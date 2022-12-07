@@ -3,6 +3,7 @@ import styles from './LoginPage.module.scss';
 import Input from '../../components/fields/inputs/Input/Input';
 import InputPassword from '../../components/fields/inputs/InputPassword/InputPassword';
 import Button from '../../components/buttons/Button/Button';
+import { NavLink } from 'react-router-dom';
 
 const LoginPage = () => {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
@@ -39,7 +40,9 @@ const LoginPage = () => {
             />
           </div>
           <div className={styles.form__button}>
-            <Button type='submit'>Sign In </Button>
+            <NavLink to="/error">
+              <Button type='submit'>Sign In </Button>
+            </NavLink>
           </div>
         </form>
       </div>
