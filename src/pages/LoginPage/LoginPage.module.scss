@@ -1,0 +1,53 @@
+.page {
+    margin: 0 auto;
+    max-width: 1310px;
+    padding: 0 15px;
+    text-align: center;
+    height: 100vh;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    &__header {
+        text-align: center;
+        font-weight: 400;
+        font-size: 64px;
+        line-height: 80px;
+        &:not(:last-child) {
+            margin-bottom: 39px;
+        }
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+        &:not(:last-child) {
+            margin-bottom: 36px;
+        }
+    }
+}
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    &__input {
+        min-width: 300px;
+        &:not(:last-child) {
+            margin-bottom: 32px;
+        }
+    }
+    &__checkbox {
+
+    }
+    &__button {
+        align-self: stretch;
+    }
+}

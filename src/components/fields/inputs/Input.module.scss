@@ -1,0 +1,33 @@
+.input__container {
+    position: relative;
+    padding: 12px 18px;
+    background-color: #224957;
+    border-radius: 10px;
+    cursor: text;
+    overflow: hidden;
+    &:hover, &:focus-within {
+        outline: 1px solid grey;
+    }
+}
+
+.input {
+    background-color: transparent;
+    width: 100%;
+    outline: none;
+    caret-color: #fff;
+    color: inherit;
+    cursor: text;
+    &:focus + .label,
+    &:not([value='']) + .label{
+        left: -100%;
+    }
+}
+
+.label {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+    cursor: text;
+    transition: left 0.3s ease 0s;
+}
