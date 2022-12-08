@@ -4,47 +4,45 @@ import Input from '../../components/fields/inputs/Input/Input';
 import InputPassword from '../../components/fields/inputs/InputPassword/InputPassword';
 import Button from '../../components/buttons/Button/Button';
 import { NavLink } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 
-const LoginPage = () => {
-  const [formValues, setFormValues] = useState({ email: '', password: '' });
+const LoginForm = (props) => {
 
+  return (
+    <form
+    className={styles.form}
+    onSubmit={props.handleSubmit}
+    >
+    <div className={styles.form__input}>
+      <Field name="email" component={"input"}></Field>
+    </div>
+    <div className={styles.form__input}>
+      <Field name="password" component={"input"}></Field>
+    </div>
+    <div className={styles.form__button}>
+    <Button type='submit'>Sign In </Button>
+    </div>
+  </form>
+  );
+};
+
+const LoginReduxForm = reduxForm({
+  form: 'login'
+})(LoginForm);
+
+const LoginPage = (props) => {
+  const onSubmit = (formData) => {
+    console.log(formData);
+  }
   return (
     <div className={styles.page}>
       <div className={styles.page__container}>
         <h1 className={styles.page__header}>Sign in</h1>
         <p className={styles.page__title}>Sign in and start managing your candidates!</p>
-        <form
-          className={styles.form}
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <div className={styles.form__input}>
-            <Input
-              label='Email'
-              value={formValues.email}
-              onChange={(event) => {
-                const email = event.target.value;
-                setFormValues({ ...formValues, email });
-              }}
-            />
-          </div>
-          <div className={styles.form__input}>
-            <InputPassword
-              label='Enter your password'
-              value={formValues.password}
-              onChange={(event) => {
-                const password = event.target.value;
-                setFormValues({ ...formValues, password });
-              }}
-            />
-          </div>
-          <div className={styles.form__button}>
-            <NavLink to="/error">
-              <Button type='submit'>Sign In </Button>
-            </NavLink>
-          </div>
-        </form>
+        <LoginReduxForm onSubmit={onSubmit}></LoginReduxForm>
+        <NavLink to="/error">
+          <p className={styles.page__title}>to 404</p>
+        </NavLink>
       </div>
     </div>
   );
