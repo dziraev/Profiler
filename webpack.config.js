@@ -20,7 +20,26 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        exclude: /\.module\.(css|scss)$/
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: {
+                localIdentName: '[name]_[local]__[hash:base64:5]'
+              }
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ],
+        include: /\.module\.scss$/
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,

@@ -1,33 +1,62 @@
-.input__container {
+@use '../../../static/scss/global';
+.inputContainer {
     position: relative;
-    padding: 12px 18px;
-    background-color: #224957;
-    border-radius: 10px;
-    cursor: text;
-    overflow: hidden;
-    &:hover, &:focus-within {
-        outline: 1px solid grey;
-    }
 }
-
 .input {
-    background-color: transparent;
+    font-family: "Red Hat Display";
+    padding: 0.67em 0.83em;
+    padding-right: 3em;
+    border-radius: 15px;
+    background-color: global.$input-background;
     width: 100%;
+    font-weight: 400;
+    font-size: 1.125em;
+    line-height: 1.333 ;
     outline: none;
-    caret-color: #fff;
-    color: inherit;
+    caret-color: global.$text-primary-blue;
+    color: global.$text-primary-dark-blue;
     cursor: text;
-    &:focus + .label,
-    &:not([value='']) + .label{
-        left: -100%;
+    &:hover, &:focus {
+        outline: 1px solid global.$input-stroke-active;
     }
+    &:not([value=""]) + label {
+        display: none;
+    }
+
+    &::placeholder {
+        font-family: "Red Hat Display";
+        font-size: 1.125em;
+        line-height: 1.33em;
+        color: global.$text-primary-secondary-gray;
+    }
+
+    &__error {
+        color: global.$text-primary-error;
+        outline: 1px solid global.$input-stroke-error;
+        &:hover, &:focus {
+            outline: 1px solid global.$input-stroke-error;
+        }
+        &::placeholder {
+            color: global.$text-primary-error
+        }
+    }
+
 }
 
-.label {
-    position: absolute;
-    top: 50%;
-    left: 18px;
-    transform: translateY(-50%);
-    cursor: text;
-    transition: left 0.3s ease 0s;
+.inputContainer + .error {
+    margin-top: 7px;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.75em;
+    line-height: 1;
+    color: global.$text-primary-error;
+    svg {
+        margin-right: 5px;
+        width: 14px;
+        height: 14px;
+    }
 }

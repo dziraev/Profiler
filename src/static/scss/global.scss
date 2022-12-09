@@ -33,15 +33,49 @@ h6 {
 img {
     vertical-align: top;
 }
+
 body {
-    background-color: #093545;;
+    font-family: "Red Hat Display";
 }
+
 html,
 body {
     height: 100%;
-
+    overflow-x: hidden;
 }
 
 html {
     font-size: 100%;
 }
+a {
+    outline: none;
+}
+
+
+/*=======VARIABLES =====*/
+/*=======background========*/
+$background-main: #fff;
+
+/*=======text========*/
+$text-primary-blue: #407bff;
+$text-primary-white: #fff;
+$text-primary-dark-blue: #25225d;
+$text-primary-grey: #9c9c9c;
+$text-primary-secondary-gray: #b0b0b0;
+$text-primary-error: #d40000;
+
+/*=======button========*/
+$button-default: #407bff;
+$button-hover: #296bff;
+$button-active: #004fff;
+$button-disabled: #94b5ff;
+
+/*=======input========*/
+$input-background: #f3f3f3;
+$input-stroke-active: #407bff;
+$input-stroke-error: #d40000;
+
+
+
+
+
