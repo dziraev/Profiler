@@ -2,7 +2,7 @@
 .page {
     min-height: 100vh;
     text-align: center;
-    background: global.$background-main url("../../static/images/background-login.png") center / cover no-repeat;
+    background: #333 url("../../static/images/background-login.png") center / cover no-repeat;
     overflow: hidden;
     padding: 0 15px;
     @media (max-width: 767.98px) {
