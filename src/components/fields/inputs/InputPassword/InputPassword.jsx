@@ -4,25 +4,18 @@ import stylesInputPassword from './InputPassword.module.scss';
 
 import styles from '../Input.module.scss';
 
-const InputPassword = ({ label, isError, helperText, onBlurHandler, ...props }) => {
-  const [focused, setFocused] = useState(false);
+const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const showPasswordToggle = props.value;
+  
   return (
     <>
       <div className={styles.inputContainer}>
-        <input
-          className={`${styles.input} ${!props.value && isError ? styles.input__error : ''}`}
+        <input {...input}
+          className={`${styles.input} ${!input.value && error ? styles.input__error : ''}`}
           type={showPassword ? 'text' : 'password'}
-          {...props}
-          onFocus={() => setFocused(true)}
-          onBlur={() => {
-            setFocused(false);
-            onBlurHandler();
-          }}
-          placeholder={!focused ? label : 'Enter your password'}
+          placeholder={!active ? label : 'Enter your password'}
         />
-        {showPasswordToggle && (
+        {input.value && (
           <div
             className={stylesInputPassword.password}
             onClick={(event) => {
@@ -60,7 +53,7 @@ const InputPassword = ({ label, isError, helperText, onBlurHandler, ...props }) 
           </div>
         )}
       </div>
-      {!props.value && isError && helperText && (
+      {!input.value && touched && error && (
         <div className={styles.error}>
           <svg
             width='24'
@@ -74,7 +67,7 @@ const InputPassword = ({ label, isError, helperText, onBlurHandler, ...props }) 
               fill='#D40000'
             />
           </svg>
-          {helperText}
+          {error}
         </div>
       )}
     </>

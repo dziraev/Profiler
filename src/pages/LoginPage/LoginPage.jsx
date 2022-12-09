@@ -14,13 +14,13 @@ const LoginForm = (props) => {
     onSubmit={props.handleSubmit}
     >
     <div className={styles.form__input}>
-      <Field name="email" component={"input"}></Field>
+      <Field name="email" component={Input} label='Email'></Field>
     </div>
     <div className={styles.form__input}>
-      <Field name="password" component={"input"}></Field>
+      <Field name="password" component={InputPassword} label='Password'></Field>
     </div>
     <div className={styles.form__button}>
-    <Button type='submit'>Sign In </Button>
+      <Button type='submit'>Sign In</Button>
     </div>
   </form>
   );
