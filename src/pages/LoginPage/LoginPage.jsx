@@ -5,19 +5,28 @@ import InputPassword from '../../components/fields/inputs/InputPassword/InputPas
 import Button from '../../components/buttons/Button/Button';
 import { NavLink } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import {emailLength, emailValidator, required} from '../../validators/validators'
 
 const LoginForm = (props) => {
 
   return (
     <form
-    className={styles.form}
-    onSubmit={props.handleSubmit}
+      className={styles.form}
+      onSubmit={props.handleSubmit}
     >
     <div className={styles.form__input}>
-      <Field name="email" component={Input} label='Email'></Field>
+      <Field name="email"
+        component={Input}
+        label='Email'
+        validate={[required, emailLength, emailValidator]}
+      />
     </div>
     <div className={styles.form__input}>
-      <Field name="password" component={InputPassword} label='Password'></Field>
+      <Field name="password"
+        component={InputPassword}
+        label='Password'
+        validate={[required]}
+      />
     </div>
     <div className={styles.form__button}>
       <Button type='submit'>Sign In</Button>
@@ -39,7 +48,7 @@ const LoginPage = (props) => {
       <div className={styles.page__container}>
         <h1 className={styles.page__header}>Sign in</h1>
         <p className={styles.page__title}>Sign in and start managing your candidates!</p>
-        <LoginReduxForm onSubmit={onSubmit}></LoginReduxForm>
+        <LoginReduxForm onSubmit={onSubmit}/>
         <NavLink to="/error">
           <p className={styles.page__title}>to 404</p>
         </NavLink>
