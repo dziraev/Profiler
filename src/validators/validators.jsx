@@ -6,7 +6,7 @@ export const required = (value) => {
 export const emailValidator = (value) => {
   let email = value.trim();
   const EMAIL_REGEXP =
-    /^[a-zA-Z0-9]+([!"#$%&'()*+,-./:;<=>?[\]\\^_{}][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)?)\.([a-z]{2,})(\.[a-z]{2,})?$/iu;
+    /^[a-zA-Z0-9]+([!"#$%&'()*+,\-.\/:;<=>?[\]\\^_{}][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)?)\.([a-z]{2,})(\.[a-z]{2,})?$/iu;
   if (!EMAIL_REGEXP.test(email)) return 'Invalid email';
   return undefined;
 };

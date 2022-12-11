@@ -1,10 +1,11 @@
 import styles from '../Input.module.scss';
 
-const Input = ({ input, meta: { touched, error, active }, label }) => {
+const Input = ({ input, meta: { touched, error, active }, label, ...props }) => {
   return (
     <>
       <div className={styles.inputContainer}>
         <input
+          {...props}
           {...input}
           type='text'
           className={`${styles.input} ${error && touched ? styles.input__error : ''}`}

@@ -10,7 +10,9 @@
     border-radius: 10px;
     text-align: center;
     color: global.$text-primary-white;
+    cursor: pointer;
     outline: none;
+    user-select: none;
     &:hover, &:focus {
         background-color: global.$button-hover;
     }
