@@ -6,7 +6,7 @@ const Input = ({ input, meta: { touched, error, active }, label }) => {
     <div className={styles.input__container}>
       <input {...input}
         type="text" 
-        className={`${styles.input} ${error ? styles.input__error : ''}`}
+        className={`${styles.input} ${error && touched ? styles.input__error : ''}`}
         placeholder={!active ? label : 'Enter your email'}/>
     </div>
     {touched && error && 

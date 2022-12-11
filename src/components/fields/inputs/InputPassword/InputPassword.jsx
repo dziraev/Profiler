@@ -11,7 +11,7 @@ const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
     <>
       <div className={styles.inputContainer}>
         <input {...input}
-          className={`${styles.input} ${!input.value && error ? styles.input__error : ''}`}
+          className={`${styles.input} ${!input.value && error && touched ? styles.input__error : ''}`}
           type={showPassword ? 'text' : 'password'}
           placeholder={!active ? label : 'Enter your password'}
         />
