@@ -1,21 +1,32 @@
 @use '../../../static/scss/global';
 .inputContainer {
     position: relative;
+    &:not(:last-child) {
+        margin-bottom: 2px;
+        @media (min-width: 767.98px) {
+            margin-bottom: 7px;
+        }
+    }
 }
 .input {
     font-family: "Red Hat Display";
+    font-size: 1em;
+    line-height: 1.3125;
     padding: 0.67em 0.83em;
     padding-right: 3em;
     border-radius: 15px;
     background-color: global.$input-background;
     width: 100%;
     font-weight: 400;
-    font-size: 1.125em;
-    line-height: 1.333 ;
     outline: none;
     caret-color: global.$text-primary-blue;
     color: global.$text-primary-dark-blue;
     cursor: text;
+    @media(min-width: 767.98px) {
+        font-size: 1.125em;
+        line-height: 1.333;
+    }
+
     &:hover, &:focus {
         outline: 1px solid global.$input-stroke-active;
     }
@@ -26,8 +37,12 @@
     &::placeholder {
         font-family: "Red Hat Display";
         font-size: 1.125em;
-        line-height: 1.33em;
+        line-height: 1.3125;
         color: global.$text-primary-secondary-gray;
+        @media(min-width: 767.98px) {
+            font-size: 1.125em;
+            line-height: 1.333;
+        }
     }
 
     &__error {
@@ -43,20 +58,20 @@
 
 }
 
-.inputContainer + .error {
-    margin-top: 7px;
-}
-
 .error {
     display: flex;
     align-items: center;
     font-weight: 500;
-    font-size: 0.75em;
-    line-height: 1;
+    font-size: 0.625em;
+    line-height: 1.3;
     color: global.$text-primary-error;
     svg {
         margin-right: 5px;
         width: 14px;
         height: 14px;
+    }
+    @media (min-width: 767.98px) {
+        font-size: 0.75em;
+        line-height: 1.333;
     }
 }
