@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import '../Input.module.scss';
 import stylesInputPassword from './InputPassword.module.scss';
 
@@ -6,15 +6,16 @@ import styles from '../Input.module.scss';
 
 const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const test = !touched
+    ? styles.input
+    : `${styles.input} ${!input.value && error ? styles.input__error : ''}`;
+  console.log('touched', touched);
   return (
     <>
       <div className={styles.inputContainer}>
         <input
           {...input}
-          className={`${styles.input} ${
-            !input.value && error && touched ? styles.input__error : ''
-          }`}
+          className={test}
           type={showPassword ? 'text' : 'password'}
           placeholder={!active ? label : 'Enter your password'}
         />
@@ -56,8 +57,9 @@ const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
           </div>
         )}
       </div>
-      {!input.value && touched && error && (
+      {touched && error && (
         <div className={styles.error}>
+          {error}
           <svg
             width='24'
             height='24'
@@ -70,7 +72,6 @@ const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
               fill='#D40000'
             />
           </svg>
-          {error}
         </div>
       )}
     </>

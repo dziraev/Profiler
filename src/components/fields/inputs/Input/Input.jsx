@@ -14,6 +14,7 @@ const Input = ({ input, meta: { touched, error, active }, label, ...props }) => 
       </div>
       {touched && error && (
         <div className={styles.error}>
+          {error}
           <svg
             width='24'
             height='24'
@@ -26,7 +27,6 @@ const Input = ({ input, meta: { touched, error, active }, label, ...props }) => 
               fill='#D40000'
             />
           </svg>
-          {error}
         </div>
       )}
     </>

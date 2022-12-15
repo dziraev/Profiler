@@ -4,8 +4,7 @@ import Input from '../../components/fields/inputs/Input/Input';
 import InputPassword from '../../components/fields/inputs/InputPassword/InputPassword';
 import Button from '../../components/buttons/Button/Button';
 import logo from '../../static/images/logo.svg';
-import { NavLink } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form';
+import { clearFields, Field, reduxForm, SubmissionError, untouch } from 'redux-form';
 import { emailValidator, required } from '../../validators/validators';
 import AuthService from '../../services/AuthService';
 import { useDispatch } from 'react-redux';
@@ -52,6 +51,8 @@ const LoginPage = (props) => {
       dispatch(authIn());
     } catch (e) {
       console.log(e.response.data.message);
+      dispatch(clearFields('login', false, true, 'password'));
+      throw new SubmissionError({ password: <span>Wrong email or password</span> });
     }
   };
   return (
