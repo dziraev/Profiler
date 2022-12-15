@@ -7,6 +7,9 @@ import logo from '../../static/images/logo.svg';
 import { NavLink } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { emailValidator, required } from '../../validators/validators';
+import AuthService from '../../services/AuthService';
+import { useDispatch } from 'react-redux';
+import { authIn } from '../../redux/actions';
 
 const LoginForm = (props) => {
   const { invalid, pristine, submitting } = props;
@@ -40,8 +43,16 @@ const LoginReduxForm = reduxForm({
 })(LoginForm);
 
 const LoginPage = (props) => {
-  const onSubmit = (formData) => {
+  const dispatch = useDispatch();
+  const onSubmit = async (formData) => {
     console.log(formData);
+    try {
+      const response = await AuthService.login(formData.email, formData.password);
+      localStorage.setItem('token', response.data.token);
+      dispatch(authIn());
+    } catch (e) {
+      console.log(e.response.data.message);
+    }
   };
   return (
     <div className={styles.page}>
@@ -52,9 +63,6 @@ const LoginPage = (props) => {
         <h1 className={styles.page__header}>Hello</h1>
         <p className={styles.page__title}>We’re glad to see you on our platform </p>
         <LoginReduxForm onSubmit={onSubmit} />
-        <NavLink to='/error'>
-          <p className={styles.page__title}>to 404</p>
-        </NavLink>
       </div>
     </div>
   );
