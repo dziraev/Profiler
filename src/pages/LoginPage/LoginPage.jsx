@@ -45,10 +45,12 @@ const LoginPage = (props) => {
   const dispatch = useDispatch();
   const onSubmit = async (formData) => {
     try {
-      const response = await AuthService.login(formData.email, formData.password);
+      const response = await AuthService.login(formData.email.trim(), formData.password);
       localStorage.setItem('token', response.data.token);
       dispatch(authIn());
     } catch (e) {
+      console.log(e.response.data.message);
+      dispatch(clearFields('login', false, true, 'password'));
       throw new SubmissionError({ password: <span>Wrong email or password</span> });
     }
   };
