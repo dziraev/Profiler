@@ -32,7 +32,7 @@ const LoginPage = (props) => {
               dispatch(authIn());
             } catch (e) {
               setFieldValue('password', '', false);
-              setFieldError('password', <span>Invalid email or password</span>);
+              setFieldError('password', <span>Wrong email or password</span>);
             }
           }}
           validate={validator}
