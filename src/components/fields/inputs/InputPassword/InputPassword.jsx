@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 import '../Input.module.scss';
 import stylesInputPassword from './InputPassword.module.scss';
-
+import { useField } from 'formik';
 import styles from '../Input.module.scss';
 
-const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
+const InputPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
-  const test = !touched
+  const [active, setActive] = useState(false)
+  const [field, meta] = useField(props);
+  const test = !meta.touched
     ? styles.input
-    : `${styles.input} ${!input.value && error ? styles.input__error : ''}`;
+    : `${styles.input} ${!field.value && meta.error ? styles.input__error : ''}`;
 
   return (
     <>
       <div className={styles.inputContainer}>
         <input
-          {...input}
+          {...props}
+          {...field}
           className={test}
+          //onFocus={() => setActive(true)}
+          //onBlur={() => setActive(false)}
           type={showPassword ? 'text' : 'password'}
-          placeholder={!active ? label : 'Enter your password'}
+          placeholder={!active ? 'Password' : 'Enter your password'}
         />
           <div
             className={stylesInputPassword.password}
@@ -54,9 +59,9 @@ const InputPassword = ({ input, meta: { touched, error, active }, label }) => {
           )}
         </div>
       </div>
-      {touched && error && (
+      {meta.touched && meta.error && (
         <div className={styles.error}>
-          {error}
+          {meta.error}
           <svg
             width='24'
             height='24'

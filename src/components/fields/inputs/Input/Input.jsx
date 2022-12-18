@@ -1,20 +1,30 @@
 import styles from '../Input.module.scss';
+import { useField } from 'formik';
+import React, { useState } from 'react';
 
-const Input = ({ input, meta: { touched, error, active }, label, ...props }) => {
+const Input = (props) => {
+  const [active, setActive] = useState(false);
+  const [error, setError] = useState('');
+  const [field, meta] = useField(props);
   return (
     <>
       <div className={styles.inputContainer}>
         <input
           {...props}
-          {...input}
+          {...field}
           type='text'
-          className={`${styles.input} ${error && touched ? styles.input__error : ''}`}
-          placeholder={!active ? label : 'Enter your email'}
+          maxLength={50}
+          onFocus={() => setActive(true)}
+          /*onBlur={() => {
+            setActive(false)
+          }}*/
+          className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
+          placeholder={!active ? 'Email' : 'Enter your email'}
         />
       </div>
-      {touched && error && (
+      {meta.touched && meta.error && (
         <div className={styles.error}>
-          {error}
+          {meta.error}
           <svg
             width='24'
             height='24'

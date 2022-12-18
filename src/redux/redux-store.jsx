@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
+//import { reducer as formReducer } from 'redux-form';
 import { authReducer } from './authReducer';
 
 let combinedReducers = combineReducers({
-  form: formReducer,
+  //form: formReducer,
   authReducer
 });
 
