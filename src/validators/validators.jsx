@@ -17,7 +17,6 @@ const maxLengthCreator = (maxLength, message) => (value) => {
 };
 export const emailLength = maxLengthCreator(50, 'Invalid email');
 
-
 export const validator = (values) => {
   let errors = {};
   let email = values.email.trim();
@@ -35,4 +34,4 @@ export const validator = (values) => {
   }
 
   return errors;
-}
+};

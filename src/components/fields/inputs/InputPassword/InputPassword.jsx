@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import '../Input.module.scss';
-import stylesInputPassword from './InputPassword.module.scss';
 import { useField } from 'formik';
+import stylesInputPassword from './InputPassword.module.scss';
 import styles from '../Input.module.scss';
 
 const InputPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(false);
   const [field, meta] = useField(props);
-  const test = !meta.touched
-    ? styles.input
-    : `${styles.input} ${!field.value && meta.error ? styles.input__error : ''}`;
+
+  function handleBlur(e) {
+    field.onBlur(e);
+    setActive(false);
+  }
+
+  function handleFocus(e) {
+    setActive(true);
+  }
 
   return (
     <>
@@ -18,18 +23,18 @@ const InputPassword = (props) => {
         <input
           {...props}
           {...field}
-          className={test}
-          //onFocus={() => setActive(true)}
-          //onBlur={() => setActive(false)}
+          className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           type={showPassword ? 'text' : 'password'}
           placeholder={!active ? 'Password' : 'Enter your password'}
         />
-          <div
-            className={stylesInputPassword.password}
-            onClick={(event) => {
-              setShowPassword(!showPassword);
-            }}
-          >
+        <div
+          className={stylesInputPassword.password}
+          onClick={() => {
+            setShowPassword(!showPassword);
+          }}
+        >
           {showPassword ? (
             <svg
               width='30'

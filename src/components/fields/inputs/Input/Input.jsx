@@ -1,23 +1,30 @@
+import React, { useState } from 'react';
 import styles from '../Input.module.scss';
 import { useField } from 'formik';
-import React, { useState } from 'react';
 
 const Input = (props) => {
   const [active, setActive] = useState(false);
-  const [error, setError] = useState('');
-  const [field, meta] = useField(props);
+  const [field, meta, helper] = useField(props);
+
+  function handleBlur(e) {
+    field.onBlur(e);
+    setActive(false);
+  }
+
+  function handleFocus(e) {
+    setActive(true);
+  }
+
   return (
     <>
       <div className={styles.inputContainer}>
         <input
           {...props}
           {...field}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           type='text'
           maxLength={50}
-          onFocus={() => setActive(true)}
-          /*onBlur={() => {
-            setActive(false)
-          }}*/
           className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
           placeholder={!active ? 'Email' : 'Enter your email'}
         />

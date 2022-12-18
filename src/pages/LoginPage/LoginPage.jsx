@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from './LoginPage.module.scss';
-import Input from '../../components/fields/inputs/Input/Input';
-import InputPassword from '../../components/fields/inputs/InputPassword/InputPassword';
-import Button from '../../components/buttons/Button/Button';
-import logo from '../../static/images/logo.svg';
-import { emailValidator, required, validator } from '../../validators/validators';
-import AuthService from '../../services/AuthService';
+import { validator } from '../../validators/validators';
 import { useDispatch } from 'react-redux';
 import { authIn } from '../../redux/actions';
 import { Formik, Form } from 'formik';
+import Input from '../../components/fields/inputs/Input/Input';
+import InputPassword from '../../components/fields/inputs/InputPassword/InputPassword';
+import Button from '../../components/buttons/Button/Button';
+import AuthService from '../../services/AuthService';
+import logo from '../../static/images/logo.svg';
+import styles from './LoginPage.module.scss';
 
 const LoginPage = (props) => {
-
+  const dispatch = useDispatch();
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -25,51 +25,32 @@ const LoginPage = (props) => {
             email: '',
             password: ''
           }}
-          onSubmit={ async (values, {resetForm}) => {
+          onSubmit={async (values, { setFieldValue, setFieldError }) => {
             try {
-              console.log(values)
               const response = await AuthService.login(values.email.trim(), values.password);
               localStorage.setItem('token', response.data.token);
               dispatch(authIn());
             } catch (e) {
-              console.log(e.response.data.message);
-              /*resetForm({values : {
-                password: ''
-              }});*/
+              setFieldValue('password', '', false);
+              setFieldError('password', <span>Invalid email or password</span>);
             }
           }}
           validate={validator}
         >
           {(formik) => {
-            const {
-              values,
-              handleChange,
-              handleSubmit,
-              errors,
-              touched,
-              handleBlur,
-              isValid,
-              dirty
-            } = formik;
+            const { isValid, dirty } = formik;
             return (
               <Form className={styles.form}>
                 <div className={styles.form__inputs}>
                   <div className={styles.form__input}>
-                    <Input
-                      name='email'
-                    />
+                    <Input name='email' />
                   </div>
                   <div className={styles.form__input}>
-                    <InputPassword
-                      name='password'
-                    />
+                    <InputPassword name='password' />
                   </div>
                 </div>
                 <div className={styles.form__button}>
-                  <Button
-                    type='submit'
-                    disabled={!(dirty && isValid)}
-                  >
+                  <Button type='submit' disabled={!(dirty && isValid)}>
                     Sign In
                   </Button>
                 </div>
