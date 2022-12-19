@@ -43,10 +43,10 @@ const LoginPage = (props) => {
               <Form className={styles.form}>
                 <div className={styles.form__inputs}>
                   <div className={styles.form__input}>
-                    <Input name='email' />
+                    <Input name='email' maxLength={50} />
                   </div>
                   <div className={styles.form__input}>
-                    <InputPassword name='password' />
+                    <InputPassword name='password' maxLength={15} />
                   </div>
                 </div>
                 <div className={styles.form__button}>

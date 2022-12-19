@@ -24,7 +24,6 @@ const Input = (props) => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           type='text'
-          maxLength={50}
           className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
           placeholder={!active ? 'Email' : 'Enter your email'}
         />
