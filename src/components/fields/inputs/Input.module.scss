@@ -4,10 +4,10 @@
 }
 .input {
     font-family: "Red Hat Display";
-    font-size: 1em;
-    line-height: 1.3125;
-    padding: 0.67em 0.83em;
-    padding-right: 3em;
+    font-size: 1.125rem;
+    line-height: 1.3333;
+    padding: 0.75rem 0.9375rem;
+    padding-right: 3rem;
     border-radius: 15px;
     background-color: global.$input-background;
     width: 100%;
@@ -16,44 +16,31 @@
     caret-color: global.$text-primary-blue;
     color: global.$text-primary-dark-blue;
     cursor: text;
-    @media(min-width: 767.98px) {
-        font-size: 1.125em;
-        line-height: 1.333;
-    }
+
 
     &:hover, &:focus {
         box-shadow: 0 0 0 1px global.$input-stroke-active;
     }
-    &:not([value=""]) + label {
-        display: none;
+    &:disabled {
+        cursor: no-drop;
+    }
+
+    &:disabled:hover {
+        box-shadow: none;
     }
 
     &::placeholder {
         font-family: "Red Hat Display";
-        font-size: 1.125em;
+        font-size: 1rem;
         line-height: 1.3125;
         color: global.$text-primary-secondary-gray;
+        user-select: none;
         @media(min-width: 767.98px) {
-            font-size: 1.125em;
+            font-size: 1.125rem;
             line-height: 1.333;
         }
     }
 
-    &[type="text"]::-ms-clear {
-        display: none;
-    }   
-    &[type="password"]::-ms-reveal {
-        display: none;
-    }
-
-    &::-webkit-credentials-auto-fill-button,
-    &::-webkit-contacts-auto-fill-button {
-        visibility: hidden;
-        display: none !important;
-        pointer-events: none;
-        position: absolute;
-        right: 0;
-    }
 
     &__error {
         color: global.$text-primary-error;
@@ -72,7 +59,7 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
     font-weight: 500;
     font-size: 0.625em;
     line-height: 1.3;
@@ -84,8 +71,8 @@
         transform: translateY(6px);
     }
     svg {
+        flex: 0 0 14px;
         margin-right: 5px;
-        width: 14px;
         height: 14px;
     }
     span {

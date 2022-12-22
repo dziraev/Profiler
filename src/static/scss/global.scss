@@ -47,8 +47,26 @@ body {
 html {
     font-size: 100%;
 }
+
 a {
     outline: none;
+}
+
+input[type="text"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
 }
 
 
@@ -69,11 +87,16 @@ $button-default: #407bff;
 $button-hover: #296bff;
 $button-active: #004fff;
 $button-disabled: #94b5ff;
+$cancel-button-background: #e6edff;
 
 /*=======input========*/
 $input-background: #f3f3f3;
 $input-stroke-active: #407bff;
 $input-stroke-error: #d40000;
+
+/*=======scrollbar========*/
+
+$scrollbar: #c1c1c1;
 
 
 

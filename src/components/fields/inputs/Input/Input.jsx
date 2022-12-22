@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import styles from '../Input.module.scss';
 import { useField } from 'formik';
+import styles from '../Input.module.scss';
 
-const Input = (props) => {
+const Input = ({ label, activeLabel, ...props }) => {
   const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props);
 
@@ -25,7 +25,7 @@ const Input = (props) => {
           onFocus={handleFocus}
           type='text'
           className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
-          placeholder={!active ? 'Email' : 'Enter your email'}
+          placeholder={active ? activeLabel : label}
         />
         {meta.touched && meta.error && (
           <div className={styles.error}>
