@@ -1,0 +1,58 @@
+@use '../../static/scss/global';
+.wrapper {
+    max-width: 934px;
+    padding: 0 15px;
+}
+.title {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.3125;
+    color: global.$text-primary-dark-blue;
+    margin-bottom: 25px;
+    @media (min-width: 376px) {
+        margin-bottom: 40px;
+        font-size: 1.5rem;
+        line-height: 1.3333;
+    }
+}
+
+.form {
+
+    &__inputs {
+        display: flex;
+        gap: 52px 64px;
+        flex-wrap: wrap;
+        margin-bottom: 36px;
+        @media (max-width: 376px) {
+            flex-direction: column;
+            row-gap: 20px;
+        }
+    }
+    &__input {
+        flex: 1 0 calc(50% - 64px / 2)
+    }
+    &__buttons {
+        display: flex;
+        column-gap: 40px;
+        justify-content: flex-end;
+
+        @media (max-width: 376px) {
+            width: 100%;
+            padding: 1.25rem 0.9375rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            column-gap: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+            border-radius: 20px 20px 0px 0px;
+        }
+    }
+    &__button {
+        width: 100%;
+        @media (min-width: 376px) {
+            max-width: 172px;
+        }
+    }
+}
+
+

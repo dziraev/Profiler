@@ -1,5 +1,5 @@
 import React from 'react';
-import { validator } from '../../validators/validators';
+import { validator } from '../../utils/validators/validators';
 import { useDispatch } from 'react-redux';
 import { authIn } from '../../redux/actions';
 import { Formik, Form } from 'formik';
@@ -43,10 +43,15 @@ const LoginPage = (props) => {
               <Form className={styles.form}>
                 <div className={styles.form__inputs}>
                   <div className={styles.form__input}>
-                    <Input name='email' />
+                    <Input
+                      name='email'
+                      label={'Email'}
+                      activeLabel={'Enter your password'}
+                      maxLength={50}
+                    />
                   </div>
                   <div className={styles.form__input}>
-                    <InputPassword name='password' />
+                    <InputPassword name='password' maxLength={15} />
                   </div>
                 </div>
                 <div className={styles.form__button}>
