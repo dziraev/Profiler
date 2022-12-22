@@ -1,0 +1,38 @@
+@use '../../static/scss/global';
+.page {
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    
+    &__background {
+        position: absolute;
+        z-index: -1;
+        top: 130px;
+        width: 100vw;
+        height: 216px;
+        background: global.$background-main url("../../static/images/background-cabinet.png") center / cover no-repeat;
+    }
+    &__container {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        text-align: center;
+        width: 100%;
+    }
+    &__content {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        width: 100%;
+    }
+    &__header {
+        margin: 130px 0 91.45px;
+    }
+    &__main {
+        margin: auto;
+    }
+    &__sidebar {
+        flex-basis: 358px;
+    }
+}

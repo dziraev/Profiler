@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/LoginPage';
+import PersonalCabinetPage from '../pages/PersonalCabinetPage/PersonalCabinetPage';
+import MyCV from '../pages/PersonalCabinetPage/myCV';
+import PersonalDetails from '../pages/PersonalCabinetPage/PersonalDetails';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import { useSelector } from 'react-redux';
 
@@ -12,7 +15,10 @@ const AuthRoutes = () => (
 );
 const MainRoutes = () => (
   <Routes>
-    <Route path='/main' element={<h1>HELLO WORLD</h1>} />
+    <Route path='/main' element={<PersonalCabinetPage />}>
+      <Route path='personal-details' element={<PersonalDetails />} />
+      <Route path='to-cv' element={<MyCV />} />
+    </Route>
     <Route path='/*' element={<Navigate to='/main' />} />
   </Routes>
 );
