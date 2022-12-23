@@ -18,4 +18,18 @@
         color: global.$text-primary-blue;
         font-weight: 700;
     }
+    @media (max-width: 375px) {
+        height: 208.57px;
+        padding: 80.57px 0 50px;
+        &__title {
+            max-width: 302px;
+            line-height: 1.32;
+            font-size: 1.25em;
+            text-align: center;
+            margin: auto;
+        }
+        &__title_highlighted {
+            font-weight: 700;
+        }
+    }
 }

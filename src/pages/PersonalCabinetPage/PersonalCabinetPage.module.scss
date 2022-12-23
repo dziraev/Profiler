@@ -7,7 +7,7 @@
     &__background {
         position: absolute;
         z-index: -1;
-        top: 130px;
+        margin: 130px 0 91.45px;
         width: 100vw;
         height: 216px;
         background: global.$background-main url("../../static/images/background-cabinet.png") center / cover no-repeat;
@@ -34,5 +34,39 @@
     }
     &__sidebar {
         flex-basis: 358px;
+    }
+    @media (max-width: 375px) {
+
+        &__container {
+            display: block;
+        }
+        &__sidebar {
+            width: 100%;
+        }
+        &__background {
+            display: none;
+        }
+        &__header {
+            margin: 0%;
+            background: global.$background-main url("../../static/images/background-cabinet-small.png") top / cover no-repeat;
+        }
+    }
+}
+.header {
+    display: none;
+    @media (max-width: 375px) {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        height: 70.57px;
+        padding: 20px 15px 0 18.75px;
+        position: fixed;
+        z-index: 2;
+        &__burger {
+
+        }
+        &__photo__icon {
+
+        }
     }
 }
