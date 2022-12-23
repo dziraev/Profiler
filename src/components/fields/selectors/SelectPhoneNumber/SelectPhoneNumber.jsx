@@ -1,26 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
+import { useSelector } from 'react-redux';
+import { selectCodeNumber } from './selectors';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesInput from '../../inputs/Input.module.scss';
 import stylesSelect from '../Select.module.scss';
 
-const data = [{ id: '1', number: '+375' }];
+const data = [
+  { id: '1', number: '+93' },
+  { id: '2', number: '+35' },
+  { id: '3', number: '+575' }
+];
 
 const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
-  const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props.name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
+  const { value } = field;
   const { setValue } = helper;
-
-  function handleBlur(e) {
-    field.onBlur(e);
-    setActive(false);
-  }
-
-  function handleFocus(e) {
-    setActive(true);
-  }
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -52,6 +49,9 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
         style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         onClick={() => setIsVisible((prev) => !prev)}
       >
+        <div className={styles.selectPhone__codeNumber}>
+          {value !== '' ? value : data[0].number}
+        </div>
         <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
           <svg
             width='12'
@@ -70,19 +70,20 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
           </svg>
         </div>
       </div>
-      <input
-        {...props}
-        {...field}
-        disabled={disabled}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        type='text'
-        className={`${stylesInput.input} ${
-          meta.error && meta.touched ? stylesInput.input__error : ''
-        }`}
-        placeholder={active ? activeLabel : label}
-      />
-      {meta.touched && meta.error && (
+      {/*<input*/}
+      {/*  {...props}*/}
+      {/*  {...field}*/}
+      {/*  disabled={disabled}*/}
+      {/*  onBlur={handleBlur}*/}
+      {/*  onFocus={handleFocus}*/}
+      {/*  type='text'*/}
+      {/*  className={`${stylesInput.input} ${*/}
+      {/*    meta.error && meta.touched ? stylesInput.input__error : ''*/}
+      {/*  }`}*/}
+      {/*  placeholder={active ? activeLabel : label}*/}
+      {/*/>*/}
+      {props.children}
+      {meta.error && (
         <div className={stylesInput.error}>
           {meta.error}
           <svg

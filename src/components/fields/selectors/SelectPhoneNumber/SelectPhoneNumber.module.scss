@@ -7,6 +7,9 @@
     &__select {
         flex: 1 0 114px;
     }
+    &__codeNumber {
+
+    }
     &__error {
         box-shadow: 0 0 0 1px global.$input-stroke-error;
         &:hover {

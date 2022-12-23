@@ -83,13 +83,16 @@ const PersonalDetails = () => {
                   />
                 </div>
                 <div className={styles.form__input}>
-                  <SelectPhoneNumber
-                    name='phoneNumber'
-                    label='Cell phone number'
-                    activeLabel='Enter cell phone number'
-                    maxLength={25}
-                    disabled={!isEdit}
-                  />
+                  <SelectPhoneNumber name='codeNumber' maxLength={25} disabled={!isEdit}>
+                    <Input
+                      name='phoneNumber'
+                      label='Cell phone number'
+                      activeLabel='Enter cell phone number'
+                      maxLength={25}
+                      disabled={!isEdit}
+                      showError={false}
+                    />
+                  </SelectPhoneNumber>
                 </div>
                 <div className={styles.form__input}>
                   <Select name='position' label='Position' disabled={!isEdit} />

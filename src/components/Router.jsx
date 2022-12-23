@@ -25,7 +25,7 @@ const MainRoutes = () => (
 
 const Router = () => {
   const { isAuth } = useSelector((state) => state.authReducer);
-  return isAuth ? <MainRoutes /> : <AuthRoutes />;
+  return true ? <MainRoutes /> : <AuthRoutes />;
 };
 
 export default Router;

@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useField } from 'formik';
 import styles from '../Input.module.scss';
 
-const Input = ({ label, activeLabel, ...props }) => {
+const Input = ({ label, activeLabel, showError = true, ...props }) => {
   const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props);
-
   function handleBlur(e) {
     field.onBlur(e);
     setActive(false);
@@ -27,7 +26,7 @@ const Input = ({ label, activeLabel, ...props }) => {
           className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
           placeholder={active ? activeLabel : label}
         />
-        {meta.touched && meta.error && (
+        {meta.touched && meta.error && showError && (
           <div className={styles.error}>
             {meta.error}
             <svg

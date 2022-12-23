@@ -7,8 +7,8 @@ const initialState = {
     email: '',
     country: '',
     position: '',
-    phoneNumber: '',
-    code: ''
+    codeNumber: '',
+    phoneNumber: ''
   }
 };
 
