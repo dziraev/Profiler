@@ -23,5 +23,10 @@ export const validateDetails = (values) => {
       'The email of the user was entered incorrectly. Email address  must have four parts Recipient name, @ symbol, Domain name, Top-level domain';
   }
 
+  if (!/^\d+$/.test(values.phoneNumber) && values.phoneNumber) {
+    errors.phoneNumber =
+      "The user's phone number was entered incorrectly. It is not allowed to use a dash and a space between numbers.";
+  }
+
   return errors;
 };

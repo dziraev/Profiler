@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validateDetails } from '../../utils/validators/validateDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { personalDetailsUpdate } from '../../redux/actions';
+import { countriesLoad, personalDetailsUpdate } from '../../redux/actions';
 import Input from '../../components/fields/inputs/Input/Input';
 import Button from '../../components/buttons/Button/Button';
 import CancelButton from '../../components/buttons/CancelButton/CancelButton';
 import SearchBar from '../../components/fields/SearchBar/SearchBar';
-import Select from '../../components/fields/Select/Select';
+import Select from '../../components/fields/selectors/Select/Select';
+import { selectPersonalDetails } from './selectors';
+import SelectPhoneNumber from '../../components/fields/selectors/SelectPhoneNumber/SelectPhoneNumber';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = () => {
   const dispatch = useDispatch();
-  const { countriesReducer, personalDetailsReducer } = useSelector((state) => state);
-  const { countries } = countriesReducer;
-  const { personalDetails } = personalDetailsReducer;
+  const personalDetails = useSelector(selectPersonalDetails);
+  useEffect(() => {
+    dispatch(countriesLoad());
+  }, []);
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -38,7 +41,7 @@ const PersonalDetails = () => {
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty, handleReset } = formik;
+          const { dirty } = formik;
 
           return (
             <Form className={styles.form}>
@@ -65,10 +68,10 @@ const PersonalDetails = () => {
                   <SearchBar
                     name='country'
                     label='Country'
+                    maxLength={50}
                     activeLabel='Enter your location'
                     autoComplete={'off'}
                     disabled={!isEdit}
-                    data={countries}
                   />
                 </div>
                 <div className={styles.form__input}>
@@ -76,6 +79,15 @@ const PersonalDetails = () => {
                     name='email'
                     label='Email'
                     activeLabel='Enter your email'
+                    disabled={!isEdit}
+                  />
+                </div>
+                <div className={styles.form__input}>
+                  <SelectPhoneNumber
+                    name='phoneNumber'
+                    label='Cell phone number'
+                    activeLabel='Enter cell phone number'
+                    maxLength={25}
                     disabled={!isEdit}
                   />
                 </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import styles from './Select.module.scss';
+import styles from '../Select.module.scss';
 
 const Select = ({ label, disabled, data = [], ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -57,6 +57,7 @@ const Select = ({ label, disabled, data = [], ...props }) => {
           </svg>
         </div>
       </div>
+
       <div className={styles.select__dropdown}>
         {isVisible &&
           data.map((value) => (

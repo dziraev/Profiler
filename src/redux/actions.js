@@ -1,4 +1,11 @@
-import { AUTH_IN, AUTH_OUT, COUNTRIES_LOAD, PERSONALDETAILS_UPDATE } from './types';
+import {
+  AUTH_IN,
+  AUTH_OUT,
+  COUNTRIES_LOAD,
+  COUNTRIES_SEARCH,
+  PERSONALDETAILS_UPDATE
+} from './types';
+import { API_URL } from '../http/api';
 
 export function authIn() {
   return {
@@ -11,12 +18,17 @@ export function authOut() {
   };
 }
 
-export function countriesLoad(str) {
+export function countriesLoad() {
   return async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://63a2d4e1471b38b206fd9b87.mockapi.io/country?search=${str}`
-      );
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://192.168.205.11:8080/api/v1/countries', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer_' + token,
+          'Content-Type': 'application/json'
+        }
+      });
       const jsonData = await response.json();
       dispatch({
         type: COUNTRIES_LOAD,
@@ -25,6 +37,13 @@ export function countriesLoad(str) {
     } catch (e) {
       console.log(e);
     }
+  };
+}
+
+export function countriesSearch(text) {
+  return {
+    type: COUNTRIES_SEARCH,
+    searchText: text
   };
 }
 

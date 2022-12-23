@@ -1,11 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import { debounce } from '../../../utils/debounce';
-import { useDispatch } from 'react-redux';
-import { countriesLoad } from '../../../redux/actions';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { countriesSearch } from '../../../redux/actions';
+import { filterCountriesByPrefix } from '../../../pages/PersonalDetails/selectors';
 import styles from './SearchBar.module.scss';
 
-const SearchBar = ({ label, activeLabel, data, ...props }) => {
+const SearchBar = ({ label, activeLabel, ...props }) => {
+  const { filteredCountries, searchText } = useSelector((state) => {
+    const data = state.countriesReducer;
+    const filteredCountries = filterCountriesByPrefix(data.countries, data.searchText);
+    return { filteredCountries, searchText: data.searchText };
+  }, shallowEqual);
   const wrapperRef = useRef(null);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
@@ -30,7 +36,7 @@ const SearchBar = ({ label, activeLabel, data, ...props }) => {
   const updateSearchValue = useCallback(
     debounce(
       (str) => {
-        dispatch(countriesLoad(str.toLowerCase()));
+        dispatch(countriesSearch(str.toLowerCase()));
       },
       350,
       false
@@ -51,7 +57,6 @@ const SearchBar = ({ label, activeLabel, data, ...props }) => {
   const handleFocus = (e) => {
     setActive(true);
   };
-
   return (
     <div className={styles.search} ref={wrapperRef}>
       <input
@@ -67,22 +72,24 @@ const SearchBar = ({ label, activeLabel, data, ...props }) => {
       />
       {display && (
         <div className={styles.dataResult}>
-          {data.length === 0 && field.value.length > 1 && (
+          {filteredCountries.length === 0 && searchText.length > 0 && (
             <div className={styles.dataResult__notFound}>No such countries found</div>
           )}
-          {data.map((value) => (
-            <div
-              className={styles.dataResult__item}
-              key={value.id}
-              onClick={() => {
-                country.current = value.name;
-                setValue(value.name);
-                setDisplay(false);
-              }}
-            >
-              {value.name}
-            </div>
-          ))}
+          {searchText.length > 0 &&
+            filteredCountries.length > 0 &&
+            filteredCountries.map((value) => (
+              <div
+                className={styles.dataResult__item}
+                key={value.id}
+                onClick={() => {
+                  country.current = value.countryName;
+                  setValue(value.countryName);
+                  setDisplay(false);
+                }}
+              >
+                {value.countryName}
+              </div>
+            ))}
         </div>
       )}
     </div>

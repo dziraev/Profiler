@@ -2,5 +2,6 @@ export const AUTH_IN = 'AUTH_IN';
 export const AUTH_OUT = 'AUTH_OUT';
 
 export const COUNTRIES_LOAD = 'COUNTRIES_LOAD';
+export const COUNTRIES_SEARCH = 'COUNTRIES_SEARCH';
 
 export const PERSONALDETAILS_UPDATE = 'PERSONALDETAILS_UPDATE';

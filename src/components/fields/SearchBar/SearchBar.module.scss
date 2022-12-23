@@ -2,9 +2,11 @@
 
 .search {
     font-family: "Red Hat Display";
+    width: 100%;
     position: relative;
 
     &__input {
+        font-family: inherit;
         border-radius: 15px;
         background-color: global.$input-background;
         padding: 0.75rem 0.9375rem;
@@ -41,6 +43,7 @@
 }
 
 .dataResult {
+    text-align: left;
     position: absolute;
     z-index: 3;
     top: 100%;

@@ -1,6 +1,7 @@
-import { COUNTRIES_LOAD } from './types';
+import { COUNTRIES_LOAD, COUNTRIES_SEARCH } from './types';
 
 const initialState = {
+  searchText: '',
   countries: []
 };
 
@@ -10,6 +11,12 @@ export const countriesReducer = (state = initialState, action) => {
       return {
         ...state,
         countries: action.data
+      };
+    }
+    case COUNTRIES_SEARCH: {
+      return {
+        ...state,
+        searchText: action.searchText
       };
     }
     default:

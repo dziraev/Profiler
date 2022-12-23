@@ -1,0 +1,18 @@
+@use '../../../../static/scss/global';
+
+.selectPhone {
+    display: flex;
+    column-gap: 15px;
+
+    &__select {
+        flex: 1 0 114px;
+    }
+    &__error {
+        box-shadow: 0 0 0 1px global.$input-stroke-error;
+        &:hover {
+            box-shadow: 0 0 0 1px global.$input-stroke-error;
+        }
+    }
+
+}
+

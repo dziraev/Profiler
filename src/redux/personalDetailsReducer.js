@@ -6,7 +6,9 @@ const initialState = {
     surname: '',
     email: '',
     country: '',
-    position: ''
+    position: '',
+    phoneNumber: '',
+    code: ''
   }
 };
 
