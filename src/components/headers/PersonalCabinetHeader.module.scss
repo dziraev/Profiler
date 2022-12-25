@@ -1,10 +1,9 @@
 @use '../../static/scss/global';
 .CabinetHeader {
-    height: 216px;
     width: 100%;
     text-align: center;
     overflow: hidden;
-    padding: 98px 0 0;
+    margin: 98px 0 0;
 
     &__title {
         max-width: 640px;
@@ -19,8 +18,9 @@
         font-weight: 700;
     }
     @media (max-width: 375px) {
-        height: 208.57px;
-        padding: 80.57px 0 50px;
+        margin: 80.57px 0 50px;
+        background: global.$background-main url("../../static/images/background-cabinet-small.png") top / cover no-repeat;
+
         &__title {
             max-width: 302px;
             line-height: 1.32;

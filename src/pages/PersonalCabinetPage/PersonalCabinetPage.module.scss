@@ -48,7 +48,6 @@
         }
         &__header {
             margin: 0%;
-            background: global.$background-main url("../../static/images/background-cabinet-small.png") top / cover no-repeat;
         }
     }
 }
@@ -63,10 +62,10 @@
         position: fixed;
         z-index: 2;
         &__burger {
-
+            cursor: pointer;
         }
         &__photo__icon {
-
+            cursor: pointer;
         }
     }
 }

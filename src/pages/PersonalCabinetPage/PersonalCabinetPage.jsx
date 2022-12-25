@@ -1,14 +1,19 @@
 import React from 'react';
+import { useState } from 'react';
 import NavMenu from '../../components/navigation/NavMenu';
 import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeader';
 import styles from './PersonalCabinetPage.module.scss';
 import { Outlet } from 'react-router-dom';
 
 const PersonalCabinetPage = (props) => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  function openAndCloseMenu(e) {
+    setMenuIsOpen(!menuIsOpen);
+  };
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <div className={styles.header__burger}>
+        <div className={styles.header__burger} onClick={openAndCloseMenu}>
           <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3.75 6.67859H13.75M3.75 15.4286H20M3.75 24.1786H26.25" stroke="#407BFF" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -25,7 +30,7 @@ const PersonalCabinetPage = (props) => {
       <div className={styles.page__background}></div>
       <div className={styles.page__container}>
         <div className={styles.page__sidebar}>
-            <NavMenu />
+            <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} />
         </div>
         <div className={styles.page__content}>
           <header className={styles.page__header}>

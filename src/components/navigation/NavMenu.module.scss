@@ -35,7 +35,9 @@
     flex-direction: column;
     text-align: left;
     height: 100vh;
-
+    &_open__header {
+        display: none;
+    }
     &__logo {
         padding: 0 0 63px;
         width: fit-content;
@@ -80,7 +82,7 @@
         flex-direction: row;
         column-gap: 12px;
         padding: 23px;
-        font-weight: 600;
+        font-weight: 400;
         font-size: 1.25em;
         line-height: 1.32;
         color: global.$text-primary-dark-blue;
@@ -91,12 +93,67 @@
         }
     }
     @media (max-width: 375px) {
+        background: global.$background-main url("../../static/images/background-cabinet-burger.png") bottom / contain no-repeat;
+        width: 100%;
         position: absolute;
+        z-index: 3;
         top: 0;
-        right: 40px;
+        right: 0;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 400ms ease-in;
+        transition: opacity 200ms ease-in;
+        &__logo {
+            display: none;
+        }
+        &__photo {
+            display: none;
+        }
+        &__number {
+            display: none;
+        }
+    }
+}
+
+.sidebar_open.sidebar {
+    @media (max-width: 375px) {
+        visibility: visible;
+        opacity: 1;
+        padding: 9.57px 15px 0;
+        .sidebar {
+            &_open__header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 30px;
+                &_exit {
+                    cursor: pointer;
+                }
+            }
+            &__nav__link {
+                column-gap: 8px;
+                padding: 16.5px 0;
+                font-size: 1em;
+                color: global.$text-primary-dark-blue;
+                background: transparent;
+                border-radius: 0%;
+                & svg {
+                    stroke: global.$text-primary-dark-blue;
+                }
+            }
+        }
+        .active {
+            & .sidebar__nav__link {
+                color: global.$text-primary-blue;
+                & svg {
+                    stroke: global.$text-primary-blue;
+                }
+                &::before {
+                    content: none;
+                }
+                &::after {
+                    content: none;
+                }
+            }
+        }
     }
 }
 
@@ -106,6 +163,7 @@
         color: global.$text-primary-blue;
         border-radius: 15px 0 0 15px;
         color: global.$text-primary-blue;
+        font-weight: 600;
         animation: opacity-animation 500ms ease-out alternate;
         &::after {
             content: '';
@@ -132,5 +190,13 @@
         & svg {
             stroke: global.$text-primary-blue;
         }
+    }
+}
+
+.exit {
+    margin: auto 0 119.5px;
+    &__link {
+        display: flex;
+        column-gap: 8px;
     }
 }
