@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import { useSelector } from 'react-redux';
-import { selectCodeNumber } from './selectors';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesInput from '../../inputs/Input.module.scss';
 import stylesSelect from '../Select.module.scss';
@@ -70,19 +68,8 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
           </svg>
         </div>
       </div>
-      {/*<input*/}
-      {/*  {...props}*/}
-      {/*  {...field}*/}
-      {/*  disabled={disabled}*/}
-      {/*  onBlur={handleBlur}*/}
-      {/*  onFocus={handleFocus}*/}
-      {/*  type='text'*/}
-      {/*  className={`${stylesInput.input} ${*/}
-      {/*    meta.error && meta.touched ? stylesInput.input__error : ''*/}
-      {/*  }`}*/}
-      {/*  placeholder={active ? activeLabel : label}*/}
-      {/*/>*/}
-      {props.children}
+
+      <div className={styles.selectPhone__input}>{props.children}</div>
       {meta.error && (
         <div className={stylesInput.error}>
           {meta.error}
@@ -100,7 +87,7 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
           </svg>
         </div>
       )}
-      <div className={stylesSelect.select__dropdown}>
+      <div className={`${stylesSelect.select__dropdown} ${isVisible ? stylesSelect.display : ''}`}>
         {isVisible &&
           data.map((value) => (
             <div

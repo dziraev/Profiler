@@ -44,10 +44,7 @@
         transform: rotate(180deg);
     }
     &__dropdown {
-        position: absolute;
-        z-index: 3;
-        top: 100%;
-        transform: translateY(15px);
+        display: none;
         max-height: 370px;
         transition: all 0.3s ease 0s;
         padding: 0 10px;
@@ -56,6 +53,12 @@
         border-radius: 15px;
         overflow-y: auto;
         width: 100%;
+        @media (min-width: 376px) {
+            position: absolute;
+            z-index: 3;
+            top: 100%;
+            transform: translateY(15px);
+        }
         &__item {
             padding: 10px;
             cursor: pointer;
@@ -86,5 +89,9 @@
             color: global.$text-primary-blue;
         }
     }
+}
+
+.display {
+    display: block;
 }
 
