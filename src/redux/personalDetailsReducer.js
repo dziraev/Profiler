@@ -1,4 +1,4 @@
-import { PERSONALDETAILS_UPDATE } from './types';
+import { PERSONALDETAILS_UPDATE, PHONECODE_UPDATE } from './types';
 
 const initialState = {
   personalDetails: {
@@ -7,7 +7,7 @@ const initialState = {
     email: '',
     country: '',
     position: '',
-    codeNumber: '',
+    phoneCode: '',
     phoneNumber: ''
   }
 };

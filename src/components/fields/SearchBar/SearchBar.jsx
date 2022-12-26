@@ -6,12 +6,16 @@ import { countriesSearch } from '../../../redux/actions';
 import { filterCountriesByPrefix } from '../../../pages/PersonalDetails/selectors';
 import styles from './SearchBar.module.scss';
 
-const SearchBar = ({ label, activeLabel, ...props }) => {
+export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
   const { filteredCountries, searchText } = useSelector((state) => {
-    const data = state.countriesReducer;
-    const filteredCountries = filterCountriesByPrefix(data.countries, data.searchText);
-    return { filteredCountries, searchText: data.searchText };
+    const countriesReducer = state.countriesReducer;
+    const filteredCountries = filterCountriesByPrefix(
+      countriesReducer.countries,
+      countriesReducer.searchText
+    );
+    return { filteredCountries, searchText: countriesReducer.searchText };
   }, shallowEqual);
+
   const wrapperRef = useRef(null);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
@@ -57,6 +61,13 @@ const SearchBar = ({ label, activeLabel, ...props }) => {
   const handleFocus = (e) => {
     setActive(true);
   };
+
+  const handleClick = (value) => {
+    country.current = value.countryName;
+    setValue(value.countryName);
+    setCountryId(value.id);
+    setDisplay(false);
+  };
   return (
     <div className={styles.search} ref={wrapperRef}>
       <input
@@ -81,13 +92,9 @@ const SearchBar = ({ label, activeLabel, ...props }) => {
               <div
                 className={styles.dataResult__item}
                 key={value.id}
-                onClick={() => {
-                  country.current = value.countryName;
-                  setValue(value.countryName);
-                  setDisplay(false);
-                }}
+                onClick={() => handleClick(value)}
               >
-                {value.countryName}
+                {value?.countryName}
               </div>
             ))}
         </div>
@@ -95,5 +102,3 @@ const SearchBar = ({ label, activeLabel, ...props }) => {
     </div>
   );
 };
-
-export default SearchBar;

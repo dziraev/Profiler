@@ -59,20 +59,7 @@
             top: 100%;
             transform: translateY(15px);
         }
-        &__item {
-            padding: 10px;
-            cursor: pointer;
-            font-weight: 400;
-            font-size: 0.875rem;
-            line-height: 1.357;
-            &:hover {
-                background-color: global.$input-background;
-                border-radius: 7px;
-            }
-            &:active {
-                color: global.$text-primary-blue;
-            }
-        }
+
     }
 
     &__item {

@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import stylesInputPassword from './InputPassword.module.scss';
 import styles from '../Input.module.scss';
 
-const InputPassword = (props) => {
+export const InputPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [active, setActive] = useState(false);
   const [field, meta] = useField(props);
@@ -23,7 +23,9 @@ const InputPassword = (props) => {
         <input
           {...props}
           {...field}
-          className={`${styles.input} ${meta.error && meta.touched && typeof meta.error === "string" ? styles.input__error : ''}`}
+          className={`${styles.input} ${
+            meta.error && meta.touched && typeof meta.error === 'string' ? styles.input__error : ''
+          }`}
           onFocus={handleFocus}
           onBlur={handleBlur}
           type={showPassword ? 'text' : 'password'}

@@ -1,21 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
+import { useSelector } from 'react-redux';
+import { selectPhoneCodes } from '@components/fields';
+import { findCodeByCountryId } from '../../../../utils/findCodeByCountryId';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesInput from '../../inputs/Input.module.scss';
 import stylesSelect from '../Select.module.scss';
 
-const data = [
-  { id: '1', number: '+93' },
-  { id: '2', number: '+35' },
-  { id: '3', number: '+575' }
-];
-
-const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
+export const SelectPhoneNumber = ({ label, activeLabel, disabled, countryId, ...props }) => {
+  const phoneCodes = useSelector(selectPhoneCodes);
   const [field, meta, helper] = useField(props.name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
   const { value } = field;
   const { setValue } = helper;
+
+  console.log(meta.error);
+
+  useEffect(() => {
+    if (countryId) {
+      const code = findCodeByCountryId(phoneCodes, countryId);
+      code ? setValue(code) : setValue(phoneCodes[0]?.code);
+    } else {
+      setValue(phoneCodes[0]?.code);
+    }
+  }, [countryId, phoneCodes]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -29,7 +38,7 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
     }
   }
 
-  const onClickListPosition = (value) => {
+  const onClickListPhoneCodes = (value) => {
     setIsVisible(false);
     setValue(value);
   };
@@ -47,9 +56,7 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
         style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         onClick={() => setIsVisible((prev) => !prev)}
       >
-        <div className={styles.selectPhone__codeNumber}>
-          {value !== '' ? value : data[0].number}
-        </div>
+        <div className={styles.selectPhone__codeNumber}>{value ? value : phoneCodes[0]?.code}</div>
         <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
           <svg
             width='12'
@@ -87,20 +94,22 @@ const SelectPhoneNumber = ({ label, activeLabel, disabled, ...props }) => {
           </svg>
         </div>
       )}
-      <div className={`${stylesSelect.select__dropdown} ${isVisible ? stylesSelect.display : ''}`}>
-        {isVisible &&
-          data.map((value) => (
-            <div
-              className={stylesSelect.select__item}
-              key={value.id}
-              onClick={() => onClickListPosition(value.number)}
-            >
-              {value.number}
-            </div>
-          ))}
-      </div>
+      {isVisible && (
+        <div className={styles.selectPhone__modal}>
+          <div className={styles.selectPhone__dropdown}>
+            <div className={styles.selectPhone__title}>Country</div>
+            {phoneCodes.map((phoneCode) => (
+              <div
+                className={stylesSelect.select__item}
+                key={phoneCode.id}
+                onClick={() => onClickListPhoneCodes(phoneCode.code)}
+              >
+                {phoneCode.code}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
-export default SelectPhoneNumber;
