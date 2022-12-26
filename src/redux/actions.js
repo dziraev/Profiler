@@ -22,7 +22,7 @@ export function countriesLoad() {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://192.168.205.11:8080/api/v1/countries', {
+      const response = await fetch(`${process.env.API_URL}:8080/api/v1/countries`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer_' + token,
