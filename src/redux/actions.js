@@ -3,6 +3,8 @@ import {
   AUTH_OUT,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
+  EDITMODE_OFF,
+  EDITMODE_ON,
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD
@@ -48,6 +50,17 @@ export function countriesLoad() {
   };
 }
 
+export function editModeOn() {
+  return {
+    type: EDITMODE_ON
+  };
+}
+export function editModeOff() {
+  return {
+    type: EDITMODE_OFF
+  };
+}
+
 export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
   return {
     type: PHONECODE_AND_ID_UPDATE,
@@ -59,7 +72,7 @@ export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/codes`);
+      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes`);
       const jsonData = await response.json();
       dispatch({
         type: PHONECODES_LOAD,

@@ -4,12 +4,14 @@ import { authReducer } from './authReducer';
 import { countriesReducer } from './countriesReducer';
 import { personalDetailsReducer } from './personalDetailsReducer';
 import { phoneCodesReducer } from './phoneCodesReducer';
+import { editModeReducer } from './editModeReducer';
 
 let combinedReducers = combineReducers({
   authReducer,
   countriesReducer,
   phoneCodesReducer,
-  personalDetailsReducer
+  personalDetailsReducer,
+  editModeReducer
 });
 
 const store = createStore(

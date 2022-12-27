@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validateDetails } from '../../utils/validators/validateDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { countriesLoad, personalDetailsUpdate, phoneCodesLoad } from '../../redux/actions';
+import {
+  countriesLoad,
+  editModeOff,
+  editModeOn,
+  personalDetailsUpdate,
+  phoneCodesLoad
+} from '../../redux/actions';
 import { Input } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, Select, SelectPhoneNumber } from '@components/fields';
@@ -12,13 +18,12 @@ import styles from './PersonalDetails.module.scss';
 const PersonalDetails = () => {
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
+  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const [countryId, setCountryId] = useState(null);
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
   }, []);
-
-  const [isEdit, setIsEdit] = useState(false);
 
   return (
     <section className={styles.wrapper}>
@@ -33,10 +38,10 @@ const PersonalDetails = () => {
           }
 
           dispatch(personalDetailsUpdate(values));
-          setIsEdit(false);
+          dispatch(editModeOff());
         }}
         onReset={() => {
-          setIsEdit(false);
+          dispatch(editModeOff());
         }}
         validate={validateDetails}
       >
@@ -113,7 +118,7 @@ const PersonalDetails = () => {
               <div className={styles.form__buttons}>
                 {!isEdit && (
                   <div className={styles.form__button}>
-                    <Button type='button' onClick={() => setIsEdit(true)}>
+                    <Button type='button' onClick={() => dispatch(editModeOn())}>
                       Edit
                     </Button>
                   </div>
