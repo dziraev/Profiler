@@ -58,10 +58,9 @@ export const Select = ({ label, disabled, data = [], setFieldValue, ...props }) 
           </svg>
         </div>
       </div>
-
-      <div className={styles.select__dropdown}>
-        {isVisible &&
-          data.map((value) => (
+      {isVisible && (
+        <div className={styles.select__dropdown}>
+          {data.map((value) => (
             <div
               className={styles.select__item}
               key={value.id}
@@ -70,7 +69,8 @@ export const Select = ({ label, disabled, data = [], setFieldValue, ...props }) 
               {value.position}
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

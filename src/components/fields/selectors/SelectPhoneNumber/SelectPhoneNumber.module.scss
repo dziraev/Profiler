@@ -9,6 +9,11 @@
     }
     &__select {
         flex: 0 0 114px;
+        @media (max-width: 767.98px){
+            div &:not(:last-child) {
+                margin-bottom: 0;
+            }
+        }
     }
     &__input {
         width: 100%;
@@ -99,6 +104,5 @@
         @media (max-width: 767.98px) {
             padding: 0 10px;
         }
-
     }
 }
