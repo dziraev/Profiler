@@ -3,6 +3,7 @@ import styles from './NavMenu.module.scss';
 import logo from '../../static/images/menu-logo.svg';
 import mobilelogo from '../../static/images/menu-logo-mobile.svg';
 import { NavLink } from 'react-router-dom';
+import Logout from '../../components/links/Logout';
 
 const NavMenu = (props) => {
   const [studentNumber, setStudentNumber] = useState('123455');
@@ -28,7 +29,7 @@ const NavMenu = (props) => {
         <p className={styles.sidebar__photo__title}>Add your photo</p>
       </div>
       <div className={styles.sidebar__number}>
-        <p>Student number <span className={styles.sidebar__number__id}>{studentNumber}</span></p>
+        <p>Student’s number<span className={styles.sidebar__number__id}>{studentNumber}</span></p>
       </div>
       <nav className={styles.sidebar__nav}>
         <ul>
@@ -57,18 +58,7 @@ const NavMenu = (props) => {
         </ul>
       </nav>
       <div className={styles.exit}>
-        <NavLink to='/auth'>
-          <div className={styles.exit__link}>
-            <div className={styles.exit__icon}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.1 16.44C14.79 20.04 12.94 21.51 8.88998 21.51L8.75998 21.51C4.28998 21.51 2.49998 19.72 2.49998 15.25L2.49998 8.73001C2.49998 4.26001 4.28998 2.47001 8.75998 2.47001L8.88998 2.47001C12.91 2.47001 14.76 3.92001 15.09 7.46001" stroke="#25225D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M9 12L20.38 12" stroke="#25225D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M18.15 15.35L21.5 12L18.15 8.64997" stroke="#25225D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <p>Log out</p>
-          </div>
-        </NavLink>
+        <Logout />
       </div>
     </div>
   );

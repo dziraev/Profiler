@@ -17,9 +17,17 @@
         color: global.$text-primary-blue;
         font-weight: 700;
     }
-    @media (max-width: 375px) {
+    @media (max-width: 1439.98px) {
+        margin: 40.69px 0 0;
+        &__title {
+            max-width: 346px;
+            line-height: 1.32;
+            font-size: 1.25em;
+        }
+    }
+    @media (max-width: 767.98px) {
         margin: 80.57px 0 50px;
-        background: global.$background-main url("../../static/images/background-cabinet-small.png") top / cover no-repeat;
+        background: global.$background-main url("../../static/images/background-personal-cabinet.png") center / cover no-repeat;
 
         &__title {
             max-width: 302px;

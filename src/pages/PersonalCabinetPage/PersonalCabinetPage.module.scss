@@ -2,15 +2,14 @@
 .page {
     min-height: 100vh;
     text-align: center;
-    overflow: hidden;
     
     &__background {
         position: absolute;
         z-index: -1;
-        margin: 130px 0 91.45px;
+        margin: 126px 0 91.45px;
         width: 100vw;
-        height: 216px;
-        background: global.$background-main url("../../static/images/background-cabinet.png") center / cover no-repeat;
+        height: 220px;
+        background: global.$background-main url("../../static/images/background-personal-cabinet.png") center / cover no-repeat;
     }
     &__container {
         margin: 0 auto;
@@ -24,21 +23,39 @@
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
-        width: 100%;
+        width: 75%;
     }
     &__header {
-        margin: 130px 0 91.45px;
+        margin: 38px 0 91.45px;
+        height: 216px;
     }
     &__main {
-        margin: auto;
+        margin: 0 auto;
     }
     &__sidebar {
-        flex-basis: 358px;
+        flex-basis: 25%;
     }
-    @media (max-width: 375px) {
-
+    @media (max-width: 1439.98px) {
+        &__background {
+            margin: 52px 0 44px;
+        }
+        &__sidebar {
+            flex-basis: 32%;
+        }
+        &__content {
+            width: 68%;
+        }
+        &__header {
+            margin: 52px 0 44px;
+            height: 126px;
+        }
+    }
+    @media (max-width: 767.98px) {
         &__container {
             display: block;
+        }
+        &__content {
+            width: 100%;
         }
         &__sidebar {
             width: 100%;
@@ -47,13 +64,14 @@
             display: none;
         }
         &__header {
-            margin: 0%;
+            margin: 0;
+            height: fit-content;
         }
     }
 }
 .header {
     display: none;
-    @media (max-width: 375px) {
+    @media (max-width: 767.98px) {
         display: flex;
         width: 100%;
         justify-content: space-between;
@@ -61,11 +79,25 @@
         padding: 20px 15px 0 18.75px;
         position: fixed;
         z-index: 2;
+        backdrop-filter: blur(2px);
+        background: rgba(255, 255, 255, 0.1);
         &__burger {
             cursor: pointer;
         }
         &__photo__icon {
             cursor: pointer;
         }
+    }
+}
+.exit {
+    align-self: flex-end;
+    margin: 66px 112px 0 0;
+    font-size: 1.25em;
+    line-height: 1.32;
+    @media (max-width: 1439.98px) {
+        margin: 46px 32px 0 0;
+    }
+    @media (max-width: 767.98px) {
+        display: none;
     }
 }

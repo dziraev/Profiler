@@ -4,6 +4,7 @@ import NavMenu from '../../components/navigation/NavMenu';
 import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeader';
 import styles from './PersonalCabinetPage.module.scss';
 import { Outlet } from 'react-router-dom';
+import Logout from '../../components/links/Logout';
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -33,6 +34,9 @@ const PersonalCabinetPage = (props) => {
             <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} />
         </div>
         <div className={styles.page__content}>
+          <div className={styles.exit}>
+            <Logout />
+          </div>
           <header className={styles.page__header}>
             <PersonalCabinetHeader />
           </header>
