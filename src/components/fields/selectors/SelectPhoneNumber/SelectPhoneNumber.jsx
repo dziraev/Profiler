@@ -1,13 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
-import { findCodeByCountryId } from '../../../../utils/findCodeByCountryId';
+import { findPhoneCodeByCountryId } from '../../../../utils/findPhoneCodeByCountryId';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesInput from '../../inputs/Input.module.scss';
 import stylesSelect from '../Select.module.scss';
+import { phoneCodesAndIdUpdate } from '../../../../redux/actions';
 
-export const SelectPhoneNumber = ({ label, activeLabel, disabled, countryId, ...props }) => {
+export const SelectPhoneNumber = ({
+  label,
+  activeLabel,
+  disabled,
+  countryId,
+  setFieldValue,
+  ...props
+}) => {
+  const dispatch = useDispatch();
   const phoneCodes = useSelector(selectPhoneCodes);
   const [field, meta, helper] = useField(props.name);
   const [isVisible, setIsVisible] = useState(false);
@@ -15,14 +24,14 @@ export const SelectPhoneNumber = ({ label, activeLabel, disabled, countryId, ...
   const { value } = field;
   const { setValue } = helper;
 
-  console.log(meta.error);
-
   useEffect(() => {
-    if (countryId) {
-      const code = findCodeByCountryId(phoneCodes, countryId);
-      code ? setValue(code) : setValue(phoneCodes[0]?.code);
-    } else {
-      setValue(phoneCodes[0]?.code);
+    const phoneCode = findPhoneCodeByCountryId(phoneCodes, countryId);
+    if (phoneCode) {
+      setValue(phoneCode.code);
+      setFieldValue('phoneCodeId', phoneCode.id);
+    }
+    if (!value && phoneCodes.length) {
+      dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
     }
   }, [countryId, phoneCodes]);
 
@@ -40,7 +49,8 @@ export const SelectPhoneNumber = ({ label, activeLabel, disabled, countryId, ...
 
   const onClickListPhoneCodes = (value) => {
     setIsVisible(false);
-    setValue(value);
+    setValue(value.code);
+    setFieldValue('phoneCodeId', value.id);
   };
 
   return (
@@ -56,7 +66,7 @@ export const SelectPhoneNumber = ({ label, activeLabel, disabled, countryId, ...
         style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         onClick={() => setIsVisible((prev) => !prev)}
       >
-        <div className={styles.selectPhone__codeNumber}>{value ? value : phoneCodes[0]?.code}</div>
+        <div className={styles.selectPhone__codeNumber}>{value}</div>
         <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
           <svg
             width='12'
@@ -100,11 +110,14 @@ export const SelectPhoneNumber = ({ label, activeLabel, disabled, countryId, ...
             <div className={styles.selectPhone__title}>Country</div>
             {phoneCodes.map((phoneCode) => (
               <div
-                className={stylesSelect.select__item}
+                className={styles.selectPhone__item}
                 key={phoneCode.id}
-                onClick={() => onClickListPhoneCodes(phoneCode.code)}
+                onClick={() => onClickListPhoneCodes(phoneCode)}
               >
-                {phoneCode.code}
+                <div className={styles.selectPhone__countryName}>
+                  {phoneCode.country.countryName}
+                </div>
+                <div className={styles.selectPhone__countryCode}>{phoneCode.code}</div>
               </div>
             ))}
           </div>

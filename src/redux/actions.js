@@ -4,6 +4,7 @@ import {
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
   PERSONALDETAILS_UPDATE,
+  PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD
 } from './types';
 
@@ -34,7 +35,8 @@ export function countriesLoad() {
         { id: 14, countryName: 'Belarus' },
         { id: 1, countryName: 'Afganistan' },
         { id: 142, countryName: 'Russia' },
-        { id: 5444, countryName: 'SOSOSO' }
+        { id: 5444, countryName: 'Ukraine' },
+        { id: 544, countryName: 'India' }
       ];
       dispatch({
         type: COUNTRIES_LOAD,
@@ -46,12 +48,18 @@ export function countriesLoad() {
   };
 }
 
+export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
+  return {
+    type: PHONECODE_AND_ID_UPDATE,
+    phoneCode,
+    phoneCodeId
+  };
+}
+
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
-      const response = await fetch(
-        `https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phone_codes`
-      );
+      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/codes`);
       const jsonData = await response.json();
       dispatch({
         type: PHONECODES_LOAD,

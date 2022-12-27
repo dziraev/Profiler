@@ -24,6 +24,9 @@
         &:hover, &:focus {
             box-shadow: 0 0 0 1px global.$input-stroke-active;
         }
+        @media (max-width: 767.98px) {
+            margin-bottom: 10px;
+        }
     }
     &__placeholder {
         font-size: 1rem;
@@ -44,7 +47,6 @@
         transform: rotate(180deg);
     }
     &__dropdown {
-        display: none;
         max-height: 370px;
         transition: all 0.3s ease 0s;
         padding: 0 10px;
@@ -53,13 +55,12 @@
         border-radius: 15px;
         overflow-y: auto;
         width: 100%;
-        @media (min-width: 376px) {
+        @media (min-width: 767.98px) {
             position: absolute;
             z-index: 3;
             top: 100%;
             transform: translateY(15px);
         }
-
     }
 
     &__item {
@@ -78,7 +79,4 @@
     }
 }
 
-.display {
-    display: block;
-}
 

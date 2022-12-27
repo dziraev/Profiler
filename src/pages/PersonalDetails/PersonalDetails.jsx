@@ -31,6 +31,7 @@ const PersonalDetails = () => {
           for (let key in values) {
             if (typeof values[key] === 'string') values[key] = values[key].trim();
           }
+
           dispatch(personalDetailsUpdate(values));
           setIsEdit(false);
         }}
@@ -40,7 +41,7 @@ const PersonalDetails = () => {
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty } = formik;
+          const { dirty, setFieldValue } = formik;
 
           return (
             <Form className={styles.form}>
@@ -72,6 +73,7 @@ const PersonalDetails = () => {
                     autoComplete={'off'}
                     disabled={!isEdit}
                     setCountryId={setCountryId}
+                    setFieldValue={setFieldValue}
                   />
                 </div>
                 <div className={`${styles.form__input} ${styles['order-3']}`}>
@@ -85,14 +87,14 @@ const PersonalDetails = () => {
                 <div className={`${styles.form__input} ${styles['order-2']}`}>
                   <SelectPhoneNumber
                     name='phoneCode'
-                    maxLength={25}
                     disabled={!isEdit}
                     countryId={countryId}
+                    setFieldValue={setFieldValue}
                   >
                     <Input
-                      name='phoneNumber'
+                      name='cellPhone'
                       label='Cell phone number'
-                      activeLabel='Enter cell phone number'
+                      activeLabel='Choose your code and enter cell phone number'
                       maxLength={25}
                       disabled={!isEdit}
                       showError={false}
@@ -100,7 +102,12 @@ const PersonalDetails = () => {
                   </SelectPhoneNumber>
                 </div>
                 <div className={`${styles.form__input} ${styles['order-1']}`}>
-                  <Select name='position' label='Position' disabled={!isEdit} />
+                  <Select
+                    name='position'
+                    label='Position'
+                    disabled={!isEdit}
+                    setFieldValue={setFieldValue}
+                  />
                 </div>
               </div>
               <div className={styles.form__buttons}>

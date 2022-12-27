@@ -6,7 +6,7 @@ import { countriesSearch } from '../../../redux/actions';
 import { filterCountriesByPrefix } from '../../../pages/PersonalDetails/selectors';
 import styles from './SearchBar.module.scss';
 
-export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
+export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...props }) => {
   const { filteredCountries, searchText } = useSelector((state) => {
     const countriesReducer = state.countriesReducer;
     const filteredCountries = filterCountriesByPrefix(
@@ -21,6 +21,7 @@ export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
   const [active, setActive] = useState(false);
   const [display, setDisplay] = useState(false);
   const [field, meta, helpers] = useField(props);
+  const [valueInput, setValueInput] = useState(field.value);
   const country = useRef(field.value);
   const { setValue } = helpers;
 
@@ -32,7 +33,7 @@ export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
   function handleClickOutside(e) {
     const { current } = wrapperRef;
     if (current && !current.contains(e.target) && display) {
-      setValue(country.current);
+      setValueInput(country.current);
       setDisplay(false);
     }
   }
@@ -49,22 +50,26 @@ export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
   );
 
   const handleChange = (e) => {
-    field.onChange(e);
+    setValueInput(e.target.value);
     updateSearchValue(e.target.value);
   };
 
   const handleBlur = (e) => {
     field.onBlur(e);
     setActive(false);
+    updateSearchValue('');
   };
 
   const handleFocus = (e) => {
     setActive(true);
+    setDisplay(true);
   };
 
   const handleClick = (value) => {
     country.current = value.countryName;
     setValue(value.countryName);
+    setValueInput(value.countryName);
+    setFieldValue('countryId', value.id);
     setCountryId(value.id);
     setDisplay(false);
   };
@@ -72,7 +77,7 @@ export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
     <div className={styles.search} ref={wrapperRef}>
       <input
         {...props}
-        {...field}
+        value={valueInput}
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
@@ -81,13 +86,11 @@ export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
         placeholder={active ? activeLabel : label}
         onClick={() => setDisplay(true)}
       />
-      {display && (
+      {display && searchText.length > 0 && (
         <div className={styles.dataResult}>
-          {filteredCountries.length === 0 && searchText.length > 0 && (
-            <div className={styles.dataResult__notFound}>No such countries found</div>
-          )}
-          {searchText.length > 0 &&
-            filteredCountries.length > 0 &&
+          {filteredCountries.length === 0 ? (
+            <div className={styles.dataResult__notFound}>Country no found</div>
+          ) : (
             filteredCountries.map((value) => (
               <div
                 className={styles.dataResult__item}
@@ -96,7 +99,8 @@ export const SearchBar = ({ label, activeLabel, setCountryId, ...props }) => {
               >
                 {value?.countryName}
               </div>
-            ))}
+            ))
+          )}
         </div>
       )}
     </div>

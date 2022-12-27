@@ -10,12 +10,12 @@ export const validateDetails = (values) => {
 
   if (!checkIsValidName(values.name.trim()) && values.name) {
     errors.name =
-      'The user name is entered incorrectly, it is allowed to use Latin letters, dash and spaces.';
+      'The user name is was entered incorrectly, it is allowed to use Latin letters, dashes and spaces.';
   }
 
   if (!checkIsValidName(values.surname.trim()) && values.surname) {
     errors.surname =
-      'The surname of the user was entered incorrectly, it is allowed to use Latin letters, dash and spaces.';
+      'The surname of the user was entered incorrectly, it is allowed to use Latin letters, dashes and spaces.';
   }
 
   if (!emailValidator(values.email.trim()) && values.email) {
@@ -23,10 +23,10 @@ export const validateDetails = (values) => {
       'The email of the user was entered incorrectly. Email address  must have four parts Recipient name, @ symbol, Domain name, Top-level domain';
   }
 
-  if (!/^\d+$/.test(values.phoneNumber) && values.phoneNumber) {
-    errors.phoneNumber = true;
+  if (!/^\d+$/.test(values.cellPhone) && values.cellPhone) {
+    errors.cellPhone = true;
     errors.phoneCode =
-      "The user's phone number was entered incorrectly. It is not allowed to use a dash and a space between numbers.";
+      "The user's phone number was entered incorrectly. It is not allowed to use a dashes and a spaces between numbers.";
   }
 
   return errors;

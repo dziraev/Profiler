@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import styles from '../Select.module.scss';
 
-export const Select = ({ label, disabled, data = [], ...props }) => {
+export const Select = ({ label, disabled, data = [], setFieldValue, ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [field, meta, helpers] = useField(props.name);
   const positionRef = useRef(null);
@@ -23,6 +23,7 @@ export const Select = ({ label, disabled, data = [], ...props }) => {
 
   const onClickListPosition = (value) => {
     setIsVisible(false);
+    setFieldValue('positionId', value.id);
     setValue(value);
   };
 
@@ -58,7 +59,7 @@ export const Select = ({ label, disabled, data = [], ...props }) => {
         </div>
       </div>
 
-      <div className={`${styles.select__dropdown} ${isVisible ? styles.display : ''}`}>
+      <div className={styles.select__dropdown}>
         {isVisible &&
           data.map((value) => (
             <div

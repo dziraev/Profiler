@@ -1,4 +1,4 @@
-export const findCodeByCountryId = (phoneCodes, countryId) => {
+export const findPhoneCodeByCountryId = (phoneCodes, countryId) => {
   const foundPhoneCode = phoneCodes.find((phoneCode) => phoneCode.country.id === countryId);
-  return foundPhoneCode?.code;
+  return foundPhoneCode;
 };
