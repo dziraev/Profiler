@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validateDetails } from '../../utils/validators/validateDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { countriesLoad, personalDetailsUpdate } from '../../redux/actions';
-import Input from '../../components/fields/inputs/Input/Input';
-import Button from '../../components/buttons/Button/Button';
-import CancelButton from '../../components/buttons/CancelButton/CancelButton';
-import SearchBar from '../../components/fields/SearchBar/SearchBar';
-import Select from '../../components/fields/selectors/Select/Select';
+import { countriesLoad, personalDetailsUpdate, phoneCodesLoad } from '../../redux/actions';
+import { Input } from '@components/fields';
+import { Button, CancelButton } from '@components/buttons';
+import { SearchBar, Select, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
-import SelectPhoneNumber from '../../components/fields/selectors/SelectPhoneNumber/SelectPhoneNumber';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = () => {
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
+  const [countryId, setCountryId] = useState(null);
   useEffect(() => {
     dispatch(countriesLoad());
+    dispatch(phoneCodesLoad());
   }, []);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -64,7 +63,7 @@ const PersonalDetails = () => {
                     disabled={!isEdit}
                   />
                 </div>
-                <div className={styles.form__input}>
+                <div className={`${styles.form__input} ${styles['order-2']}`}>
                   <SearchBar
                     name='country'
                     label='Country'
@@ -72,9 +71,10 @@ const PersonalDetails = () => {
                     activeLabel='Enter your location'
                     autoComplete={'off'}
                     disabled={!isEdit}
+                    setCountryId={setCountryId}
                   />
                 </div>
-                <div className={styles.form__input}>
+                <div className={`${styles.form__input} ${styles['order-3']}`}>
                   <Input
                     name='email'
                     label='Email'
@@ -82,8 +82,13 @@ const PersonalDetails = () => {
                     disabled={!isEdit}
                   />
                 </div>
-                <div className={styles.form__input}>
-                  <SelectPhoneNumber name='codeNumber' maxLength={25} disabled={!isEdit}>
+                <div className={`${styles.form__input} ${styles['order-2']}`}>
+                  <SelectPhoneNumber
+                    name='phoneCode'
+                    maxLength={25}
+                    disabled={!isEdit}
+                    countryId={countryId}
+                  >
                     <Input
                       name='phoneNumber'
                       label='Cell phone number'
@@ -94,7 +99,7 @@ const PersonalDetails = () => {
                     />
                   </SelectPhoneNumber>
                 </div>
-                <div className={styles.form__input}>
+                <div className={`${styles.form__input} ${styles['order-1']}`}>
                   <Select name='position' label='Position' disabled={!isEdit} />
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../LoginPage/LoginPage.module.scss';
 import { NavLink } from 'react-router-dom';
-import Button from '../../components/buttons/Button/Button';
+import { Button } from '@components/buttons';
 
 const NotFoundPage = () => {
   return (

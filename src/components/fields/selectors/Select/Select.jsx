@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import styles from '../Select.module.scss';
 
-const Select = ({ label, disabled, data = [], ...props }) => {
+export const Select = ({ label, disabled, data = [], ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [field, meta, helpers] = useField(props.name);
   const positionRef = useRef(null);
@@ -58,7 +58,7 @@ const Select = ({ label, disabled, data = [], ...props }) => {
         </div>
       </div>
 
-      <div className={styles.select__dropdown}>
+      <div className={`${styles.select__dropdown} ${isVisible ? styles.display : ''}`}>
         {isVisible &&
           data.map((value) => (
             <div
@@ -73,5 +73,3 @@ const Select = ({ label, disabled, data = [], ...props }) => {
     </div>
   );
 };
-
-export default Select;

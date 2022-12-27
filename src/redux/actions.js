@@ -3,9 +3,9 @@ import {
   AUTH_OUT,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
-  PERSONALDETAILS_UPDATE
+  PERSONALDETAILS_UPDATE,
+  PHONECODES_LOAD
 } from './types';
-import { API_URL } from '../http/api';
 
 export function authIn() {
   return {
@@ -21,17 +21,40 @@ export function authOut() {
 export function countriesLoad() {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}:8080/api/v1/countries`, {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer_' + token,
-          'Content-Type': 'application/json'
-        }
-      });
-      const jsonData = await response.json();
+      // const token = localStorage.getItem('token');
+      // const response = await fetch(`${process.env.API_URL}:8080/api/v1/countries`, {
+      //   method: 'GET',
+      //   headers: {
+      //     Authorization: 'Bearer_' + token,
+      //     'Content-Type': 'application/json'
+      //   }
+      // });
+      // const jsonData = await response.json();
+      const jsonData = [
+        { id: 14, countryName: 'Belarus' },
+        { id: 1, countryName: 'Afganistan' },
+        { id: 142, countryName: 'Russia' },
+        { id: 5444, countryName: 'SOSOSO' }
+      ];
       dispatch({
         type: COUNTRIES_LOAD,
+        data: jsonData
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function phoneCodesLoad() {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phone_codes`
+      );
+      const jsonData = await response.json();
+      dispatch({
+        type: PHONECODES_LOAD,
         data: jsonData
       });
     } catch (e) {
