@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import NavMenu from '../../components/navigation/NavMenu';
 import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeader';
 import styles from './PersonalCabinetPage.module.scss';
@@ -8,11 +9,17 @@ import Logout from '../../components/links/Logout';
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [navLinkIsClicked, setNavLinkIsClicked] = useState(false);
+  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   function openAndCloseMenu(e) {
     setMenuIsOpen(!menuIsOpen);
   };
+  function showModal(e) {
+    setNavLinkIsClicked(true);
+  }
   return (
     <div className={styles.page}>
+      {/*!isEdit && navLinkIsClicked ? <div>Modal window</div> : ''*/}
       <div className={styles.header}>
         <div className={styles.header__burger} onClick={openAndCloseMenu}>
           <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +38,7 @@ const PersonalCabinetPage = (props) => {
       <div className={styles.page__background}></div>
       <div className={styles.page__container}>
         <div className={styles.page__sidebar}>
-            <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} />
+            <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} showModal={showModal} />
         </div>
         <div className={styles.page__content}>
           <div className={styles.exit}>
