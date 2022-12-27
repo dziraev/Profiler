@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import styles from './Logout.module.scss';
-import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authOut } from '../../redux/actions';
+import styles from './Logout.module.scss';
 
 const Logout = (props) => {
   const dispatch = useDispatch();
   function logout(e) {
     localStorage.removeItem('token');
     dispatch(authOut());
-    console.log('i work');
   }
   return (
     <div className={styles.logout} onClick={logout}>
