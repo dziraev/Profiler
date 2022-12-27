@@ -1,0 +1,117 @@
+@use '../../static/scss/global';
+
+.modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 50;
+    &__bcg{
+        width: 636px;
+        min-height: 296px;
+        background: #FFFFFF;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    &__content{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        font-size: 25px;
+        line-height: 33px;
+        color: global.$text-primary-dark-blue;
+        text-align: center;
+        min-height: 188px;
+        max-width: 416px;
+        &__close{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            &::after, &::before{
+                content: '';
+                position: absolute;
+                top: 10px;
+                display: block;
+                width: 25px;
+                height: 3px;
+                border-radius: 5px;
+                background-color: global.$text-primary-dark-blue;
+            }
+            &::before{
+                transform: rotate(45deg);
+            }
+            &::after{
+                transform: rotate(-45deg);
+            }
+        }
+        &__titles{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80px;
+        }
+        &__title{
+            font-weight: 500;
+        }
+        &__subtitle{
+            margin-top: 14px;
+            font-weight: 400;
+        }
+        &__btns{
+            display: flex;
+            flex-direction: row;
+            width: 416px;
+            min-height: 58px;
+            justify-content: space-between;
+            &__cancel{
+                width: 40%;
+            }
+            &__again{
+                width: 40%;
+            }
+        }
+    }
+    @media (max-width: 375px) {
+        &__bcg{
+            width: 365px;
+            min-height: 175px;
+        }
+        &__content{
+            font-size: 16px;
+            line-height: 21px;
+            min-height: 100px;
+            max-width: 313px;
+            &__close{
+                position: absolute;
+                top: 5px;
+                right: 10px;
+                width: 24px;
+                height: 24px;
+                &::after, &::before{
+                    width: 19px;
+                    height: 2px;
+                }
+            }
+            &__titles{
+                min-height: 100px;
+            }
+            &__btns{
+                width: 345px;
+                min-height: 58px;
+                justify-content: space-around;
+            }
+        }
+    }
+}
