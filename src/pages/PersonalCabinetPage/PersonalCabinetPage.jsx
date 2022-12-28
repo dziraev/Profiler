@@ -6,6 +6,7 @@ import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeade
 import styles from './PersonalCabinetPage.module.scss';
 import { Outlet } from 'react-router-dom';
 import Logout from '../../components/links/Logout';
+import { PopUpSave } from '../../components/popup/save/PopUpSave';
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -17,9 +18,14 @@ const PersonalCabinetPage = (props) => {
   function showModal(e) {
     setNavLinkIsClicked(true);
   }
+  function closeModal(e) {
+    setNavLinkIsClicked(false);
+  }
   return (
     <div className={styles.page}>
-      {/*!isEdit && navLinkIsClicked ? <div>Modal window</div> : ''*/}
+      {isEdit && navLinkIsClicked ?
+        <PopUpSave close={closeModal}>Do you want to save the changes in Personal details?</PopUpSave>
+      : ''}
       <div className={styles.header}>
         <div className={styles.header__burger} onClick={openAndCloseMenu}>
           <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
