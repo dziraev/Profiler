@@ -24,11 +24,30 @@ export function authOut() {
   };
 }
 
+export function editModeOn() {
+  return {
+    type: EDITMODE_ON
+  };
+}
+
+export function editModeOff() {
+  return {
+    type: EDITMODE_OFF
+  };
+}
+
 export function countriesLoad() {
   return async (dispatch) => {
     try {
+      // const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/countries`);
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/countries`);
+      const response = await fetch(`${process.env.API_URL}:8080/api/v1/countries`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer_' + token,
+          'Content-Type': 'application/json'
+        }
+      });
       const jsonData = await response.json();
       dispatch({
         type: COUNTRIES_LOAD,
@@ -44,18 +63,6 @@ export function countriesSearch(text) {
   return {
     type: COUNTRIES_SEARCH,
     searchText: text
-  };
-}
-
-export function editModeOn() {
-  return {
-    type: EDITMODE_ON
-  };
-}
-
-export function editModeOff() {
-  return {
-    type: EDITMODE_OFF
   };
 }
 
@@ -76,8 +83,15 @@ export function phoneCodesCountryFlagUpdate(countryFlag) {
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
+      // const response = await fetch('https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes);
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes`);
+      const response = await fetch(`${process.env.API_URL}:8080/api/v1/phonecodes`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer_' + token,
+          'Content-Type': 'application/json'
+        }
+      });
       const jsonData = await response.json();
       dispatch({
         type: PHONECODES_LOAD,
@@ -92,8 +106,15 @@ export function phoneCodesLoad() {
 export function positionsLoad() {
   return async (dispatch) => {
     try {
+      // const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/positions`);
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/positions`);
+      const response = await fetch(`${process.env.API_URL}:8080/api/v1/positions`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer_' + token,
+          'Content-Type': 'application/json'
+        }
+      });
       const jsonData = await response.json();
       dispatch({
         type: POSITIONS_LOAD,
