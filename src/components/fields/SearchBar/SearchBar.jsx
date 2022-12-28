@@ -21,7 +21,6 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   const [active, setActive] = useState(false);
   const [display, setDisplay] = useState(false);
   const [field, meta, helpers] = useField(props);
-  const [valueInput, setValueInput] = useState(field.value);
   const country = useRef(field.value);
   const { setValue } = helpers;
 
@@ -32,9 +31,13 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
 
   function handleClickOutside(e) {
     const { current } = wrapperRef;
+
     if (current && !current.contains(e.target) && display) {
-      setValueInput(country.current);
+      setValue(country.current);
       setDisplay(false);
+    }
+    if (e.target.closest('button[type=reset]')) {
+      country.current = '';
     }
   }
 
@@ -50,13 +53,14 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   );
 
   const handleChange = (e) => {
-    setValueInput(e.target.value);
+    field.onChange(e);
     updateSearchValue(e.target.value);
   };
 
   const handleBlur = (e) => {
     field.onBlur(e);
     setActive(false);
+    setValue(country.current);
     updateSearchValue('');
   };
 
@@ -68,7 +72,6 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   const handleClick = (value) => {
     country.current = value.countryName;
     setValue(value.countryName);
-    setValueInput(value.countryName);
     setFieldValue('countryId', value.id);
     setCountryId(value.id);
     setDisplay(false);
@@ -77,7 +80,7 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
     <div className={styles.search} ref={wrapperRef}>
       <input
         {...props}
-        value={valueInput}
+        {...field}
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}

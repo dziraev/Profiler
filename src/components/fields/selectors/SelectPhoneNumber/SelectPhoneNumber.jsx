@@ -3,10 +3,10 @@ import { useField } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
 import { findPhoneCodeByCountryId } from '../../../../utils/findPhoneCodeByCountryId';
+import { phoneCodesAndIdUpdate, phoneCodesCountryFlagUpdate } from '../../../../redux/actions';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesInput from '../../inputs/Input.module.scss';
 import stylesSelect from '../Select.module.scss';
-import { phoneCodesAndIdUpdate } from '../../../../redux/actions';
 
 export const SelectPhoneNumber = ({
   label,
@@ -17,7 +17,7 @@ export const SelectPhoneNumber = ({
   ...props
 }) => {
   const dispatch = useDispatch();
-  const phoneCodes = useSelector(selectPhoneCodes);
+  const { phoneCodes, countryFlag } = useSelector(selectPhoneCodes);
   const [field, meta, helper] = useField(props.name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
@@ -29,9 +29,11 @@ export const SelectPhoneNumber = ({
     if (phoneCode) {
       setValue(phoneCode.code);
       setFieldValue('phoneCodeId', phoneCode.id);
+      dispatch(phoneCodesCountryFlagUpdate(phoneCode.country.countryName));
     }
     if (!value && phoneCodes.length) {
       dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
+      dispatch(phoneCodesCountryFlagUpdate(phoneCodes[0].country.countryName));
     }
   }, [countryId, phoneCodes]);
 
@@ -50,6 +52,7 @@ export const SelectPhoneNumber = ({
   const onClickListPhoneCodes = (value) => {
     setIsVisible(false);
     setValue(value.code);
+    dispatch(phoneCodesCountryFlagUpdate(value.country.countryName));
     setFieldValue('phoneCodeId', value.id);
   };
 
@@ -60,27 +63,30 @@ export const SelectPhoneNumber = ({
       style={{ cursor: disabled ? 'no-drop' : 'pointer' }}
     >
       <div
-        className={`${stylesSelect.select__input} ${styles.selectPhone__select} ${
-          meta.error ? styles.selectPhone__error : ''
-        }`}
+        className={`${styles.selectPhone__select} ${meta.error ? styles.selectPhone__error : ''}`}
         style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         onClick={() => setIsVisible((prev) => !prev)}
       >
-        <div className={styles.selectPhone__codeNumber}>{value}</div>
+        <div className={styles.selectPhone__phoneCode}>
+          {countryFlag && (
+            <img
+              src={require(`../../../../static/images/countryFlags/${countryFlag}.svg`)}
+              alt='flag'
+            />
+          )}
+          {value}
+        </div>
         <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
           <svg
-            width='12'
-            height='8'
-            viewBox='0 0 12 8'
+            width='10'
+            height='5'
+            viewBox='0 0 10 5'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
             <path
-              d='M10.6666 1.66602L5.99992 6.33268L1.33325 1.66602'
-              stroke='#407BFF'
-              strokeWidth='1.5'
-              strokeLinecap='round'
-              strokeLinejoin='round'
+              d='M0.197628 0.17321C0.329381 0.0577367 0.485375 0 0.665612 0C0.845498 0 1.00132 0.0577367 1.13307 0.17321L4.99341 3.55658L8.86693 0.161663C8.9899 0.0538876 9.14361 0 9.32806 0C9.51252 0 9.67062 0.0577367 9.80237 0.17321C9.93412 0.288684 10 0.425404 10 0.583372C10 0.741031 9.93412 0.877598 9.80237 0.993072L5.36232 4.87298C5.30962 4.91917 5.25253 4.95196 5.19104 4.97136C5.12956 4.99045 5.06368 5 4.99341 5C4.92314 5 4.85727 4.99045 4.79578 4.97136C4.7343 4.95196 4.67721 4.91917 4.62451 4.87298L0.184453 0.981524C0.0614843 0.873749 0 0.741031 0 0.583372C0 0.425404 0.065876 0.288684 0.197628 0.17321Z'
+              fill='#4C84FF'
             />
           </svg>
         </div>
@@ -115,6 +121,10 @@ export const SelectPhoneNumber = ({
                 onClick={() => onClickListPhoneCodes(phoneCode)}
               >
                 <div className={styles.selectPhone__countryName}>
+                  <img
+                    src={require(`../../../../static/images/countryFlags/${phoneCode.country.countryName}.svg`)}
+                    alt='flag'
+                  />
                   {phoneCode.country.countryName}
                 </div>
                 <div className={styles.selectPhone__countryCode}>{phoneCode.code}</div>

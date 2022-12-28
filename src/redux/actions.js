@@ -7,8 +7,11 @@ import {
   EDITMODE_ON,
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
-  PHONECODES_LOAD
+  PHONECODE_COUNTRYFLAG_UPDATE,
+  PHONECODES_LOAD,
+  POSITIONS_LOAD
 } from './types';
+import uniqid from 'uniqid';
 
 export function authIn() {
   return {
@@ -24,22 +27,9 @@ export function authOut() {
 export function countriesLoad() {
   return async (dispatch) => {
     try {
-      // const token = localStorage.getItem('token');
-      // const response = await fetch(`${process.env.API_URL}:8080/api/v1/countries`, {
-      //   method: 'GET',
-      //   headers: {
-      //     Authorization: 'Bearer_' + token,
-      //     'Content-Type': 'application/json'
-      //   }
-      // });
-      // const jsonData = await response.json();
-      const jsonData = [
-        { id: 14, countryName: 'Belarus' },
-        { id: 1, countryName: 'Afganistan' },
-        { id: 142, countryName: 'Russia' },
-        { id: 5444, countryName: 'Ukraine' },
-        { id: 544, countryName: 'India' }
-      ];
+      const token = localStorage.getItem('token');
+      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/countries`);
+      const jsonData = await response.json();
       dispatch({
         type: COUNTRIES_LOAD,
         data: jsonData
@@ -50,11 +40,19 @@ export function countriesLoad() {
   };
 }
 
+export function countriesSearch(text) {
+  return {
+    type: COUNTRIES_SEARCH,
+    searchText: text
+  };
+}
+
 export function editModeOn() {
   return {
     type: EDITMODE_ON
   };
 }
+
 export function editModeOff() {
   return {
     type: EDITMODE_OFF
@@ -68,10 +66,17 @@ export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
     phoneCodeId
   };
 }
+export function phoneCodesCountryFlagUpdate(countryFlag) {
+  return {
+    type: PHONECODE_COUNTRYFLAG_UPDATE,
+    countryFlag
+  };
+}
 
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes`);
       const jsonData = await response.json();
       dispatch({
@@ -84,10 +89,19 @@ export function phoneCodesLoad() {
   };
 }
 
-export function countriesSearch(text) {
-  return {
-    type: COUNTRIES_SEARCH,
-    searchText: text
+export function positionsLoad() {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/positions`);
+      const jsonData = await response.json();
+      dispatch({
+        type: POSITIONS_LOAD,
+        data: [{ id: uniqid(), name: 'None' }, ...jsonData]
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
 

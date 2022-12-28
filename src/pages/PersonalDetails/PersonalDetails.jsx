@@ -7,11 +7,12 @@ import {
   editModeOff,
   editModeOn,
   personalDetailsUpdate,
-  phoneCodesLoad
+  phoneCodesLoad,
+  positionsLoad
 } from '../../redux/actions';
 import { Input } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
-import { SearchBar, Select, SelectPhoneNumber } from '@components/fields';
+import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
 import styles from './PersonalDetails.module.scss';
 
@@ -23,6 +24,7 @@ const PersonalDetails = () => {
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
+    dispatch(positionsLoad());
   }, []);
 
   return (
@@ -99,7 +101,7 @@ const PersonalDetails = () => {
                     <Input
                       name='cellPhone'
                       label='Cell phone number'
-                      activeLabel='Choose your code and enter cell phone number'
+                      activeLabel='Enter cell phone number'
                       maxLength={25}
                       disabled={!isEdit}
                       showError={false}
@@ -107,7 +109,7 @@ const PersonalDetails = () => {
                   </SelectPhoneNumber>
                 </div>
                 <div className={`${styles.form__input} ${styles['order-1']}`}>
-                  <Select
+                  <SelectPositions
                     name='position'
                     label='Position'
                     disabled={!isEdit}
