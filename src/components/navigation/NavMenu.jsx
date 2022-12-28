@@ -64,7 +64,7 @@ const NavMenu = (props) => {
         </ul>
       </nav>
       <div className={styles.exit}>
-        <Logout />
+        <Logout showModal={props.showModal}/>
       </div>
     </div>
   );
