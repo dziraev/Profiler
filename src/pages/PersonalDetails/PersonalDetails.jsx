@@ -8,7 +8,7 @@ import {
   editModeOn,
   personalDetailsUpdate,
   phoneCodesLoad,
-  positionsLoad,
+  positionsLoad
 } from '../../redux/actions';
 import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
@@ -28,12 +28,7 @@ const PersonalDetails = (props) => {
     dispatch(phoneCodesLoad());
     dispatch(positionsLoad());
   }, []);
-  const handleReset = (resetForm) => {
-    resetForm();
-  }
-  const handleSubmit = (submitForm) => {
-    submitForm();
-  }
+
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>Personal details</h2>
@@ -55,13 +50,17 @@ const PersonalDetails = (props) => {
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty, setFieldValue } = formik;
+          const { dirty, setFieldValue, handleSubmit, handleReset } = formik;
 
           return (
             <Form className={styles.form}>
-              {isEdit && linkIsClicked ?
-                <PopUpSave handleSubmit={handleSubmit.bind(null, formik.submitForm)} handleReset={handleReset.bind(null, formik.resetForm)}>Do you want to save the changes in Personal details?</PopUpSave>
-              : ''}
+              {isEdit && linkIsClicked ? (
+                <PopUpSave handleSubmit={handleSubmit} handleReset={handleReset}>
+                  Do you want to save the changes in Personal details?
+                </PopUpSave>
+              ) : (
+                ''
+              )}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails

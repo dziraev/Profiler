@@ -1,1 +1,1 @@
-export const selectPhoneCodes = (state) => state.phoneCodesReducer;
+export const selectPhoneCodes = (state) => state.phoneCodesReducer.phoneCodes;

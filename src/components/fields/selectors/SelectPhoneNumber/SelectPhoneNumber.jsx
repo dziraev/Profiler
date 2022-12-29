@@ -2,10 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
-import { findPhoneCodeByCountryId } from '../../../../utils/findPhoneCodeByCountryId';
+import {
+  findCountryFlagByPhoneCodeId,
+  findPhoneCodeByCountryId
+} from '../../../../utils/findPhoneCodeByCountryId';
 import { phoneCodesAndIdUpdate, phoneCodesCountryFlagUpdate } from '../../../../redux/actions';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesSelect from '../Select.module.scss';
+import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
 
 export const SelectPhoneNumber = ({
   label,
@@ -16,7 +20,9 @@ export const SelectPhoneNumber = ({
   ...props
 }) => {
   const dispatch = useDispatch();
-  const { phoneCodes, countryFlag } = useSelector(selectPhoneCodes);
+  const phoneCodes = useSelector(selectPhoneCodes);
+  const phoneCodeId = useSelector(selectPersonalDetailsPhoneCodeId);
+  const [countryFlag, setCountryFlag] = useState(false);
   const [field, meta, helper] = useField(props.name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
@@ -24,34 +30,42 @@ export const SelectPhoneNumber = ({
   const { setValue } = helper;
 
   useEffect(() => {
-    const phoneCode = findPhoneCodeByCountryId(phoneCodes, countryId);
-    if (phoneCode) {
-      setValue(phoneCode.code);
-      setFieldValue('phoneCodeId', phoneCode.id);
-      dispatch(phoneCodesCountryFlagUpdate(phoneCode.country.countryName));
+    const foundPhoneCode = findPhoneCodeByCountryId(phoneCodes, countryId);
+    if (foundPhoneCode) {
+      setValue(foundPhoneCode.code);
+      setFieldValue('phoneCodeId', foundPhoneCode.id);
+      setCountryFlag(foundPhoneCode.country.countryName);
     }
     if (!value && phoneCodes.length) {
       dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
-      dispatch(phoneCodesCountryFlagUpdate(phoneCodes[0].country.countryName));
+      setCountryFlag(phoneCodes[0].country.countryName);
+    }
+    if (value && phoneCodes.length) {
+      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
+      setCountryFlag(countryFlag);
     }
   }, [countryId, phoneCodes]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+  }, [phoneCodeId]);
 
   function handleClickOutside(e) {
     const { current } = positionRef;
     if (current && !current.contains(e.target)) {
       setIsVisible(false);
     }
+    if (e.target.closest('button[type=reset]')) {
+      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
+      setCountryFlag(countryFlag);
+    }
   }
 
   const onClickListPhoneCodes = (value) => {
     setIsVisible(false);
     setValue(value.code);
-    dispatch(phoneCodesCountryFlagUpdate(value.country.countryName));
+    setCountryFlag(value.country.countryName);
     setFieldValue('phoneCodeId', value.id);
   };
 

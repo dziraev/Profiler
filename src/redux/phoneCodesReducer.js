@@ -1,7 +1,6 @@
-import { PHONECODE_COUNTRYFLAG_UPDATE, PHONECODES_LOAD } from './types';
+import { PHONECODES_LOAD } from './types';
 
 const initialState = {
-  countryFlag: '',
   phoneCodes: []
 };
 
@@ -11,12 +10,6 @@ export const phoneCodesReducer = (state = initialState, action) => {
       return {
         ...state,
         phoneCodes: action.data
-      };
-    }
-    case PHONECODE_COUNTRYFLAG_UPDATE: {
-      return {
-        ...state,
-        countryFlag: action.countryFlag
       };
     }
     default:
