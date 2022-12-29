@@ -9,7 +9,9 @@ import {
   PHONECODE_AND_ID_UPDATE,
   PHONECODE_COUNTRYFLAG_UPDATE,
   PHONECODES_LOAD,
-  POSITIONS_LOAD
+  POSITIONS_LOAD,
+  LINK_IS_CLICKED,
+  LINK_IS_NOT_CLICKED
 } from './types';
 import uniqid from 'uniqid';
 
@@ -33,6 +35,18 @@ export function editModeOn() {
 export function editModeOff() {
   return {
     type: EDITMODE_OFF
+  };
+}
+
+export function linkIsClicked() {
+  return {
+    type: LINK_IS_CLICKED
+  };
+}
+
+export function linkIsNotClicked() {
+  return {
+    type: LINK_IS_NOT_CLICKED
   };
 }
 

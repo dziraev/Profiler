@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authOut } from '../../redux/actions';
+import { authOut, linkIsClicked } from '../../redux/actions';
 import styles from './Logout.module.scss';
 
 const Logout = (props) => {
@@ -8,7 +8,7 @@ const Logout = (props) => {
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   function logout(e) {
     if (isEdit) {
-      props.showModal();
+      dispatch(linkIsClicked());
     } else {
       localStorage.removeItem('token');
       dispatch(authOut());

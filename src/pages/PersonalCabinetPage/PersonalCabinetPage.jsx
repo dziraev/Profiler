@@ -1,31 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import NavMenu from '../../components/navigation/NavMenu';
 import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeader';
 import styles from './PersonalCabinetPage.module.scss';
 import Logout from '../../components/links/Logout';
-import { PopUpSave } from '../../components/popup/save/PopUpSave';
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [navLinkIsClicked, setNavLinkIsClicked] = useState(false);
-  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   function openAndCloseMenu(e) {
     setMenuIsOpen(!menuIsOpen);
   };
-  function showModal(e) {
-    setNavLinkIsClicked(true);
-  }
-  function closeModal(e) {
-    setNavLinkIsClicked(false);
-  }
   return (
     <div className={styles.page}>
-      {isEdit && navLinkIsClicked ?
-        <PopUpSave close={closeModal}>Do you want to save the changes in Personal details?</PopUpSave>
-      : ''}
       <div className={styles.header}>
         <div className={styles.header__burger} onClick={openAndCloseMenu}>
           <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,11 +31,11 @@ const PersonalCabinetPage = (props) => {
       <div className={styles.page__background}></div>
       <div className={styles.page__container}>
         <div className={styles.page__sidebar}>
-            <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} showModal={showModal} />
+            <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} />
         </div>
         <div className={styles.page__content}>
           <div className={styles.exit}>
-            <Logout showModal={showModal} />
+            <Logout />
           </div>
           <header className={styles.page__header}>
             <PersonalCabinetHeader />

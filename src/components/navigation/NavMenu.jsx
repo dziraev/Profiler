@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { linkIsClicked } from '../../redux/actions';
 import styles from './NavMenu.module.scss';
 import logo from '../../static/images/menu-logo.svg';
 import mobilelogo from '../../static/images/menu-logo-mobile.svg';
-import { NavLink } from 'react-router-dom';
 import Logout from '../../components/links/Logout';
-import { useSelector } from 'react-redux';
 
 const NavMenu = (props) => {
+  const dispatch = useDispatch();
   const [studentNumber, setStudentNumber] = useState('123455');
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const handleClick = (e) => {
     if (isEdit) e.preventDefault();
-    props.showModal();
+    dispatch(linkIsClicked());
   };
   return (
     <div className={`${styles.sidebar} ${props.menuIsOpen ? styles.sidebar_open : styles.sidebar}`}>
@@ -64,7 +66,7 @@ const NavMenu = (props) => {
         </ul>
       </nav>
       <div className={styles.exit}>
-        <Logout showModal={props.showModal}/>
+        <Logout />
       </div>
     </div>
   );

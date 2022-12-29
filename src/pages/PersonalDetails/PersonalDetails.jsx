@@ -8,25 +8,32 @@ import {
   editModeOn,
   personalDetailsUpdate,
   phoneCodesLoad,
-  positionsLoad
+  positionsLoad,
 } from '../../redux/actions';
 import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
+import { PopUpSave } from '../../components/popup/save/PopUpSave';
 import { selectPersonalDetails } from './selectors';
 import styles from './PersonalDetails.module.scss';
 
-const PersonalDetails = () => {
+const PersonalDetails = (props) => {
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
+  const linkIsClicked = useSelector((state) => state.linkIsClickedReducer.linkIsClicked);
   const [countryId, setCountryId] = useState(null);
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
     dispatch(positionsLoad());
   }, []);
-
+  const handleReset = (resetForm) => {
+    resetForm();
+  }
+  const handleSubmit = (submitForm) => {
+    submitForm();
+  }
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>Personal details</h2>
@@ -52,6 +59,9 @@ const PersonalDetails = () => {
 
           return (
             <Form className={styles.form}>
+              {isEdit && linkIsClicked ?
+                <PopUpSave handleSubmit={handleSubmit.bind(null, formik.submitForm)} handleReset={handleReset.bind(null, formik.resetForm)}>Do you want to save the changes in Personal details?</PopUpSave>
+              : ''}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails
