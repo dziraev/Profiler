@@ -6,10 +6,10 @@ import {
   findCountryFlagByPhoneCodeId,
   findPhoneCodeByCountryId
 } from '../../../../utils/findPhoneCodeByCountryId';
-import { phoneCodesAndIdUpdate, phoneCodesCountryFlagUpdate } from '../../../../redux/actions';
+import { phoneCodesAndIdUpdate } from '../../../../redux/actions';
+import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesSelect from '../Select.module.scss';
-import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
 
 export const SelectPhoneNumber = ({
   label,
@@ -31,7 +31,7 @@ export const SelectPhoneNumber = ({
 
   useEffect(() => {
     const foundPhoneCode = findPhoneCodeByCountryId(phoneCodes, countryId);
-    if (foundPhoneCode) {
+    if (foundPhoneCode && countryId) {
       setValue(foundPhoneCode.code);
       setFieldValue('phoneCodeId', foundPhoneCode.id);
       setCountryFlag(foundPhoneCode.country.countryName);
@@ -40,7 +40,7 @@ export const SelectPhoneNumber = ({
       dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
       setCountryFlag(phoneCodes[0].country.countryName);
     }
-    if (value && phoneCodes.length) {
+    if (value && phoneCodes.length && !countryId) {
       const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
       setCountryFlag(countryFlag);
     }

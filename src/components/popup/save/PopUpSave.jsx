@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { editModeOff, linkIsNotClicked } from '../../../redux/actions';
+import { Button, CancelButton } from '@components/buttons';
 import styles from '../PopUp.module.scss';
-import { Button } from '../../buttons/Button/Button';
-import { CancelButton } from '../../buttons/CancelButton/CancelButton';
 
 export const PopUpSave = ({ children, ...props }) => {
   const dispatch = useDispatch();

@@ -10,14 +10,16 @@ import {
   phoneCodesLoad,
   positionsLoad
 } from '../../redux/actions';
+import { PopUpSave } from '@components/popup/save/PopUpSave';
+import { PopUpTryAgain } from '@components/popup/tryAgain/PopUpTryAgain';
 import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
-import { PopUpSave } from '../../components/popup/save/PopUpSave';
 import { selectPersonalDetails } from './selectors';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = (props) => {
+  const [errorResponse, setErrorResponse] = useState(false);
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
@@ -36,13 +38,34 @@ const PersonalDetails = (props) => {
         enableReinitialize={true}
         initialValues={personalDetails}
         validateOnChange={false}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           for (let key in values) {
             if (typeof values[key] === 'string') values[key] = values[key].trim();
           }
-
-          dispatch(personalDetailsUpdate(values));
-          dispatch(editModeOff());
+          try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${process.env.API_URL}:8080/api/v1/profile`, {
+              method: 'POST',
+              headers: {
+                Authorization: 'Bearer_' + token,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                name: values.name,
+                surname: values.name,
+                countryId: values.countryId,
+                email: values.email,
+                phoneCodeId: values.phoneCodeId,
+                cellPhone: values.cellPhone,
+                positionId: values.positionId
+              })
+            });
+            dispatch(personalDetailsUpdate(values));
+            dispatch(editModeOff());
+            setErrorResponse(false);
+          } catch (e) {
+            setErrorResponse(true);
+          }
         }}
         onReset={() => {
           dispatch(editModeOff());
@@ -54,12 +77,21 @@ const PersonalDetails = (props) => {
 
           return (
             <Form className={styles.form}>
-              {isEdit && linkIsClicked ? (
+              {isEdit && linkIsClicked && (
                 <PopUpSave handleSubmit={handleSubmit} handleReset={handleReset}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
-              ) : (
-                ''
+              )}
+              {errorResponse && (
+                <PopUpTryAgain
+                  onSubmit={handleSubmit}
+                  onCancel={(e) => {
+                    handleReset(e);
+                    setErrorResponse(false);
+                  }}
+                >
+                  Failed to save data. Please try again
+                </PopUpTryAgain>
               )}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>

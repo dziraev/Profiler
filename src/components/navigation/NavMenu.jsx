@@ -12,8 +12,10 @@ const NavMenu = (props) => {
   const [studentNumber, setStudentNumber] = useState('123455');
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const handleClick = (e) => {
-    if (isEdit) e.preventDefault();
-    dispatch(linkIsClicked());
+    if (isEdit) {
+      e.preventDefault();
+      dispatch(linkIsClicked());
+    }
   };
   return (
     <div className={`${styles.sidebar} ${props.menuIsOpen ? styles.sidebar_open : styles.sidebar}`}>
