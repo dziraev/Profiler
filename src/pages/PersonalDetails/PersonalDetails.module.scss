@@ -1,10 +1,12 @@
 @use '../../static/scss/global';
 .wrapper {
+    margin: 0 auto;
     text-align: left;
     max-width: 934px;
     padding: 0 80px;
     @media (max-width: 1439.98px) {
         padding: 0 30px;
+        width: fit-content;
     }
     @media (min-width: 768px) {
         padding: 0 15px;
@@ -31,6 +33,7 @@
         flex-direction: column;
         gap: 52px 64px;
         margin-bottom: 36px;
+        align-items: center;
         @media (min-width: 992px) {
             flex-direction: row;
             flex-wrap: wrap;

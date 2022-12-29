@@ -14,6 +14,7 @@ const NavMenu = (props) => {
   const handleClick = (e) => {
     if (isEdit) e.preventDefault();
     dispatch(linkIsClicked());
+    props.closeMenu();
   };
   return (
     <div className={`${styles.sidebar} ${props.menuIsOpen ? styles.sidebar_open : styles.sidebar}`}>
