@@ -10,7 +10,7 @@ import {
   phoneCodesLoad,
   positionsLoad
 } from '../../redux/actions';
-import { Input } from '@components/fields';
+import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
@@ -54,7 +54,7 @@ const PersonalDetails = () => {
             <Form className={styles.form}>
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
-                  <Input
+                  <InputPersonalDetails
                     name='name'
                     maxLength={50}
                     label='Name'
@@ -63,7 +63,7 @@ const PersonalDetails = () => {
                   />
                 </div>
                 <div className={styles.form__input}>
-                  <Input
+                  <InputPersonalDetails
                     name='surname'
                     maxLength={50}
                     label='Surname'
@@ -84,7 +84,7 @@ const PersonalDetails = () => {
                   />
                 </div>
                 <div className={`${styles.form__input} ${styles['order-3']}`}>
-                  <Input
+                  <InputPersonalDetails
                     name='email'
                     label='Email'
                     activeLabel='Enter your email'
@@ -98,7 +98,7 @@ const PersonalDetails = () => {
                     countryId={countryId}
                     setFieldValue={setFieldValue}
                   >
-                    <Input
+                    <InputPersonalDetails
                       name='cellPhone'
                       label='Cell phone number'
                       activeLabel='Enter cell phone number'

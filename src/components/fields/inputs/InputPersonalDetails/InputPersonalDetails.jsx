@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useField } from 'formik';
+import stylesPD from './InputPersonalDetails.module.scss';
 import styles from '../Input.module.scss';
 
-export const Input = ({ label, activeLabel, ...props }) => {
+export const InputPersonalDetails = ({ label, activeLabel, showError = true, ...props }) => {
   const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props);
   function handleBlur(e) {
@@ -25,9 +26,8 @@ export const Input = ({ label, activeLabel, ...props }) => {
         className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
         placeholder={active ? activeLabel : label}
       />
-      {meta.touched && meta.error && (
-        <div className={styles.error}>
-          {meta.error}
+      {meta.touched && meta.error && showError && (
+        <div className={stylesPD.error}>
           <svg
             width='24'
             height='24'
@@ -40,6 +40,7 @@ export const Input = ({ label, activeLabel, ...props }) => {
               fill='#D40000'
             />
           </svg>
+          {meta.error}
         </div>
       )}
     </div>
