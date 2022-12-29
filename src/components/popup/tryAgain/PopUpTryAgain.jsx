@@ -9,7 +9,7 @@ export const PopUpTryAgain = ({ children, ...props }) => {
       <div className={styles.modal__bcg}>
         <div className={styles.modal__content}>
           <div className={styles.modal__content__titles}>
-            {children.length >= 2 ? (
+            {false /*children.length >= 2*/ ? (
               <>
                 <p className={styles.modal__content__title}>{children[0]}</p>
                 <p className={styles.modal__content__subtitle}>{children[1]}</p>

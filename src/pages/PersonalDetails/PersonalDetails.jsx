@@ -69,6 +69,7 @@ const PersonalDetails = (props) => {
         }}
         onReset={() => {
           dispatch(editModeOff());
+          setErrorResponse(false);
         }}
         validate={validateDetails}
       >
@@ -87,7 +88,6 @@ const PersonalDetails = (props) => {
                   onSubmit={handleSubmit}
                   onCancel={(e) => {
                     handleReset(e);
-                    setErrorResponse(false);
                   }}
                 >
                   Failed to save data. Please try again
