@@ -44,20 +44,20 @@ const PersonalDetails = (props) => {
           }
           try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.API_URL}:8080/api/v1/profile`, {
+            const response = await fetch(`${process.env.API_URL}/api/v1/profile`, {
               method: 'POST',
               headers: {
                 Authorization: 'Bearer_' + token,
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                name: values.name,
-                surname: values.name,
-                countryId: values.countryId,
-                email: values.email,
-                phoneCodeId: values.phoneCodeId,
-                cellPhone: values.cellPhone,
-                positionId: values.positionId
+                name: values.name || null,
+                surname: values.surname || null,
+                countryId: values.countryId || null,
+                email: values.email || null,
+                phoneCodeId: values.phoneCodeId || null,
+                cellPhone: values.cellPhone || null,
+                positionId: values.positionId || null
               })
             });
             dispatch(personalDetailsUpdate(values));
