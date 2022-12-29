@@ -1,0 +1,24 @@
+@use '../../static/scss/global';
+
+.logout {
+    &__link {
+        display: flex;
+        column-gap: 8px;
+        color: global.$text-primary-blue;
+        & svg {
+            stroke: global.$text-primary-blue;
+        }
+    }
+    &__link:hover p {
+        text-decoration: global.$text-primary-blue underline;
+    }
+    &__link:active {
+        color: global.$text-primary-dark-blue;
+        & p {
+            text-decoration: none;
+        }
+        & svg {
+            stroke: global.$text-primary-dark-blue;
+        }
+    }
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useField } from 'formik';
 import styles from '../Input.module.scss';
 
-const Input = ({ label, activeLabel, showError = true, ...props }) => {
+export const Input = ({ label, activeLabel, showError = true, ...props }) => {
   const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props);
   function handleBlur(e) {

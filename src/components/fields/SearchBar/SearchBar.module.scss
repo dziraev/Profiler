@@ -18,6 +18,11 @@
         caret-color: global.$text-primary-blue;
         color: global.$text-primary-dark-blue;
         cursor: text;
+        @media (max-width: 767.98px) {
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
 
         &:hover, &:focus {
             box-shadow: 0 0 0 1px global.$input-stroke-active;
@@ -43,19 +48,20 @@
 }
 
 .dataResult {
-    text-align: left;
-    position: absolute;
-    z-index: 3;
-    top: 100%;
-    transform: translateY(15px);
     max-height: 370px;
-    transition: all 0.3s ease 0s;
     padding: 0 10px;
     background-color: global.$background-main;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     overflow-y: auto;
     width: 100%;
+    @media (min-width: 767.98px ){
+        position: absolute;
+        z-index: 3;
+        top: 100%;
+        transform: translateY(15px);
+
+    }
     &__item {
         padding: 10px;
         cursor: pointer;

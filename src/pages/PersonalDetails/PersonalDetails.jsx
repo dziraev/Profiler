@@ -2,24 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validateDetails } from '../../utils/validators/validateDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { countriesLoad, personalDetailsUpdate } from '../../redux/actions';
-import Input from '../../components/fields/inputs/Input/Input';
-import Button from '../../components/buttons/Button/Button';
-import CancelButton from '../../components/buttons/CancelButton/CancelButton';
-import SearchBar from '../../components/fields/SearchBar/SearchBar';
-import Select from '../../components/fields/selectors/Select/Select';
+import {
+  countriesLoad,
+  editModeOff,
+  editModeOn,
+  personalDetailsUpdate,
+  phoneCodesLoad,
+  positionsLoad
+} from '../../redux/actions';
+import { Input } from '@components/fields';
+import { Button, CancelButton } from '@components/buttons';
+import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
-import SelectPhoneNumber from '../../components/fields/selectors/SelectPhoneNumber/SelectPhoneNumber';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = () => {
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
+  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
+  const [countryId, setCountryId] = useState(null);
   useEffect(() => {
     dispatch(countriesLoad());
+    dispatch(phoneCodesLoad());
+    dispatch(positionsLoad());
   }, []);
-
-  const [isEdit, setIsEdit] = useState(false);
 
   return (
     <section className={styles.wrapper}>
@@ -32,16 +38,17 @@ const PersonalDetails = () => {
           for (let key in values) {
             if (typeof values[key] === 'string') values[key] = values[key].trim();
           }
+
           dispatch(personalDetailsUpdate(values));
-          setIsEdit(false);
+          dispatch(editModeOff());
         }}
         onReset={() => {
-          setIsEdit(false);
+          dispatch(editModeOff());
         }}
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty } = formik;
+          const { dirty, setFieldValue } = formik;
 
           return (
             <Form className={styles.form}>
@@ -64,7 +71,7 @@ const PersonalDetails = () => {
                     disabled={!isEdit}
                   />
                 </div>
-                <div className={styles.form__input}>
+                <div className={`${styles.form__input} ${styles['order-2']}`}>
                   <SearchBar
                     name='country'
                     label='Country'
@@ -72,9 +79,11 @@ const PersonalDetails = () => {
                     activeLabel='Enter your location'
                     autoComplete={'off'}
                     disabled={!isEdit}
+                    setCountryId={setCountryId}
+                    setFieldValue={setFieldValue}
                   />
                 </div>
-                <div className={styles.form__input}>
+                <div className={`${styles.form__input} ${styles['order-3']}`}>
                   <Input
                     name='email'
                     label='Email'
@@ -82,10 +91,15 @@ const PersonalDetails = () => {
                     disabled={!isEdit}
                   />
                 </div>
-                <div className={styles.form__input}>
-                  <SelectPhoneNumber name='codeNumber' maxLength={25} disabled={!isEdit}>
+                <div className={`${styles.form__input} ${styles['order-2']}`}>
+                  <SelectPhoneNumber
+                    name='phoneCode'
+                    disabled={!isEdit}
+                    countryId={countryId}
+                    setFieldValue={setFieldValue}
+                  >
                     <Input
-                      name='phoneNumber'
+                      name='cellPhone'
                       label='Cell phone number'
                       activeLabel='Enter cell phone number'
                       maxLength={25}
@@ -94,14 +108,19 @@ const PersonalDetails = () => {
                     />
                   </SelectPhoneNumber>
                 </div>
-                <div className={styles.form__input}>
-                  <Select name='position' label='Position' disabled={!isEdit} />
+                <div className={`${styles.form__input} ${styles['order-1']}`}>
+                  <SelectPositions
+                    name='position'
+                    label='Position'
+                    disabled={!isEdit}
+                    setFieldValue={setFieldValue}
+                  />
                 </div>
               </div>
               <div className={styles.form__buttons}>
                 {!isEdit && (
                   <div className={styles.form__button}>
-                    <Button type='button' onClick={() => setIsEdit(true)}>
+                    <Button type='button' onClick={() => dispatch(editModeOn())}>
                       Edit
                     </Button>
                   </div>

@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useField } from 'formik';
+import { selectPositions } from '@components/fields/selectors/Select/selectors';
 import styles from '../Select.module.scss';
 
-const Select = ({ label, disabled, data = [], ...props }) => {
+export const SelectPositions = ({ label, disabled, setFieldValue, ...props }) => {
+  const positions = useSelector(selectPositions);
   const [isVisible, setIsVisible] = useState(false);
   const [field, meta, helpers] = useField(props.name);
   const positionRef = useRef(null);
@@ -23,7 +26,10 @@ const Select = ({ label, disabled, data = [], ...props }) => {
 
   const onClickListPosition = (value) => {
     setIsVisible(false);
-    setValue(value);
+    value.name === 'None'
+      ? setFieldValue('positionId', 'null')
+      : setFieldValue('positionId', value.id);
+    setValue(value.name);
   };
 
   return (
@@ -37,8 +43,10 @@ const Select = ({ label, disabled, data = [], ...props }) => {
         style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         onClick={() => setIsVisible((prev) => !prev)}
       >
-        {!!value && value}
-        {!value && <span className={styles.select__placeholder}>{!isVisible && label}</span>}
+        {!!value && value !== 'None' && value}
+        {(!value || value === 'None') && !isVisible && (
+          <span className={styles.select__placeholder}>{label}</span>
+        )}
         <div className={isVisible ? styles.select__arrowOpen : styles.select__arrow}>
           <svg
             width='12'
@@ -57,21 +65,19 @@ const Select = ({ label, disabled, data = [], ...props }) => {
           </svg>
         </div>
       </div>
-
-      <div className={styles.select__dropdown}>
-        {isVisible &&
-          data.map((value) => (
+      {isVisible && positions.length && (
+        <div className={styles.select__dropdown}>
+          {positions.map((position) => (
             <div
               className={styles.select__item}
-              key={value.id}
-              onClick={() => onClickListPosition(value.position)}
+              key={position.id}
+              onClick={() => onClickListPosition(position)}
             >
-              {value.position}
+              {position.name}
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
-
-export default Select;

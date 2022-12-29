@@ -6,12 +6,16 @@ import { countriesSearch } from '../../../redux/actions';
 import { filterCountriesByPrefix } from '../../../pages/PersonalDetails/selectors';
 import styles from './SearchBar.module.scss';
 
-const SearchBar = ({ label, activeLabel, ...props }) => {
+export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...props }) => {
   const { filteredCountries, searchText } = useSelector((state) => {
-    const data = state.countriesReducer;
-    const filteredCountries = filterCountriesByPrefix(data.countries, data.searchText);
-    return { filteredCountries, searchText: data.searchText };
+    const countriesReducer = state.countriesReducer;
+    const filteredCountries = filterCountriesByPrefix(
+      countriesReducer.countries,
+      countriesReducer.searchText
+    );
+    return { filteredCountries, searchText: countriesReducer.searchText };
   }, shallowEqual);
+
   const wrapperRef = useRef(null);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
@@ -27,9 +31,13 @@ const SearchBar = ({ label, activeLabel, ...props }) => {
 
   function handleClickOutside(e) {
     const { current } = wrapperRef;
+
     if (current && !current.contains(e.target) && display) {
       setValue(country.current);
       setDisplay(false);
+    }
+    if (e.target.closest('button[type=reset]')) {
+      country.current = '';
     }
   }
 
@@ -52,10 +60,21 @@ const SearchBar = ({ label, activeLabel, ...props }) => {
   const handleBlur = (e) => {
     field.onBlur(e);
     setActive(false);
+    setValue(country.current);
+    updateSearchValue('');
   };
 
   const handleFocus = (e) => {
     setActive(true);
+    setDisplay(true);
+  };
+
+  const handleClick = (value) => {
+    country.current = value.countryName;
+    setValue(value.countryName);
+    setFieldValue('countryId', value.id);
+    setCountryId(value.id);
+    setDisplay(false);
   };
   return (
     <div className={styles.search} ref={wrapperRef}>
@@ -70,30 +89,23 @@ const SearchBar = ({ label, activeLabel, ...props }) => {
         placeholder={active ? activeLabel : label}
         onClick={() => setDisplay(true)}
       />
-      {display && (
+      {display && searchText.length > 0 && (
         <div className={styles.dataResult}>
-          {filteredCountries.length === 0 && searchText.length > 0 && (
-            <div className={styles.dataResult__notFound}>No such countries found</div>
-          )}
-          {searchText.length > 0 &&
-            filteredCountries.length > 0 &&
+          {filteredCountries.length === 0 ? (
+            <div className={styles.dataResult__notFound}>Country no found</div>
+          ) : (
             filteredCountries.map((value) => (
               <div
                 className={styles.dataResult__item}
                 key={value.id}
-                onClick={() => {
-                  country.current = value.countryName;
-                  setValue(value.countryName);
-                  setDisplay(false);
-                }}
+                onClick={() => handleClick(value)}
               >
-                {value.countryName}
+                {value?.countryName}
               </div>
-            ))}
+            ))
+          )}
         </div>
       )}
     </div>
   );
 };
-
-export default SearchBar;

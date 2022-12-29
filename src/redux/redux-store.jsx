@@ -3,20 +3,20 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { authReducer } from './authReducer';
 import { countriesReducer } from './countriesReducer';
 import { personalDetailsReducer } from './personalDetailsReducer';
+import { phoneCodesReducer } from './phoneCodesReducer';
+import { editModeReducer } from './editModeReducer';
+import { positionsReducer } from './positionsReducer';
 
 let combinedReducers = combineReducers({
   authReducer,
   countriesReducer,
-  personalDetailsReducer
+  phoneCodesReducer,
+  personalDetailsReducer,
+  editModeReducer,
+  positionsReducer
 });
 
-const store = createStore(
-  combinedReducers,
-  compose(
-    applyMiddleware(thunk)
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+const store = createStore(combinedReducers, compose(applyMiddleware(thunk)));
 
 window.store = store;
 

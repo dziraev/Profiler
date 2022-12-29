@@ -3,9 +3,16 @@ import styles from './NavMenu.module.scss';
 import logo from '../../static/images/menu-logo.svg';
 import mobilelogo from '../../static/images/menu-logo-mobile.svg';
 import { NavLink } from 'react-router-dom';
+import Logout from '../../components/links/Logout';
+import { useSelector } from 'react-redux';
 
 const NavMenu = (props) => {
   const [studentNumber, setStudentNumber] = useState('123455');
+  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
+  const handleClick = (e) => {
+    if (isEdit) e.preventDefault();
+    props.showModal();
+  };
   return (
     <div className={`${styles.sidebar} ${props.menuIsOpen ? styles.sidebar_open : styles.sidebar}`}>
       <div className={styles.sidebar__logo}>
@@ -28,11 +35,11 @@ const NavMenu = (props) => {
         <p className={styles.sidebar__photo__title}>Add your photo</p>
       </div>
       <div className={styles.sidebar__number}>
-        <p>Student number <span className={styles.sidebar__number__id}>{studentNumber}</span></p>
+        <p>Student’s number<span className={styles.sidebar__number__id}>{studentNumber}</span></p>
       </div>
       <nav className={styles.sidebar__nav}>
         <ul>
-          <NavLink to='/main/to-cv' className={ isActive => window.location.pathname === '/main/to-cv' ? styles.active : ''}>
+          <NavLink to='/main/to-cv' onClick={handleClick} className={ isActive => window.location.pathname === '/main/to-cv' ? styles.active : ''}>
             <li className={styles.sidebar__nav__link}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21.1654 10V15C21.1654 20 19.332 22 14.7487 22H9.2487C4.66536 22 2.83203 20 2.83203 15V9C2.83203 4 4.66536 2 9.2487 2H13.832" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -41,7 +48,7 @@ const NavMenu = (props) => {
               <p>My CV</p>
             </li>
           </NavLink>
-          <NavLink to='/main/personal-details' className={ isActive => isActive && window.location.pathname === '/main/personal-details' ? styles.active : ''}>
+          <NavLink to='/main/personal-details' onClick={handleClick} className={ isActive => isActive && window.location.pathname === '/main/personal-details' ? styles.active : ''}>
             <li className={styles.sidebar__nav__link}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.0781 18.9229H20.3089" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -57,18 +64,7 @@ const NavMenu = (props) => {
         </ul>
       </nav>
       <div className={styles.exit}>
-        <NavLink to='/auth'>
-          <div className={styles.exit__link}>
-            <div className={styles.exit__icon}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.1 16.44C14.79 20.04 12.94 21.51 8.88998 21.51L8.75998 21.51C4.28998 21.51 2.49998 19.72 2.49998 15.25L2.49998 8.73001C2.49998 4.26001 4.28998 2.47001 8.75998 2.47001L8.88998 2.47001C12.91 2.47001 14.76 3.92001 15.09 7.46001" stroke="#25225D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M9 12L20.38 12" stroke="#25225D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M18.15 15.35L21.5 12L18.15 8.64997" stroke="#25225D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <p>Log out</p>
-          </div>
-        </NavLink>
+        <Logout showModal={props.showModal}/>
       </div>
     </div>
   );
