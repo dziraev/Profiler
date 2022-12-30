@@ -7,23 +7,27 @@ import logo from '../../static/images/menu-logo.svg';
 import mobilelogo from '../../static/images/menu-logo-mobile.svg';
 import Logout from '../../components/links/Logout';
 
-const NavMenu = (props) => {
+const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
   const dispatch = useDispatch();
   const [studentNumber, setStudentNumber] = useState('123455');
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const handleClick = (e) => {
-    if (isEdit) e.preventDefault();
-    dispatch(linkIsClicked());
-    props.closeMenu();
+    if (isEdit) {
+      e.preventDefault();
+      dispatch(linkIsClicked());
+    }
+    if (menuIsOpen) {
+      closeMenu();
+    }
   };
   return (
-    <div className={`${styles.sidebar} ${props.menuIsOpen ? styles.sidebar_open : styles.sidebar}`}>
+    <div className={`${styles.sidebar} ${menuIsOpen ? styles.sidebar_open : styles.sidebar}`}>
       <div className={styles.sidebar__logo}>
         <img src={logo} alt='logo' />
       </div>
       <div className={styles.sidebar_open__header}>
         <img src={mobilelogo} alt='logo' />
-        <div className={styles.sidebar_open__header_exit} onClick={props.closeMenu}>
+        <div className={styles.sidebar_open__header_exit} onClick={closeMenu}>
           <svg
             width='24'
             height='25'

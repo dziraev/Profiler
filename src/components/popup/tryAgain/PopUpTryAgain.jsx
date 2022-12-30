@@ -20,14 +20,10 @@ export const PopUpTryAgain = ({ children, ...props }) => {
           </div>
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
-              <CancelButton type='reset' onReset={props.onCancel}>
-                Cancel
-              </CancelButton>
+              <CancelButton type='reset' /*onReset={props.onCancel}*/>Cancel</CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
-              <Button type='submit' onSubmit={props.onSubmit}>
-                Try again
-              </Button>
+              <Button type='submit' /*onSubmit={props.onSubmit}*/>Try again</Button>
             </div>
           </div>
         </div>

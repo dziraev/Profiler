@@ -23,11 +23,11 @@ export const PopUpSave = ({ children, ...props }) => {
             <div className={styles.modal__content__btns__cancel}>
               <CancelButton
                 type='reset'
-                onClick={(e) => {
-                  props.handleReset(e);
-                  dispatch(editModeOff());
-                  dispatch(linkIsNotClicked());
-                }}
+                // onClick={(e) => {
+                //   dispatch(editModeOff());
+                //   dispatch(linkIsNotClicked());
+                //   props.handleReset(e);
+                // }}
               >
                 Don't save
               </CancelButton>
@@ -35,11 +35,11 @@ export const PopUpSave = ({ children, ...props }) => {
             <div className={styles.modal__content__btns__again}>
               <Button
                 type='submit'
-                onClick={(e) => {
-                  props.handleSubmit(e);
-                  dispatch(editModeOff());
-                  dispatch(linkIsNotClicked());
-                }}
+                // onClick={(e) => {
+                //   props.handleSubmit(e);
+                //   dispatch(editModeOff());
+                //   dispatch(linkIsNotClicked());
+                // }}
               >
                 Save
               </Button>
