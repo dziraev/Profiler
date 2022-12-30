@@ -23,6 +23,7 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   const [field, meta, helpers] = useField(props);
   const country = useRef(field.value);
   const { setValue } = helpers;
+  const { value } = field;
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -31,13 +32,9 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
 
   function handleClickOutside(e) {
     const { current } = wrapperRef;
-
     if (current && !current.contains(e.target) && display) {
       setValue(country.current);
       setDisplay(false);
-    }
-    if (e.target.closest('button[type=reset]')) {
-      country.current = '';
     }
   }
 
