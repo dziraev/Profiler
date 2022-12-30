@@ -1,4 +1,4 @@
-import { COUNTRIES_LOAD, COUNTRIES_SEARCH } from './types';
+import { COUNTRIES_LOAD, COUNTRIES_SEARCH } from '../../types';
 
 const initialState = {
   searchText: '',

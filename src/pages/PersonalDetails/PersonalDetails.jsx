@@ -128,6 +128,7 @@ const PersonalDetails = (props) => {
                   <InputPersonalDetails
                     name='email'
                     label='Email'
+                    maxLength={50}
                     activeLabel='Enter your email'
                     disabled={!isEdit}
                   />

@@ -11,7 +11,7 @@ const Logout = (props) => {
       dispatch(linkIsClicked());
     } else {
       localStorage.removeItem('token');
-      dispatch(authOut());
+      dispatch({ type: 'USER_LOGOUT' });
     }
   }
   return (

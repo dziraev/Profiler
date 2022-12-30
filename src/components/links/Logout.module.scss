@@ -1,6 +1,7 @@
 @use '../../static/scss/global';
 
 .logout {
+    cursor: pointer;
     &__link {
         display: flex;
         column-gap: 8px;

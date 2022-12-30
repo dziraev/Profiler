@@ -52,7 +52,6 @@ export function linkIsNotClicked() {
 export function countriesLoad() {
   return async (dispatch) => {
     try {
-      // const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/countries`);
       const token = localStorage.getItem('token');
       const response = await fetch(`${process.env.API_URL}/api/v1/countries`, {
         method: 'GET',
@@ -90,7 +89,6 @@ export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
-      // const response = await fetch('https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes');
       const token = localStorage.getItem('token');
       const response = await fetch(`${process.env.API_URL}/api/v1/phonecodes`, {
         method: 'GET',
@@ -113,7 +111,6 @@ export function phoneCodesLoad() {
 export function positionsLoad() {
   return async (dispatch) => {
     try {
-      // const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/positions`);
       const token = localStorage.getItem('token');
       const response = await fetch(`${process.env.API_URL}/api/v1/positions`, {
         method: 'GET',
