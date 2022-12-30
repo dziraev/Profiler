@@ -2,8 +2,8 @@
 .inputContainer {
     position: relative;
     width: 100%;
-
 }
+
 .input {
     font-family: "Red Hat Display";
     font-size: 1.125rem;
@@ -71,6 +71,8 @@
     transform: translateY(2px);
     @media (min-width: 767.98px) {
         transform: translateY(6px);
+        font-size: 0.75em;
+        line-height: 1.333;
     }
     svg {
         flex: 0 0 14px;
@@ -82,10 +84,6 @@
     }
     span + svg {
         display: none;
-    }
-    @media (min-width: 767.98px) {
-        font-size: 0.75em;
-        line-height: 1.333;
     }
 }
 

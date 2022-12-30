@@ -45,7 +45,7 @@ const LoginPage = (props) => {
                     <Input
                       name='email'
                       label={'Email'}
-                      activeLabel={'Enter your password'}
+                      activeLabel={'Enter your email'}
                       maxLength={50}
                     />
                   </div>

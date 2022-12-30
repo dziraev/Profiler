@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useField } from 'formik';
-import { selectPositions } from '@components/fields/selectors/Select/selectors';
+import { selectPositions } from '@components/fields/selectors/SelectPositons/selectors';
 import styles from '../Select.module.scss';
 
 export const SelectPositions = ({ label, disabled, setFieldValue, ...props }) => {
@@ -65,7 +65,7 @@ export const SelectPositions = ({ label, disabled, setFieldValue, ...props }) =>
           </svg>
         </div>
       </div>
-      {isVisible && positions.length && (
+      {isVisible && positions.length > 0 && (
         <div className={styles.select__dropdown}>
           {positions.map((position) => (
             <div

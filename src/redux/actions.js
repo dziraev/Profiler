@@ -5,9 +5,10 @@ import {
   COUNTRIES_SEARCH,
   EDITMODE_OFF,
   EDITMODE_ON,
+  LINK_IS_CLICKED,
+  LINK_IS_NOT_CLICKED,
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
-  PHONECODE_COUNTRYFLAG_UPDATE,
   PHONECODES_LOAD,
   POSITIONS_LOAD
 } from './types';
@@ -36,12 +37,24 @@ export function editModeOff() {
   };
 }
 
+export function linkIsClicked() {
+  return {
+    type: LINK_IS_CLICKED
+  };
+}
+
+export function linkIsNotClicked() {
+  return {
+    type: LINK_IS_NOT_CLICKED
+  };
+}
+
 export function countriesLoad() {
   return async (dispatch) => {
     try {
       // const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/countries`);
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}:8080/api/v1/countries`, {
+      const response = await fetch(`${process.env.API_URL}/api/v1/countries`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer_' + token,
@@ -73,19 +86,13 @@ export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
     phoneCodeId
   };
 }
-export function phoneCodesCountryFlagUpdate(countryFlag) {
-  return {
-    type: PHONECODE_COUNTRYFLAG_UPDATE,
-    countryFlag
-  };
-}
 
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
-      // const response = await fetch('https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes);
+      // const response = await fetch('https://63a88eec100b7737b98198c8.mockapi.io/api/v1/phonecodes');
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}:8080/api/v1/phonecodes`, {
+      const response = await fetch(`${process.env.API_URL}/api/v1/phonecodes`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer_' + token,
@@ -108,7 +115,7 @@ export function positionsLoad() {
     try {
       // const response = await fetch(`https://63a88eec100b7737b98198c8.mockapi.io/api/v1/positions`);
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}:8080/api/v1/positions`, {
+      const response = await fetch(`${process.env.API_URL}/api/v1/positions`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer_' + token,
