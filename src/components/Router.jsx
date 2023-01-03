@@ -20,6 +20,7 @@ const MainRoutes = () => (
       <Route path='to-cv' element={<MyCV />} />
     </Route>
     <Route path='/*' element={<Navigate to='/main/personal-details' />} />
+    <Route path='/error' element={<NotFoundPage />} />
   </Routes>
 );
 

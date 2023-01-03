@@ -1,0 +1,102 @@
+@use '../../static/scss/global';
+.page {
+    max-width: 1168px;
+    margin: 0 auto;
+    padding: 0 32px;
+    &__logo {
+        padding: 70px 0 99px;
+    }
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        text-align: center;
+        gap: 34px;
+        width: 100%;
+    }
+    &__content {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        gap: 40px;
+    }
+    &__title {
+        font-size: 3em;
+        line-height: 1.32;
+        font-weight: 600;
+        color: global.$text-primary-dark-blue;
+    }
+    &__subtitle {
+        font-size: 1.5em;
+        line-height: 1.32;
+        font-weight: 400;
+        color: global.$text-primary-dark-blue;
+        max-width: 440px;
+        & a {
+            font-weight: 700;
+            color: global.$text-primary-blue;
+        }
+    }
+    @media (max-width: 768px) {
+        max-width: 704px;
+        margin: 0 auto;
+        &__logo {
+            padding: 24px 0 16px;
+        }
+        &__container {
+            flex-direction: column-reverse;
+            gap: 36px;
+            max-width: 610px;
+            margin: 0 auto;
+        }
+        &__image img {
+            width: 336px;
+            height: 280px;
+        }
+        &__content {
+            text-align: center;
+            align-items: center;
+            gap: 24px;
+        }
+        &__title {
+            font-size: 2.25em;
+        }
+        &__subtitle {
+            max-width: 468px;
+        }
+    }
+    @media (max-width: 360px) {
+        max-width: 328px;
+        padding: 0 16px;
+        margin: 0 auto;
+        &__logo {
+            padding: 16px 0 24px;
+            & img {
+                width: 86px;
+                height: 75px;
+            }
+        }
+        &__container {
+            gap: 30px;
+            max-width: 328px;
+        }
+        &__image img {
+            width: 248px;
+            height: 168px;
+        }
+        &__content {
+            gap: 16px;
+        }
+        &__title {
+            font-size: 1.25em;
+        }
+        &__subtitle {
+            max-width: 328px;
+            font-size: 1em;
+            & a {
+                font-weight: 500;
+            }
+        }
+    }
+}
