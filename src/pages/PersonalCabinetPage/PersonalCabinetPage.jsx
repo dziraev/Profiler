@@ -28,7 +28,6 @@ const PersonalCabinetPage = (props) => {
           </svg>
         </div>
       </div>
-      <div className={styles.page__background}></div>
       <div className={styles.page__container}>
         <div className={styles.page__sidebar}>
             <NavMenu menuIsOpen={menuIsOpen} closeMenu={openAndCloseMenu} />
