@@ -3,13 +3,13 @@
     width: 100%;
     text-align: center;
     overflow: hidden;
-    margin: 98px 0 0;
+    margin: 24px 0 94px;
 
     &__title {
-        max-width: 640px;
+        width: 768px;
         font-weight: 400;
-        line-height: 1.33;
-        font-size: 1.875em;
+        line-height: 1.32;
+        font-size: 1.5em;
         text-align: center;
         margin: auto;
     }
@@ -17,27 +17,27 @@
         color: global.$text-primary-blue;
         font-weight: 700;
     }
-    @media (max-width: 1439.98px) {
-        margin: 40.69px 0 0;
+    @media (max-width: 1535px) {
         &__title {
-            max-width: 346px;
-            line-height: 1.32;
-            font-size: 1.25em;
+            width: 598px;
         }
     }
-    @media (max-width: 767.98px) {
-        margin: 80.57px 0 50px;
-        background: global.$background-main url("../../static/images/background-personal-cabinet.png") center / cover no-repeat;
-
+    @media (max-width: 1365px) {
+        margin: 86px 0 60px;
         &__title {
-            max-width: 302px;
+            max-width: 328px;
+            font-weight: 500;
             line-height: 1.32;
-            font-size: 1.25em;
+            font-size: 1em;
             text-align: center;
-            margin: auto;
         }
         &__title_highlighted {
             font-weight: 700;
+        }
+    }
+    @media (max-width: 360px) {
+        &__title {
+            width: 100%;
         }
     }
 }
