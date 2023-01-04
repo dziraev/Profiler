@@ -26,7 +26,7 @@ export const SelectPositions = ({ label, activeLabel, disabled, setFieldValue, .
   const onClickListPosition = (value) => {
     setIsVisible(false);
     if (value.name === 'None') {
-      setFieldValue('positionId', 'null');
+      setFieldValue('positionId', '');
       setValue('');
     } else {
       setFieldValue('positionId', value.id);
