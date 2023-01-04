@@ -28,13 +28,17 @@
 }
 
 .sidebar {
-    width: 100%;
+    width: 320px;
     background: global.$background-sidebar;
     padding: 30px 0 0 50px;
     display: flex;
     flex-direction: column;
     text-align: left;
-    height: 100vh;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
     &_open__header {
         display: none;
     }
@@ -101,6 +105,7 @@
     @media (max-width: 1365px) {
         background: global.$background-main url("../../static/images/background-personal-cabinet-burger.png") 0 calc(100% - 54px) / contain no-repeat;
         width: 428px;
+        height: 100vh;
         margin: 0 auto;
         position: absolute;
         z-index: 3;
