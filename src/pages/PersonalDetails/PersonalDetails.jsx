@@ -153,6 +153,7 @@ const PersonalDetails = (props) => {
                   <SelectPositions
                     name='position'
                     label='Position'
+                    activeLabel='Choose your position'
                     disabled={!isEdit}
                     setFieldValue={setFieldValue}
                   />

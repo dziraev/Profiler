@@ -4,17 +4,16 @@ import { useField } from 'formik';
 import { selectPositions } from '@components/fields/selectors/SelectPositons/selectors';
 import styles from '../Select.module.scss';
 
-export const SelectPositions = ({ label, disabled, setFieldValue, ...props }) => {
+export const SelectPositions = ({ label, activeLabel, disabled, setFieldValue, ...props }) => {
   const positions = useSelector(selectPositions);
   const [isVisible, setIsVisible] = useState(false);
   const [field, meta, helpers] = useField(props.name);
   const positionRef = useRef(null);
   const { setValue } = helpers;
   const { value } = field;
-
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener('click', handleClickOutside, { capture: true });
+    return () => document.removeEventListener('click', handleClickOutside, { capture: true });
   }, []);
 
   function handleClickOutside(e) {
@@ -26,10 +25,13 @@ export const SelectPositions = ({ label, disabled, setFieldValue, ...props }) =>
 
   const onClickListPosition = (value) => {
     setIsVisible(false);
-    value.name === 'None'
-      ? setFieldValue('positionId', 'null')
-      : setFieldValue('positionId', value.id);
-    setValue(value.name);
+    if (value.name === 'None') {
+      setFieldValue('positionId', 'null');
+      setValue('');
+    } else {
+      setFieldValue('positionId', value.id);
+      setValue(value.name);
+    }
   };
 
   return (
@@ -43,10 +45,10 @@ export const SelectPositions = ({ label, disabled, setFieldValue, ...props }) =>
         style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         onClick={() => setIsVisible((prev) => !prev)}
       >
-        {!!value && value !== 'None' && value}
-        {(!value || value === 'None') && !isVisible && (
-          <span className={styles.select__placeholder}>{label}</span>
-        )}
+        {!!value && !isVisible && value}
+        {!value && !isVisible && <span className={styles.select__placeholder}>{label}</span>}
+        {isVisible && <span className={styles.select__placeholder}>{activeLabel}</span>}
+
         <div className={isVisible ? styles.select__arrowOpen : styles.select__arrow}>
           <svg
             width='12'
