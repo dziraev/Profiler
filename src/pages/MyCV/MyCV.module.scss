@@ -17,7 +17,6 @@
     border-radius: 20px;
     text-align: center;
     padding: 81px 23px;
-
     &__content {
       color: global.$text-primary-blue;
       font-size: 1.125em;
@@ -46,6 +45,37 @@
       font-weight: 600;
       color: #000000;
       text-align: left;
+    }
+  }
+  @media (max-width: 1365px) {
+    width: 100%;
+    &__title {
+      font-size: 1em;
+      margin: 0 0 24px 0;
+    }
+    &__container {
+      width: 191px;
+      height: 220px;
+      padding: 79px 21px;
+      margin: 0 auto;
+      &__content {
+        font-size: 0.75em;
+        max-width: 148px;
+      }
+    }
+    &__label {
+      display: none;
+    }
+  }
+  @media (max-width: 428px) {
+    &__title {
+      margin: 0 0 24px 16px;
+    }
+  }
+  @media (max-width: 360px) {
+    &__container {
+      width: 158px;
+      padding: 79px 4px;
     }
   }
 }
