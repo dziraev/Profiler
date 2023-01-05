@@ -56,7 +56,7 @@ export function countriesLoad() {
       const response = await fetch(`${process.env.API_URL}/api/v1/countries`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer_' + token,
+          Authorization: 'Bearer' + token,
           'Content-Type': 'application/json'
         }
       });
@@ -93,7 +93,7 @@ export function phoneCodesLoad() {
       const response = await fetch(`${process.env.API_URL}/api/v1/phonecodes`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer_' + token,
+          Authorization: 'Bearer' + token,
           'Content-Type': 'application/json'
         }
       });
@@ -115,7 +115,7 @@ export function positionsLoad() {
       const response = await fetch(`${process.env.API_URL}/api/v1/positions`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer_' + token,
+          Authorization: 'Bearer' + token,
           'Content-Type': 'application/json'
         }
       });
