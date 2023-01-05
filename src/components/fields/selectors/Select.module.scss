@@ -10,7 +10,7 @@
         height: 48px;
         border-radius: 15px;
         background-color: global.$input-background;
-        padding: 0.6875rem 0.9375rem;
+        padding: 0.6875rem 0.875rem;
         border: 1px solid transparent;
         font-size: 1.125rem;
         line-height: 1.333;
@@ -41,7 +41,7 @@
         position: absolute;
         font-size: 0;
         top: 50%;
-        right: 22px;
+        right: 16px;
         transform: translateY(-50%) rotate(0);
         transition: transform 0.3s ease 0s;
     }

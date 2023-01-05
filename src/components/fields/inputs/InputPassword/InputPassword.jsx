@@ -22,7 +22,7 @@ export const InputPassword = (props) => {
       <input
         {...props}
         {...field}
-        className={`${styles.input} ${
+        className={`${styles.input} ${styles.input_paddingRight} ${
           meta.error && meta.touched && typeof meta.error === 'string' ? styles.input__error : ''
         }`}
         onFocus={handleFocus}

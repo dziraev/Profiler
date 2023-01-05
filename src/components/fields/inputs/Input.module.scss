@@ -7,9 +7,8 @@
 .input {
     font-family: "Red Hat Display";
     font-size: 1.125rem;
-    line-height: 1.3333;
-    padding: 0.6875rem 0.9375rem;
-    padding-right: 3rem;
+    line-height: 1.3334;
+    padding: 0.6875rem 0.875rem;
     border-radius: 15px;
     background-color: global.$input-background;
     width: 100%;
@@ -19,6 +18,10 @@
     color: global.$text-primary-dark-blue;
     cursor: text;
     border: 1px solid transparent;
+
+    &_paddingRight {
+        padding-right: 3rem;
+    }
 
     &:hover, &:focus {
         border-color:global.$input-stroke-active;

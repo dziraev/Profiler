@@ -88,7 +88,7 @@ export const SelectPhoneNumber = ({
                 alt='flag'
               />
             )}
-            {value}
+            <span>+{value}</span>
           </div>
           <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
             <svg
@@ -142,7 +142,7 @@ export const SelectPhoneNumber = ({
                     />
                     {phoneCode.country.countryName}
                   </div>
-                  <div className={styles.selectPhone__countryCode}>{phoneCode.code}</div>
+                  <div className={styles.selectPhone__countryCode}>+{phoneCode.code}</div>
                 </div>
                 {index === 4 && <div className={styles.selectPhone__line}></div>}
               </React.Fragment>
