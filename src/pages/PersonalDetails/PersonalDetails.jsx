@@ -17,6 +17,8 @@ import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
+import  { Notification }  from '../../components/tooltip/Notification';
+import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = (props) => {
@@ -34,7 +36,12 @@ const PersonalDetails = (props) => {
 
   return (
     <section className={styles.wrapper}>
-      <h2 className={styles.title}>Personal details</h2>
+      <div className={styles.blockTitle}>
+        <h2 className={styles.title}>Personal details</h2>
+        <Notification>
+          <img src={info} alt='notification'></img>
+        </Notification>
+      </div>
       <Formik
         enableReinitialize={true}
         initialValues={personalDetails}
