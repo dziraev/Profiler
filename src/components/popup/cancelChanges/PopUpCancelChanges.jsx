@@ -2,12 +2,8 @@ import React from 'react';
 import styles from '../PopUp.module.scss';
 import { CancelButton } from '../../buttons/CancelButton/CancelButton';
 import { Button } from '../../buttons/Button/Button';
-import { useDispatch } from 'react-redux';
-import { editModeOff, cancelIsNotClicked } from '../../../redux/actions';
 
-export const PopUpCancelChanges = ({ children, ...props }) => {
-    const dispatch = useDispatch();
-  
+export const PopUpCancelChanges = ({ children, ...props}) => {
     return (
     <div className={styles.modal}>
         <div className={styles.modal__bcg}>
@@ -18,19 +14,21 @@ export const PopUpCancelChanges = ({ children, ...props }) => {
                 <div className={styles.modal__content__btns}>
                     <div className={styles.modal__content__btns__again}>
                         <Button
-                        type='submit'
+                        type='reset'
+                        onClick={(e) => {
+                          props.handleReset(e);
+                          props.setCancelIsClicked(false)
+                        }}
                         >
                             Yes
                         </Button>
                     </div>
                     <div className={styles.modal__content__btns__cancel} >
                         <CancelButton 
-                        type='reset'
-                        // onClick={(e) => {
-                        //   dispatch(editModeOff());
-                        //   dispatch(linkIsNotClicked());
-                        //   props.handleReset(e);
-                        // }}
+                        type='submit'
+                        onClick={(e) => {
+                            props.setCancelIsClicked(false)
+                          }}
                         >
                             No
                         </CancelButton>

@@ -103,11 +103,11 @@ const PersonalDetails = (props) => {
               {errorResponse && (
                 <PopUpTryAgain>Failed to save data. Please try again</PopUpTryAgain>
               )}
-              {cancelIsClicked && (
-                <PopUpCancelChanges>
+              {cancelIsClicked ? (
+                <PopUpCancelChanges handleSubmit={handleSubmit} handleReset={handleReset} setCancelIsClicked={setCancelIsClicked}>
                   Do you really want to cancel the changes?
-                </PopUpCancelChanges>
-              )}
+                </PopUpCancelChanges> 
+              ) : false}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails
