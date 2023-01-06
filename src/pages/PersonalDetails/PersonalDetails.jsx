@@ -17,6 +17,7 @@ import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
+import $api from '../../http/api';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = (props) => {
@@ -44,30 +45,18 @@ const PersonalDetails = (props) => {
             if (typeof values[key] === 'string') values[key] = values[key].trim();
           }
           try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.API_URL}/api/v1/profile`, {
-              method: 'POST',
-              headers: {
-                Authorization: 'Bearer_' + token,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                name: values.name || null,
-                surname: values.surname || null,
-                countryId: values.countryId || null,
-                email: values.email || null,
-                phoneCodeId: values.phoneCodeId || null,
-                cellPhone: values.cellPhone || null,
-                positionId: values.positionId || null
-              })
+            const response = await $api.post('/profile', {
+              name: values.name || null,
+              surname: values.surname || null,
+              countryId: values.countryId || null,
+              email: values.email || null,
+              phoneCodeId: values.phoneCodeId || null,
+              cellPhone: values.cellPhone || null,
+              positionId: values.positionId || null
             });
-            if (!response.ok) {
-              setErrorResponse(true);
-            } else {
-              dispatch(personalDetailsUpdate(values));
-              dispatch(editModeOff());
-              dispatch(linkIsNotClicked());
-            }
+            dispatch(personalDetailsUpdate(values));
+            dispatch(editModeOff());
+            dispatch(linkIsNotClicked());
           } catch (e) {
             setErrorResponse(true);
           }
@@ -80,7 +69,7 @@ const PersonalDetails = (props) => {
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty, setFieldValue, handleSubmit, handleReset } = formik;
+          const { dirty, isSubmitting, setFieldValue, handleSubmit, handleReset } = formik;
 
           return (
             <Form className={styles.form}>
@@ -162,7 +151,11 @@ const PersonalDetails = (props) => {
               <div className={styles.form__buttons}>
                 {!isEdit && (
                   <div className={styles.form__button}>
-                    <Button type='button' onClick={() => dispatch(editModeOn())}>
+                    <Button
+                      type='button'
+                      disabled={isSubmitting}
+                      onClick={() => dispatch(editModeOn())}
+                    >
                       Edit
                     </Button>
                   </div>

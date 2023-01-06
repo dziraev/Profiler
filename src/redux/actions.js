@@ -13,6 +13,7 @@ import {
   POSITIONS_LOAD
 } from './types';
 import uniqid from 'uniqid';
+import $api from '../http/api';
 
 export function authIn() {
   return {
@@ -52,18 +53,10 @@ export function linkIsNotClicked() {
 export function countriesLoad() {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}/api/v1/countries`, {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer' + token,
-          'Content-Type': 'application/json'
-        }
-      });
-      const jsonData = await response.json();
+      const { data } = await $api.get('countries');
       dispatch({
         type: COUNTRIES_LOAD,
-        data: jsonData
+        data
       });
     } catch (e) {
       console.log(e);
@@ -89,18 +82,10 @@ export function phoneCodesAndIdUpdate(phoneCode, phoneCodeId) {
 export function phoneCodesLoad() {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}/api/v1/phonecodes`, {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer' + token,
-          'Content-Type': 'application/json'
-        }
-      });
-      const jsonData = await response.json();
+      const { data } = await $api.get('phonecodes');
       dispatch({
         type: PHONECODES_LOAD,
-        data: jsonData
+        data
       });
     } catch (e) {
       console.log(e);
@@ -111,18 +96,10 @@ export function phoneCodesLoad() {
 export function positionsLoad() {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.API_URL}/api/v1/positions`, {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer' + token,
-          'Content-Type': 'application/json'
-        }
-      });
-      const jsonData = await response.json();
+      const { data } = await $api.get('positions');
       dispatch({
         type: POSITIONS_LOAD,
-        data: [{ id: uniqid(), name: 'None' }, ...jsonData]
+        data: [{ id: uniqid(), name: 'None' }, ...data]
       });
     } catch (e) {
       console.log(e);

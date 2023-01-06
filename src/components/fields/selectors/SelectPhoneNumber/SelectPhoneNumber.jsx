@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
-import {
-  findCountryFlagByPhoneCodeId,
-  findPhoneCodeByCountryId
-} from '../../../../utils/findPhoneCodeByCountryId';
-import { phoneCodesAndIdUpdate } from '../../../../redux/actions';
+import { findCountryCodeByPhoneCodeId } from '../../../../utils/findCountryCodeByPhoneCodeId';
+import { findPhoneCodeByCountryId } from '../../../../utils/findPhoneCodeByCountryId';
 import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesSelect from '../Select.module.scss';
@@ -19,10 +16,9 @@ export const SelectPhoneNumber = ({
   setFieldValue,
   ...props
 }) => {
-  const dispatch = useDispatch();
   const phoneCodes = useSelector(selectPhoneCodes);
   const phoneCodeId = useSelector(selectPersonalDetailsPhoneCodeId);
-  const [countryFlag, setCountryFlag] = useState(false);
+  const [countryCode, setCountryCode] = useState({ code: '', flag: '' });
   const [field, meta, helper] = useField(props.name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
@@ -34,38 +30,42 @@ export const SelectPhoneNumber = ({
     if (foundPhoneCode && countryId) {
       setValue(foundPhoneCode.code);
       setFieldValue('phoneCodeId', foundPhoneCode.id);
-      setCountryFlag(foundPhoneCode.country.countryName);
+      setCountryCode({ code: foundPhoneCode.code, flag: foundPhoneCode.country.countryName });
     }
-    if (!value && phoneCodes.length) {
-      dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
-      setCountryFlag(phoneCodes[0].country.countryName);
+    if (!value && phoneCodes.length && !countryId) {
+      setCountryCode({ code: phoneCodes[0].code, flag: phoneCodes[0].country.countryName });
     }
     if (value && phoneCodes.length && !countryId) {
-      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
-      setCountryFlag(countryFlag);
+      const countryCode = findCountryCodeByPhoneCodeId(phoneCodes, phoneCodeId);
+      setCountryCode({ code: countryCode.code, flag: countryCode.country.countryName });
     }
   }, [countryId, phoneCodes]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, [phoneCodeId]);
+  }, [phoneCodes, phoneCodeId]);
 
-  function handleClickOutside(e) {
+  const handleClickOutside = (e) => {
     const { current } = positionRef;
     if (current && !current.contains(e.target)) {
       setIsVisible(false);
     }
-    if (e.target.closest('button[type=reset]')) {
-      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
-      setCountryFlag(countryFlag);
+    if (e.target.closest('button[type=reset]') && phoneCodes.length >= 1) {
+      const countryCode = findCountryCodeByPhoneCodeId(phoneCodes, phoneCodeId);
+      countryCode
+        ? setCountryCode({
+            code: countryCode.code,
+            flag: countryCode.country.countryName
+          })
+        : setCountryCode({ code: phoneCodes[0].code, flag: phoneCodes[0].country.countryName });
     }
-  }
+  };
 
   const onClickListPhoneCodes = (value) => {
     setIsVisible(false);
     setValue(value.code);
-    setCountryFlag(value.country.countryName);
+    setCountryCode({ code: value.code, flag: value.country.countryName });
     setFieldValue('phoneCodeId', value.id);
   };
 
@@ -82,13 +82,13 @@ export const SelectPhoneNumber = ({
           onClick={() => setIsVisible((prev) => !prev)}
         >
           <div className={styles.selectPhone__phoneCode}>
-            {countryFlag && (
+            {!!countryCode.flag && (
               <img
-                src={require(`../../../../static/images/countryFlags/${countryFlag}.svg`)}
+                src={require(`../../../../static/images/countryFlags/${countryCode.flag}.svg`)}
                 alt='flag'
               />
             )}
-            <span>+{value}</span>
+            <span>+{countryCode.code}</span>
           </div>
           <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
             <svg

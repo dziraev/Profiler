@@ -2,7 +2,6 @@ import { PERSONALDETAILS_UPDATE, PHONECODE_AND_ID_UPDATE } from '../../types';
 
 const initialState = {
   personalDetails: {
-    userId: '',
     name: '',
     surname: '',
     email: '',
