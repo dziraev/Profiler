@@ -18,7 +18,11 @@ import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
 import $api from '../../http/api';
+import  { Notification }  from '../../components/tooltip/Notification';
+import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
+import { PopUpCancelChanges } from '../../components/popup/cancelChanges/PopUpCancelChanges';
+
 
 const PersonalDetails = (props) => {
   const [errorResponse, setErrorResponse] = useState(false);
@@ -27,6 +31,8 @@ const PersonalDetails = (props) => {
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const linkIsClicked = useSelector((state) => state.linkIsClickedReducer.linkIsClicked);
   const [countryId, setCountryId] = useState(null);
+  const [cancelIsClicked, setCancelIsClicked] = useState(false);
+
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
@@ -35,7 +41,12 @@ const PersonalDetails = (props) => {
 
   return (
     <section className={styles.wrapper}>
-      <h2 className={styles.title}>Personal details</h2>
+      <div className={styles.blockTitle}>
+        <h2 className={styles.title}>Personal details</h2>
+        <Notification>
+          <img src={info} alt='notification'></img>
+        </Notification>
+      </div>
       <Formik
         enableReinitialize={true}
         initialValues={personalDetails}
@@ -81,6 +92,11 @@ const PersonalDetails = (props) => {
               {errorResponse && (
                 <PopUpTryAgain>Failed to save data. Please try again</PopUpTryAgain>
               )}
+              {cancelIsClicked ? (
+                <PopUpCancelChanges handleSubmit={handleSubmit} handleReset={handleReset} setCancelIsClicked={setCancelIsClicked}>
+                  Do you really want to cancel the changes?
+                </PopUpCancelChanges> 
+              ) : false}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails
@@ -163,7 +179,7 @@ const PersonalDetails = (props) => {
                 {isEdit && (
                   <>
                     <div className={styles.form__button}>
-                      <CancelButton type='reset'>Cancel</CancelButton>
+                      <CancelButton type='reset' onClick={() => {setCancelIsClicked(!cancelIsClicked)}}>Cancel</CancelButton>
                     </div>
                     <div className={styles.form__button}>
                       <Button type='submit' disabled={!dirty}>
@@ -172,6 +188,7 @@ const PersonalDetails = (props) => {
                     </div>
                   </>
                 )}
+                
               </div>
             </Form>
           );
