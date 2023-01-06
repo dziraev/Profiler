@@ -2,12 +2,11 @@
 .button {
     font-family:"Red Hat Display";
     width: 100%;
-    padding: 0.6875rem;
-
+    padding: 0.8125rem;
     border: 1px solid global.$button-default;
-    font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.3;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.3125;
     background-color: global.$background-main;
     border-radius: 15px;
     text-align: center;
@@ -15,8 +14,10 @@
     cursor: pointer;
     outline: none;
     user-select: none;
-    @media (min-width: 767.98px) {
+    @media (min-width: 1365px) {
         padding: 0.9375rem;
+        font-weight: 700;
+        font-size: 1.25rem;
     }
     &:hover, &:focus {
        background-color: global.$cancel-button-background;

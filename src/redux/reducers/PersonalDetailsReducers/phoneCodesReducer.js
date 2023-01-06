@@ -1,4 +1,4 @@
-import { PHONECODES_LOAD } from './types';
+import { PHONECODES_LOAD } from '../../types';
 
 const initialState = {
   phoneCodes: []

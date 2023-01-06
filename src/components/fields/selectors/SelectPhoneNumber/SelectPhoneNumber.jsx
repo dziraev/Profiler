@@ -88,7 +88,7 @@ export const SelectPhoneNumber = ({
                 alt='flag'
               />
             )}
-            {value}
+            <span>+{value}</span>
           </div>
           <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
             <svg
@@ -125,25 +125,27 @@ export const SelectPhoneNumber = ({
           {meta.error}
         </div>
       )}
-      {isVisible && phoneCodes.length > 1 && (
+      {isVisible && phoneCodes.length >= 1 && (
         <div className={styles.selectPhone__modal}>
           <div className={styles.selectPhone__dropdown}>
             <div className={styles.selectPhone__title}>Country</div>
-            {phoneCodes.map((phoneCode) => (
-              <div
-                className={styles.selectPhone__item}
-                key={phoneCode.id}
-                onClick={() => onClickListPhoneCodes(phoneCode)}
-              >
-                <div className={styles.selectPhone__countryName}>
-                  <img
-                    src={require(`../../../../static/images/countryFlags/${phoneCode.country.countryName}.svg`)}
-                    alt='flag'
-                  />
-                  {phoneCode.country.countryName}
+            {phoneCodes.map((phoneCode, index) => (
+              <React.Fragment key={phoneCode.id}>
+                <div
+                  className={styles.selectPhone__item}
+                  onClick={() => onClickListPhoneCodes(phoneCode)}
+                >
+                  <div className={styles.selectPhone__countryName}>
+                    <img
+                      src={require(`../../../../static/images/countryFlags/${phoneCode.country.countryName}.svg`)}
+                      alt='flag'
+                    />
+                    {phoneCode.country.countryName}
+                  </div>
+                  <div className={styles.selectPhone__countryCode}>+{phoneCode.code}</div>
                 </div>
-                <div className={styles.selectPhone__countryCode}>{phoneCode.code}</div>
-              </div>
+                {index === 4 && <div className={styles.selectPhone__line}></div>}
+              </React.Fragment>
             ))}
           </div>
         </div>

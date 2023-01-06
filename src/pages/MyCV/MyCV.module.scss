@@ -1,21 +1,22 @@
 @use '../../static/scss/global';
 .page {
-  margin: 77px 0 0 81px;
+  margin: 0 auto;
+  width: 1055px;
   &__title {
     font-size: 1.625em;
     line-height: 1.32;
     font-weight: 600;
     color: global.$text-primary-dark-blue;
-    margin-bottom: 40px;
+    margin: 0 0 40px 0;
     text-align: left;
   }
   &__container {
     background: global.$background-sidebar;
     width: 200px;
-    height: 270px;
+    height: 252px;
     border-radius: 20px;
     text-align: center;
-    padding: 94px 23px 0;
+    padding: 81px 23px;
     &__content {
       color: global.$text-primary-blue;
       font-size: 1.125em;
@@ -32,7 +33,6 @@
     width: 32px;
     height: 32px;
     padding: 7px 9px;
-    cursor: pointer;
   }
   &__label {
     display: flex;
@@ -45,6 +45,37 @@
       font-weight: 600;
       color: #000000;
       text-align: left;
+    }
+  }
+  @media (max-width: 1365px) {
+    width: 100%;
+    &__title {
+      font-size: 1em;
+      margin: 0 0 24px 0;
+    }
+    &__container {
+      width: 191px;
+      height: 220px;
+      padding: 79px 21px;
+      margin: 0 auto;
+      &__content {
+        font-size: 0.75em;
+        max-width: 148px;
+      }
+    }
+    &__label {
+      display: none;
+    }
+  }
+  @media (max-width: 428px) {
+    &__title {
+      margin: 0 0 24px 16px;
+    }
+  }
+  @media (max-width: 360px) {
+    &__container {
+      width: 158px;
+      padding: 79px 4px;
     }
   }
 }

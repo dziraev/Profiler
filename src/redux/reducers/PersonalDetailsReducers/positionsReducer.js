@@ -1,4 +1,4 @@
-import { POSITIONS_LOAD } from './types';
+import { POSITIONS_LOAD } from '../../types';
 
 const initialState = {
   positions: []

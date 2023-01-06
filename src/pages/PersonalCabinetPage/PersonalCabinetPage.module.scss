@@ -2,16 +2,9 @@
 .page {
     min-height: 100vh;
     text-align: center;
-    
-    &__background {
-        position: absolute;
-        z-index: -1;
-        margin: 126px 0 91.45px;
-        width: 100vw;
-        height: 220px;
-        background: global.$background-main url("../../static/images/background-personal-cabinet.png") center / cover no-repeat;
-    }
+    width: 100vw;
     &__container {
+        background: global.$background-main url("../../static/images/background-personal-cabinet.png") top center / contain no-repeat;
         margin: 0 auto;
         display: flex;
         justify-content: center;
@@ -23,36 +16,26 @@
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
-        width: 75%;
+        width: calc(100% - 320px);
     }
     &__header {
-        margin: 38px 0 91.45px;
-        height: 216px;
+
     }
     &__main {
 
     }
     &__sidebar {
-        flex-basis: 25%;
+        flex-basis: 320px;
+        position: relative;
     }
-    @media (max-width: 1439.98px) {
-        &__background {
-            margin: 52px 0 44px;
-        }
-        &__sidebar {
-            flex-basis: 32%;
-        }
-        &__content {
-            width: 68%;
-        }
-        &__header {
-            margin: 52px 0 44px;
-            height: 126px;
-        }
-    }
-    @media (max-width: 767.98px) {
+    @media (max-width: 1365px) {
         &__container {
             display: block;
+            width: 428px;
+            background: global.$background-main url("../../static/images/background-personal-cabinet-small.png") 0 56px / contain no-repeat;
+        }
+        &__header {
+
         }
         &__content {
             width: 100%;
@@ -60,24 +43,24 @@
         &__sidebar {
             width: 100%;
         }
-        &__background {
-            display: none;
-        }
-        &__header {
-            margin: 0;
-            height: fit-content;
+    }
+    @media (max-width: 428px) {
+        &__container {
+            width: 100%;
         }
     }
 }
 .header {
     display: none;
-    @media (max-width: 767.98px) {
+    @media (max-width: 1365px) {
         display: flex;
-        width: 100%;
+        width: 428px;
         justify-content: space-between;
         height: 70.57px;
-        padding: 20px 15px 0 18.75px;
+        padding: 20px 16px 0;
         position: fixed;
+        top: 0;
+        right: calc(50% - 428px/2);
         z-index: 2;
         backdrop-filter: blur(2px);
         background: rgba(255, 255, 255, 0.1);
@@ -88,16 +71,17 @@
             cursor: pointer;
         }
     }
+    @media (max-width: 428px) {
+        width: 100%;
+        right: 0;
+    }
 }
 .exit {
     align-self: flex-end;
-    margin: 66px 112px 0 0;
+    margin: 50px 50px 0 0;
     font-size: 1.25em;
     line-height: 1.32;
-    @media (max-width: 1439.98px) {
-        margin: 46px 32px 0 0;
-    }
-    @media (max-width: 767.98px) {
+    @media (max-width: 1365px) {
         display: none;
     }
 }

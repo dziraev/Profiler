@@ -28,61 +28,72 @@
 }
 
 .sidebar {
-    width: 100%;
+    width: 320px;
     background: global.$background-sidebar;
-    padding: 50px 0 0 60px;
+    padding: 30px 0 0 50px;
     display: flex;
     flex-direction: column;
     text-align: left;
-    height: 100vh;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
     &_open__header {
         display: none;
     }
     &__logo {
-        padding: 0 0 63px;
-        width: fit-content;
-        padding-left: 10px;
+        padding: 0 0 40px 0;
+        & img {
+            width: 130px;
+            height: 44px;
+        }
     }
     &__photo {
-        height: 200px;
-        width: 200px;
-        margin-left: 10px;
+        height: 140px;
+        width: 140px;
+        margin-left: 40px;
         background: global.$background-main;
         border: global.$text-primary-blue solid 1px;
         border-radius: 50%;
-        padding: 72px 34px 72px 34px;
+        padding: 48px 20px;
     }
     &__photo__button {
-        width: 32px;
-        height: 32px;
+        width: 24px;
+        height: 24px;
         margin: auto;
         background-color: #F0F5FF;
         border-radius: 50%;
-        padding: 7px 9px;
+        padding: 6.75px;
+        & svg {
+            display: block;
+        }
     }
     &__photo__title {
         color: global.$text-primary-blue;
         font-weight: 600;
-        font-size: 1.12em;
+        font-size: 0.875em;
         line-height: 1.32;
+        white-space: nowrap;
     }
     &__number {
         color: global.$text-primary-grey;
-        font-size: 1em;
+        font-size: 0.875em;
         font-weight: 500;
         line-height: 1.32;
-        padding: 10px 0 39px 22px;
+        padding: 12px 0px 31px 28px;
     }
     &__number__id {
         font-weight: 400;
+        padding-left: 5px;
     }
     &__nav__link {
         display: flex;
         flex-direction: row;
         column-gap: 12px;
-        padding: 23px 25px;
+        padding: 15px 24px;
         font-weight: 400;
-        font-size: 1.25em;
+        font-size: 1.125em;
         line-height: 1.32;
         color: global.$text-primary-dark-blue;
         position: relative;
@@ -91,34 +102,15 @@
             stroke: global.$text-primary-dark-blue;
         }
     }
-    @media (max-width: 1439.98px) {
-        padding: 30px 0 0 30px;
-        &__nav__link {
-            padding: 23px 28px;
-            column-gap: 10px;
-        }
-        &__logo {
-            padding: 0 0 28px;
-            padding-left: 2px;
-            & img {
-                width: 130px;
-                height: 44px;
-            }
-        }
-        &__number {
-            padding: 10px 0 41px 20px;
-        }
-        &__photo {
-            margin-left: 2px;
-        }
-    }
-    @media (max-width: 767.98px) {
-        background: global.$background-main url("../../static/images/background-cabinet-burger.png") bottom / cover no-repeat;
-        width: 100%;
+    @media (max-width: 1365px) {
+        background: global.$background-main url("../../static/images/background-personal-cabinet-burger.png") 0 calc(100% - 54px) / contain no-repeat;
+        width: 428px;
+        height: 100vh;
+        margin: 0 auto;
         position: absolute;
         z-index: 3;
         top: 0;
-        right: 0;
+        right: calc(50% - 428px/2);
         opacity: 0;
         visibility: hidden;
         transition: opacity 100ms ease-in;
@@ -132,25 +124,29 @@
             display: none;
         }
     }
+    @media (max-width: 428px) {
+        width: 100%;
+        right: 0;
+    }
 }
 
 .sidebar_open.sidebar {
-    @media (max-width: 767.98px) {
+    @media (max-width: 1365px) {
         visibility: visible;
         opacity: 1;
-        padding: 9.57px 15px 0;
+        padding: 20px 16px 0;
         .sidebar {
             &_open__header {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 30px;
+                margin-bottom: 24px;
                 &_exit {
                     cursor: pointer;
                 }
             }
             &__nav__link {
                 column-gap: 8px;
-                padding: 16.5px 0;
+                padding: 12.5px 0;
                 font-size: 1em;
                 color: global.$text-primary-dark-blue;
                 background: transparent;
@@ -221,8 +217,8 @@
 
 .exit{
     display: none;
-    @media (max-width: 767.98px) {
-        margin: auto 0 119.5px;
+    @media (max-width: 1365px) {
+        margin: auto 0 58px;
         display: block;
         & p {
             font-size: 1em;

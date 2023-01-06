@@ -6,6 +6,7 @@ import {
   countriesLoad,
   editModeOff,
   editModeOn,
+  linkIsNotClicked,
   personalDetailsUpdate,
   phoneCodesLoad,
   positionsLoad
@@ -60,9 +61,13 @@ const PersonalDetails = (props) => {
                 positionId: values.positionId || null
               })
             });
-            dispatch(personalDetailsUpdate(values));
-            dispatch(editModeOff());
-            setErrorResponse(false);
+            if (!response.ok) {
+              setErrorResponse(true);
+            } else {
+              dispatch(personalDetailsUpdate(values));
+              dispatch(editModeOff());
+              dispatch(linkIsNotClicked());
+            }
           } catch (e) {
             setErrorResponse(true);
           }
@@ -70,6 +75,7 @@ const PersonalDetails = (props) => {
         onReset={() => {
           dispatch(editModeOff());
           setErrorResponse(false);
+          dispatch(linkIsNotClicked());
         }}
         validate={validateDetails}
       >
@@ -84,14 +90,7 @@ const PersonalDetails = (props) => {
                 </PopUpSave>
               )}
               {errorResponse && (
-                <PopUpTryAgain
-                  onSubmit={handleSubmit}
-                  onCancel={(e) => {
-                    handleReset(e);
-                  }}
-                >
-                  Failed to save data. Please try again
-                </PopUpTryAgain>
+                <PopUpTryAgain>Failed to save data. Please try again</PopUpTryAgain>
               )}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
@@ -128,6 +127,7 @@ const PersonalDetails = (props) => {
                   <InputPersonalDetails
                     name='email'
                     label='Email'
+                    maxLength={50}
                     activeLabel='Enter your email'
                     disabled={!isEdit}
                   />
@@ -153,6 +153,7 @@ const PersonalDetails = (props) => {
                   <SelectPositions
                     name='position'
                     label='Position'
+                    activeLabel='Choose your position'
                     disabled={!isEdit}
                     setFieldValue={setFieldValue}
                   />

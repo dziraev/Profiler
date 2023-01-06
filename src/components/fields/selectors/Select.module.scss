@@ -6,13 +6,12 @@
     position: relative;
     width: 100%;
     &__input {
+        position: relative;
         height: 48px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         border-radius: 15px;
         background-color: global.$input-background;
-        padding: 0.75rem 0.9375rem;
+        padding: 0.6875rem 0.875rem;
+        border: 1px solid transparent;
         font-size: 1.125rem;
         line-height: 1.333;
         width: 100%;
@@ -21,7 +20,7 @@
         color: global.$text-primary-dark-blue;
         cursor: pointer;
         &:hover, &:focus {
-            box-shadow: 0 0 0 1px global.$input-stroke-active;
+           border-color: global.$input-stroke-active;
         }
         @media (max-width: 767.98px) {
             &:not(:last-child) {
@@ -39,13 +38,16 @@
         }
     }
     &__arrow, &__arrowOpen {
+        position: absolute;
         font-size: 0;
-        transition: all 0.3s ease 0s;
-        transform: rotate(0);
+        top: 50%;
+        right: 16px;
+        transform: translateY(-50%) rotate(0);
+        transition: transform 0.3s ease 0s;
     }
 
     &__arrowOpen {
-        transform: rotate(180deg);
+        transform: translateY(-50%) rotate(180deg);
     }
     &__dropdown {
         max-height: 370px;

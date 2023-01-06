@@ -1,14 +1,14 @@
 import thunk from 'redux-thunk';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { authReducer } from './authReducer';
-import { countriesReducer } from './countriesReducer';
-import { personalDetailsReducer } from './personalDetailsReducer';
-import { phoneCodesReducer } from './phoneCodesReducer';
+import { countriesReducer } from '@reducers';
+import { personalDetailsReducer } from '@reducers';
+import { phoneCodesReducer } from '@reducers';
+import { positionsReducer } from '@reducers';
 import { editModeReducer } from './editModeReducer';
-import { positionsReducer } from './positionsReducer';
 import { linkIsClickedReducer } from './linkIsClickedReducer';
 
-let combinedReducers = combineReducers({
+const appReducer = combineReducers({
   authReducer,
   countriesReducer,
   phoneCodesReducer,
@@ -18,8 +18,15 @@ let combinedReducers = combineReducers({
   linkIsClickedReducer
 });
 
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    return appReducer(undefined, action);
+  }
+  return appReducer(state, action);
+};
+
 const store = createStore(
-  combinedReducers,
+  rootReducer,
   compose(
     applyMiddleware(thunk)
     // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

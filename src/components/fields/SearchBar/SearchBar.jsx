@@ -21,7 +21,8 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   const [active, setActive] = useState(false);
   const [display, setDisplay] = useState(false);
   const [field, meta, helpers] = useField(props);
-  const country = useRef(field.value);
+  const { value } = field;
+  const country = useRef(value);
   const { setValue } = helpers;
 
   useEffect(() => {
@@ -31,13 +32,9 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
 
   function handleClickOutside(e) {
     const { current } = wrapperRef;
-
     if (current && !current.contains(e.target) && display) {
       setValue(country.current);
       setDisplay(false);
-    }
-    if (e.target.closest('button[type=reset]')) {
-      country.current = '';
     }
   }
 
@@ -53,6 +50,10 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   );
 
   const handleChange = (e) => {
+    if (e.target.value.length === 0) {
+      country.current = e.target.value;
+      setFieldValue('countryId', 'null');
+    }
     field.onChange(e);
     updateSearchValue(e.target.value);
   };

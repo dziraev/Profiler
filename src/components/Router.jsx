@@ -19,7 +19,10 @@ const MainRoutes = () => (
       <Route path='personal-details' element={<PersonalDetails />} />
       <Route path='to-cv' element={<MyCV />} />
     </Route>
-    <Route path='/*' element={<Navigate to='/main/personal-details' />} />
+    <Route path='/auth' element={<Navigate to='/main/personal-details' />} />
+    <Route path='/' element={<Navigate to='/main/personal-details' />} />
+    <Route path='/404' element={<NotFoundPage />} />
+    <Route path='*' element={<NotFoundPage />} />
   </Routes>
 );
 
