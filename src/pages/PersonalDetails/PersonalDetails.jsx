@@ -20,6 +20,8 @@ import { selectPersonalDetails } from './selectors';
 import  { Notification }  from '../../components/tooltip/Notification';
 import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
+import { PopUpCancelChanges } from '../../components/popup/cancelChanges/PopUpCancelChanges';
+
 
 const PersonalDetails = (props) => {
   const [errorResponse, setErrorResponse] = useState(false);
@@ -28,6 +30,8 @@ const PersonalDetails = (props) => {
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const linkIsClicked = useSelector((state) => state.linkIsClickedReducer.linkIsClicked);
   const [countryId, setCountryId] = useState(null);
+  const [cancelIsClicked, setCancelIsClicked] = useState(false);
+
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
@@ -98,6 +102,11 @@ const PersonalDetails = (props) => {
               )}
               {errorResponse && (
                 <PopUpTryAgain>Failed to save data. Please try again</PopUpTryAgain>
+              )}
+              {cancelIsClicked && (
+                <PopUpCancelChanges>
+                  Do you really want to cancel the changes?
+                </PopUpCancelChanges>
               )}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
@@ -177,7 +186,7 @@ const PersonalDetails = (props) => {
                 {isEdit && (
                   <>
                     <div className={styles.form__button}>
-                      <CancelButton type='reset'>Cancel</CancelButton>
+                      <CancelButton type='reset' onClick={() => {setCancelIsClicked(!cancelIsClicked)}}>Cancel</CancelButton>
                     </div>
                     <div className={styles.form__button}>
                       <Button type='submit' disabled={!dirty}>
@@ -186,6 +195,7 @@ const PersonalDetails = (props) => {
                     </div>
                   </>
                 )}
+                
               </div>
             </Form>
           );
