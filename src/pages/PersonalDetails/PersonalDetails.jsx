@@ -11,18 +11,15 @@ import {
   phoneCodesLoad,
   positionsLoad
 } from '../../redux/actions';
-import { PopUpSave } from '@components/popup/save/PopUpSave';
-import { PopUpTryAgain } from '@components/popup/tryAgain/PopUpTryAgain';
+import { PopUpSave, PopUpTryAgain, PopUpCancelChanges } from '@components/popup';
 import { InputPersonalDetails } from '@components/fields';
 import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
+import { Notification } from '@components/tooltip/Notification';
 import $api from '../../http/api';
-import  { Notification }  from '../../components/tooltip/Notification';
 import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
-import { PopUpCancelChanges } from '../../components/popup/cancelChanges/PopUpCancelChanges';
-
 
 const PersonalDetails = (props) => {
   const [errorResponse, setErrorResponse] = useState(false);
@@ -32,7 +29,6 @@ const PersonalDetails = (props) => {
   const linkIsClicked = useSelector((state) => state.linkIsClickedReducer.linkIsClicked);
   const [countryId, setCountryId] = useState(null);
   const [cancelIsClicked, setCancelIsClicked] = useState(false);
-
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
@@ -74,29 +70,34 @@ const PersonalDetails = (props) => {
         }}
         onReset={() => {
           dispatch(editModeOff());
-          setErrorResponse(false);
+          setCancelIsClicked(false);
           dispatch(linkIsNotClicked());
         }}
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty, isSubmitting, setFieldValue, handleSubmit, handleReset } = formik;
+          const { dirty, isSubmitting, setFieldValue } = formik;
 
           return (
             <Form className={styles.form}>
               {isEdit && linkIsClicked && (
-                <PopUpSave handleSubmit={handleSubmit} handleReset={handleReset}>
+                <PopUpSave type={isSubmitting ? 'button' : 'submit'}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}
               {errorResponse && (
-                <PopUpTryAgain>Failed to save data. Please try again</PopUpTryAgain>
+                <PopUpTryAgain
+                  type={isSubmitting ? 'button' : 'submit'}
+                  onClick={() => setErrorResponse(false)}
+                >
+                  Failed to save data. Please try again
+                </PopUpTryAgain>
               )}
-              {cancelIsClicked ? (
-                <PopUpCancelChanges handleSubmit={handleSubmit} handleReset={handleReset} setCancelIsClicked={setCancelIsClicked}>
+              {cancelIsClicked && dirty && (
+                <PopUpCancelChanges setCancelIsClicked={setCancelIsClicked}>
                   Do you really want to cancel the changes?
-                </PopUpCancelChanges> 
-              ) : false}
+                </PopUpCancelChanges>
+              )}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails
@@ -167,11 +168,7 @@ const PersonalDetails = (props) => {
               <div className={styles.form__buttons}>
                 {!isEdit && (
                   <div className={styles.form__button}>
-                    <Button
-                      type='button'
-                      disabled={isSubmitting}
-                      onClick={() => dispatch(editModeOn())}
-                    >
+                    <Button type='button' onClick={() => dispatch(editModeOn())}>
                       Edit
                     </Button>
                   </div>
@@ -179,16 +176,23 @@ const PersonalDetails = (props) => {
                 {isEdit && (
                   <>
                     <div className={styles.form__button}>
-                      <CancelButton type='reset' onClick={() => {setCancelIsClicked(!cancelIsClicked)}}>Cancel</CancelButton>
+                      <CancelButton
+                        type='reset'
+                        {...(dirty && {
+                          type: 'button',
+                          onClick: () => setCancelIsClicked(!cancelIsClicked)
+                        })}
+                      >
+                        Cancel
+                      </CancelButton>
                     </div>
                     <div className={styles.form__button}>
-                      <Button type='submit' disabled={!dirty}>
+                      <Button type={isSubmitting ? 'button' : 'submit'} disabled={!dirty}>
                         Save
                       </Button>
                     </div>
                   </>
                 )}
-                
               </div>
             </Form>
           );

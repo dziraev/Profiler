@@ -21,26 +21,10 @@ export const PopUpSave = ({ children, ...props }) => {
           </div>
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
-              <CancelButton
-                type='reset'
-                // onClick={(e) => {
-                //   dispatch(editModeOff());
-                //   dispatch(linkIsNotClicked());
-                //   props.handleReset(e);
-                // }}
-              >
-                Don't save
-              </CancelButton>
+              <CancelButton type='reset'>Don't save</CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
-              <Button
-                type='submit'
-                // onClick={(e) => {
-                //   props.handleSubmit(e);
-                //   dispatch(editModeOff());
-                //   dispatch(linkIsNotClicked());
-                // }}
-              >
+              <Button type='submit' {...props}>
                 Save
               </Button>
             </div>

@@ -9,7 +9,7 @@ export const PopUpTryAgain = ({ children, ...props }) => {
       <div className={styles.modal__bcg}>
         <div className={styles.modal__content}>
           <div className={styles.modal__content__titles}>
-            {false /*children.length >= 2*/ ? (
+            {Array.isArray(children) ? (
               <>
                 <p className={styles.modal__content__title}>{children[0]}</p>
                 <p className={styles.modal__content__subtitle}>{children[1]}</p>
@@ -20,10 +20,12 @@ export const PopUpTryAgain = ({ children, ...props }) => {
           </div>
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
-              <CancelButton type='reset' /*onReset={props.onCancel}*/>Cancel</CancelButton>
+              <CancelButton type='button' {...props}>
+                Cancel
+              </CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
-              <Button type='submit' /*onSubmit={props.onSubmit}*/>Try again</Button>
+              <Button type='submit'>Try again</Button>
             </div>
           </div>
         </div>
