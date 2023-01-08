@@ -20,6 +20,7 @@ import { Notification } from '@components/tooltip/Notification';
 import $api from '../../http/api';
 import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
+import { getChangedValues } from '../../utils/getChangedValues';
 
 const PersonalDetails = (props) => {
   const [errorResponse, setErrorResponse] = useState(false);
@@ -51,16 +52,34 @@ const PersonalDetails = (props) => {
           for (let key in values) {
             if (typeof values[key] === 'string') values[key] = values[key].trim();
           }
+
+          const initialValues = {
+            name: personalDetails.name || null,
+            surname: personalDetails.surname || null,
+            countryId: personalDetails.countryId || null,
+            email: personalDetails.email || null,
+            phoneCodeId: personalDetails.phoneCodeId || null,
+            cellPhone: personalDetails.cellPhone || null,
+            positionId: personalDetails.positionId || null
+          };
+
+          const currentValues = {
+            name: values.name || null,
+            surname: values.surname || null,
+            countryId: values.countryId || null,
+            email: values.email || null,
+            phoneCodeId: values.phoneCodeId || null,
+            cellPhone: values.cellPhone || null,
+            positionId: values.positionId || null
+          };
+
           try {
-            const response = await $api.post('/profile', {
-              name: values.name || null,
-              surname: values.surname || null,
-              countryId: values.countryId || null,
-              email: values.email || null,
-              phoneCodeId: values.phoneCodeId || null,
-              cellPhone: values.cellPhone || null,
-              positionId: values.positionId || null
-            });
+            if (Object.values(initialValues).every((value) => value === null)) {
+              const response = await $api.post('/profile', currentValues);
+            } else {
+              const changedValues = getChangedValues(currentValues, initialValues);
+              const response = await $api.patch('/profile', changedValues);
+            }
             dispatch(personalDetailsUpdate(values));
             dispatch(editModeOff());
             dispatch(linkIsNotClicked());
