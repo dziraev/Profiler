@@ -12,14 +12,21 @@
     }
 }
 
+.blockTitle{
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    @media (max-width: 1365px) {
+        margin-bottom: 24px;
+    }
+}
+
 .title {
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.3333;
     color: global.$text-primary-dark-blue;
-    margin-bottom: 40px;
     @media (max-width: 1365px) {
-        margin-bottom: 24px;
         font-size: 1rem;
         line-height: 1.3125;
     }
@@ -117,8 +124,4 @@
     .order-3 {
         order: 3;
     }
-}
-.blockTitle{
-    display: flex;
-    align-items: center;
 }
