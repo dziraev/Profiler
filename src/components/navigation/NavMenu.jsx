@@ -70,10 +70,10 @@ const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
       <nav className={styles.sidebar__nav}>
         <ul>
           <NavLink
-            to='/main/to-cv'
+            to='/main/my-cv'
             onClick={handleClick}
             className={(isActive) =>
-              window.location.pathname === '/main/to-cv' ? styles.active : ''
+              window.location.pathname === '/main/my-cv' ? styles.active : ''
             }
           >
             <li className={styles.sidebar__nav__link}>

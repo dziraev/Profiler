@@ -17,10 +17,10 @@ const MainRoutes = () => (
   <Routes>
     <Route path='/main' element={<PersonalCabinetPage />}>
       <Route path='personal-details' element={<PersonalDetails />} />
-      <Route path='to-cv' element={<MyCV />} />
+      <Route path='my-cv' element={<MyCV />} />
     </Route>
-    <Route path='/auth' element={<Navigate to='/main/personal-details' />} />
-    <Route path='/' element={<Navigate to='/main/personal-details' />} />
+    <Route path='/auth' element={<Navigate to='/main/my-cv' />} />
+    <Route path='/' element={<Navigate to='/main/my-cv' />} />
     <Route path='/404' element={<NotFoundPage />} />
     <Route path='*' element={<NotFoundPage />} />
   </Routes>
