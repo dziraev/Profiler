@@ -9,7 +9,7 @@ export const linkIsClickedReducer = (state = initialState, action) => {
     case LINK_IS_CLICKED:
       return {
         ...state,
-        linkIsClicked: true
+        linkIsClicked: action.data
       };
     case LINK_IS_NOT_CLICKED:
       return {

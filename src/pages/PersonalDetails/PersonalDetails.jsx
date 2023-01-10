@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validateDetails } from '../../utils/validators/validateDetails';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   countriesLoad,
   editModeOff,
@@ -24,6 +25,7 @@ import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = (props) => {
   const [errorResponse, setErrorResponse] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
@@ -78,13 +80,15 @@ const PersonalDetails = (props) => {
               const response = await $api.post('/profile', currentValues);
             } else {
               const changedValues = getChangedValues(currentValues, initialValues);
-              const response = await $api.patch('/profile', changedValues);
+              const response = await $api.put('/profile', changedValues);
             }
             dispatch(personalDetailsUpdate(values));
             dispatch(editModeOff());
             dispatch(linkIsNotClicked());
           } catch (e) {
             setErrorResponse(true);
+            dispatch(editModeOff());
+            dispatch(linkIsNotClicked());
           }
         }}
         onReset={() => {
@@ -92,15 +96,16 @@ const PersonalDetails = (props) => {
           setCancelIsClicked(false);
           dispatch(linkIsNotClicked());
         }}
+
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty, isSubmitting, setFieldValue } = formik;
+          const { dirty, isSubmitting, setFieldValue, handleReset, handleSubmit } = formik;
 
           return (
             <Form className={styles.form}>
               {isEdit && linkIsClicked && (
-                <PopUpSave type={isSubmitting ? 'button' : 'submit'}>
+                <PopUpSave isSubmitting={isSubmitting} handleReset={handleReset} handleSubmit={handleSubmit}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}

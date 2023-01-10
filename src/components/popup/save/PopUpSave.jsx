@@ -1,11 +1,14 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { editModeOff, linkIsNotClicked } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { editModeOff, linkIsClicked, linkIsNotClicked } from '../../../redux/actions';
 import { Button, CancelButton } from '@components/buttons';
 import styles from '../PopUp.module.scss';
 
-export const PopUpSave = ({ children, ...props }) => {
+export const PopUpSave = ({ children, handleReset, handleSubmit, isSubmitting, ...props }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const linkIsClicked = useSelector((state) => state.linkIsClickedReducer.linkIsClicked);
   return (
     <div className={styles.modal}>
       <div className={styles.modal__bcg}>
@@ -21,10 +24,30 @@ export const PopUpSave = ({ children, ...props }) => {
           </div>
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
-              <CancelButton type='reset'>Don't save</CancelButton>
+              <CancelButton
+                type='button'
+                onClick={(e) => {
+                  if (linkIsClicked === '/auth') {
+                    localStorage.removeItem('token');
+                    dispatch({ type: 'USER_LOGOUT' });
+                  }
+                  navigate(linkIsClicked);
+                  handleReset();
+                }}>
+                  Don't save
+                </CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
-              <Button type='submit' {...props}>
+              <Button
+                type={isSubmitting ? 'button' : 'submit'}
+                onClick={(e) => {
+                  if (linkIsClicked === '/auth') {
+                    localStorage.removeItem('token');
+                    dispatch({ type: 'USER_LOGOUT' });
+                  }
+                  navigate(linkIsClicked);
+                  handleSubmit();
+                }}>
                 Save
               </Button>
             </div>

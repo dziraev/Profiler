@@ -50,6 +50,11 @@
         }
     }
 }
+.page_hidden {
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+}
 .header {
     display: none;
     @media (max-width: 1365px) {

@@ -74,9 +74,10 @@ export function editModeOff() {
   };
 }
 
-export function linkIsClicked() {
+export function linkIsClicked(path) {
   return {
-    type: LINK_IS_CLICKED
+    type: LINK_IS_CLICKED,
+    data: path
   };
 }
 

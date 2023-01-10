@@ -12,12 +12,12 @@ const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
   const [studentNumber, setStudentNumber] = useState('123455');
   const isEdit = useSelector((state) => state.editModeReducer.isEdit);
   const handleClick = (e) => {
-    if (isEdit) {
-      e.preventDefault();
-      dispatch(linkIsClicked());
-    }
     if (menuIsOpen) {
       closeMenu();
+    }
+    if (isEdit) {
+      e.preventDefault();
+      dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
     }
   };
 
@@ -149,7 +149,7 @@ const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
         </ul>
       </nav>
       <div className={styles.exit}>
-        <Logout />
+        <Logout menuIsOpen={menuIsOpen} closeMenu={closeMenu} />
       </div>
     </div>
   );
