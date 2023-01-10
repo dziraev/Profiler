@@ -1,6 +1,9 @@
 export const AUTH_IN = 'AUTH_IN';
 export const AUTH_OUT = 'AUTH_OUT';
 
+export const LOADER_DISPLAY_ON = 'LOADER_DISPLAY_ON';
+export const LOADER_DISPLAY_OFF = 'LOADER_DISPLAY_OFF';
+
 export const COUNTRIES_LOAD = 'COUNTRIES_LOAD';
 export const COUNTRIES_SEARCH = 'COUNTRIES_SEARCH';
 

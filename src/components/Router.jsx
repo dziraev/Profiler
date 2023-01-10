@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { authInAndPersonalDetailsLoad } from '../redux/actions';
+import jwt_decode from 'jwt-decode';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import PersonalCabinetPage from '../pages/PersonalCabinetPage/PersonalCabinetPage';
 import MyCV from '../pages/MyCV/MyCV';
 import PersonalDetails from '../pages/PersonalDetails/PersonalDetails';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
-import { useSelector } from 'react-redux';
 
 const AuthRoutes = () => (
   <Routes>
@@ -27,7 +29,26 @@ const MainRoutes = () => (
 );
 
 const Router = () => {
-  const { isAuth } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
+  const { isAuth, isLoading } = useSelector((state) => state.authReducer);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const decodedToken = token ? jwt_decode(token) : null;
+
+    if (token && Date.now() > decodedToken.exp * 1000) {
+      localStorage.removeItem('token');
+    }
+
+    if (token) {
+      dispatch(authInAndPersonalDetailsLoad());
+    }
+  }, []);
+
+  if (isLoading) {
+    return;
+  }
+
   return isAuth ? <MainRoutes /> : <AuthRoutes />;
 };
 

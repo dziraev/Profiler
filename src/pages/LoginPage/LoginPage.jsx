@@ -2,10 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { validator } from '../../utils/validators/validators';
 import { useDispatch } from 'react-redux';
-import { authIn, personalDetailsUpdate } from '../../redux/actions';
 import { Form, Formik } from 'formik';
 import { Input, InputPassword } from '@components/fields';
 import { Button } from '@components/buttons';
+import { authInAndPersonalDetailsLoad } from '../../redux/actions';
 import logo from '../../static/images/logo.svg';
 import styles from './LoginPage.module.scss';
 
@@ -30,28 +30,11 @@ const LoginPage = (props) => {
                 email: values.email.trim(),
                 password: values.password
               });
-              try {
-                const personalDetails = await axios.get(
-                  'https://63a88eec100b7737b98198c8.mockapi.io/api/v1/profile'
-                );
-                dispatch(personalDetailsUpdate(personalDetails.data));
-              } catch (e) {
-                if (e.response.status !== 404) {
-                  throw e;
-                }
-              }
               localStorage.setItem('token', response.data.token);
-              dispatch(authIn());
+              dispatch(authInAndPersonalDetailsLoad());
             } catch (e) {
               setFieldValue('password', '', false);
-              setFieldError(
-                'password',
-                <span>
-                  {e.response.status === 400
-                    ? 'Wrong email or password'
-                    : 'Something get wrong. Try again later'}
-                </span>
-              );
+              setFieldError('password', <span>Wrong email or password</span>);
             }
           }}
           validate={validator}

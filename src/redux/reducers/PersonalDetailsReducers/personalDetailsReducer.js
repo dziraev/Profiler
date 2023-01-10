@@ -11,7 +11,8 @@ const initialState = {
     positionId: '',
     phoneCode: '',
     phoneCodeId: '',
-    cellPhone: ''
+    cellPhone: '',
+    userInDB: false
   }
 };
 

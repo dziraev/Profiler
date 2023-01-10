@@ -17,10 +17,10 @@ import { Button, CancelButton } from '@components/buttons';
 import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
 import { selectPersonalDetails } from './selectors';
 import { Notification } from '@components/tooltip/Notification';
+import { getChangedValues } from '../../utils/getChangedValues';
 import $api from '../../http/api';
 import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
-import { getChangedValues } from '../../utils/getChangedValues';
 
 const PersonalDetails = (props) => {
   const [errorResponse, setErrorResponse] = useState(false);
@@ -74,7 +74,7 @@ const PersonalDetails = (props) => {
           };
 
           try {
-            if (Object.values(initialValues).every((value) => value === null)) {
+            if (!values.userInDB) {
               const response = await $api.post('/profile', currentValues);
             } else {
               const changedValues = getChangedValues(currentValues, initialValues);
