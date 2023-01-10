@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './NotFoundPage.module.scss';
 import logo from '../../static/images/big-logo.svg';
 
 const NotFoundPage = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.page}>
       <div className={styles.page__logo}>
@@ -11,7 +13,7 @@ const NotFoundPage = () => {
       <div className={styles.page__container}>
         <div className={styles.page__content}>
           <h1 className={styles.page__title}>Sorry, the page you are looking for doesn't exist or has been moved</h1>
-          <p className={styles.page__subtitle}>Please check entered address or <span onClick={() => window.history.back()}>go back</span> where you came from</p>
+          <p className={styles.page__subtitle}>Please check entered address or <span onClick={() => navigate(-1)}>go back</span> where you came from</p>
         </div>
         <div className={styles.page__image}>
           <svg width="84" height="112" viewBox="0 0 84 112" fill="none" xmlns="http://www.w3.org/2000/svg">
