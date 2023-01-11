@@ -3,6 +3,7 @@ const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.jsx'),
@@ -68,6 +69,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
       filename: 'index.html'
+    }),
+    new FileManagerPlugin({
+      events: {
+        onStart: {
+          delete: ['dist']
+        }
+      }
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'

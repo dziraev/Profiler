@@ -23,6 +23,7 @@
         "babel-loader": "^9.1.0",
         "css-loader": "^6.7.2",
         "dotenv-webpack": "^8.0.1",
+        "filemanager-webpack-plugin": "^8.0.0",
         "image-minimizer-webpack-plugin": "^3.8.1",
         "imagemin": "^8.0.1",
         "imagemin-gifsicle": "^7.0.0",
