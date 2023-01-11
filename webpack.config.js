@@ -59,7 +59,8 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
-      '@reducers': path.resolve(__dirname, 'src/redux/reducers')
+      '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
+      '@hooks': path.resolve(__dirname, 'src/hooks')
     }
   },
   plugins: [

@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { linkIsClicked } from '../../redux/actions';
+import { selectIsDirtyFormPD } from '../../pages/PersonalDetails/selectors';
+import Logout from '../../components/links/Logout';
 import styles from './NavMenu.module.scss';
 import logo from '../../static/images/menu-logo.svg';
 import mobilelogo from '../../static/images/menu-logo-mobile.svg';
-import Logout from '../../components/links/Logout';
 
 const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const [studentNumber, setStudentNumber] = useState('123455');
-  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
+  const isDirtyFormPD = useSelector(selectIsDirtyFormPD);
+
   const handleClick = (e) => {
+    const href = e.currentTarget.getAttribute('href');
+
     if (menuIsOpen) {
       closeMenu();
     }
-    if (isEdit) {
+
+    if (isDirtyFormPD && pathname !== href) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
+    }
+
+    if (pathname === href) {
+      e.preventDefault();
     }
   };
 

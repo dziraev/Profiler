@@ -1,10 +1,10 @@
 import {
   AUTH_IN,
   AUTH_OUT,
+  CHANGE_DIRTY_STATUS_FORM_PD,
+  RESET_DIRTY_STATUS_FORM_PD,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
-  EDITMODE_OFF,
-  EDITMODE_ON,
   LINK_IS_CLICKED,
   LINK_IS_NOT_CLICKED,
   LOADER_DISPLAY_OFF,
@@ -16,7 +16,6 @@ import {
 } from './types';
 import uniqid from 'uniqid';
 import $api from '../http/api';
-import axios from 'axios';
 
 export function authIn() {
   return {
@@ -53,7 +52,7 @@ export function authInAndPersonalDetailsLoad() {
       dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
       dispatch(authIn());
     } catch (e) {
-      if (e.response.status === 404) {
+      if (e.response && e.response.status === 404) {
       }
       console.log(e);
     } finally {
@@ -62,15 +61,16 @@ export function authInAndPersonalDetailsLoad() {
   };
 }
 
-export function editModeOn() {
+export function changeDirtyStatusFormPD(dirty) {
   return {
-    type: EDITMODE_ON
+    type: CHANGE_DIRTY_STATUS_FORM_PD,
+    dirty
   };
 }
 
-export function editModeOff() {
+export function resetDirtyStatusFormPD() {
   return {
-    type: EDITMODE_OFF
+    type: RESET_DIRTY_STATUS_FORM_PD
   };
 }
 

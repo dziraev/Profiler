@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { authOut, linkIsClicked } from '../../redux/actions';
+import { linkIsClicked } from '../../redux/actions';
 import styles from './Logout.module.scss';
+import { selectIsDirtyFormPD } from '../../pages/PersonalDetails/selectors';
 
 const Logout = (props) => {
   const dispatch = useDispatch();
-  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
+  const isDirtyFormPD = useSelector(selectIsDirtyFormPD);
   const handleClick = (e) => {
     if (props.menuIsOpen) {
       e.preventDefault();
       props.closeMenu();
     }
-    if (isEdit) {
+    if (isDirtyFormPD) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
     } else {
