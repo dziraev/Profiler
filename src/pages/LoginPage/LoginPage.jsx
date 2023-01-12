@@ -1,11 +1,11 @@
 import React from 'react';
+import axios from 'axios';
 import { validator } from '../../utils/validators/validators';
 import { useDispatch } from 'react-redux';
-import { authIn } from '../../redux/actions';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import { Input, InputPassword } from '@components/fields';
 import { Button } from '@components/buttons';
-import AuthService from '../../services/AuthService';
+import { authInAndPersonalDetailsLoad } from '../../redux/actions';
 import logo from '../../static/images/logo.svg';
 import styles from './LoginPage.module.scss';
 
@@ -26,9 +26,12 @@ const LoginPage = (props) => {
           }}
           onSubmit={async (values, { setFieldValue, setFieldError }) => {
             try {
-              const response = await AuthService.login(values.email.trim(), values.password);
+              const response = await axios.post(`${process.env.API_URL}/api/v1/auth/login`, {
+                email: values.email.trim(),
+                password: values.password
+              });
               localStorage.setItem('token', response.data.token);
-              dispatch(authIn());
+              dispatch(authInAndPersonalDetailsLoad());
             } catch (e) {
               setFieldValue('password', '', false);
               setFieldError('password', <span>Wrong email or password</span>);
@@ -37,7 +40,8 @@ const LoginPage = (props) => {
           validate={validator}
         >
           {(formik) => {
-            const { isValid, dirty } = formik;
+            const { isValid, dirty, isSubmitting } = formik;
+
             return (
               <Form className={styles.form}>
                 <div className={styles.form__inputs}>
@@ -54,7 +58,7 @@ const LoginPage = (props) => {
                   </div>
                 </div>
                 <div className={styles.form__button}>
-                  <Button type='submit' disabled={!(dirty && isValid)}>
+                  <Button type='submit' disabled={!(dirty && isValid) || isSubmitting}>
                     Sign In
                   </Button>
                 </div>

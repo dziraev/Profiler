@@ -57,6 +57,7 @@
         border: global.$text-primary-blue solid 1px;
         border-radius: 50%;
         padding: 48px 20px;
+        cursor: pointer;
     }
     &__photo__button {
         width: 24px;
@@ -64,7 +65,7 @@
         margin: auto;
         background-color: #F0F5FF;
         border-radius: 50%;
-        padding: 6.75px;
+        padding: 6px;
         & svg {
             display: block;
         }

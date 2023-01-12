@@ -49,14 +49,15 @@ export const SelectPhoneNumber = ({
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, [phoneCodeId]);
+  }, [phoneCodes, phoneCodeId]);
 
   function handleClickOutside(e) {
     const { current } = positionRef;
     if (current && !current.contains(e.target)) {
       setIsVisible(false);
     }
-    if (e.target.closest('button[type=reset]')) {
+
+    if (e.target.closest('button[type=reset]') && phoneCodes.length >= 1) {
       const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
       setCountryFlag(countryFlag);
     }

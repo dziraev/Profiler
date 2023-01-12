@@ -1,11 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { editModeOff, linkIsNotClicked } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { linkIsNotClicked } from '../../../redux/actions';
 import { Button, CancelButton } from '@components/buttons';
+import { selectLinkIsClicked } from '../../../pages/PersonalDetails/selectors';
 import styles from '../PopUp.module.scss';
 
-export const PopUpSave = ({ children, ...props }) => {
+export const PopUpSave = ({ children, isSubmitting, handleReset, ...props }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const linkIsClicked = useSelector(selectLinkIsClicked);
   return (
     <div className={styles.modal}>
       <div className={styles.modal__bcg}>
@@ -22,27 +26,23 @@ export const PopUpSave = ({ children, ...props }) => {
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
               <CancelButton
-                type='reset'
-                // onClick={(e) => {
-                //   dispatch(editModeOff());
-                //   dispatch(linkIsNotClicked());
-                //   props.handleReset(e);
-                // }}
+                type='button'
+                {...(!isSubmitting && {
+                  onClick: () => {
+                    if (linkIsClicked === '/auth') {
+                      localStorage.removeItem('token');
+                      dispatch({ type: 'USER_LOGOUT' });
+                    }
+                    navigate(linkIsClicked);
+                    handleReset();
+                  }
+                })}
               >
                 Don't save
               </CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
-              <Button
-                type='submit'
-                // onClick={(e) => {
-                //   props.handleSubmit(e);
-                //   dispatch(editModeOff());
-                //   dispatch(linkIsNotClicked());
-                // }}
-              >
-                Save
-              </Button>
+              <Button type={isSubmitting ? 'button' : 'submit'}>Save</Button>
             </div>
           </div>
         </div>

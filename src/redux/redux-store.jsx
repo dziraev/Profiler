@@ -5,8 +5,8 @@ import { countriesReducer } from '@reducers';
 import { personalDetailsReducer } from '@reducers';
 import { phoneCodesReducer } from '@reducers';
 import { positionsReducer } from '@reducers';
-import { editModeReducer } from './editModeReducer';
-import { linkIsClickedReducer } from './linkIsClickedReducer';
+import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
+import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
 
 const appReducer = combineReducers({
   authReducer,

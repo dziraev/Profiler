@@ -52,7 +52,7 @@ export const SearchBar = ({ label, activeLabel, setCountryId, setFieldValue, ...
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       country.current = e.target.value;
-      setFieldValue('countryId', 'null');
+      setFieldValue('countryId', '');
     }
     field.onChange(e);
     updateSearchValue(e.target.value);

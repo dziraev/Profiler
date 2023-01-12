@@ -1,96 +1,133 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validateDetails } from '../../utils/validators/validateDetails';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
-  countriesLoad,
-  editModeOff,
-  editModeOn,
+  changeDirtyStatusFormPD,
   linkIsNotClicked,
   personalDetailsUpdate,
-  phoneCodesLoad,
-  positionsLoad
+  resetDirtyStatusFormPD
 } from '../../redux/actions';
-import { PopUpSave } from '@components/popup/save/PopUpSave';
-import { PopUpTryAgain } from '@components/popup/tryAgain/PopUpTryAgain';
-import { InputPersonalDetails } from '@components/fields';
+import { PopUpCancelChanges, PopUpSave, PopUpTryAgain } from '@components/popup';
+import {
+  InputPersonalDetails,
+  SearchBar,
+  SelectPhoneNumber,
+  SelectPositions
+} from '@components/fields';
+import { useNavigate } from 'react-router-dom';
 import { Button, CancelButton } from '@components/buttons';
-import { SearchBar, SelectPositions, SelectPhoneNumber } from '@components/fields';
-import { selectPersonalDetails } from './selectors';
+import { Notification } from '@components/tooltip/Notification';
+import { getChangedValues } from '../../utils/getChangedValues';
+import { usePersonalDetails } from '@hooks/usePersonalDetails';
+import $api from '../../http/api';
+import info from '../../static/images/info.png';
 import styles from './PersonalDetails.module.scss';
 
 const PersonalDetails = (props) => {
-  const [errorResponse, setErrorResponse] = useState(false);
   const dispatch = useDispatch();
-  const personalDetails = useSelector(selectPersonalDetails);
-  const isEdit = useSelector((state) => state.editModeReducer.isEdit);
-  const linkIsClicked = useSelector((state) => state.linkIsClickedReducer.linkIsClicked);
+  const navigate = useNavigate();
+  const [isEdit, setIsEdit] = useState(false);
+  const [cancelIsClicked, setCancelIsClicked] = useState(false);
   const [countryId, setCountryId] = useState(null);
-  useEffect(() => {
-    dispatch(countriesLoad());
-    dispatch(phoneCodesLoad());
-    dispatch(positionsLoad());
-  }, []);
+  const { personalDetails, linkIsClicked } = usePersonalDetails();
+  const hrefLinkIsClicked = useRef(null);
+  hrefLinkIsClicked.current = linkIsClicked;
 
   return (
     <section className={styles.wrapper}>
-      <h2 className={styles.title}>Personal details</h2>
+      <div className={styles.blockTitle}>
+        <h2 className={styles.title}>Personal details</h2>
+        <Notification>
+          <img src={info} alt='notification'></img>
+        </Notification>
+      </div>
       <Formik
         enableReinitialize={true}
         initialValues={personalDetails}
         validateOnChange={false}
-        onSubmit={async (values) => {
+        onSubmit={async (values, formikHelpers) => {
+          const { setStatus } = formikHelpers;
           for (let key in values) {
             if (typeof values[key] === 'string') values[key] = values[key].trim();
           }
+
+          const initialValues = {
+            name: personalDetails.name || null,
+            surname: personalDetails.surname || null,
+            countryId: personalDetails.countryId || null,
+            email: personalDetails.email || null,
+            phoneCodeId: personalDetails.phoneCodeId || null,
+            cellPhone: personalDetails.cellPhone || null,
+            positionId: personalDetails.positionId || null
+          };
+
+          const currentValues = {
+            name: values.name || null,
+            surname: values.surname || null,
+            countryId: values.countryId || null,
+            email: values.email || null,
+            phoneCodeId: values.phoneCodeId || null,
+            cellPhone: values.cellPhone || null,
+            positionId: values.positionId || null
+          };
+
           try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.API_URL}/api/v1/profile`, {
-              method: 'POST',
-              headers: {
-                Authorization: 'Bearer_' + token,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                name: values.name || null,
-                surname: values.surname || null,
-                countryId: values.countryId || null,
-                email: values.email || null,
-                phoneCodeId: values.phoneCodeId || null,
-                cellPhone: values.cellPhone || null,
-                positionId: values.positionId || null
-              })
-            });
-            if (!response.ok) {
-              setErrorResponse(true);
+            if (!values.userInDB) {
+              const response = await $api.post('/profile', currentValues);
             } else {
-              dispatch(personalDetailsUpdate(values));
-              dispatch(editModeOff());
-              dispatch(linkIsNotClicked());
+              const changedValues = getChangedValues(currentValues, initialValues);
+              const response = await $api.put('/profile', changedValues);
             }
+            dispatch(personalDetailsUpdate(values));
+            if (hrefLinkIsClicked.current && hrefLinkIsClicked.current === '/auth') {
+              localStorage.removeItem('token');
+              dispatch({ type: 'USER_LOGOUT' });
+              navigate(linkIsClicked);
+            }
+            if (hrefLinkIsClicked.current && hrefLinkIsClicked.current !== '/auth') {
+              navigate(linkIsClicked);
+            }
+            dispatch(resetDirtyStatusFormPD());
           } catch (e) {
-            setErrorResponse(true);
+            dispatch(linkIsNotClicked());
+            setStatus({ errorResponse: true });
           }
         }}
         onReset={() => {
-          dispatch(editModeOff());
-          setErrorResponse(false);
+          dispatch(resetDirtyStatusFormPD());
+          setIsEdit(false);
+          setCancelIsClicked(false);
           dispatch(linkIsNotClicked());
         }}
         validate={validateDetails}
       >
         {(formik) => {
-          const { dirty, setFieldValue, handleSubmit, handleReset } = formik;
+          const { dirty, isSubmitting, setFieldValue, handleReset, status, setStatus } = formik;
+
+          useEffect(() => {
+            dispatch(changeDirtyStatusFormPD(dirty));
+          }, [dirty]);
 
           return (
             <Form className={styles.form}>
-              {isEdit && linkIsClicked && (
-                <PopUpSave handleSubmit={handleSubmit} handleReset={handleReset}>
+              {dirty && linkIsClicked && (
+                <PopUpSave isSubmitting={isSubmitting} handleReset={handleReset}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}
-              {errorResponse && (
-                <PopUpTryAgain>Failed to save data. Please try again</PopUpTryAgain>
+              {status?.errorResponse && (
+                <PopUpTryAgain
+                  isSubmitting={isSubmitting}
+                  onClickHandler={() => setStatus({ errorResponse: false })}
+                >
+                  Failed to save data. Please try again
+                </PopUpTryAgain>
+              )}
+              {cancelIsClicked && dirty && (
+                <PopUpCancelChanges setCancelIsClicked={setCancelIsClicked}>
+                  Do you really want to cancel the changes?
+                </PopUpCancelChanges>
               )}
               <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
@@ -162,7 +199,7 @@ const PersonalDetails = (props) => {
               <div className={styles.form__buttons}>
                 {!isEdit && (
                   <div className={styles.form__button}>
-                    <Button type='button' onClick={() => dispatch(editModeOn())}>
+                    <Button type='button' onClick={() => setIsEdit(true)}>
                       Edit
                     </Button>
                   </div>
@@ -170,10 +207,18 @@ const PersonalDetails = (props) => {
                 {isEdit && (
                   <>
                     <div className={styles.form__button}>
-                      <CancelButton type='reset'>Cancel</CancelButton>
+                      <CancelButton
+                        type='reset'
+                        {...(dirty && {
+                          type: 'button',
+                          onClick: () => setCancelIsClicked(!cancelIsClicked)
+                        })}
+                      >
+                        Cancel
+                      </CancelButton>
                     </div>
                     <div className={styles.form__button}>
-                      <Button type='submit' disabled={!dirty}>
+                      <Button type={isSubmitting ? 'button' : 'submit'} disabled={!dirty}>
                         Save
                       </Button>
                     </div>

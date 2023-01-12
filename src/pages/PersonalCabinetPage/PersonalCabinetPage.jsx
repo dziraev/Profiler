@@ -12,7 +12,7 @@ const PersonalCabinetPage = (props) => {
     setMenuIsOpen(!menuIsOpen);
   };
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${menuIsOpen ? styles.page_hidden : ''}`}>
       <div className={styles.header}>
         <div className={styles.header__burger} onClick={openAndCloseMenu}>
           <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">

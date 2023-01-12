@@ -1,0 +1,50 @@
+.wrapper {
+    margin-left: 11px;
+    position: relative;
+    @media (min-width: 1365px) {
+        margin-left: 13px;
+    }
+
+}
+
+.icon:hover ~ .tooltip {
+    visibility: visible;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 110%;
+    left: 115%;
+    background: #f3f3f3;
+    color: black;
+    visibility: hidden;
+    padding: 12px 21px;
+    border-radius: 15px 15px 15px 0px;
+    font-family: 'Red Hat Display';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    min-width: 318px;
+    @media (max-width: 1365px) {
+        min-width: 252px;
+        font-size: 12px;
+        line-height: 16px;
+        padding: 8px 19px;
+    }
+    @media (max-width: 470px) {
+        min-width: 180px;
+        padding: 7px 14px;
+        left: 105%;
+    }
+}
+
+.tooltipArrow {
+    position: absolute;
+    top: 95%;
+    left: 0%;
+    border: 7px solid transparent;
+    border-left: 7px solid #f3f3f3;
+    border-top: 7px solid #f3f3f3;
+    border-radius: 0 0 0 4px;
+}
+  
