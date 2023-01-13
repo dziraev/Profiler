@@ -3,6 +3,9 @@ export const filterCountriesByPrefix = (countries, prefix) =>
 
 export const selectPersonalDetails = (state) => state.personalDetailsReducer.personalDetails;
 
+export const selectNamePersonalDetails = (state) =>
+  state.personalDetailsReducer.personalDetails.name;
+
 export const selectIsDirtyFormPD = (state) => state.editModeReducer.isDirtyFormPD;
 
 export const selectLinkIsClicked = (state) => state.linkIsClickedReducer.linkIsClicked;
