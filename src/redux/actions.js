@@ -53,6 +53,7 @@ export function authInAndPersonalDetailsLoad() {
       dispatch(authIn());
     } catch (e) {
       if (e.response && e.response.status === 404) {
+        dispatch(authIn());
       }
       console.log(e);
     } finally {

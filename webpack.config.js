@@ -4,7 +4,6 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
-
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.jsx'),
   output: {
@@ -74,6 +73,14 @@ module.exports = {
       events: {
         onStart: {
           delete: ['dist']
+        },
+        onEnd: {
+          copy: [
+            {
+              source: path.join('public'),
+              destination: 'dist'
+            }
+          ]
         }
       }
     }),

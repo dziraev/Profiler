@@ -1,9 +1,10 @@
 @use '../../static/scss/global';
 .wrapper {
-    margin: 0 auto;
+    margin: 0 auto 400px;
     text-align: left;
     max-width: 1056px;
     @media (max-width: 1535px) {
+        margin: 0 auto;
         max-width: 886px;
     }
     @media (max-width: 1365px) {

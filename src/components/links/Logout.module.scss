@@ -4,14 +4,16 @@
     cursor: pointer;
     &__link {
         display: flex;
+        align-items: center;
         column-gap: 8px;
         color: global.$text-primary-blue;
         & svg {
+            display: block;
             stroke: global.$text-primary-blue;
         }
     }
     &__link:hover p {
-        text-decoration: global.$text-primary-blue underline;
+        border-bottom: 1px global.$text-primary-blue solid;
     }
     &__link:active {
         color: global.$text-primary-dark-blue;

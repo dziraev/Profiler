@@ -91,6 +91,7 @@
     &__nav__link {
         display: flex;
         flex-direction: row;
+        align-items: center;
         column-gap: 12px;
         padding: 15px 24px;
         font-weight: 400;
@@ -99,8 +100,17 @@
         color: global.$text-primary-dark-blue;
         position: relative;
         background: global.$background-sidebar;
+        & p {
+            height: 23px;
+        }
         & svg {
             stroke: global.$text-primary-dark-blue;
+        }
+        &:hover {
+            color: global.$text-primary-blue;
+            & svg {
+                stroke: global.$text-primary-blue;
+            }
         }
     }
     @media (max-width: 1365px) {
@@ -152,6 +162,9 @@
                 color: global.$text-primary-dark-blue;
                 background: transparent;
                 border-radius: 0%;
+                & p {
+                    height: 21px;
+                }
                 & svg {
                     stroke: global.$text-primary-dark-blue;
                 }
@@ -223,6 +236,7 @@
         display: block;
         & p {
             font-size: 1em;
+            height: 21px;
         }
     }
 }
