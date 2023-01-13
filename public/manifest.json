@@ -1,0 +1,10 @@
+{
+    "icons": [
+        {"srs": "images/favicons/favicon-180.png", "type": "image/png", "type": "96x96"},
+        {"srs": "images/favicons/favicon-180.png", "type": "image/png", "type": "120x120"},
+        {"srs": "images/favicons/favicon-180.png", "type": "image/png", "type": "144x144"},
+        {"srs": "images/favicons/favicon-180.png", "type": "image/png", "type": "180x180"},
+        {"srs": "images/favicons/favicon-192.png", "type": "image/png", "type": "192x192"},
+        {"srs": "images/favicons/favicon-512.png", "type": "image/png", "type": "512x512"},
+    ]
+}
