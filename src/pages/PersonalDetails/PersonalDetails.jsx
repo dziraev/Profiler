@@ -33,10 +33,7 @@ const PersonalDetails = (props) => {
   const { personalDetails, linkIsClicked } = usePersonalDetails();
   const hrefLinkIsClicked = useRef(null);
   hrefLinkIsClicked.current = linkIsClicked;
-  useEffect(() => {
-    setIsEdit(false);
-    dispatch(linkIsNotClicked());
-  }, []);
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.blockTitle}>
