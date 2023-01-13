@@ -331,7 +331,7 @@
             font-weight: 700;
             color: global.$text-primary-blue;
             &:hover {
-                text-decoration: global.$text-primary-blue underline;
+                border-bottom: 1px global.$text-primary-blue solid;
             }
             &:active {
                 color: global.$text-primary-dark-blue;

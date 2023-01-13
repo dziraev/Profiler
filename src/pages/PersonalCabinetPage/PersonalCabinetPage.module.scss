@@ -68,7 +68,6 @@
         right: calc(50% - 428px/2);
         z-index: 2;
         backdrop-filter: blur(2px);
-        background: rgba(255, 255, 255, 0.1);
         &__burger {
             cursor: pointer;
         }
@@ -86,6 +85,9 @@
     margin: 50px 50px 0 0;
     font-size: 1.25em;
     line-height: 1.32;
+    & p {
+        height: 26px;
+    }
     @media (max-width: 1365px) {
         display: none;
     }
