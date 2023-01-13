@@ -83,10 +83,10 @@
             }
         }
     }
-    @media (max-width: 375px) {
+    @media (max-width: 1365px) {
         &__bcg{
-            width: 365px;
-            min-height: 175px;
+            width: 350px;
+            min-height: 174px;
         }
         &__content{
             font-size: 16px;
@@ -95,8 +95,8 @@
             max-width: 313px;
             &__close{
                 position: absolute;
-                top: 5px;
-                right: 10px;
+                top: 15px;
+                right: 15px;
                 width: 24px;
                 height: 24px;
                 &::after, &::before{
@@ -105,11 +105,11 @@
                 }
             }
             &__titles{
-                min-height: 100px;
+                min-height: 106px;
             }
             &__btns{
-                width: 345px;
-                min-height: 58px;
+                width: 350px;
+                min-height: 68px;
                 justify-content: space-around;
             }
         }

@@ -41,6 +41,7 @@
         font-size: 1rem;
         line-height: 1.3125;
         color: global.$text-primary-secondary-gray;
+        -webkit-text-fill-color: global.$text-primary-secondary-gray;
         user-select: none;
         @media(min-width: 767.98px) {
             font-size: 1.125rem;
