@@ -4,9 +4,11 @@
     cursor: pointer;
     &__link {
         display: flex;
+        align-items: center;
         column-gap: 8px;
         color: global.$text-primary-blue;
         & svg {
+            display: block;
             stroke: global.$text-primary-blue;
         }
     }

@@ -4,6 +4,8 @@
     text-align: center;
     overflow: hidden;
     margin: 24px 0 94px;
+    color: global.$text-primary-dark-blue;
+
 
     &__title {
         width: 768px;
@@ -17,6 +19,21 @@
         color: global.$text-primary-blue;
         font-weight: 700;
     }
+
+    &__welcome {
+        display: block;
+        font-size: 1.125rem;
+        font-weight: 600;
+        line-height: 1.3334;
+        color: global.$text-primary-dark-blue;
+        &:not(:last-child) {
+            margin-bottom: 4px;
+        }
+        @media (min-width: 1365.98px) {
+            font-size: 1.5rem;
+        }
+    }
+
     @media (max-width: 1535px) {
         &__title {
             width: 598px;
