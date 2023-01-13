@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLinkIsClicked, selectPersonalDetails } from '../pages/PersonalDetails/selectors';
-import { countriesLoad, phoneCodesLoad, positionsLoad } from '../redux/actions';
+import {
+  countriesLoad,
+  linkIsNotClicked,
+  phoneCodesLoad,
+  positionsLoad,
+  resetDirtyStatusFormPD
+} from '../redux/actions';
 
 export const usePersonalDetails = () => {
   const dispatch = useDispatch();
@@ -11,6 +17,10 @@ export const usePersonalDetails = () => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
     dispatch(positionsLoad());
+    return () => {
+      dispatch(resetDirtyStatusFormPD());
+      dispatch(linkIsNotClicked());
+    };
   }, []);
 
   return {
