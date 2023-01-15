@@ -1,8 +1,7 @@
 @use '../../static/scss/variables';
 .page {
   margin: 0 auto;
-  width: 1055px;
-  padding: 0 80px;
+  max-width: 1055px;
   &__title {
     font-size: 1.625em;
     line-height: 1.32;
@@ -12,7 +11,7 @@
     text-align: left;
   }
   &__container {
-    background: variables.$background-sidebar;
+    background: #F9FAFE;
     width: 200px;
     height: 252px;
     border-radius: 20px;
@@ -48,6 +47,9 @@
       text-align: left;
     }
   }
+  @media (max-width: 1535px) {
+    max-width: 886px;
+}
   @media (max-width: 1365px) {
     width: 100%;
     padding: 0;
