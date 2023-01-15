@@ -51,6 +51,7 @@
 
 
     &__error {
+        -webkit-text-fill-color: global.$text-primary-error;
         color: global.$text-primary-error;
         border-color: global.$input-stroke-error;
         &:hover, &:focus {
