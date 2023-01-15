@@ -1,16 +1,16 @@
-@use '../../../static/scss/global';
+@use '../../../static/scss/variables';
 .button {
     font-family:"Red Hat Display";
     width: 100%;
     padding: 0.8125rem;
-    border: 1px solid global.$button-default;
+    border: 1px solid variables.$button-default;
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.3125;
-    background-color: global.$background-main;
+    background-color: variables.$background-main;
     border-radius: 15px;
     text-align: center;
-    color: global.$text-primary-blue;
+    color: variables.$text-primary-blue;
     cursor: pointer;
     outline: none;
     user-select: none;
@@ -20,11 +20,11 @@
         font-size: 1.25rem;
     }
     &:hover, &:focus {
-       background-color: global.$cancel-button-background;
+       background-color: variables.$cancel-button-background;
     }
     &:active {
-        border-color: global.$button-active;
-        color: global.$button-active;
+        border-color: variables.$button-active;
+        color: variables.$button-active;
     }
 
 }

@@ -1,4 +1,4 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 
 .modal{
     display: flex;
@@ -28,7 +28,7 @@
         flex-direction: column;
         font-size: 25px;
         line-height: 33px;
-        color: global.$text-primary-dark-blue;
+        color: variables.$text-primary-dark-blue;
         text-align: center;
         min-height: 188px;
         max-width: 416px;
@@ -47,7 +47,7 @@
                 width: 25px;
                 height: 3px;
                 border-radius: 5px;
-                background-color: global.$text-primary-dark-blue;
+                background-color: variables.$text-primary-dark-blue;
             }
             &::before{
                 transform: rotate(45deg);

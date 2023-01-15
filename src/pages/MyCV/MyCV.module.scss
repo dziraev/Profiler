@@ -1,4 +1,4 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 .page {
   margin: 0 auto;
   width: 1055px;
@@ -7,19 +7,19 @@
     font-size: 1.625em;
     line-height: 1.32;
     font-weight: 600;
-    color: global.$text-primary-dark-blue;
+    color: variables.$text-primary-dark-blue;
     margin: 0 0 40px 0;
     text-align: left;
   }
   &__container {
-    background: global.$background-sidebar;
+    background: variables.$background-sidebar;
     width: 200px;
     height: 252px;
     border-radius: 20px;
     text-align: center;
     padding: 81px 23px;
     &__content {
-      color: global.$text-primary-blue;
+      color: variables.$text-primary-blue;
       font-size: 1.125em;
       line-height: 1.32;
       font-weight: 600;

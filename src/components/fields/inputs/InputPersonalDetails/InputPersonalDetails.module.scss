@@ -1,4 +1,4 @@
-@use '../../../../static/scss/global';
+@use '../../../../static/scss/variables';
 
 .error {
     display: flex;
@@ -6,7 +6,7 @@
     font-size: 0.75rem;
     align-items: center;
     line-height: 1.333;
-    color: global.$text-primary-error;
+    color: variables.$text-primary-error;
     @media (min-width: 1365.98px) {
         top: 100%;
         position: absolute;

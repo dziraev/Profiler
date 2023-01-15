@@ -1,10 +1,10 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 .CabinetHeader {
     width: 100%;
     text-align: center;
     overflow: hidden;
     margin: 24px 0 94px;
-    color: global.$text-primary-dark-blue;
+    color: variables.$text-primary-dark-blue;
 
 
     &__title {
@@ -16,7 +16,7 @@
         margin: auto;
     }
     &__title_highlighted {
-        color: global.$text-primary-blue;
+        color: variables.$text-primary-blue;
         font-weight: 700;
     }
 
@@ -25,7 +25,7 @@
         font-size: 1.125rem;
         font-weight: 600;
         line-height: 1.3334;
-        color: global.$text-primary-dark-blue;
+        color: variables.$text-primary-dark-blue;
         &:not(:last-child) {
             margin-bottom: 4px;
         }
