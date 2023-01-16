@@ -1,4 +1,4 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 
 .wrapper {
     margin-left: 11px;
@@ -22,7 +22,7 @@
     bottom: 140%;
     left: 115%;
     background: #f3f3f3;
-    color: global.$text-primary-dark-blue;
+    color: variables.$text-primary-dark-blue;
     visibility: hidden;
     padding: 12px 21px;
     border-radius: 15px 15px 15px 0px;

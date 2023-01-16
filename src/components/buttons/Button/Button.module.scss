@@ -1,4 +1,4 @@
-@use '../../../static/scss/global';
+@use '../../../static/scss/variables';
 .button {
     font-family:"Red Hat Display";
     padding: 0.875rem;
@@ -6,10 +6,10 @@
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.3125;
-    background-color: global.$button-default;
+    background-color: variables.$button-default;
     border-radius: 15px;
     text-align: center;
-    color: global.$text-primary-white;
+    color: variables.$text-primary-white;
     cursor: pointer;
     outline: none;
     user-select: none;
@@ -19,12 +19,12 @@
         font-size: 1.25rem;
     }
     &:hover, &:focus {
-        background-color: global.$button-hover;
+        background-color: variables.$button-hover;
     }
     &:active {
-        background-color: global.$button-active;
+        background-color: variables.$button-active;
     }
     &:disabled {
-        background-color: global.$button-disabled;
+        background-color: variables.$button-disabled;
     }
 }

@@ -21,7 +21,10 @@ export const personalDetailsReducer = (state = initialState, action) => {
     case PERSONALDETAILS_UPDATE:
       return {
         ...state,
-        personalDetails: { ...action.data }
+        personalDetails: {
+          ...state.personalDetails,
+          ...action.data
+        }
       };
     case PHONECODE_AND_ID_UPDATE:
       return {

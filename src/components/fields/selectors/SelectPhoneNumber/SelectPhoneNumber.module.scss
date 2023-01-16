@@ -1,4 +1,4 @@
-@use '../../../../static/scss/global';
+@use '../../../../static/scss/variables';
 
 .selectPhone {
     font-family: "Red Hat Display";
@@ -18,18 +18,18 @@
         flex: 1 0 114px;
         height: 48px;
         border-radius: 15px;
-        background-color: global.$input-background;
+        background-color: variables.$input-background;
         padding: 0.6875rem 0.875rem;
         border: 1px solid transparent;
         font-size: 1.125rem;
         line-height: 1.333;
         width: 100%;
         font-weight: 400;
-        caret-color: global.$text-primary-blue;
-        color: global.$text-primary-dark-blue;
+        caret-color: variables.$text-primary-blue;
+        color: variables.$text-primary-dark-blue;
         cursor: pointer;
         &:hover, &:focus {
-            border-color: global.$input-stroke-active;
+            border-color: variables.$input-stroke-active;
         }
     }
     &__input {
@@ -47,9 +47,9 @@
         }
     }
     &__error {
-        border-color: global.$input-stroke-error;
+        border-color: variables.$input-stroke-error;
         &:hover {
-            border-color: global.$input-stroke-error;
+            border-color: variables.$input-stroke-error;
         }
     }
 
@@ -57,14 +57,15 @@
         display: flex;
         flex-direction: column;
         row-gap: 8px;
-        @media (max-width: 767.98px) {
+        @media (max-width: 1365.98px) {
             padding: 15px 5px;
-            background-color: global.$background-main;
+            background-color: variables.$background-main;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
             border-radius: 15px;
             overflow-y: auto;
             width: 100%;
             z-index: 4;
+            max-width: 396px;
             max-height: 370px;
         }
     }
@@ -77,15 +78,15 @@
         line-height: 1.357;
         padding: 6px 5px;
         &:hover {
-            background-color: global.$input-background;
+            background-color: variables.$input-background;
             border-radius: 7px;
         }
         &:active {
-            color: global.$text-primary-blue;
+            color: variables.$text-primary-blue;
         }
     }
     &__line {
-        background-color: global.$input-background;
+        background-color: variables.$input-background;
         min-height: 1px;
     }
     &__countryName {
@@ -102,27 +103,21 @@
 
     }
     &__modal {
-        @media(min-width: 767.98px)  {
+        @media(min-width: 1365.98px)  {
             position: absolute;
             padding: 15px 25px;
-            background-color: global.$background-main;
+            background-color: variables.$background-main;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
             border-radius: 15px;
             overflow-y: auto;
             width: 100%;
             z-index: 4;
             max-height: 370px;
-        }
-        @media (min-width: 1200px) {
             top: 100%;
             transform: translateY(15px);
         }
-        @media(min-width: 767.98px) and (max-width:1200px) {
-            bottom: 100%;
-            transform: translateY(-10px);
-        }
 
-        @media (max-width: 767.98px) {
+        @media (max-width: 1365.98px) {
             display:flex;
             align-items: center;
             justify-content: center;
@@ -140,9 +135,9 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 19px;
-        margin-bottom: 10px;
-        @media (max-width: 767.98px) {
-            padding: 0 10px;
+        padding-bottom: 2px;
+        @media (max-width: 1365.98px) {
+            padding: 0 10px 2px;
         }
     }
 }
@@ -151,19 +146,17 @@
     display: flex;
     align-items: center;
     font-weight: 500;
-    font-size: 0.625rem;
-    line-height: 1.3;
-    color: global.$text-primary-error;
-    @media (min-width: 767.98px) {
-        font-size: 0.75em;
-        line-height: 1.333;
+    font-size: 0.75rem;
+    line-height: 1.333;
+    color: variables.$text-primary-error;
+    @media (min-width: 1365.98px) {
         align-items: flex-start;
         transform: translateY(6px);
         top: 100%;
         position: absolute;
     }
-    @media (max-width: 767.98px) {
-        margin-top: 2px;
+    @media (max-width: 1365.98px) {
+        margin-top: 4px;
     }
     svg {
         flex: 0 0 14px;

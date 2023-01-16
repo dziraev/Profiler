@@ -11,9 +11,13 @@ const PersonalCabinetHeader = (props) => {
         {!!name && userInDB && (
           <span className={styles.CabinetHeader__welcome}>Hello, {name}!</span>
         )}
-        Welcome to{' '}
-        <span className={styles.CabinetHeader__title_highlighted}>Profiler's personal cabinet</span>{' '}
-        — an employment program for our best students
+        <p className={styles.CabinetHeader__subtitle}>
+          Welcome to{' '}
+          <span className={styles.CabinetHeader__subtitle_highlighted}>
+            Profiler's personal cabinet
+          </span>{' '}
+          — an employment program for our best students
+        </p>
       </h1>
     </div>
   );

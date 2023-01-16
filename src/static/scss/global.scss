@@ -1,23 +1,23 @@
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 a,
 a:visited {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 h1,
@@ -26,38 +26,38 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: inherit;
-    font-size: inherit;
+  font-weight: inherit;
+  font-size: inherit;
 }
 
 img {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 body {
-    font-family: "Red Hat Display";
+  font-family: "Red Hat Display";
 }
 
 html,
 body {
-    height: 100%;
-    overflow-x: hidden;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 a {
-    outline: none;
+  outline: none;
 }
 
 input[type="text"]::-ms-clear {
-    display: none;
+  display: none;
 }
 
 input[type="password"]::-ms-reveal {
-    display: none;
+  display: none;
 }
 
 //input::-webkit-credentials-auto-fill-button,
@@ -68,37 +68,3 @@ input[type="password"]::-ms-reveal {
 //    position: absolute;
 //    right: 0;
 //}
-
-/*=======VARIABLES =====*/
-/*=======background========*/
-$background-main: #fff;
-$background-sidebar: #F6F9FF;
-
-/*=======text========*/
-$text-primary-blue: #407bff;
-$text-primary-white: #fff;
-$text-primary-dark-blue: #25225d;
-$text-primary-grey: #9c9c9c;
-$text-primary-secondary-gray: #b0b0b0;
-$text-primary-error: #d40000;
-
-/*=======button========*/
-$button-default: #407bff;
-$button-hover: #296bff;
-$button-active: #004fff;
-$button-disabled: #94b5ff;
-$cancel-button-background: #e6edff;
-
-/*=======input========*/
-$input-background: #f3f3f3;
-$input-stroke-active: #407bff;
-$input-stroke-error: #d40000;
-
-/*=======scrollbar========*/
-
-$scrollbar: #c1c1c1;
-
-
-
-
-

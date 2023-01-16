@@ -106,7 +106,6 @@ export const SelectPhoneNumber = ({
             </svg>
           </div>
         </div>
-
         <div className={styles.selectPhone__input}>{props.children}</div>
       </div>
       {meta.error && (

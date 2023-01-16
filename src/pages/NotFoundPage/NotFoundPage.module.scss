@@ -1,4 +1,4 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 
 @keyframes move-1 {
     0% {
@@ -318,24 +318,24 @@
         font-size: 1.875em;
         line-height: 1.32;
         font-weight: 600;
-        color: global.$text-primary-dark-blue;
+        color: variables.$text-primary-dark-blue;
     }
     &__subtitle {
         font-size: 1.25em;
         line-height: 1.32;
         font-weight: 400;
-        color: global.$text-primary-dark-blue;
+        color: variables.$text-primary-dark-blue;
         max-width: 471px;
         & span {
             cursor: pointer;
             font-weight: 700;
-            color: global.$text-primary-blue;
+            color: variables.$text-primary-blue;
             &:hover {
-                border-bottom: 1px global.$text-primary-blue solid;
+                border-bottom: 1px variables.$text-primary-blue solid;
             }
             &:active {
-                color: global.$text-primary-dark-blue;
-                text-decoration: global.$text-primary-dark-blue;
+                color: variables.$text-primary-dark-blue;
+                text-decoration: variables.$text-primary-dark-blue;
             }
         }
     }

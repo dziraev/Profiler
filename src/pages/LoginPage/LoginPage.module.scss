@@ -1,8 +1,8 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 .page {
     min-height: 100vh;
     text-align: center;
-    background: global.$background-main url("../../static/images/background-login-small.png") center / cover no-repeat;
+    background: variables.$background-main url("../../static/images/background-login-small.png") center / cover no-repeat;
     overflow: hidden;
     padding: 0 15px;
     @media(min-width: 991.98px) {
@@ -20,7 +20,7 @@
         width: 100%
     }
     &__header {
-        color: global.$text-primary-blue;
+        color: variables.$text-primary-blue;
         font-weight: 700;
         font-size: 2.25em;
         line-height: 1.33;
@@ -30,7 +30,7 @@
     }
 
     &__title {
-        color: global.$text-primary-grey;
+        color: variables.$text-primary-grey;
         font-weight: 400;
         font-size: 0.875em;
         line-height: 1.357;

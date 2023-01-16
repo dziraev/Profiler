@@ -1,10 +1,10 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 .page {
     min-height: 100vh;
     text-align: center;
     width: 100vw;
     &__container {
-        background: global.$background-main url("../../static/images/background-personal-cabinet.png") 54% 0% / 2100px 216px no-repeat;
+        background: variables.$background-main url("../../static/images/background-personal-cabinet.png") 54% 0% / 2100px 216px no-repeat;
         margin: 0 auto;
         display: flex;
         justify-content: center;
@@ -32,7 +32,7 @@
         &__container {
             display: block;
             width: 428px;
-            background: global.$background-main url("../../static/images/background-personal-cabinet-small.png") 0 56px / contain no-repeat;
+            background: variables.$background-main url("../../static/images/background-personal-cabinet-small.png") 0 56px / contain no-repeat;
         }
         &__header {
 

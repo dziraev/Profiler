@@ -1,4 +1,4 @@
-@use '../../static/scss/global';
+@use '../../static/scss/variables';
 
 .logout {
     cursor: pointer;
@@ -6,22 +6,22 @@
         display: flex;
         align-items: center;
         column-gap: 8px;
-        color: global.$text-primary-blue;
+        color: variables.$text-primary-blue;
         & svg {
             display: block;
-            stroke: global.$text-primary-blue;
+            stroke: variables.$text-primary-blue;
         }
     }
     &__link:hover p {
-        border-bottom: 1px global.$text-primary-blue solid;
+        border-bottom: 1px variables.$text-primary-blue solid;
     }
     &__link:active {
-        color: global.$text-primary-dark-blue;
+        color: variables.$text-primary-dark-blue;
         & p {
             text-decoration: none;
         }
         & svg {
-            stroke: global.$text-primary-dark-blue;
+            stroke: variables.$text-primary-dark-blue;
         }
     }
 }
