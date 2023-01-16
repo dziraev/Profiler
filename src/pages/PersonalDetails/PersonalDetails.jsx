@@ -95,11 +95,12 @@ const PersonalDetails = (props) => {
           try {
             if (!values.userInDB) {
               const response = await $api.post('/profile', currentValues);
+              dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
             } else {
               const changedValues = getChangedValues(currentValues, initialValues);
               const response = await $api.put('/profile', changedValues);
+              dispatch(personalDetailsUpdate(values));
             }
-            dispatch(personalDetailsUpdate(values));
             if (hrefLinkIsClicked.current && hrefLinkIsClicked.current === '/auth') {
               localStorage.removeItem('token');
               dispatch({ type: 'USER_LOGOUT' });
@@ -108,7 +109,6 @@ const PersonalDetails = (props) => {
             if (hrefLinkIsClicked.current && hrefLinkIsClicked.current !== '/auth') {
               navigate(linkIsClicked);
             }
-            dispatch(resetDirtyStatusFormPD());
           } catch (e) {
             dispatch(linkIsNotClicked());
             setStatus({ errorResponse: true });
