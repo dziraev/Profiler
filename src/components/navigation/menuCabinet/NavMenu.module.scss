@@ -1,4 +1,4 @@
-@use '../../static/scss/variables';
+@use '../../../static/scss/variables';
 
 @keyframes opacity-animation {
     0% {
@@ -114,7 +114,7 @@
         }
     }
     @media (max-width: 1365px) {
-        background: variables.$background-main url("../../static/images/background-personal-cabinet-burger.png") 0 calc(100% - 54px) / contain no-repeat;
+        background: variables.$background-main url("../../../static/images/background-personal-cabinet-burger.png") 0 calc(100% - 54px) / contain no-repeat;
         width: 428px;
         height: 100vh;
         margin: 0 auto;

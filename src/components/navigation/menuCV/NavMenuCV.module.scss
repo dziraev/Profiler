@@ -1,0 +1,71 @@
+@use '../../../static/scss/variables';
+
+.sidebar {
+    width: 320px;
+    background: variables.$background-sidebar;
+    padding: 30px 0 0 50px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    height: 100%;
+    &__logo {
+        padding: 0 0 20px 0;
+        & img {
+          width: 130px;
+          height: 44px;
+        }
+    }
+    &__link {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+      line-height: 1.32;
+      gap: 15px;
+      padding: 1.5px 0 1.5px 5px;
+      margin-bottom: 32px;
+      color: variables.$text-primary-blue;
+      &:hover p {
+        border-bottom: 1px solid variables.$text-primary-blue;
+      }
+      &:active {
+        color: variables.$text-primary-dark-blue;
+        & svg {
+          fill: variables.$text-primary-dark-blue;
+        }
+      }
+    }
+    &__nav__link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 12px;
+        padding: 15px 24px;
+        font-weight: 400;
+        font-size: 1.125em;
+        line-height: 1.32;
+        color: variables.$text-primary-dark-blue;
+        position: relative;
+        background: variables.$background-sidebar;
+        & p {
+            height: 23px;
+        }
+        & svg {
+            stroke: variables.$text-primary-dark-blue;
+        }
+        &:hover {
+            color: variables.$text-primary-blue;
+            & svg {
+                stroke: variables.$text-primary-blue;
+            }
+        }
+    }
+}
+
+.active {
+    & .sidebar__nav__link {
+
+        & svg {
+
+        }
+    }
+}

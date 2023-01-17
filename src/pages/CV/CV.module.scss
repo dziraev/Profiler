@@ -1,0 +1,30 @@
+@use '../../static/scss/variables';
+
+.page {
+    min-height: 100vh;
+    background: variables.$background-main;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    &__content {
+        width: 100%;
+        padding: 50px 50px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__main {
+        margin: 0 auto;
+    }
+    &__sidebar {
+        flex-basis: 320px;
+    }
+}
+.exit {
+    align-self: flex-end;
+    font-size: 1.25em;
+    line-height: 1.32;
+    & p {
+        height: 26px;
+    }
+}

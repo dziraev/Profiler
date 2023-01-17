@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import NavMenu from '../../components/navigation/NavMenu';
+import NavMenu from '../../components/navigation/menuCabinet/NavMenu';
 import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeader';
 import styles from './PersonalCabinetPage.module.scss';
 import Logout from '../../components/links/Logout';
