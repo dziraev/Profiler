@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './CV.module.scss';
 import Logout from '../../components/links/Logout';
 import NavMenuCV from '../../components/navigation/menuCV/NavMenuCV';
 
 const CV = () => {
+  const [closed, setClosed] =useState(false);
+  const closeModal = () => setClosed(true);
   return (
     <div className={styles.page}>
+      <div className={`${styles.overlay} ${closed ? styles.modal_closed : ''}`}>
+        <div className={styles.modal}>
+          <div className={styles.modal__close} onClick={closeModal}>
+            <svg 
+              width='24' 
+              height='24' 
+              viewBox='0 0 24 24' 
+              fill='none' 
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path 
+                d='M6.75781 17.2428L12.0008 11.9998M17.2438 6.75684L11.9998 11.9998M11.9998 11.9998L6.75781 6.75684M12.0008 11.9998L17.2438 17.2428'
+                stroke='black' 
+                strokeWidth='1.5' 
+                strokeLinecap='round' 
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
+          <div className={styles.modal__content}>
+            <h2>Please use a computer</h2>
+            <p>
+              for the convenience of filling in a CV. This page does not have an adaptive version for mobile phone and tablet
+            </p>
+          </div>
+        </div>
+      </div>
       <div className={styles.page__sidebar}>
           <NavMenuCV />
       </div>
