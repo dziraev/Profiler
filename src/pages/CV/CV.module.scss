@@ -28,8 +28,13 @@
         height: 26px;
     }
 }
+.overlay {
+    display: none;
+}
 @media (max-width: 1365px) {
     .overlay {
+        color: variables.$text-primary-dark-blue;
+        display: block;
         background-color: rgba(0, 0, 0, 0.25);
         position: absolute;
         z-index: 2;
