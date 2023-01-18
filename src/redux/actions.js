@@ -14,7 +14,6 @@ import {
   PHONECODES_LOAD,
   POSITIONS_LOAD
 } from './types';
-import uniqid from 'uniqid';
 import $api from '../http/api';
 
 export function authIn() {
@@ -137,7 +136,7 @@ export function positionsLoad() {
       const { data } = await $api.get('positions');
       dispatch({
         type: POSITIONS_LOAD,
-        data: [{ id: uniqid(), name: 'None' }, ...data]
+        data
       });
     } catch (e) {
       console.log(e);
