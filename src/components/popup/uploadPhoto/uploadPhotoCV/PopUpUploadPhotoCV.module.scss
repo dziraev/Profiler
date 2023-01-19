@@ -1,0 +1,107 @@
+@use '../../../../static/scss/variables';
+
+.overlay {
+    width: 100vw;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: default;
+}
+.modal {
+    width: 636px;
+    height: 422px;
+    background-color: variables.$background-main;
+    border-radius: 15px;
+    position: absolute;
+    z-index: 3;
+    top: calc(50% - 422px / 2);
+    left: calc(50% - 636px / 2);
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 1.125em;
+        line-height: 1.288;
+        color: variables.$text-primary-dark-blue;
+        text-align: center;
+        width: 586px;
+        padding: 23px 0 18px;
+        font-weight: 500;
+        margin: 0 auto;
+        &__title {
+            padding-bottom: 9px;
+            font-weight: 700;
+        }
+        & span {
+            font-weight: 700;
+        }
+    }
+    &__close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+    &__images {
+        width: 290px;
+        display: flex;
+        gap: 50px;
+        margin: 0 auto 22px;
+        &__image {
+            position: relative;
+        } 
+    }
+    &__button {
+        margin: 0 auto;
+        width: 170px;
+        &__label {
+            display: block;
+            width: 100%;
+            background-color: variables.$button-default;
+            border-radius: 15px;
+            color: variables.$background-main;
+            font-size: 1.25em;
+            line-height: 1.32;
+            font-weight: 700;
+            padding: 16px 34.5px;
+            cursor: pointer;
+            &:hover, &:focus {
+                background-color: variables.$button-hover;
+            }
+            &:active {
+                background-color: variables.$button-active;
+            }
+            &:disabled {
+                background-color: variables.$button-disabled;
+            }
+        }
+        & input[type='file'] {
+            display: none;
+        }
+    }
+}
+
+.cross {
+    position: absolute;
+    top: calc(0% - 5px);
+    left: calc(0% - 26px / 2);
+    width: 26px;
+    height: 26px;
+    background: url(../../../../static/images/cross.png);
+    background-size: cover;
+}
+
+.check {
+    position: absolute;
+    top: calc(0% - 5px);
+    left: calc(0% - 26px / 2);
+    width: 26px;
+    height: 26px;
+    background: url(../../../../static/images/check.png);
+    background-size: cover;
+}
