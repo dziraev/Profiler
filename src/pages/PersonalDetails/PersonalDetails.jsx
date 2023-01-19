@@ -5,10 +5,9 @@ import { useDispatch } from 'react-redux';
 import {
   changeDirtyStatusFormPD,
   linkIsNotClicked,
-  personalDetailsUpdate,
-  resetDirtyStatusFormPD
+  personalDetailsUpdate
 } from '../../redux/actions';
-import { PopUpCancelChanges, PopUpSave, PopUpTryAgain } from '@components/popup';
+import { PopUpCancelChanges, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@components/popup';
 import {
   InputPersonalDetails,
   SearchBar,
@@ -115,15 +114,13 @@ const PersonalDetails = (props) => {
           }
         }}
         onReset={() => {
-          dispatch(resetDirtyStatusFormPD());
           setIsEdit(false);
           setCancelIsClicked(false);
-          dispatch(linkIsNotClicked());
         }}
         validate={validatePersonalDetails}
       >
         {(formik) => {
-          const { dirty, isSubmitting, setFieldValue, handleReset, status, setStatus } = formik;
+          const { dirty, isSubmitting, isValid, setFieldValue, status, setStatus } = formik;
 
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
@@ -131,8 +128,9 @@ const PersonalDetails = (props) => {
 
           return (
             <Form className={styles.form}>
-              {dirty && linkIsClicked && (
-                <PopUpSave isSubmitting={isSubmitting} handleReset={handleReset}>
+              {dirty && !isValid && linkIsClicked && <PopUpStayOrLeave />}
+              {dirty && isValid && linkIsClicked && (
+                <PopUpSave isSubmitting={isSubmitting}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}
