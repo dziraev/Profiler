@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import PopUpUploadPhotoCV from '../popup/uploadPhoto/uploadPhotoCV/PopUpUploadPhotoCV';
-import PopUpUploadPhotoCabinet from '../popup/uploadPhoto/uploadPhotoCabinet/PopUpUploadPhotoCabinet';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../redux/actions';
 import styles from './Photo.module.scss';
 
 const Photo = (props) => {
-  const [openModal, setOpenModal] = useState(false);
-  const close = () => setOpenModal(false);
+  const dispatch = useDispatch();
   return (
     <>
       <div 
         className={`${styles.photo} ${props.page === 'cabinet' ? styles.Cabinet : styles.CV}`} 
-        onClick={() => setOpenModal(true)}
+        onClick={() => dispatch(openModal())}
       >
         <div className={`${styles.photo__button} ${props.page === 'cabinet' ? styles.Cabinet : styles.CV}`}>
           <svg
@@ -28,12 +27,6 @@ const Photo = (props) => {
         </div>
         <p className={`${styles.photo__title} ${props.page === 'cabinet' ? styles.Cabinet : styles.CV}`}>Add your photo</p>
       </div>
-      {openModal && props.page !== 'cabinet' &&
-        <PopUpUploadPhotoCV close={close} />
-      }
-      {openModal && props.page === 'cabinet' &&
-        <PopUpUploadPhotoCabinet close={close} />
-      }
     </>
   );
 };

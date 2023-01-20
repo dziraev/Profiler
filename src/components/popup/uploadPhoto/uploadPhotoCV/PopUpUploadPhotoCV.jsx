@@ -1,17 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '../../../../redux/actions';
 import styles from './PopUpUploadPhotoCV.module.scss';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
 
-export const PopUpUploadPhotoCV = (props) => {
+export const PopUpUploadPhotoCV = () => {
+  const dispatch = useDispatch();
   return (
     <div 
       className={styles.overlay} 
-      onClick={props.close}>
+    >
       <div className={styles.modal}>
         <div
           className={styles.modal__close}
-          onClick={props.close}
+          onClick={() => dispatch(closeModal())}
         >
           <svg 
             width='30' 
