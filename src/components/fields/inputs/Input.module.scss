@@ -25,7 +25,7 @@
     }
 
     &:hover, &:focus {
-        border-color:variables.$input-stroke-active;
+        border-color: variables.$input-stroke-active;
     }
     &:disabled {
         cursor: no-drop;
@@ -58,6 +58,7 @@
             border-color:  variables.$input-stroke-error;
         }
         &::placeholder {
+            -webkit-text-fill-color: variables.$text-primary-error;
             color: variables.$text-primary-error
         }
     }

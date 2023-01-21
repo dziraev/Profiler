@@ -1,9 +1,4 @@
-import { emailValidator } from './validators';
-
-const checkIsValidName = (value) => {
-  const REGEXP = /^[a-z]+(([ -])?[a-z]+)*$/i;
-  return REGEXP.test(value);
-};
+import { emailValidator, checkIsValidName } from './validators';
 
 export const validatePersonalDetails = (values) => {
   let errors = {};

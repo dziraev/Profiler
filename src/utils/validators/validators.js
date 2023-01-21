@@ -1,6 +1,9 @@
-export const required = (value) => {
-  if (value) return undefined;
-  return 'Required field';
+export const trimValues = (object) => {
+  return Object.entries(object).reduce((acc, [key, value]) => {
+    if (typeof value === 'string') acc[key] = value.trim();
+
+    return acc;
+  }, {});
 };
 
 export const emailValidator = (value) => {
@@ -10,11 +13,10 @@ export const emailValidator = (value) => {
   return EMAIL_REGEXP.test(email);
 };
 
-const maxLengthCreator = (maxLength, message) => (value) => {
-  if (value.length > maxLength) return message;
-  return undefined;
+export const checkIsValidName = (value) => {
+  const REGEXP = /^[a-z]+(([ -])?[a-z]+)*$/i;
+  return REGEXP.test(value);
 };
-export const emailLength = maxLengthCreator(50, 'Invalid email');
 
 export const validator = (values) => {
   let errors = {};

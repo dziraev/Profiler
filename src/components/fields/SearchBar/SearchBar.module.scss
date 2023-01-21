@@ -3,6 +3,7 @@
 .search {
     font-family: "Red Hat Display";
     position: relative;
+    width: 100%;
     &__input {
         font-family: inherit;
         border-radius: 15px;
@@ -40,7 +41,7 @@
             font-size: 1rem;
             line-height: 1.3125;
             color: variables.$text-primary-secondary-gray;
-            @media(min-width: 767.98px) {
+            @media(min-width: 1365.98px) {
                 font-size: 1.125rem;
                 line-height: 1.333;
             }
@@ -61,7 +62,6 @@
         z-index: 3;
         top: 100%;
         transform: translateY(15px);
-
     }
     &__item {
         padding: 10px;

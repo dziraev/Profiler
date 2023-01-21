@@ -1,0 +1,52 @@
+@use 'src/static/scss/variables';
+@use 'src/static/scss/mixins';
+
+.checkbox {
+  font-weight: 400;
+  color: variables.$text-primary-dark-blue;
+  font-size: 0;
+  position: relative;
+
+  &__input {
+    display: none;
+    &:focus + .checkbox__label {
+
+    }
+    &:checked + .checkbox__label::after {
+        opacity: 1;
+    }
+  }
+
+  &__label {
+    position: relative;
+    font-size: mixins.rem(16);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 14px;
+    line-height: 1.3125;
+    &::before {
+      content: '';
+      flex: 0 0 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 1.5px solid variables.$input-stroke-active;
+      border-radius: 5px;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 4px;
+      width: 6px;
+      height: 10px;
+      border: solid variables.$input-stroke-active;
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.1s ease 0s;
+    }
+  }
+}
+
+

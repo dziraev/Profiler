@@ -60,7 +60,8 @@ module.exports = {
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
       '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
-      '@hooks': path.resolve(__dirname, 'src/hooks')
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@images': path.resolve(__dirname, 'src/static/images')
     }
   },
   plugins: [
@@ -91,7 +92,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     watchFiles: path.join(__dirname, 'src'),
-    port: 80
+    port: 9000
   },
   optimization: {
     minimizer: [

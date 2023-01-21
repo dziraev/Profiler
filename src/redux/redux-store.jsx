@@ -7,12 +7,14 @@ import { phoneCodesReducer } from '@reducers';
 import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
+import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
 
 const appReducer = combineReducers({
   authReducer,
   countriesReducer,
   phoneCodesReducer,
   personalDetailsReducer,
+  personalInformationReducer,
   editModeReducer,
   positionsReducer,
   linkIsClickedReducer

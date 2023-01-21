@@ -3,7 +3,13 @@ import { useField } from 'formik';
 import stylesPD from './InputPersonalDetails.module.scss';
 import styles from '../Input.module.scss';
 
-export const InputPersonalDetails = ({ label, activeLabel, showError = true, ...props }) => {
+export const InputPersonalDetails = ({
+  label,
+  activeLabel,
+  adaptiveError = true,
+  showError = true,
+  ...props
+}) => {
   const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props);
   function handleBlur(e) {
@@ -27,7 +33,7 @@ export const InputPersonalDetails = ({ label, activeLabel, showError = true, ...
         placeholder={active ? activeLabel : label}
       />
       {meta.touched && meta.error && showError && (
-        <div className={stylesPD.error}>
+        <div className={`${adaptiveError ? stylesPD.error : stylesPD.errorNotAdaptive}`}>
           <svg
             width='24'
             height='24'

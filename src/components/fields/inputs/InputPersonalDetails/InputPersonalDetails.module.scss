@@ -22,3 +22,20 @@
         height: 14px;
     }
 }
+
+.errorNotAdaptive {
+    position: absolute;
+    display: flex;
+    font-weight: 500;
+    font-size: 0.75rem;
+    align-items: flex-start;
+    line-height: 1.333;
+    color: variables.$text-primary-error;
+    top: 100%;
+    transform: translateY(6px);
+    svg {
+        flex: 0 0 14px;
+        margin-right: 6px;
+        height: 14px;
+    }
+}

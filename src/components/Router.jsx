@@ -9,6 +9,7 @@ import MyCV from '../pages/MyCV/MyCV';
 import PersonalDetails from '../pages/PersonalDetails/PersonalDetails';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import CV from '../pages/CV/CV';
+import { PersonalInformation } from '../pages/CVsteps/PersonalInformation/PersonalInformation';
 
 const AuthRoutes = () => (
   <Routes>
@@ -23,7 +24,7 @@ const MainRoutes = () => (
       <Route path='my-cv' element={<MyCV />} />
     </Route>
     <Route path='/cv' element={<CV />}>
-      {/* <Route path='personal-info' element={< />} /> */}
+      <Route index element={<PersonalInformation />} />
     </Route>
     <Route path='/auth' element={<Navigate to='/main/my-cv' />} />
     <Route path='/' element={<Navigate to='/main/my-cv' />} />
