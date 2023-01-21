@@ -61,6 +61,7 @@ module.exports = {
       '@components': path.resolve(__dirname, 'src/components'),
       '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@validators': path.resolve(__dirname, 'src/utils/validators'),
       '@images': path.resolve(__dirname, 'src/static/images')
     }
   },

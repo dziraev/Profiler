@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form, Formik } from 'formik';
-import { validatePersonalDetails } from '../../utils/validators/validatePersonalDetails';
+import { validatePersonalDetails } from '@validators/validatePersonalDetails';
 import { useDispatch } from 'react-redux';
 import {
   changeDirtyStatusFormPD,

@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
 import { Button } from '@components/buttons';
-import { validatePersonalInformation } from '../../../utils/validators/validatePersonalInformation';
+import { ClearButton } from '@components/buttons';
+import { validatePersonalInformation } from '@validators/validatePersonalInformation';
 import { useSelector } from 'react-redux';
 import styles from './PersonalInformation.module.scss';
-import { ClearButton } from '@components/buttons/ClearButton/ClearButton';
 
 export const PersonalInformation = () => {
   const personalInformation = useSelector(

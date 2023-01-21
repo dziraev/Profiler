@@ -17,22 +17,3 @@ export const checkIsValidName = (value) => {
   const REGEXP = /^[a-z]+(([ -])?[a-z]+)*$/i;
   return REGEXP.test(value);
 };
-
-export const validator = (values) => {
-  let errors = {};
-  let email = values.email.trim();
-  const EMAIL_REGEXP =
-    /^[a-zA-Z0-9]+([!"#$%&'()*+,\-.\/:;<=>?[\]\\^_{}][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)?)(\.[a-z]{2,})+$/iu;
-
-  if (!values.email) {
-    errors.email = 'Required field';
-  } else if (!EMAIL_REGEXP.test(email)) {
-    errors.email = 'Invalid email';
-  }
-
-  if (!values.password) {
-    errors.password = 'Required field';
-  }
-
-  return errors;
-};

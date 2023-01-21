@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { validator } from '../../utils/validators/validators';
 import { useDispatch } from 'react-redux';
 import { Form, Formik } from 'formik';
 import { Input, InputPassword } from '@components/fields';
 import { Button } from '@components/buttons';
 import { authInAndPersonalDetailsLoad } from '../../redux/actions';
+import { validateAuthorization } from '@validators/validateAuthorization';
 import logo from '../../static/images/logo.svg';
 import styles from './LoginPage.module.scss';
 
@@ -37,7 +37,7 @@ const LoginPage = (props) => {
               setFieldError('password', <span>Wrong email or password</span>);
             }
           }}
-          validate={validator}
+          validate={validateAuthorization}
         >
           {(formik) => {
             const { isValid, dirty, isSubmitting } = formik;
