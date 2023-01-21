@@ -53,7 +53,7 @@ const Router = () => {
     return;
   }
 
-  return true ? <MainRoutes /> : <AuthRoutes />;
+  return isAuth ? <MainRoutes /> : <AuthRoutes />;
 };
 
 export default Router;
