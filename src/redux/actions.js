@@ -12,7 +12,9 @@ import {
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD,
-  POSITIONS_LOAD
+  POSITIONS_LOAD,
+  MODAL_IS_CLOSED,
+  MODAL_IS_OPENED
 } from './types';
 import $api from '../http/api';
 
@@ -148,5 +150,17 @@ export function personalDetailsUpdate(data) {
   return {
     type: PERSONALDETAILS_UPDATE,
     data
+  };
+}
+
+export function closeModal() {
+  return {
+    type: MODAL_IS_CLOSED,
+  };
+}
+
+export function openModal() {
+  return {
+    type: MODAL_IS_OPENED
   };
 }

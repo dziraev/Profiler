@@ -8,6 +8,7 @@ import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
 import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
+import { photoModalReducer } from '@reducers/photoModalReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -17,7 +18,8 @@ const appReducer = combineReducers({
   personalInformationReducer,
   editModeReducer,
   positionsReducer,
-  linkIsClickedReducer
+  linkIsClickedReducer,
+  photoModalReducer
 });
 
 const rootReducer = (state, action) => {

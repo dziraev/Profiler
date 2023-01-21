@@ -29,43 +29,146 @@
       }
       &:active {
         color: variables.$text-primary-dark-blue;
-        & svg {
+        & p {
+          border: none;
+        }
+        & path {
           fill: variables.$text-primary-dark-blue;
         }
       }
     }
-    &__nav__link {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        column-gap: 12px;
-        padding: 15px 24px;
-        font-weight: 400;
-        font-size: 1.125em;
-        line-height: 1.32;
-        color: variables.$text-primary-dark-blue;
-        position: relative;
-        background: variables.$background-sidebar;
-        & p {
-            height: 23px;
+    &__nav {
+      display: flex;
+      gap: 12px;
+      flex-direction: column-reverse;
+      &__link {
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          column-gap: 16px;
+          padding: 4px 0px 4px 4px;
+          font-weight: 400;
+          font-size: 1em;
+          line-height: 1.32;
+          color: variables.$text-primary-dark-blue;
+          opacity: 40%;
+          &__icon {
+            background-color: rgba( 255, 255, 255, 0.4);
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            text-align: center;
+            padding: 12px;
+          }
+          & svg {
+            display: block;
+            width: 16px;
+            height: 16px;
+          }
+          & p {
+              height: 21px;
+          }
+          &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 48px;
+            left: 24px;
+            border-left: 0.5px solid variables.$text-primary-secondary-gray;
+            height: 4.5px;
+          }
+          &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -4px;
+            left: 24px;
+            border-left: 0.5px solid variables.$text-primary-secondary-gray;
+            height: 4.5px;
+          }
+      }
+      & a:nth-child(1) .sidebar__nav__link {
+        &::before {
+          content: none;
         }
-        & svg {
-            stroke: variables.$text-primary-dark-blue;
+      }
+      & a:nth-child(8) .sidebar__nav__link {
+        &::after {
+          content: none;
         }
-        &:hover {
-            color: variables.$text-primary-blue;
-            & svg {
-                stroke: variables.$text-primary-blue;
-            }
-        }
+      }
     }
 }
 
 .active {
-    & .sidebar__nav__link {
-
-        & svg {
-
-        }
+  padding: 0px;
+  column-gap: 12px;
+  & .sidebar__nav__link {
+    padding: 0;
+    opacity: 100%;
+  }
+  & .sidebar__nav__link__icon {
+    background-color: variables.$text-primary-blue;
+    box-shadow: 0 4px 12px 0 rgba(64, 123, 255, 0.2);
+    width: 48px;
+    height: 48px;
+    padding: 16px;
+  }
+  & p {
+    color: variables.$text-primary-blue;
+    font-weight: 600;
+  }
+  & path {
+    fill: variables.$background-main;
+  }
+  &:hover {
+    & path {
+      stroke: variables.$background-main;
     }
+  }
+  & ~ a .sidebar__nav__link {
+    color: variables.$text-primary-dark-blue;
+    opacity: 100%;
+    & .sidebar__nav__link__icon {
+      background-color: variables.$background-main;
+      & path {
+        fill: variables.$text-primary-dark-blue;
+      }
+      & .stroke {
+        fill: none;
+        stroke: variables.$text-primary-dark-blue;
+      }
+    }
+    &:hover {
+      color: variables.$text-primary-blue;
+      & path {
+        fill: variables.$text-primary-blue;
+      }
+      & .stroke {
+        fill: none;
+        stroke: variables.$text-primary-blue;
+      }
+    }
+    &:active {
+      padding: 0px;
+      font-weight: 600;
+      column-gap: 12px;
+      color: variables.$text-primary-blue;
+      & .sidebar__nav__link__icon {
+        background-color: variables.$text-primary-blue;
+        box-shadow: 0 4px 12px 0 rgba(64, 123, 255, 0.2);
+        width: 48px;
+        height: 48px;
+        padding: 16px;
+      }
+      & path {
+        fill: variables.$background-main;
+      }
+      & .stroke {
+        fill: none;
+        stroke: variables.$background-main;
+      }
+    }
+  }
 }

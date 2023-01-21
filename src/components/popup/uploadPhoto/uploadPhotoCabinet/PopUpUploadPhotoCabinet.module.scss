@@ -1,0 +1,220 @@
+@use '../../../../static/scss/variables';
+
+@keyframes mobile-animation {
+    from {
+        bottom: -630px;
+    }
+    to {
+        bottom: 0;
+    }
+}
+
+.overlay {
+    width: 100vw;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    cursor: default;
+}
+.modal {
+    width: 636px;
+    height: 422px;
+    background-color: variables.$background-main;
+    border-radius: 15px;
+    position: absolute;
+    z-index: 30;
+    bottom: calc(50% - 422px / 2);
+    left: calc(50% - 636px / 2);
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 1.125em;
+        line-height: 1.288;
+        color: variables.$text-primary-dark-blue;
+        text-align: center;
+        width: 586px;
+        padding: 23px 0 18px;
+        font-weight: 500;
+        margin: 0 auto;
+        &__title {
+            padding-bottom: 9px;
+            font-weight: 700;
+        }
+        & span {
+            font-weight: 700;
+        }
+        &__photo {
+            display: none;
+        }
+    }
+    &__close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+    }
+    &__close_mobile {
+        display: none;
+        position: absolute;
+        cursor: pointer;
+    }
+    &__images {
+        width: 290px;
+        display: flex;
+        gap: 50px;
+        margin: 0 auto 22px;
+        &__image {
+            position: relative;
+        } 
+    }
+    &__button {
+        margin: 0 auto;
+        width: 170px;
+        &__label {
+            display: block;
+            width: 100%;
+            background-color: variables.$button-default;
+            border-radius: 15px;
+            color: variables.$background-main;
+            font-size: 1.25em;
+            line-height: 1.32;
+            font-weight: 700;
+            padding: 16px 34.5px;
+            cursor: pointer;
+            &:hover, &:focus {
+                background-color: variables.$button-hover;
+            }
+            &:active {
+                background-color: variables.$button-active;
+            }
+            &:disabled {
+                background-color: variables.$button-disabled;
+            }
+        }
+        & input[type='file'] {
+            display: none;
+        }
+    }
+    @media (max-width: 1365px) {
+        width: 428px;
+        height: 630px;
+        border-radius: 25px 25px 0 0;
+        bottom: 0;
+        left: calc(50% - 428px / 2);
+        animation: mobile-animation 500ms ease-out;
+        &__content {
+            gap: 20px;
+            font-size: 0.875em;
+            line-height: 1.322;
+            padding: 20px 15px 26px;
+            font-weight: 400;
+            width: 100%;
+            & p {
+                text-align: left;
+            }
+            &__title {
+                padding-bottom: 0;
+                font-weight: 500;
+                font-size: 1.125em;
+                margin: 22px 10px -2px;
+            }
+            & span {
+                font-weight: 500;
+            }
+            &__photo {
+                display: block;
+                margin: 0 auto 10px;
+                height: 130px;
+                width: 130px;
+                padding: 47px 22px;
+                background: variables.$background-main;
+                border: variables.$text-primary-blue solid 1px;
+                border-radius: 50%;
+                position: relative;
+                & p {
+                    text-align: center;
+                }
+                &__button {
+                    width: 20px;
+                    height: 20px;
+                    padding: 5.5px;
+                    margin: 0 auto;
+                    background-color: #F0F5FF;
+                    border-radius: 50%;
+                    text-align: center;
+                    & svg {
+                        display: block;
+                    }
+                }
+                &__title {
+                    white-space: nowrap;
+                    color: variables.$text-primary-blue;
+                    font-weight: 600;
+                    font-size: 0.75em;
+                    line-height: 1.32;
+                }
+                &__label {
+                    position: absolute;
+                    top: 0%;
+                    left: 0%;
+                    z-index: 2;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+                & input[type='file'] {
+                    display: none;
+                }
+            }
+        }
+        &__close {
+            display: none;
+        }
+        &__close_mobile {
+            display: block;
+            top: 15px;
+            right: 15px;
+        }
+        &__images {
+            width: 226px;
+            gap: 26px;
+            margin: 0 auto 30px;
+            & img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        &__button {
+            display: none;
+        }
+    }
+    @media (max-width: 428px) {
+        width: 100%;
+        left: 0;
+    }
+}
+
+.cross {
+    position: absolute;
+    top: calc(0% - 5px);
+    left: calc(0% - 26px / 2);
+    width: 26px;
+    height: 26px;
+    background: url(../../../../static/images/cross.png);
+    background-size: cover;
+}
+
+.check {
+    position: absolute;
+    top: calc(0% - 5px);
+    left: calc(0% - 26px / 2);
+    width: 26px;
+    height: 26px;
+    background: url(../../../../static/images/check.png);
+    background-size: cover;
+}

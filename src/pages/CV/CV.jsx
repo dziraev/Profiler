@@ -3,10 +3,12 @@ import { Outlet } from 'react-router-dom';
 import styles from './CV.module.scss';
 import Logout from '../../components/links/Logout';
 import NavMenuCV from '../../components/navigation/menuCV/NavMenuCV';
+import PopUpUploadPhotoCV from '../../components/popup/uploadPhoto/uploadPhotoCV/PopUpUploadPhotoCV';
 
 const CV = () => {
   const [closed, setClosed] =useState(false);
   const closeModal = () => setClosed(true);
+  const openModal = useSelector((state) => state.photoModalReducer.openModal);
   return (
     <div className={styles.page}>
       <div className={`${styles.overlay} ${closed ? styles.modal_closed : ''}`}>
@@ -47,6 +49,9 @@ const CV = () => {
           <Outlet />
         </main>
       </div>
+      {openModal && 
+        <PopUpUploadPhotoCV />
+      }
     </div>
   );
 };
