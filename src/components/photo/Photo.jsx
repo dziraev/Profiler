@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { openModal } from '../../redux/actions';
+import { openPhotoModal } from '../../redux/actions';
 import styles from './Photo.module.scss';
 
 const Photo = (props) => {
@@ -9,7 +9,7 @@ const Photo = (props) => {
     <>
       <div 
         className={`${styles.photo} ${props.page === 'cabinet' ? styles.Cabinet : styles.CV}`} 
-        onClick={() => dispatch(openModal())}
+        onClick={() => dispatch(openPhotoModal())}
       >
         <div className={`${styles.photo__button} ${props.page === 'cabinet' ? styles.Cabinet : styles.CV}`}>
           <svg

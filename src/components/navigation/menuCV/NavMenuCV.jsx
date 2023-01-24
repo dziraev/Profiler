@@ -5,13 +5,16 @@ import logo from '../../../static/images/menu-logo.svg';
 
 const NavMenu = () => {
   const isActiveLink = ({ isActive }) => (isActive ? styles.active : '');
+  const handleClick = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebar__logo}>
         <img src={logo} alt='logo' />
       </div>
       <nav className={styles.sidebar__nav}>
-        <NavLink to='/cv/recommendations' className={isActiveLink}>
+        <NavLink to='/cv/recommendations' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -32,7 +35,7 @@ const NavMenu = () => {
             <p>Recommendations</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/additional' className={isActiveLink}>
+        <NavLink to='/cv/additional' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -57,7 +60,7 @@ const NavMenu = () => {
             <p>Additional information</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/education' className={isActiveLink}>
+        <NavLink to='/cv/education' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -78,7 +81,7 @@ const NavMenu = () => {
             <p>Education</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/experience' className={isActiveLink}>
+        <NavLink to='/cv/experience' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -99,7 +102,7 @@ const NavMenu = () => {
             <p>Work experience</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/skills' className={isActiveLink}>
+        <NavLink to='/cv/skills' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -122,7 +125,7 @@ const NavMenu = () => {
             <p>Skills</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/about' className={isActiveLink}>
+        <NavLink to='/cv/about' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -143,7 +146,7 @@ const NavMenu = () => {
             <p>About yourself</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/contacts' className={isActiveLink}>
+        <NavLink to='/cv/contacts' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 
@@ -165,7 +168,7 @@ const NavMenu = () => {
             <p>Contacts</p>
           </div>
         </NavLink>
-        <NavLink to='/cv/info' className={isActiveLink}>
+        <NavLink to='/cv' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg 

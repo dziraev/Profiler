@@ -1,12 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../../../../redux/actions';
+import { closePhotoModal, invalidUpload } from '../../../../redux/actions';
 import styles from './PopUpUploadPhotoCV.module.scss';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
 
 export const PopUpUploadPhotoCV = () => {
   const dispatch = useDispatch();
+  const getFile = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 5242880 ||
+        file.type !== 'image/jpeg' &&
+        file.type !== 'image/jpg' &&
+        file.type !== 'image/png') {
+      dispatch(closePhotoModal());
+      dispatch(invalidUpload());
+    };
+  };
   return (
     <div 
       className={styles.overlay} 
@@ -14,7 +24,7 @@ export const PopUpUploadPhotoCV = () => {
       <div className={styles.modal}>
         <div
           className={styles.modal__close}
-          onClick={() => dispatch(closeModal())}
+          onClick={() => dispatch(closePhotoModal())}
         >
           <svg 
             width='30' 
@@ -60,8 +70,9 @@ export const PopUpUploadPhotoCV = () => {
           </div>
         </div>
         <div className={styles.modal__button}>
-          <label htmlFor='file' className={styles.modal__button__label}>Add photo</label>
-          <input type='file' name='photoUuid' id='file'/>
+          <label htmlFor='file' className={styles.modal__button__label}>Add photo
+            <input type='file' name='photoUuid' id='file' onChange={getFile}/>
+          </label>
         </div>
       </div>
     </div>

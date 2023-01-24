@@ -1,0 +1,107 @@
+@use '../../../static/scss/variables';
+
+.overlay {
+    width: 100vw;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    cursor: default;
+}
+.modal {
+    width: 500px;
+    height: 248px;
+    background-color: variables.$background-main;
+    border-radius: 15px;
+    position: absolute;
+    z-index: 30;
+    bottom: calc(50% - 248px / 2);
+    left: calc(50% - 500px / 2);
+    padding: 40px 50px 30px;
+    &__content {
+        color: variables.$text-primary-dark-blue;
+        text-align: center;
+        padding-bottom: 30px;
+        font-weight: 400;
+        font-size: 1.125em;
+        line-height: 1.32;
+        width: 400px;
+        margin: 0 auto;
+        &__title {
+            padding-bottom: 16px;
+            font-weight: 500;
+            font-size: 1.25em;
+        }
+        & p {
+            width: 330px;
+            margin: 0 auto;
+        }
+        & span {
+            font-weight: 600;
+        }
+    }
+    &__btns {
+        display: flex;
+        gap: 60px;
+        margin: 0 auto;
+        width: 400px;
+        & label {
+            display: block;
+            width: 170px;
+            height: 58px;
+            background-color: variables.$background-main;
+            border-radius: 15px;
+            border: variables.$button-default 1px solid;
+            color: variables.$text-primary-blue;
+            font-size: 1.25em;
+            line-height: 1.32;
+            font-weight: 700;
+            padding: 16px 35px;
+            position: relative;
+            cursor: pointer;
+            &:hover, &:focus {
+                background-color: variables.$cancel-button-background;
+             }
+            &:active {
+                border-color: variables.$button-active;
+                color: variables.$button-active;
+                background-color: variables.$background-main;
+            }
+        }
+        & input[type='file'] {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        & button {
+            display: block;
+            width: 170px;
+            height: 58px;
+            background-color: variables.$button-default;
+            border-radius: 15px;
+            color: variables.$background-main;
+            font-size: 1.25em;
+            line-height: 1.32;
+            font-weight: 700;
+            padding: 16px 34.5px;
+            position: relative;
+            cursor: pointer;
+            &:hover, &:focus {
+                background-color: variables.$button-hover;
+            }
+            &:active {
+                background-color: variables.$button-active;
+            }
+            &:disabled {
+                background-color: variables.$button-disabled;
+            }
+        }
+    }
+}

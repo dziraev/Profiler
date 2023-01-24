@@ -22,3 +22,6 @@ export const LINK_IS_NOT_CLICKED = 'LINK_IS_NOT_CLICKED';
 
 export const MODAL_IS_OPENED = 'MODAL_IS_OPENED';
 export const MODAL_IS_CLOSED = 'MODAL_IS_CLOSED';
+
+export const INVALID_UPLOAD = 'INVALID_UPLOAD';
+export const UPLOADED = 'UPLOADED';

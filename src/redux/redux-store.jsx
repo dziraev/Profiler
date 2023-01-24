@@ -8,7 +8,8 @@ import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
 import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
-import { photoModalReducer } from '@reducers/photoModalReducer';
+import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
+import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -19,7 +20,8 @@ const appReducer = combineReducers({
   editModeReducer,
   positionsReducer,
   linkIsClickedReducer,
-  photoModalReducer
+  photoModalReducer,
+  invalidUploadReducer
 });
 
 const rootReducer = (state, action) => {

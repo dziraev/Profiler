@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { openModal } from '../../../redux/actions';
+import { openPhotoModal } from '../../../redux/actions';
 import styles from './PhotoMobile.module.scss';
 
 const PhotoMobile = () => {
@@ -9,7 +9,7 @@ const PhotoMobile = () => {
     <>
       <div 
         className={styles.photo} 
-        onClick={() => dispatch(openModal())}
+        onClick={() => dispatch(openPhotoModal())}
       >
         <svg 
           width='36' 

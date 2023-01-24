@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import NavMenu from '../../components/navigation/menuCabinet/NavMenu';
@@ -8,13 +7,21 @@ import styles from './PersonalCabinetPage.module.scss';
 import Logout from '../../components/links/Logout';
 import PhotoMobile from '../../components/photo/photoMobile/PhotoMobile';
 import PopUpUploadPhotoCabinet from '../../components/popup/uploadPhoto/uploadPhotoCabinet/PopUpUploadPhotoCabinet';
+import PopUpInvalidUpload from '../../components/popup/invalidUpload/PopUpInvalidUpload';
+
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const openModal = useSelector((state) => state.photoModalReducer.openModal);
+  const invalidUpload = useSelector((state) => state.invalidUploadReducer.invalidUpload);
   function openAndCloseMenu(e) {
     setMenuIsOpen(!menuIsOpen);
   };
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1365) setMenuIsOpen(false);
+    });
+  }, []);
   return (
     <div className={`${styles.page} ${menuIsOpen ? styles.page_hidden : ''}`}>
       <div className={styles.header}>
@@ -56,6 +63,9 @@ const PersonalCabinetPage = (props) => {
       </div>
       {openModal && 
         <PopUpUploadPhotoCabinet />
+      }
+      {invalidUpload && 
+        <PopUpInvalidUpload />
       }
     </div>
   );

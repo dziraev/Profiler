@@ -14,7 +14,9 @@ import {
   PHONECODES_LOAD,
   POSITIONS_LOAD,
   MODAL_IS_CLOSED,
-  MODAL_IS_OPENED
+  MODAL_IS_OPENED,
+  INVALID_UPLOAD,
+  UPLOADED
 } from './types';
 import $api from '../http/api';
 
@@ -153,14 +155,26 @@ export function personalDetailsUpdate(data) {
   };
 }
 
-export function closeModal() {
+export function closePhotoModal() {
   return {
     type: MODAL_IS_CLOSED,
   };
 }
 
-export function openModal() {
+export function openPhotoModal() {
   return {
     type: MODAL_IS_OPENED
+  };
+}
+
+export function invalidUpload() {
+  return {
+    type: INVALID_UPLOAD,
+  };
+}
+
+export function uploaded() {
+  return {
+    type: UPLOADED
   };
 }
