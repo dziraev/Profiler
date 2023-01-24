@@ -41,7 +41,6 @@ body {
 html,
 body {
   height: 100%;
-  overflow-x: hidden;
 }
 
 html {
@@ -58,6 +57,16 @@ input[type="text"]::-ms-clear {
 
 input[type="password"]::-ms-reveal {
   display: none;
+}
+
+[tabindex]:focus {
+  outline: none;
+}
+
+#root {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
 }
 
 //input::-webkit-credentials-auto-fill-button,

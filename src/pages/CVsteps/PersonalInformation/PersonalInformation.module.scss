@@ -90,41 +90,12 @@
       margin-left: auto;
     }
   }
-}
-
-
-.boardAdvice {
-  grid-area: advice;
-  @include mixins.adaptive-value('margin-left', 59, 50, 1535, 1366);
-  @media(max-width: 1366px) {
-    margin-left: 50px;
-  }
-  position: relative;
-  padding: 20px;
-  color: variables.$text-primary-dark-blue;
-  background-color: variables.$background-sidebar;
-  border-radius: 16px;
-
-  &:after {
-    top: -15px;
-    right: 22px;
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 44px;
-    background: url("../../../static/images/personalInformation/Clip.png");
-  }
-  &__title {
-    font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.3;
-    &:not(:last-child) {
-      margin-bottom: 16px;
+  &__advice {
+    grid-area: advice;
+    @include mixins.adaptive-value('margin-left', 59, 50, 1535, 1366);
+    @media(max-width: 1366px) {
+      margin-left: 50px;
     }
   }
 
-  &__hint {
-    font-size: 1rem;
-    line-height: 1.3125;
-  }
 }

@@ -43,15 +43,8 @@ module.exports = {
         include: /\.module\.scss$/
       },
       {
-        test: /\.(png|jpg|jpeg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset/resource'
-      },
-      {
-        test: /\.svg$/,
-        type: 'asset/resource',
-        generator: {
-          filename: path.join('icons', '[name].[contenthash][ext]')
-        }
       }
     ]
   },
@@ -59,10 +52,10 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
+      '@buttonsLarge': path.resolve(__dirname, 'src/components/buttons/buttonsLarge'),
       '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
-      '@validators': path.resolve(__dirname, 'src/utils/validators'),
-      '@images': path.resolve(__dirname, 'src/static/images')
+      '@validators': path.resolve(__dirname, 'src/utils/validators')
     }
   },
   plugins: [

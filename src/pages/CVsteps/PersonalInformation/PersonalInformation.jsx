@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Form, Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
-import { Button } from '@components/buttons';
 import { ClearButton } from '@components/buttons';
+import { initialState } from '@reducers/CVReducers/PersonalInformationReducer';
+import { Button } from '@buttonsLarge';
 import { validatePersonalInformation } from '@validators/validatePersonalInformation';
-import { useSelector } from 'react-redux';
+import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import styles from './PersonalInformation.module.scss';
 
 export const PersonalInformation = () => {
+  const dispatch = useDispatch();
   const personalInformation = useSelector(
     (state) => state.personalInformationReducer.personalInformation
   );
@@ -24,39 +27,62 @@ export const PersonalInformation = () => {
         }}
       >
         {(formik) => {
-          const { dirty, setFieldValue } = formik;
+          const { values, setFieldValue, setTouched, setValues, errors, touched } = formik;
+
+          const notEmptyValues = useMemo(
+            () => Object.values(values).some((field) => field !== '' && field !== 0),
+            [values]
+          );
 
           return (
             <Form className={styles.form}>
               <div className={styles.form__container}>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
-                    <ClearButton disabled={!dirty}>Clear fields</ClearButton>
+                    <ClearButton
+                      disabled={!notEmptyValues}
+                      onClick={() => {
+                        setTouched({
+                          name: true,
+                          surname: true,
+                          country: true,
+                          position: true,
+                          city: true
+                        });
+                        setValues(initialState.personalInformation, true);
+                      }}
+                    >
+                      Clear fields
+                    </ClearButton>
                   </div>
                   <div className={styles.form__inputBlock}>
                     <label className={styles.form__label}>Name</label>
                     <InputPersonalDetails
+                      data-id='name'
                       name='name'
+                      adaptive={false}
                       maxLength={50}
                       label='Name'
                       activeLabel='Enter your name'
-                      adaptiveError={false}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
                     <label className={styles.form__label}>Surname</label>
                     <InputPersonalDetails
+                      data-id='surname'
                       name='surname'
+                      adaptive={false}
                       maxLength={50}
                       label='Surname'
                       activeLabel='Enter your surname'
-                      adaptiveError={false}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
                     <label className={styles.form__label}>Position</label>
                     <SelectPositions
+                      data-id='position'
                       name='position'
+                      adaptive={false}
                       label='Position'
                       activeLabel='Choose your position'
                       setFieldValue={setFieldValue}
@@ -65,7 +91,9 @@ export const PersonalInformation = () => {
                   <div className={styles.form__inputBlock}>
                     <label className={styles.form__label}>Country</label>
                     <SearchBar
+                      data-id='country'
                       name='country'
+                      adaptive={false}
                       label='Country'
                       maxLength={50}
                       activeLabel='Enter your location'
@@ -75,19 +103,17 @@ export const PersonalInformation = () => {
                   <div className={styles.form__inputBlock}>
                     <label className={styles.form__label}>City</label>
                     <InputPersonalDetails
+                      data-id='city'
                       name='city'
+                      adaptive={false}
                       maxLength={50}
                       label='City'
                       activeLabel='Enter your localization city'
-                      adaptiveError={false}
                     />
                   </div>
                 </div>
-                <div className={styles.boardAdvice}>
-                  <div className={styles.boardAdvice__title}>Advice on filling in</div>
-                  <div className={styles.boardAdvice__hint}>
-                    Click on the field to get a hint. Please fill in all fields in English.
-                  </div>
+                <div className={styles.form__advice}>
+                  <BoardAdvice />
                 </div>
                 <div className={styles.form__checkboxes}>
                   <CheckBox name='readyToRelocate' label='Ready to relocate' />

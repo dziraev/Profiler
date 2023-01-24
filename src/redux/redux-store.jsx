@@ -10,6 +10,7 @@ import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsCl
 import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
 import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
 import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
+import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -21,7 +22,8 @@ const appReducer = combineReducers({
   positionsReducer,
   linkIsClickedReducer,
   photoModalReducer,
-  invalidUploadReducer
+  invalidUploadReducer,
+  adviceReducer
 });
 
 const rootReducer = (state, action) => {

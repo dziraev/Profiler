@@ -9,14 +9,15 @@ import {
   LINK_IS_NOT_CLICKED,
   LOADER_DISPLAY_OFF,
   LOADER_DISPLAY_ON,
+  MODAL_IS_CLOSED,
+  MODAL_IS_OPENED,
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD,
   POSITIONS_LOAD,
-  MODAL_IS_CLOSED,
-  MODAL_IS_OPENED,
   INVALID_UPLOAD,
-  UPLOADED
+  UPLOADED,
+  RESET_DIRTY_STATUS_FORM_PD
 } from './types';
 import $api from '../http/api';
 
@@ -157,7 +158,7 @@ export function personalDetailsUpdate(data) {
 
 export function closePhotoModal() {
   return {
-    type: MODAL_IS_CLOSED,
+    type: MODAL_IS_CLOSED
   };
 }
 
@@ -176,5 +177,10 @@ export function invalidUpload() {
 export function uploaded() {
   return {
     type: UPLOADED
+  };
+}
+export function resetPersonalInformationToInitialState(data) {
+  return {
+    type: RESET_PERSONALINFORMATION_TO_INITIALSTATE
   };
 }

@@ -193,6 +193,7 @@ const PersonalDetails = (props) => {
                     disabled={!isEdit}
                     countryId={countryId}
                     setFieldValue={setFieldValue}
+                    setCountryId={setCountryId}
                   >
                     <InputPersonalDetails
                       name='cellPhone'

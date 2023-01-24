@@ -17,7 +17,7 @@ export const validatePersonalInformation = (values) => {
   }
 
   if (!values.position) {
-    errors.posititon = 'Required field';
+    errors.position = 'Required field';
   }
 
   if (!values.country) {

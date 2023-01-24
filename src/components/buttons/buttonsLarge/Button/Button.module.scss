@@ -1,0 +1,27 @@
+@import 'src/static/scss/variables';
+
+.button {
+    font-family:"Red Hat Display";
+    padding: 1rem;
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    background-color:$button-default;
+    border-radius: 15px;
+    text-align: center;
+    color: $text-primary-white;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+
+    &:hover, &:focus {
+        background-color: $button-hover;
+    }
+    &:active {
+        background-color: $button-active;
+    }
+    &:disabled {
+        background-color: $button-disabled;
+    }
+}
