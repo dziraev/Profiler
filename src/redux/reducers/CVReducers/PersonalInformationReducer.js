@@ -1,6 +1,5 @@
-const initialState = {
+export const initialState = {
   personalInformation: {
-    photoUuid: '',
     name: '',
     surname: '',
     country: '',
@@ -9,8 +8,7 @@ const initialState = {
     positionId: '',
     city: '',
     readyToRelocate: 0,
-    readyForRemoteWork: 0,
-    userInDB: false
+    readyForRemoteWork: 0
   }
 };
 

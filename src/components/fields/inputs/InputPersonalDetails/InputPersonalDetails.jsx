@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import { useField } from 'formik';
+import classNames from 'classnames/bind';
 import stylesPD from './InputPersonalDetails.module.scss';
 import styles from '../Input.module.scss';
+
+const cx = classNames.bind(styles);
+const stylesPDcx = classNames.bind(stylesPD);
 
 export const InputPersonalDetails = ({
   label,
   activeLabel,
-  adaptiveError = true,
+  adaptive = true,
   showError = true,
   ...props
 }) => {
   const [active, setActive] = useState(false);
   const [field, meta, helper] = useField(props);
+  const hasError = !!(meta.error && meta.touched);
+
   function handleBlur(e) {
     field.onBlur(e);
     setActive(false);
@@ -29,11 +35,16 @@ export const InputPersonalDetails = ({
         onBlur={handleBlur}
         onFocus={handleFocus}
         type='text'
-        className={`${styles.input} ${meta.error && meta.touched ? styles.input__error : ''}`}
+        className={cx(styles.input, { input__error: hasError, input_adaptive: adaptive })}
         placeholder={active ? activeLabel : label}
       />
-      {meta.touched && meta.error && showError && (
-        <div className={`${adaptiveError ? stylesPD.error : stylesPD.errorNotAdaptive}`}>
+      {hasError && showError && (
+        <div
+          className={stylesPDcx(stylesPD.error, {
+            error_adaptive: adaptive,
+            error_notAdaptive: !adaptive
+          })}
+        >
           <svg
             width='24'
             height='24'

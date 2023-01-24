@@ -9,6 +9,7 @@ import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReduc
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
 import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
 import { photoModalReducer } from '@reducers/photoModalReducer';
+import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -19,7 +20,8 @@ const appReducer = combineReducers({
   editModeReducer,
   positionsReducer,
   linkIsClickedReducer,
-  photoModalReducer
+  photoModalReducer,
+  adviceReducer
 });
 
 const rootReducer = (state, action) => {
@@ -32,8 +34,8 @@ const rootReducer = (state, action) => {
 const store = createStore(
   rootReducer,
   compose(
-    applyMiddleware(thunk)
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 
