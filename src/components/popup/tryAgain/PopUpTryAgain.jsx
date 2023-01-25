@@ -20,9 +20,7 @@ export const PopUpTryAgain = ({ children, isSubmitting, onClickHandler, ...props
           </div>
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
-              <CancelButton type='button' {...(!isSubmitting && { onClick: onClickHandler })}>
-                Cancel
-              </CancelButton>
+              <CancelButton type={isSubmitting ? 'button' : 'reset'}>Cancel</CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
               <Button type={isSubmitting ? 'button' : 'submit'}>Try again</Button>

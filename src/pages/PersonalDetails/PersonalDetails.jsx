@@ -100,27 +100,27 @@ const PersonalDetails = (props) => {
               const response = await $api.put('/profile', changedValues);
               dispatch(personalDetailsUpdate(values));
             }
-            if (hrefLinkIsClicked.current && hrefLinkIsClicked.current === '/auth') {
-              localStorage.removeItem('token');
-              dispatch({ type: 'USER_LOGOUT' });
-              navigate(linkIsClicked);
-            }
-            if (hrefLinkIsClicked.current && hrefLinkIsClicked.current !== '/auth') {
-              navigate(linkIsClicked);
-            }
           } catch (e) {
-            dispatch(linkIsNotClicked());
             setStatus({ errorResponse: true });
           }
         }}
         onReset={() => {
+          const { current } = hrefLinkIsClicked;
+          if (current && current === '/auth') {
+            localStorage.removeItem('token');
+            dispatch({ type: 'USER_LOGOUT' });
+            navigate(current);
+          }
+          if (current && current !== '/auth') {
+            navigate(current);
+          }
           setIsEdit(false);
           setCancelIsClicked(false);
         }}
         validate={validatePersonalDetails}
       >
         {(formik) => {
-          const { dirty, isSubmitting, isValid, setFieldValue, status, setStatus } = formik;
+          const { dirty, isSubmitting, isValid, setFieldValue, status } = formik;
 
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
@@ -129,16 +129,13 @@ const PersonalDetails = (props) => {
           return (
             <Form className={styles.form}>
               {dirty && !isValid && linkIsClicked && <PopUpStayOrLeave />}
-              {dirty && isValid && linkIsClicked && (
+              {dirty && isValid && linkIsClicked && !status?.errorResponse && (
                 <PopUpSave isSubmitting={isSubmitting}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}
               {status?.errorResponse && (
-                <PopUpTryAgain
-                  isSubmitting={isSubmitting}
-                  onClickHandler={() => setStatus({ errorResponse: false })}
-                >
+                <PopUpTryAgain isSubmitting={isSubmitting}>
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}

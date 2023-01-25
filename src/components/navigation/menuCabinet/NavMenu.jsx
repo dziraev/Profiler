@@ -26,10 +26,6 @@ const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
     }
-
-    if (pathname === href) {
-      e.preventDefault();
-    }
   };
 
   const isActiveLink = ({ isActive }) => (isActive ? styles.active : '');
