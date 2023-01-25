@@ -55,6 +55,7 @@ module.exports = {
       '@buttonsLarge': path.resolve(__dirname, 'src/components/buttons/buttonsLarge'),
       '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@popUps': path.resolve(__dirname, 'src/components/popup'),
       '@validators': path.resolve(__dirname, 'src/utils/validators')
     }
   },

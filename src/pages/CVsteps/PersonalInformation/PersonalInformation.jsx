@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
+import Photo from '@components/photo/Photo';
 import { ClearButton } from '@components/buttons';
-import { initialState } from '@reducers/CVReducers/PersonalInformationReducer';
+import { PopUpClearFields } from '@popUps';
 import { Button } from '@buttonsLarge';
+import { initialState } from '@reducers/CVReducers/PersonalInformationReducer';
 import { validatePersonalInformation } from '@validators/validatePersonalInformation';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import styles from './PersonalInformation.module.scss';
@@ -14,6 +16,7 @@ export const PersonalInformation = () => {
   const personalInformation = useSelector(
     (state) => state.personalInformationReducer.personalInformation
   );
+  const [clearFields, setClearFields] = useState(false);
 
   return (
     <section className={styles.wrapper}>
@@ -22,12 +25,10 @@ export const PersonalInformation = () => {
         initialValues={personalInformation}
         validateOnChange={false}
         validate={validatePersonalInformation}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
+        onSubmit={(values) => {}}
       >
         {(formik) => {
-          const { values, setFieldValue, setTouched, setValues, errors, touched } = formik;
+          const { values, setFieldValue, setTouched, setValues } = formik;
 
           const notEmptyValues = useMemo(
             () => Object.values(values).some((field) => field !== '' && field !== 0),
@@ -36,22 +37,27 @@ export const PersonalInformation = () => {
 
           return (
             <Form className={styles.form}>
+              {clearFields && (
+                <PopUpClearFields
+                  clearFields={() => {
+                    setTouched({
+                      name: true,
+                      surname: true,
+                      country: true,
+                      position: true,
+                      city: true
+                    });
+                    setValues(initialState.personalInformation, true);
+                    setClearFields(false);
+                  }}
+                  dontClearFields={() => setClearFields(false)}
+                />
+              )}
               <div className={styles.form__container}>
+                <Photo page='cabinet' />
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
-                    <ClearButton
-                      disabled={!notEmptyValues}
-                      onClick={() => {
-                        setTouched({
-                          name: true,
-                          surname: true,
-                          country: true,
-                          position: true,
-                          city: true
-                        });
-                        setValues(initialState.personalInformation, true);
-                      }}
-                    >
+                    <ClearButton disabled={!notEmptyValues} onClick={() => setClearFields(true)}>
                       Clear fields
                     </ClearButton>
                   </div>
