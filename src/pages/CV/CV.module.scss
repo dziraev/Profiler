@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
+    overflow: auto;
     &__content {
         width: 100%;
         padding: 50px 50px 0;

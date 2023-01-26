@@ -4,6 +4,7 @@ import {
   CHANGE_DIRTY_STATUS_FORM_PD,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
+  INVALID_UPLOAD,
   LINK_IS_CLICKED,
   LINK_IS_NOT_CLICKED,
   LOADER_DISPLAY_OFF,
@@ -14,9 +15,9 @@ import {
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD,
   POSITIONS_LOAD,
-  INVALID_UPLOAD,
-  UPLOADED,
-  RESET_DIRTY_STATUS_FORM_PD
+  RESET_DIRTY_STATUS_FORM_PD,
+  UPDATE_PERSONALINFORMATION_FROM_PD,
+  UPLOADED
 } from './types';
 import $api from '../http/api';
 
@@ -53,6 +54,16 @@ export function authInAndPersonalDetailsLoad() {
         if (this[key] == null) this[key] = '';
       }, data);
       dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
+      dispatch(
+        updatePersonaInformationFromPD({
+          name: data.name,
+          surname: data.surname,
+          country: data.country,
+          countryId: data.countryId,
+          position: data.position,
+          positionId: data.positionId
+        })
+      );
       dispatch(authIn());
     } catch (e) {
       if (e.response && e.response.status === 404) {
@@ -169,7 +180,7 @@ export function openPhotoModal() {
 
 export function invalidUpload() {
   return {
-    type: INVALID_UPLOAD,
+    type: INVALID_UPLOAD
   };
 }
 
@@ -178,8 +189,9 @@ export function uploaded() {
     type: UPLOADED
   };
 }
-export function resetPersonalInformationToInitialState(data) {
+export function updatePersonaInformationFromPD(data) {
   return {
-    type: RESET_PERSONALINFORMATION_TO_INITIALSTATE
+    type: UPDATE_PERSONALINFORMATION_FROM_PD,
+    data
   };
 }

@@ -1,4 +1,7 @@
+import { UPDATE_PERSONALINFORMATION_FROM_PD } from '../../types';
+
 export const initialState = {
+  imageUuid: null,
   personalInformation: {
     name: '',
     surname: '',
@@ -7,13 +10,21 @@ export const initialState = {
     position: '',
     positionId: '',
     city: '',
-    readyToRelocate: 0,
-    readyForRemoteWork: 0
+    isReadyToRelocate: false,
+    isReadyForRemoteWork: false
   }
 };
 
 export const personalInformationReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_PERSONALINFORMATION_FROM_PD:
+      return {
+        ...state,
+        personalInformation: {
+          ...state.personalInformation,
+          ...action.data
+        }
+      };
     default:
       return state;
   }

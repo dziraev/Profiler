@@ -1,6 +1,10 @@
 export const trimValues = (object) => {
   return Object.entries(object).reduce((acc, [key, value]) => {
-    if (typeof value === 'string') acc[key] = value.trim();
+    if (typeof value === 'string') {
+      acc[key] = value.trim() || null;
+    } else {
+      acc[key] = value;
+    }
 
     return acc;
   }, {});

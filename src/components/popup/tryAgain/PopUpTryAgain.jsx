@@ -3,7 +3,7 @@ import styles from '../PopUp.module.scss';
 import { Button } from '@components/buttons';
 import { CancelButton } from '@components/buttons';
 
-export const PopUpTryAgain = ({ children, isSubmitting, onClickHandler, ...props }) => {
+export const PopUpTryAgain = ({ children, type, isSubmitting, onClickHandler, ...props }) => {
   return (
     <div className={styles.modal}>
       <div className={styles.modal__bcg}>
@@ -20,7 +20,16 @@ export const PopUpTryAgain = ({ children, isSubmitting, onClickHandler, ...props
           </div>
           <div className={styles.modal__content__btns}>
             <div className={styles.modal__content__btns__cancel}>
-              <CancelButton type={isSubmitting ? 'button' : 'reset'}>Cancel</CancelButton>
+              <CancelButton
+                {...(type
+                  ? {
+                      type,
+                      onClick: isSubmitting ? null : onClickHandler
+                    }
+                  : { type: isSubmitting ? 'button' : 'reset' })}
+              >
+                Cancel
+              </CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
               <Button type={isSubmitting ? 'button' : 'submit'}>Try again</Button>

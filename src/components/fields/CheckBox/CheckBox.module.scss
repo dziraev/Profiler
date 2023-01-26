@@ -6,6 +6,7 @@
   color: variables.$text-primary-dark-blue;
   font-size: 0;
   position: relative;
+  padding: 0px 0px 0px 2px;
 
   &__input {
     display: none;
@@ -26,6 +27,7 @@
     column-gap: 14px;
     line-height: 1.3125;
     &::before {
+      align-self: flex-start;
       content: '';
       flex: 0 0 20px;
       height: 20px;

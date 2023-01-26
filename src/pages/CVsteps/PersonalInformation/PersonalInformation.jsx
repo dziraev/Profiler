@@ -1,20 +1,23 @@
 import React, { useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
+import cx from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
 import Photo from '@components/photo/Photo';
 import { ClearButton } from '@components/buttons';
-import { PopUpClearFields } from '@popUps';
+import { PopUpClearFields, PopUpTryAgain } from '@popUps';
 import { Button } from '@buttonsLarge';
 import { initialState } from '@reducers/CVReducers/PersonalInformationReducer';
 import { validatePersonalInformation } from '@validators/validatePersonalInformation';
+import { trimValues } from '@validators/validators';
+import $api from '../../../http/api';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import styles from './PersonalInformation.module.scss';
 
 export const PersonalInformation = () => {
   const dispatch = useDispatch();
-  const personalInformation = useSelector(
-    (state) => state.personalInformationReducer.personalInformation
+  const { personalInformation, imageUuid } = useSelector(
+    (state) => state.personalInformationReducer
   );
   const [clearFields, setClearFields] = useState(false);
 
@@ -25,18 +28,48 @@ export const PersonalInformation = () => {
         initialValues={personalInformation}
         validateOnChange={false}
         validate={validatePersonalInformation}
-        onSubmit={(values) => {}}
+        onSubmit={async (formikValues, { setStatus }) => {
+          const values = trimValues(formikValues);
+
+          const currentValues = {
+            imageUuid,
+            name: values.name,
+            surname: values.surname,
+            positionId: values.positionId,
+            countryId: values.countryId,
+            city: values.city,
+            isReadyToRelocate: values.isReadyToRelocate,
+            isReadyForRemoteWork: values.isReadyForRemoteWork
+          };
+
+          try {
+            const response = await $api.post('/cvs', currentValues);
+          } catch (e) {
+            setStatus({ errorResponse: true });
+          }
+        }}
       >
         {(formik) => {
-          const { values, setFieldValue, setTouched, setValues } = formik;
+          const { values, status, isSubmitting, setStatus, setFieldValue, setTouched, setValues } =
+            formik;
 
           const notEmptyValues = useMemo(
-            () => Object.values(values).some((field) => field !== '' && field !== 0),
+            () => Object.values(values).some((field) => field !== '' && field !== false),
             [values]
           );
 
           return (
             <Form className={styles.form}>
+              {status?.errorResponse && (
+                <PopUpTryAgain
+                  isSubmitting={isSubmitting}
+                  onClickHandler={() => setStatus({ errorResponse: false })}
+                  type='button'
+                >
+                  Failed to save data. Please try again
+                </PopUpTryAgain>
+              )}
+
               {clearFields && (
                 <PopUpClearFields
                   clearFields={() => {
@@ -53,8 +86,12 @@ export const PersonalInformation = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
+
               <div className={styles.form__container}>
-                <Photo page='cabinet' />
+                <div className={styles.form__inputBlock}>
+                  <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
+                  <Photo page='cabinet' />
+                </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
                     <ClearButton disabled={!notEmptyValues} onClick={() => setClearFields(true)}>
@@ -62,7 +99,7 @@ export const PersonalInformation = () => {
                     </ClearButton>
                   </div>
                   <div className={styles.form__inputBlock}>
-                    <label className={styles.form__label}>Name</label>
+                    <div className={styles.form__label}>Name</div>
                     <InputPersonalDetails
                       data-id='name'
                       name='name'
@@ -73,7 +110,7 @@ export const PersonalInformation = () => {
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
-                    <label className={styles.form__label}>Surname</label>
+                    <div className={styles.form__label}>Surname</div>
                     <InputPersonalDetails
                       data-id='surname'
                       name='surname'
@@ -84,7 +121,7 @@ export const PersonalInformation = () => {
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
-                    <label className={styles.form__label}>Position</label>
+                    <div className={styles.form__label}>Position</div>
                     <SelectPositions
                       data-id='position'
                       name='position'
@@ -95,7 +132,7 @@ export const PersonalInformation = () => {
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
-                    <label className={styles.form__label}>Country</label>
+                    <div className={styles.form__label}>Country</div>
                     <SearchBar
                       data-id='country'
                       name='country'
@@ -107,7 +144,7 @@ export const PersonalInformation = () => {
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
-                    <label className={styles.form__label}>City</label>
+                    <div className={styles.form__label}>City</div>
                     <InputPersonalDetails
                       data-id='city'
                       name='city'
@@ -122,13 +159,13 @@ export const PersonalInformation = () => {
                   <BoardAdvice />
                 </div>
                 <div className={styles.form__checkboxes}>
-                  <CheckBox name='readyToRelocate' label='Ready to relocate' />
-                  <CheckBox name='readyForRemoteWork' label='Ready for remote work' />
+                  <CheckBox name='isReadyToRelocate' label='Ready to relocate' />
+                  <CheckBox name='isReadyForRemoteWork' label='Ready for remote work' />
                 </div>
               </div>
               <div className={styles.form__buttons}>
                 <div className={styles.form__button}>
-                  <Button type='submit'>Next</Button>
+                  <Button type={isSubmitting ? 'button' : 'submit'}>Next</Button>
                 </div>
               </div>
             </Form>

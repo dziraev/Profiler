@@ -10,9 +10,9 @@ export const CheckBox = ({ name, label, ...props }) => {
   const handleChange = (e) => {
     const { checked } = e.target;
     if (checked) {
-      setValue(1);
+      setValue(true);
     } else {
-      setValue(0);
+      setValue(false);
     }
   };
   return (

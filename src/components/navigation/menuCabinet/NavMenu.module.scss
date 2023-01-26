@@ -49,6 +49,9 @@
             height: 44px;
         }
     }
+    &__photo {
+        padding: 0px 0px 0px 40px;
+    }
     &__number {
         color: variables.$text-primary-grey;
         font-size: 0.875em;

@@ -12,6 +12,7 @@ const initialState = {
     phoneCode: '',
     phoneCodeId: '',
     cellPhone: '',
+    profileImageUuid: null,
     userInDB: false
   }
 };

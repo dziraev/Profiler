@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validatePersonalDetails } from '@validators/validatePersonalDetails';
+import { trimValues } from '@validators/validators';
 import { useDispatch } from 'react-redux';
 import {
   changeDirtyStatusFormPD,
-  linkIsNotClicked,
-  personalDetailsUpdate
+  personalDetailsUpdate,
+  updatePersonaInformationFromPD
 } from '../../redux/actions';
 import { PopUpCancelChanges, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@components/popup';
 import {
@@ -65,30 +66,29 @@ const PersonalDetails = (props) => {
         enableReinitialize={true}
         initialValues={personalDetails}
         validateOnChange={false}
-        onSubmit={async (values, formikHelpers) => {
-          const { setStatus } = formikHelpers;
-          for (let key in values) {
-            if (typeof values[key] === 'string') values[key] = values[key].trim();
-          }
+        onSubmit={async (formikValues, { setStatus }) => {
+          const values = trimValues(formikValues);
 
           const initialValues = {
-            name: personalDetails.name || null,
-            surname: personalDetails.surname || null,
-            countryId: personalDetails.countryId || null,
-            email: personalDetails.email || null,
-            phoneCodeId: personalDetails.phoneCodeId || null,
-            cellPhone: personalDetails.cellPhone || null,
-            positionId: personalDetails.positionId || null
+            name: personalDetails.name,
+            surname: personalDetails.surname,
+            countryId: personalDetails.countryId,
+            email: personalDetails.email,
+            phoneCodeId: personalDetails.phoneCodeId,
+            cellPhone: personalDetails.cellPhone,
+            positionId: personalDetails.positionId,
+            profileImageUuid: personalDetails.profileImageUuid
           };
 
           const currentValues = {
-            name: values.name || null,
-            surname: values.surname || null,
-            countryId: values.countryId || null,
-            email: values.email || null,
-            phoneCodeId: values.phoneCodeId || null,
-            cellPhone: values.cellPhone || null,
-            positionId: values.positionId || null
+            name: values.name,
+            surname: values.surname,
+            countryId: values.countryId,
+            email: values.email,
+            phoneCodeId: values.phoneCodeId,
+            cellPhone: values.cellPhone,
+            positionId: values.positionId,
+            profileImageUuid: values.profileImageUuid
           };
 
           try {
@@ -100,6 +100,16 @@ const PersonalDetails = (props) => {
               const response = await $api.put('/profile', changedValues);
               dispatch(personalDetailsUpdate(values));
             }
+            dispatch(
+              updatePersonaInformationFromPD({
+                name: values.name,
+                surname: values.surname,
+                country: values.country,
+                countryId: values.countryId,
+                position: values.position,
+                positionId: values.positionId
+              })
+            );
           } catch (e) {
             setStatus({ errorResponse: true });
           }
