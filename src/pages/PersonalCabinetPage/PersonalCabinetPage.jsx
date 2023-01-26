@@ -3,11 +3,11 @@ import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import NavMenu from '../../components/navigation/menuCabinet/NavMenu';
 import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeader';
-import styles from './PersonalCabinetPage.module.scss';
 import Logout from '../../components/links/Logout';
 import PhotoMobile from '../../components/photo/photoMobile/PhotoMobile';
 import PopUpUploadPhotoCabinet from '../../components/popup/uploadPhoto/uploadPhotoCabinet/PopUpUploadPhotoCabinet';
 import PopUpInvalidUpload from '../../components/popup/invalidUpload/PopUpInvalidUpload';
+import styles from './PersonalCabinetPage.module.scss';
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);

@@ -14,6 +14,8 @@ import {
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD,
+  PHOTO_UPDATE_CABINET,
+  PHOTO_UPLOAD_CABINET,
   POSITIONS_LOAD,
   RESET_DIRTY_STATUS_FORM_PD,
   UPDATE_PERSONALINFORMATION_FROM_PD,
@@ -189,9 +191,24 @@ export function uploaded() {
     type: UPLOADED
   };
 }
+
 export function updatePersonaInformationFromPD(data) {
   return {
     type: UPDATE_PERSONALINFORMATION_FROM_PD,
+    data
+  };
+}
+
+export function photoUpdate(data) {
+  return {
+    type: PHOTO_UPDATE_CABINET,
+    data
+  };
+}
+
+export function photoUploadCabinet(data) {
+  return {
+    type: PHOTO_UPLOAD_CABINET,
     data
   };
 }

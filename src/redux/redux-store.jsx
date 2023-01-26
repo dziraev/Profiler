@@ -6,6 +6,7 @@ import { personalDetailsReducer } from '@reducers';
 import { phoneCodesReducer } from '@reducers';
 import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
+import { photoCabinetReducer } from '@reducers/PersonalDetailsReducers/photoCabinetReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
 import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
 import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
@@ -23,7 +24,8 @@ const appReducer = combineReducers({
   linkIsClickedReducer,
   photoModalReducer,
   invalidUploadReducer,
-  adviceReducer
+  adviceReducer,
+  photoCabinetReducer
 });
 
 const rootReducer = (state, action) => {

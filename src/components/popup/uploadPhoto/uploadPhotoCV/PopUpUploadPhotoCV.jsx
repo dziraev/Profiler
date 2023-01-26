@@ -16,6 +16,7 @@ export const PopUpUploadPhotoCV = () => {
       dispatch(closePhotoModal());
       dispatch(invalidUpload());
     };
+    dispatch(closePhotoModal());
   };
   return (
     <div 

@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 import Logout from '../../components/links/Logout';
 import NavMenuCV from '../../components/navigation/menuCV/NavMenuCV';
 import PopUpUploadPhotoCV from '../../components/popup/uploadPhoto/uploadPhotoCV/PopUpUploadPhotoCV';
+import PopUpInvalidUpload from '../../components/popup/invalidUpload/PopUpInvalidUpload';
 import styles from './CV.module.scss';
 
 const CV = () => {
   const [closed, setClosed] = useState(false);
   const closeModal = () => setClosed(true);
   const openModal = useSelector((state) => state.photoModalReducer.openModal);
+  const invalidUpload = useSelector((state) => state.invalidUploadReducer.invalidUpload);
+
   return (
     <div className={styles.page}>
       <div className={`${styles.overlay} ${closed ? styles.modal_closed : ''}`}>
@@ -52,6 +55,7 @@ const CV = () => {
         </main>
       </div>
       {openModal && <PopUpUploadPhotoCV />}
+      {invalidUpload && <PopUpInvalidUpload />}
     </div>
   );
 };

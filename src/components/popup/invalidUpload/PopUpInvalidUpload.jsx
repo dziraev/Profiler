@@ -16,6 +16,7 @@ const PopUpInvalidUpload = (props) => {
         file.type !== 'image/png') {
       dispatch(invalidUpload());
     };
+    dispatch(uploaded());
   };
   return (
     <div className={styles.overlay}>

@@ -19,6 +19,53 @@
     font-weight: 600;
     line-height: 1.32;
   }
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding: 0%;
+    border: transparent;
+    cursor: default;
+    &__change {
+      display: none;
+      width: 24px;
+      height: 24px;
+      background-color: #C0CCE7;
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      padding: 4.83px;
+      bottom: 9px;
+      left: 36px;
+      z-index: 2;
+      cursor: pointer;
+    }
+    &__delete {
+      display: none;
+      width: 24px;
+      height: 24px;
+      background-color: #C0CCE7;
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      padding: 4.83px;
+      bottom: 9px;
+      left: 70px;
+      z-index: 2;
+      cursor: pointer;
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+  &:hover .photo__image__change {
+    display: block;
+  }
+  &:hover .photo__image__delete {
+    display: block;
+  }
 }
 
 .Cabinet {
@@ -26,6 +73,9 @@
     height: 140px;
     width: 140px;
     padding: 48px 20px;
+    &__image {
+      padding: 0%;
+    }
   }
   &.photo__button {
     width: 24px;
@@ -42,6 +92,9 @@
     height: 130px;
     width: 130px;
     padding: 47px 22px;
+    &__image {
+      padding: 0%;
+    }
   }
   &.photo__button {
     width: 20px;
