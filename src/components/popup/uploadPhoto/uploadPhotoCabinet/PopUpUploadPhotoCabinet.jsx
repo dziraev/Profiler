@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closePhotoModal, invalidUpload, photoUpdate, photoUploadCabinet } from '../../../../redux/actions';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
-import api from '../../../../http/photoapi';
+import photoapi from '../../../../http/photoapi';
 import { Button } from '@components/buttons';
 import { CancelButton } from '@components/buttons';
 import styles from './PopUpUploadPhotoCabinet.module.scss';
@@ -25,7 +25,7 @@ export const PopUpUploadPhotoCabinet = () => {
   };
   const sendFile = async (file) => {
     try {
-      const response = await api.post('/images', {
+      const response = await photoapi.post('/images', {
         image: file
       })
       dispatch(photoUpdate(response.data.uuid));

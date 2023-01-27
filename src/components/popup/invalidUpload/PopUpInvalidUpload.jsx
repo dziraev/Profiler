@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { invalidUpload, uploaded } from '../../../redux/actions';
+import { invalidUpload, uploaded, photoUpdate, photoUploadCabinet, photoUpdateCV, photoUploadCV } from '../../../redux/actions';
+import photoapi from '../../../http/photoapi';
 import styles from './PopUpInvalidUpload.module.scss';
 
 const PopUpInvalidUpload = (props) => {
@@ -15,8 +16,35 @@ const PopUpInvalidUpload = (props) => {
         file.type !== 'image/jpg' &&
         file.type !== 'image/png') {
       dispatch(invalidUpload());
+      return;
     };
-    dispatch(uploaded());
+    props.page ? sendFileCabinet(file) : sendFileCV(file);
+  };
+  const sendFileCabinet = async (file) => {
+    try {
+      const response = await photoapi.post('/images', {
+        image: file
+      })
+      dispatch(photoUpdate(response.data.uuid));
+      dispatch(photoUploadCabinet(URL.createObjectURL(file)));
+      dispatch(uploaded());
+    } catch (e) {
+      dispatch(invalidUpload());
+      console.error(e);
+    }
+  };
+  const sendFileCV = async (file) => {
+    try {
+      const response = await photoapi.post('/images', {
+        image: file
+      })
+      dispatch(photoUpdateCV(response.data.uuid));
+      dispatch(photoUploadCV(URL.createObjectURL(file)));
+      dispatch(uploaded());
+    } catch (e) {
+      dispatch(invalidUpload());
+      console.error(e);
+    }
   };
   return (
     <div className={styles.overlay}>
