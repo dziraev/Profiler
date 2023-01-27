@@ -2,9 +2,12 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { invalidUpload, uploaded, photoUpdate, photoUploadCabinet, photoUpdateCV, photoUploadCV } from '../../../redux/actions';
 import photoapi from '../../../http/photoapi';
+import $api from '../../../http/api';
+import { usePersonalDetails } from '@hooks/usePersonalDetails';
 import styles from './PopUpInvalidUpload.module.scss';
 
 const PopUpInvalidUpload = (props) => {
+  const { personalDetails } = usePersonalDetails();
   const dispatch = useDispatch();
   const cancel = (e) => {
     dispatch(uploaded());
@@ -26,6 +29,21 @@ const PopUpInvalidUpload = (props) => {
         image: file
       })
       dispatch(photoUpdate(response.data.uuid));
+      const values = {
+        name: personalDetails.name,
+        surname: personalDetails.surname,
+        countryId: personalDetails.countryId,
+        email: personalDetails.email,
+        phoneCodeId: personalDetails.phoneCodeId,
+        cellPhone: personalDetails.cellPhone,
+        positionId: personalDetails.positionId,
+        profileImageUuid: response.data.uuid
+      };
+      try {
+        const response = await $api.post('/profile', values);
+      } catch (e) {
+        console.error(e);
+      }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(uploaded());
     } catch (e) {

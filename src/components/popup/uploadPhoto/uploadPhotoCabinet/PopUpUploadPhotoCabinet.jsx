@@ -4,11 +4,14 @@ import { closePhotoModal, invalidUpload, photoUpdate, photoUploadCabinet } from 
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
 import photoapi from '../../../../http/photoapi';
+import $api from '../../../../http/api';
 import { Button } from '@components/buttons';
 import { CancelButton } from '@components/buttons';
+import { usePersonalDetails } from '@hooks/usePersonalDetails';
 import styles from './PopUpUploadPhotoCabinet.module.scss';
 
 export const PopUpUploadPhotoCabinet = () => {
+  const { personalDetails } = usePersonalDetails();
   const image = useSelector((state) => state.photoCabinetReducer.photo);
   const dispatch = useDispatch();
   const getFile = (e) => {
@@ -29,6 +32,21 @@ export const PopUpUploadPhotoCabinet = () => {
         image: file
       })
       dispatch(photoUpdate(response.data.uuid));
+      const values = {
+        name: personalDetails.name,
+        surname: personalDetails.surname,
+        countryId: personalDetails.countryId,
+        email: personalDetails.email,
+        phoneCodeId: personalDetails.phoneCodeId,
+        cellPhone: personalDetails.cellPhone,
+        positionId: personalDetails.positionId,
+        profileImageUuid: response.data.uuid
+      };
+      try {
+        const response = await $api.post('/profile', values);
+      } catch (e) {
+        console.error(e);
+      }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(closePhotoModal());
     } catch (e) {
@@ -154,7 +172,7 @@ export const PopUpUploadPhotoCabinet = () => {
             <div className={styles.modal__buttons__button}>
               <CancelButton type='button'>Delete</CancelButton>
             </div>
-            <div className={styles.modal__buttons__button}>
+            <div className={styles.modal__buttons__button} onChange={getFile}>
               <Button type='button'>Change</Button>
             </div>
           </div>
