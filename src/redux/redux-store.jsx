@@ -8,11 +8,13 @@ import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
 import { photoCabinetReducer } from '@reducers/PersonalDetailsReducers/photoCabinetReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
-import { personalInformationReducer } from '@reducers/CVReducers/PersonalInformationReducer';
+import { personalInformationReducer } from '@reducers/CVReducers/personalInformationReducer';
 import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
 import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
 import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
 import { photoCVReducer } from '@reducers/CVReducers/PhotoCVReducer';
+import { cvReducer } from '@reducers/CVReducers/cvReducer';
+import { specificCvReducer } from '@reducers/CVReducers/specificCvReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -27,7 +29,9 @@ const appReducer = combineReducers({
   invalidUploadReducer,
   adviceReducer,
   photoCabinetReducer,
-  photoCVReducer
+  photoCVReducer,
+  cvReducer,
+  specificCvReducer
 });
 
 const rootReducer = (state, action) => {

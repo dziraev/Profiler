@@ -1,12 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import cx from 'classnames';
 import stylesDraft from './DraftCv.module.scss';
 import styles from '../Card.module.scss';
 
-export const DraftCv = ({ position }) => {
+export const DraftCv = ({ position, uuid }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className={styles.card}>
-      <div className={styles.card__container}>
-        <div className={stylesDraft.dot}>
+    <div className={styles.card} onClick={() => navigate('/cv/personal-info/' + uuid)}>
+      <div className={cx(styles.card__container, stylesDraft.draft__container)}>
+        <div className={stylesDraft.draft__dot}>
           <svg
             width='4'
             height='12'
@@ -21,8 +25,8 @@ export const DraftCv = ({ position }) => {
           </svg>
         </div>
         <div className={stylesDraft.title}>
-          <span className={stylesDraft.title__status}>Draft</span>
-          <span className={stylesDraft.title__position}>{position}</span>
+          <div className={stylesDraft.title__status}>Draft</div>
+          <div className={stylesDraft.title__position}>{position}</div>
         </div>
       </div>
     </div>

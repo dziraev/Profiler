@@ -1,8 +1,9 @@
 import { UPDATE_PERSONALINFORMATION_FROM_PD, PHOTO_UPDATE_CV } from '../../types';
 
 export const initialState = {
-  imageUuid: null,
   personalInformation: {
+    uuid: null,
+    imageUuid: null,
     name: '',
     surname: '',
     country: '',

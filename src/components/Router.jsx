@@ -24,7 +24,8 @@ const MainRoutes = () => (
       <Route path='my-cv' element={<MyCV />} />
     </Route>
     <Route path='/cv' element={<CV />}>
-      <Route index element={<PersonalInformation />} />
+      <Route path='personal-info/:uuid' element={<PersonalInformation />} />
+      <Route path='personal-info' element={<PersonalInformation />} />
     </Route>
     <Route path='/auth' element={<Navigate to='/main/my-cv' />} />
     <Route path='/' element={<Navigate to='/main/my-cv' />} />

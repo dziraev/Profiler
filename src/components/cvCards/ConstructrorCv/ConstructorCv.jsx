@@ -5,7 +5,7 @@ import styles from '../Card.module.scss';
 export const ConstructorCv = () => {
   return (
     <div className={styles.card}>
-      <NavLink to='/cv'>
+      <NavLink to='/cv/personal-info'>
         <div className={styles.card__container}>
           <div className={styles.card__link}>
             <svg
