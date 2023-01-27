@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPhotoModal } from '../../redux/actions';
 import styles from './Photo.module.scss';
 
 const Photo = (props) => {
   const dispatch = useDispatch();
-  const image = useSelector((state) => state.photoCabinetReducer.photo);
+  const imageCabinet = useSelector((state) => state.photoCabinetReducer.photo);
+  const imageCV = useSelector((state) => state.photoCVReducer.photo);
+  const image = imageCV && !props.page ? imageCV : imageCabinet;
 
   return (
     <>

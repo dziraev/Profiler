@@ -1,4 +1,4 @@
-import { UPDATE_PERSONALINFORMATION_FROM_PD } from '../../types';
+import { UPDATE_PERSONALINFORMATION_FROM_PD, PHOTO_UPDATE_CV } from '../../types';
 
 export const initialState = {
   imageUuid: null,
@@ -24,6 +24,11 @@ export const personalInformationReducer = (state = initialState, action) => {
           ...state.personalInformation,
           ...action.data
         }
+      };
+    case PHOTO_UPDATE_CV:
+      return {
+        ...state,
+        imageUuid: action.data
       };
     default:
       return state;

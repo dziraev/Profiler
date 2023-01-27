@@ -65,7 +65,7 @@ const PersonalCabinetPage = (props) => {
         </div>
       </div>
       {openModal && <PopUpUploadPhotoCabinet />}
-      {invalidUpload && <PopUpInvalidUpload />}
+      {invalidUpload && <PopUpInvalidUpload page='cabinet' />}
     </div>
   );
 };

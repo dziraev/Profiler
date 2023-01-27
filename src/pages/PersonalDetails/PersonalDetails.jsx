@@ -97,7 +97,6 @@ const PersonalDetails = (props) => {
               dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
             } else {
               const changedValues = getChangedValues(currentValues, initialValues);
-              changedValues.profileImageUuid = values.profileImageUuid;
               const response = await $api.put('/profile', changedValues);
               dispatch(personalDetailsUpdate(values));
             }

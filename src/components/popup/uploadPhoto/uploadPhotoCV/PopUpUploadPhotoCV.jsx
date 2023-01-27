@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { closePhotoModal, invalidUpload } from '../../../../redux/actions';
-import styles from './PopUpUploadPhotoCV.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { closePhotoModal, invalidUpload, photoUpdateCV, photoUploadCV } from '../../../../redux/actions';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
+import photoapi from '../../../../http/photoapi';
+import styles from './PopUpUploadPhotoCV.module.scss';
 
 export const PopUpUploadPhotoCV = () => {
+  const image = useSelector((state) => state.photoCabinetReducer.photo);
   const dispatch = useDispatch();
   const getFile = (e) => {
     const file = e.target.files[0];
@@ -15,8 +17,23 @@ export const PopUpUploadPhotoCV = () => {
         file.type !== 'image/png') {
       dispatch(closePhotoModal());
       dispatch(invalidUpload());
+      return;
     };
-    dispatch(closePhotoModal());
+    sendFile(file);
+  };
+  const sendFile = async (file) => {
+    try {
+      const response = await photoapi.post('/images', {
+        image: file
+      })
+      dispatch(photoUpdateCV(response.data.uuid));
+      dispatch(photoUploadCV(URL.createObjectURL(file)));
+      dispatch(closePhotoModal());
+    } catch (e) {
+      dispatch(invalidUpload());
+      dispatch(closePhotoModal());
+      console.error(e);
+    }
   };
   return (
     <div 
@@ -70,11 +87,20 @@ export const PopUpUploadPhotoCV = () => {
             <div className={styles.check} />
           </div>
         </div>
-        <div className={styles.modal__button}>
-          <label htmlFor='file' className={styles.modal__button__label}>Add photo
-            <input type='file' name='photoUuid' id='file' onChange={getFile}/>
-          </label>
-        </div>
+        {!image &&
+          <div className={styles.modal__button}>
+            <label htmlFor='file' className={styles.modal__button__label}>Add photo
+              <input type='file' name='photoUuid' id='file' onChange={getFile}/>
+            </label>
+          </div>
+        }
+        {image &&
+          <div className={styles.modal__button}>
+            <label htmlFor='file' className={styles.modal__button__label}>Change photo
+              <input type='file' name='photoUuid' id='file' onChange={getFile}/>
+            </label>
+          </div>
+        }
       </div>
     </div>
   );

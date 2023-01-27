@@ -12,6 +12,7 @@ import { personalInformationReducer } from '@reducers/CVReducers/PersonalInforma
 import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
 import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
 import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
+import { photoCVReducer } from '@reducers/CVReducers/PhotoCVReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -25,7 +26,8 @@ const appReducer = combineReducers({
   photoModalReducer,
   invalidUploadReducer,
   adviceReducer,
-  photoCabinetReducer
+  photoCabinetReducer,
+  photoCVReducer
 });
 
 const rootReducer = (state, action) => {

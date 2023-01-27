@@ -90,7 +90,7 @@ export const PersonalInformation = () => {
               <div className={styles.form__container}>
                 <div className={styles.form__inputBlock}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
-                  <Photo page='cabinet' />
+                  <Photo />
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
