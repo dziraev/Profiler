@@ -1,0 +1,85 @@
+@import 'src/static/scss/variables';
+
+.card {
+  &__title {
+    font-size: 1.625em;
+    line-height: 1.32;
+    font-weight: 600;
+    color: $text-primary-dark-blue;
+    margin: 0 0 40px 0;
+    text-align: left;
+  }
+  &__container {
+    background: $background-constructor-cv;
+    width: 199px;
+    height: 252px;
+    border-radius: 20px;
+    text-align: center;
+    padding: 81px 23px;
+  }
+  &__content {
+    color: $text-primary-blue;
+    font-size: 1.125em;
+    line-height: 1.32;
+    font-weight: 600;
+    padding-top: 10px;
+    max-width: 153px;
+  }
+  &__link {
+    margin: auto;
+    border-radius: 50%;
+    background-color: $background-link;
+    width: 32px;
+    height: 32px;
+    padding: 7px 9px;
+  }
+  &__label {
+    display: flex;
+    gap: 4px;
+    width: 200px;
+    padding-top: 16px;
+  }
+  &__icon {
+
+  }
+  &__text {
+    font-size: 0.75em;
+    line-height: 1.32;
+    font-weight: 600;
+    color: #000;
+    text-align: left;
+  }
+
+  @media (max-width: 1365px) {
+    &:only-of-type {
+      margin: 0 auto;
+    }
+    &__title {
+      font-size: 1em;
+      margin: 0 0 24px 0;
+    }
+    &__container {
+      width: 191px;
+      height: 220px;
+      padding: 79px 21px;
+    }
+    &__content {
+      font-size: 0.75em;
+      max-width: 148px;
+    }
+    &__label {
+      display: none;
+    }
+  }
+  @media (max-width: 428px) {
+    &__title {
+      margin: 0 0 24px 16px;
+    }
+  }
+  @media (max-width: 427px) {
+    &__container {
+      width: 158px;
+      padding: 79px 4px;
+    }
+  }
+}

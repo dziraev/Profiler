@@ -1,86 +1,48 @@
-@use '../../static/scss/variables';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
+
 .page {
   margin: 0 auto;
-  max-width: 1055px;
+  max-width: 1216px;
+  padding: 0 80px;
+  @media (max-width: 1365px) {
+    padding: 0;
+  }
   &__title {
     font-size: 1.625em;
     line-height: 1.32;
     font-weight: 600;
-    color: variables.$text-primary-dark-blue;
+    color: $text-primary-dark-blue;
     margin: 0 0 40px 0;
     text-align: left;
-  }
-  &__container {
-    display: block;
-    background: #F9FAFE;
-    width: 200px;
-    height: 252px;
-    border-radius: 20px;
-    text-align: center;
-    padding: 81px 23px;
-    &__content {
-      color: variables.$text-primary-blue;
-      font-size: 1.125em;
-      line-height: 1.32;
-      font-weight: 600;
-      padding-top: 10px;
-      max-width: 153px;
-    }
-  }
-  &__link {
-    margin: auto;
-    border-radius: 50%;
-    background-color: #F0F5FF;
-    width: 32px;
-    height: 32px;
-    padding: 7px 9px;
-  }
-  &__label {
-    display: flex;
-    gap: 4px;
-    width: 200px;
-    padding-top: 16px;
-    &__text {
-      font-size: 0.75em;
-      line-height: 1.32;
-      font-weight: 600;
-      color: #000000;
-      text-align: left;
-    }
-  }
-  @media (max-width: 1535px) {
-    max-width: 886px;
-}
-  @media (max-width: 1365px) {
-    width: 100%;
-    padding: 0;
-    &__title {
+    @media (max-width: 1365px) {
       font-size: 1em;
       margin: 0 0 24px 0;
     }
-    &__container {
-      width: 191px;
-      height: 220px;
-      padding: 79px 21px;
-      margin: 0 auto;
-      &__content {
-        font-size: 0.75em;
-        max-width: 148px;
-      }
-    }
-    &__label {
-      display: none;
-    }
-  }
-  @media (max-width: 428px) {
-    &__title {
+    @media (max-width: 428px) {
       margin: 0 0 24px 16px;
     }
   }
-  @media (max-width: 360px) {
-    &__container {
-      width: 158px;
-      padding: 79px 4px;
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    @include adaptive-value('column-gap', 86, 30, 1535, 1366);
+    gap: 30px 15.25px;
+
+    @media (max-width: 1365px) {
+      justify-content: space-between;
+      padding: 0 16px;
+      gap: 20px 12px;
     }
+    @media (max-width: 360px) {
+      flex-direction: column;
+      align-items: center;
+    }
+
   }
+
+
+
+
+
 }
