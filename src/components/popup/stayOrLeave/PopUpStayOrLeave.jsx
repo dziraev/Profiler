@@ -5,6 +5,7 @@ import { linkIsNotClicked } from '../../../redux/actions';
 import { Button, CancelButton } from '@components/buttons';
 import { selectLinkIsClicked } from '../../../pages/PersonalDetails/selectors';
 import styles from '../PopUp.module.scss';
+import { useDisableBodyScroll } from '@hooks/useDisableBodyScroll';
 
 export const PopUpStayOrLeave = () => {
   const dispatch = useDispatch();

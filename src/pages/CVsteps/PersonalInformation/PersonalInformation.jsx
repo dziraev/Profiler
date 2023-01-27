@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
 import cx from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
+import { usePersonalInformation } from '@hooks/usePersonalInformation';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
 import Photo from '@components/photo/Photo';
 import { ClearButton } from '@components/buttons';
 import { PopUpClearFields, PopUpTryAgain } from '@popUps';
 import { Button } from '@buttonsLarge';
-import { initialState } from '@reducers/CVReducers/PersonalInformationReducer';
 import { validatePersonalInformation } from '@validators/validatePersonalInformation';
 import { trimValues } from '@validators/validators';
 import $api from '../../../http/api';
@@ -15,16 +14,14 @@ import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import styles from './PersonalInformation.module.scss';
 
 export const PersonalInformation = () => {
-  const dispatch = useDispatch();
-  const { personalInformation, imageUuid } = useSelector(
-    (state) => state.personalInformationReducer
-  );
+  const personalInformation = usePersonalInformation();
   const [clearFields, setClearFields] = useState(false);
 
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>1. Personal information</h2>
       <Formik
+        enableReinitialize={true}
         initialValues={personalInformation}
         validateOnChange={false}
         validate={validatePersonalInformation}
@@ -32,7 +29,7 @@ export const PersonalInformation = () => {
           const values = trimValues(formikValues);
 
           const currentValues = {
-            imageUuid,
+            imageUuid: values.imageUuid,
             name: values.name,
             surname: values.surname,
             positionId: values.positionId,
@@ -53,10 +50,16 @@ export const PersonalInformation = () => {
           const { values, status, isSubmitting, setStatus, setFieldValue, setTouched, setValues } =
             formik;
 
-          const notEmptyValues = useMemo(
-            () => Object.values(values).some((field) => field !== '' && field !== false),
-            [values]
-          );
+          const notEmptyValues = useMemo(() => {
+            for (const field in values) {
+              if (field === 'uuid' || field === 'imageUuid') {
+                continue;
+              }
+              if (values[field] !== '' && values[field] !== false) {
+                return true;
+              }
+            }
+          }, [values]);
 
           return (
             <Form className={styles.form}>
@@ -80,7 +83,20 @@ export const PersonalInformation = () => {
                       position: true,
                       city: true
                     });
-                    setValues(initialState.personalInformation, true);
+                    setValues(
+                      {
+                        name: '',
+                        surname: '',
+                        country: '',
+                        countryId: '',
+                        position: '',
+                        positionId: '',
+                        city: '',
+                        isReadyToRelocate: false,
+                        isReadyForRemoteWork: false
+                      },
+                      true
+                    );
                     setClearFields(false);
                   }}
                   dontClearFields={() => setClearFields(false)}

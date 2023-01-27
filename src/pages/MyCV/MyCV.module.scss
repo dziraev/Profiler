@@ -27,7 +27,7 @@
     display: flex;
     flex-wrap: wrap;
     @include adaptive-value('column-gap', 86, 30, 1535, 1366);
-    gap: 30px 15.25px;
+    gap: 32px 15.25px;
 
     @media (max-width: 1365px) {
       justify-content: space-between;

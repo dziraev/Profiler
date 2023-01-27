@@ -1,4 +1,5 @@
 import {
+  ALL_CV_LOAD,
   AUTH_IN,
   AUTH_OUT,
   CHANGE_DIRTY_STATUS_FORM_PD,
@@ -21,6 +22,7 @@ import {
   POSITIONS_LOAD,
   RESET_DIRTY_STATUS_FORM_PD,
   UPDATE_PERSONALINFORMATION_FROM_PD,
+  UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
   UPLOADED
 } from './types';
 import $api from '../http/api';
@@ -226,5 +228,33 @@ export function photoUploadCV(data) {
   return {
     type: PHOTO_UPLOAD_CV,
     data
+  };
+}
+
+export function allCvLoad() {
+  return async (dispatch) => {
+    try {
+      const { data } = await $api.get('cvs');
+      dispatch({
+        type: ALL_CV_LOAD,
+        data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function getPersonalInformation(uuid) {
+  return async (dispatch) => {
+    try {
+      const { data } = await $api.get('cvs/' + uuid);
+      dispatch({
+        type: UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
+        data
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
