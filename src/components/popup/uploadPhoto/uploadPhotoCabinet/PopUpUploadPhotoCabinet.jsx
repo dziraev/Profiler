@@ -1,18 +1,25 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePhotoModal, invalidUpload, photoUpdate, photoUploadCabinet } from '../../../../redux/actions';
+import { 
+  closePhotoModal,
+  invalidUpload,
+  photoUpdate,
+  photoUploadCabinet,
+  personalDetailsUpdate
+} from '../../../../redux/actions';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
 import photoapi from '../../../../http/photoapi';
 import $api from '../../../../http/api';
-import { Button } from '@components/buttons';
 import { CancelButton } from '@components/buttons';
-import { usePersonalDetails } from '@hooks/usePersonalDetails';
+import { selectPersonalDetails } from '../../../../pages/PersonalDetails/selectors';
 import styles from './PopUpUploadPhotoCabinet.module.scss';
 
 export const PopUpUploadPhotoCabinet = () => {
-  const { personalDetails } = usePersonalDetails();
+  const personalDetails = useSelector(selectPersonalDetails);
   const image = useSelector((state) => state.photoCabinetReducer.photo);
+  const imageUuid = personalDetails.profileImageUuid;
+
   const dispatch = useDispatch();
   const getFile = (e) => {
     const file = e.target.files[0];
@@ -42,10 +49,55 @@ export const PopUpUploadPhotoCabinet = () => {
         positionId: personalDetails.positionId,
         profileImageUuid: response.data.uuid
       };
-      try {
+      if (!personalDetails.userInDB) {
         const response = await $api.post('/profile', values);
-      } catch (e) {
-        console.error(e);
+        dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
+      } else {
+        const response = await $api.put('/profile', {profileImageUuid: values.profileImageUuid});
+        dispatch(personalDetailsUpdate(values));
+      }
+      dispatch(photoUploadCabinet(URL.createObjectURL(file)));
+      dispatch(closePhotoModal());
+    } catch (e) {
+      dispatch(invalidUpload());
+      dispatch(closePhotoModal());
+      console.error(e);
+    }
+  };
+  const changeFile = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 5242880 ||
+        file.type !== 'image/jpeg' &&
+        file.type !== 'image/jpg' &&
+        file.type !== 'image/png') {
+      dispatch(closePhotoModal());
+      dispatch(invalidUpload());
+      return;
+    };
+    sendChangedFile(file);
+  };
+  const sendChangedFile = async (file) => {
+    try {
+      const response = await photoapi.put(`/images/${personalDetails.profileImageUuid}`, {
+        image: file
+      })
+      dispatch(photoUpdate(response.data.uuid));
+      const values = {
+        name: personalDetails.name,
+        surname: personalDetails.surname,
+        countryId: personalDetails.countryId,
+        email: personalDetails.email,
+        phoneCodeId: personalDetails.phoneCodeId,
+        cellPhone: personalDetails.cellPhone,
+        positionId: personalDetails.positionId,
+        profileImageUuid: response.data.uuid
+      };
+      if (!personalDetails.userInDB) {
+        const response = await $api.post('/profile', values);
+        dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
+      } else {
+        const response = await $api.put('/profile', {profileImageUuid: values.profileImageUuid});
+        dispatch(personalDetailsUpdate(values));
       }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(closePhotoModal());
@@ -113,7 +165,7 @@ export const PopUpUploadPhotoCabinet = () => {
           <h2 className={styles.modal__content__title}>
             Please choose a new photo from gallery.
           </h2>
-          {!image && 
+          {!imageUuid && 
             <div className={styles.modal__content__photo}>
               <input type='file' name='photoUuid' id='file' onChange={getFile}/>
               <div className={styles.modal__content__photo__button}>
@@ -133,7 +185,26 @@ export const PopUpUploadPhotoCabinet = () => {
               <p className={styles.modal__content__photo__title}>Add your photo</p>
             </div>
           }
-          {image && 
+          {imageUuid && !image &&
+            <div className={styles.modal__content__photo}>
+              <div className={styles.modal__content__photo__button}>
+                <svg 
+                  width='9'
+                  height='10'
+                  viewBox='0 0 9 10'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path 
+                    d='M8.35714 5.74283H5.14286V8.95712C5.14286 9.12761 5.07513 9.29113 4.95457 9.41169C4.83401 9.53225 4.6705 9.59997 4.5 9.59997C4.3295 9.59997 4.16599 9.53225 4.04543 9.41169C3.92487 9.29113 3.85714 9.12761 3.85714 8.95712V5.74283H0.642857C0.472361 5.74283 0.308848 5.6751 0.188289 5.55454C0.0677295 5.43398 0 5.27047 0 5.09998C0 4.92948 0.0677295 4.76597 0.188289 4.64541C0.308848 4.52485 0.472361 4.45712 0.642857 4.45712H3.85714V1.24283C3.85714 1.07234 3.92487 0.908823 4.04543 0.788264C4.16599 0.667705 4.3295 0.599976 4.5 0.599976C4.6705 0.599976 4.83401 0.667705 4.95457 0.788264C5.07513 0.908823 5.14286 1.07234 5.14286 1.24283V4.45712H8.35714C8.52764 4.45712 8.69115 4.52485 8.81171 4.64541C8.93227 4.76597 9 4.92948 9 5.09998C9 5.27047 8.93227 5.43398 8.81171 5.55454C8.69115 5.6751 8.52764 5.74283 8.35714 5.74283Z' 
+                    fill='#407BFF'
+                  />
+                </svg>
+              </div>
+              <p className={styles.modal__content__photo__title}>Add your photo</p>
+            </div>
+          }
+          {image && imageUuid &&
             <img 
               className={styles.modal__content__photo__preview}
               src={image}
@@ -153,27 +224,29 @@ export const PopUpUploadPhotoCabinet = () => {
             <div className={styles.check} />
           </div>
         </div>
-        {!image &&
+        {!imageUuid &&
           <div className={styles.modal__button}>
             <label htmlFor='file' className={styles.modal__button__label}>Add photo
               <input type='file' name='photoUuid' id='file' onChange={getFile}/>
             </label>
           </div>
         }
-        {image &&
+        {imageUuid &&
           <div className={styles.modal__button}>
             <label htmlFor='file' className={styles.modal__button__label}>Change photo
-              <input type='file' name='photoUuid' id='file' onChange={getFile}/>
+              <input type='file' name='photoUuid' id='file' onChange={changeFile}/>
             </label>
           </div>
         }
-        {image &&
+        {imageUuid &&
           <div className={styles.modal__buttons}>
             <div className={styles.modal__buttons__button}>
               <CancelButton type='button'>Delete</CancelButton>
             </div>
-            <div className={styles.modal__buttons__button} onChange={getFile}>
-              <Button type='button'>Change</Button>
+            <div className={styles.modal__buttons__button}>
+              <label htmlFor='file' className={styles.modal__buttons__button__label}>Change photo
+                <input type='file' name='photoUuid' id='file' onChange={changeFile}/>
+              </label>
             </div>
           </div>
         }

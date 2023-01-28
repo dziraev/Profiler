@@ -29,7 +29,10 @@ export const personalInformationReducer = (state = initialState, action) => {
     case PHOTO_UPDATE_CV:
       return {
         ...state,
-        imageUuid: action.data
+        personalInformation: {
+          ...state.personalInformation,
+          imageUuid: action.data
+        }
       };
     default:
       return state;

@@ -1,13 +1,26 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePhotoModal, invalidUpload, photoUpdateCV, photoUploadCV } from '../../../../redux/actions';
+import { 
+  closePhotoModal,
+  invalidUpload,
+  photoUpdateCV,
+  photoUploadCV
+} from '../../../../redux/actions';
+import { usePersonalInformation } from '@hooks/usePersonalInformation';
+import { selectPersonalDetails } from '../../../../pages/PersonalDetails/selectors';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
 import photoapi from '../../../../http/photoapi';
 import styles from './PopUpUploadPhotoCV.module.scss';
 
 export const PopUpUploadPhotoCV = () => {
-  const image = useSelector((state) => state.photoCabinetReducer.photo);
+  const personalDetails = useSelector(selectPersonalDetails);
+  const personalInformation = usePersonalInformation();
+  // const imageCabinet = useSelector((state) => state.photoCabinetReducer.photo);
+  // const imageCV = useSelector((state) => state.photoCVReducer.photo);
+  const imageCabinet = personalDetails.profileImageUuid;
+  const imageCV = personalInformation.imageUuid;
+  const image = imageCV || imageCabinet;
   const dispatch = useDispatch();
   const getFile = (e) => {
     const file = e.target.files[0];
@@ -24,6 +37,32 @@ export const PopUpUploadPhotoCV = () => {
   const sendFile = async (file) => {
     try {
       const response = await photoapi.post('/images', {
+        image: file
+      })
+      dispatch(photoUpdateCV(response.data.uuid));
+      dispatch(photoUploadCV(URL.createObjectURL(file)));
+      dispatch(closePhotoModal());
+    } catch (e) {
+      dispatch(invalidUpload());
+      dispatch(closePhotoModal());
+      console.error(e);
+    }
+  };
+  const changeFile = (e) => {
+    const file = e.target.files[0];
+    if (file.size > 5242880 ||
+        file.type !== 'image/jpeg' &&
+        file.type !== 'image/jpg' &&
+        file.type !== 'image/png') {
+      dispatch(closePhotoModal());
+      dispatch(invalidUpload());
+      return;
+    };
+    sendChangedFile(file);
+  }
+  const sendChangedFile = async (file) => {
+    try {
+      const response = await photoapi.put(`/images/${personalInformation.imageUuid}`, {
         image: file
       })
       dispatch(photoUpdateCV(response.data.uuid));
@@ -97,7 +136,7 @@ export const PopUpUploadPhotoCV = () => {
         {image &&
           <div className={styles.modal__button}>
             <label htmlFor='file' className={styles.modal__button__label}>Change photo
-              <input type='file' name='photoUuid' id='file' onChange={getFile}/>
+              <input type='file' name='photoUuid' id='file' onChange={changeFile}/>
             </label>
           </div>
         }

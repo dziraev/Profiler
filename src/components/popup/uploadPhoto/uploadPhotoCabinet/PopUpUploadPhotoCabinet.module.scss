@@ -224,6 +224,42 @@
             gap: 15px;
             &__button {
                 width: 157.5px;
+                &__label {
+                    font-family:"Red Hat Display";
+                    padding: 0.875rem;
+                    width: 100%;
+                    font-weight: 600;
+                    font-size: 1rem;
+                    line-height: 1.3125;
+                    background-color: variables.$button-default;
+                    border-radius: 15px;
+                    text-align: center;
+                    color: variables.$text-primary-white;
+                    cursor: pointer;
+                    outline: none;
+                    user-select: none;
+                    position: relative;
+                    display: block;
+                    &:hover, &:focus {
+                        background-color: variables.$button-hover;
+                    }
+                    &:active {
+                        background-color: variables.$button-active;
+                    }
+                    &:disabled {
+                        background-color: variables.$button-disabled;
+                    }
+                    & input[type='file'] {
+                        position: absolute;
+                        top: 0%;
+                        left: 0%;
+                        z-index: 2;
+                        width: 100%;
+                        height: 100%;
+                        opacity: 0;
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }
