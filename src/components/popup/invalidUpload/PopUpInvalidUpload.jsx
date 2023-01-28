@@ -90,7 +90,6 @@ const PopUpInvalidUpload = (props) => {
         file.type !== 'image/jpeg' &&
         file.type !== 'image/jpg' &&
         file.type !== 'image/png') {
-      dispatch(closePhotoModal());
       dispatch(invalidUpload());
       return;
     };
@@ -120,10 +119,9 @@ const PopUpInvalidUpload = (props) => {
         dispatch(personalDetailsUpdate(values));
       }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
-      dispatch(closePhotoModal());
+      dispatch(uploaded());
     } catch (e) {
       dispatch(invalidUpload());
-      dispatch(closePhotoModal());
       console.error(e);
     }
   };
@@ -134,10 +132,9 @@ const PopUpInvalidUpload = (props) => {
       })
       dispatch(photoUpdateCV(response.data.uuid));
       dispatch(photoUploadCV(URL.createObjectURL(file)));
-      dispatch(closePhotoModal());
+      dispatch(uploaded());
     } catch (e) {
       dispatch(invalidUpload());
-      dispatch(closePhotoModal());
       console.error(e);
     }
   };
