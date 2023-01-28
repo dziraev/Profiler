@@ -1,4 +1,4 @@
-import { PERSONALDETAILS_UPDATE, PHONECODE_AND_ID_UPDATE } from '../../types';
+import { PERSONALDETAILS_UPDATE, PHONECODE_AND_ID_UPDATE, PHOTO_UPDATE_CABINET } from '../../types';
 
 const initialState = {
   personalDetails: {
@@ -12,6 +12,7 @@ const initialState = {
     phoneCode: '',
     phoneCodeId: '',
     cellPhone: '',
+    profileImageUuid: null,
     userInDB: false
   }
 };
@@ -35,6 +36,14 @@ export const personalDetailsReducer = (state = initialState, action) => {
           phoneCodeId: action.phoneCodeId
         }
       };
+      case PHOTO_UPDATE_CABINET:
+        return {
+          ...state,
+          personalDetails: {
+            ...state.personalDetails,
+            profileImageUuid: action.data
+          }
+        };
     default:
       return state;
   }

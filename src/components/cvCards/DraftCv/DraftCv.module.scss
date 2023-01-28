@@ -1,0 +1,33 @@
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
+
+.draft {
+
+  &__container {
+    position: relative;
+    display: flex;
+  }
+  &__dot {
+    position: absolute;
+    top: 13px;
+    right: 18px;
+  }
+
+}
+
+
+.title {
+  margin: auto;
+  color: $text-primary-dark-blue;
+  font-weight: 600;
+  font-size: rem(14);
+  line-height: 1.36;
+
+  &__status {
+
+  }
+
+  &__position {
+
+  }
+}

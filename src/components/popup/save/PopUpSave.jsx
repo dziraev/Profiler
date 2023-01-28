@@ -34,7 +34,6 @@ export const PopUpSave = ({ children, isSubmitting, handleReset, ...props }) => 
                       dispatch({ type: 'USER_LOGOUT' });
                     }
                     navigate(linkIsClicked);
-                    handleReset();
                   }
                 })}
               >

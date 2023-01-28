@@ -1,0 +1,111 @@
+@use '../../static/scss/variables';
+
+.photo {
+  background: variables.$background-main;
+  border: variables.$text-primary-blue solid 1px;
+  border-radius: 50%;
+  cursor: pointer;
+  &__button {
+    margin: 0 auto;
+    background-color: #F0F5FF;
+    border-radius: 50%;
+    & svg {
+      display: block;
+    }
+  }
+  &__title {
+    white-space: nowrap;
+    color: variables.$text-primary-blue;
+    font-weight: 600;
+    line-height: 1.32;
+  }
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding: 0%;
+    border: transparent;
+    cursor: default;
+    &__change {
+      display: none;
+      width: 24px;
+      height: 24px;
+      background-color: #C0CCE7;
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      padding: 4.83px;
+      bottom: 9px;
+      left: 36px;
+      z-index: 2;
+      cursor: pointer;
+    }
+    &__delete {
+      display: none;
+      width: 24px;
+      height: 24px;
+      background-color: #C0CCE7;
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      padding: 4.83px;
+      bottom: 9px;
+      left: 70px;
+      z-index: 2;
+      cursor: pointer;
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+  &:hover .photo__image__change {
+    display: block;
+  }
+  &:hover .photo__image__delete {
+    display: block;
+  }
+}
+
+.Cabinet {
+  &.photo {
+    height: 140px;
+    width: 140px;
+    padding: 48px 20px;
+    &__image {
+      padding: 0%;
+    }
+  }
+  &.photo__button {
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+  }
+  &.photo__title {
+    font-size: 0.875em;
+  }
+}
+
+.CV {
+  &.photo {
+    height: 130px;
+    width: 130px;
+    padding: 47px 22px;
+    &__image {
+      padding: 0%;
+    }
+  }
+  &.photo__button {
+    width: 20px;
+    height: 20px;
+    padding: 5.5px;
+    & svg {
+      width: 9px;
+      height: 9px;
+    }
+  }
+  &.photo__title {
+    font-size: 0.75em;
+  }
+}

@@ -1,22 +1,18 @@
-import { emailValidator } from './validators';
-
-const checkIsValidName = (value) => {
-  const REGEXP = /^[a-z]+(([ -])?[a-z]+)*$/i;
-  return REGEXP.test(value);
-};
+import { emailValidator, checkIsValidName, trimValues } from './validators';
 
 export const validatePersonalDetails = (values) => {
+  const trimmedValues = trimValues(values);
   let errors = {};
 
-  if (!checkIsValidName(values.name.trim()) && values.name) {
+  if (!checkIsValidName(trimmedValues.name) && values.name) {
     errors.name = 'Invalid name';
   }
 
-  if (!checkIsValidName(values.surname.trim()) && values.surname) {
+  if (!checkIsValidName(trimmedValues.surname) && values.surname) {
     errors.surname = 'Invalid surname';
   }
 
-  if (!emailValidator(values.email.trim()) && values.email) {
+  if (!emailValidator(trimmedValues.email) && values.email) {
     errors.email = 'Invalid email. Example of the correct variant: example@example.com';
   }
 

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form, Formik } from 'formik';
-import { validatePersonalDetails } from '../../utils/validators/validatePersonalDetails';
+import { validatePersonalDetails } from '@validators/validatePersonalDetails';
+import { trimValues } from '@validators/validators';
 import { useDispatch } from 'react-redux';
 import {
   changeDirtyStatusFormPD,
-  linkIsNotClicked,
   personalDetailsUpdate,
-  resetDirtyStatusFormPD
+  updatePersonaInformationFromPD
 } from '../../redux/actions';
-import { PopUpCancelChanges, PopUpSave, PopUpTryAgain } from '@components/popup';
+import { PopUpCancelChanges, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@components/popup';
 import {
   InputPersonalDetails,
   SearchBar,
@@ -66,30 +66,29 @@ const PersonalDetails = (props) => {
         enableReinitialize={true}
         initialValues={personalDetails}
         validateOnChange={false}
-        onSubmit={async (values, formikHelpers) => {
-          const { setStatus } = formikHelpers;
-          for (let key in values) {
-            if (typeof values[key] === 'string') values[key] = values[key].trim();
-          }
+        onSubmit={async (formikValues, { setStatus }) => {
+          const values = trimValues(formikValues);
 
           const initialValues = {
-            name: personalDetails.name || null,
-            surname: personalDetails.surname || null,
-            countryId: personalDetails.countryId || null,
-            email: personalDetails.email || null,
-            phoneCodeId: personalDetails.phoneCodeId || null,
-            cellPhone: personalDetails.cellPhone || null,
-            positionId: personalDetails.positionId || null
+            name: personalDetails.name,
+            surname: personalDetails.surname,
+            countryId: personalDetails.countryId,
+            email: personalDetails.email,
+            phoneCodeId: personalDetails.phoneCodeId,
+            cellPhone: personalDetails.cellPhone,
+            positionId: personalDetails.positionId,
+            profileImageUuid: personalDetails.profileImageUuid
           };
 
           const currentValues = {
-            name: values.name || null,
-            surname: values.surname || null,
-            countryId: values.countryId || null,
-            email: values.email || null,
-            phoneCodeId: values.phoneCodeId || null,
-            cellPhone: values.cellPhone || null,
-            positionId: values.positionId || null
+            name: values.name,
+            surname: values.surname,
+            countryId: values.countryId,
+            email: values.email,
+            phoneCodeId: values.phoneCodeId,
+            cellPhone: values.cellPhone,
+            positionId: values.positionId,
+            profileImageUuid: values.profileImageUuid
           };
 
           try {
@@ -101,29 +100,37 @@ const PersonalDetails = (props) => {
               const response = await $api.put('/profile', changedValues);
               dispatch(personalDetailsUpdate(values));
             }
-            if (hrefLinkIsClicked.current && hrefLinkIsClicked.current === '/auth') {
-              localStorage.removeItem('token');
-              dispatch({ type: 'USER_LOGOUT' });
-              navigate(linkIsClicked);
-            }
-            if (hrefLinkIsClicked.current && hrefLinkIsClicked.current !== '/auth') {
-              navigate(linkIsClicked);
-            }
+            dispatch(
+              updatePersonaInformationFromPD({
+                name: values.name,
+                surname: values.surname,
+                country: values.country,
+                countryId: values.countryId,
+                position: values.position,
+                positionId: values.positionId
+              })
+            );
           } catch (e) {
-            dispatch(linkIsNotClicked());
             setStatus({ errorResponse: true });
           }
         }}
         onReset={() => {
-          dispatch(resetDirtyStatusFormPD());
+          const { current } = hrefLinkIsClicked;
+          if (current && current === '/auth') {
+            localStorage.removeItem('token');
+            dispatch({ type: 'USER_LOGOUT' });
+            navigate(current);
+          }
+          if (current && current !== '/auth') {
+            navigate(current);
+          }
           setIsEdit(false);
           setCancelIsClicked(false);
-          dispatch(linkIsNotClicked());
         }}
         validate={validatePersonalDetails}
       >
         {(formik) => {
-          const { dirty, isSubmitting, setFieldValue, handleReset, status, setStatus } = formik;
+          const { dirty, isSubmitting, isValid, setFieldValue, status } = formik;
 
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
@@ -131,16 +138,14 @@ const PersonalDetails = (props) => {
 
           return (
             <Form className={styles.form}>
-              {dirty && linkIsClicked && (
-                <PopUpSave isSubmitting={isSubmitting} handleReset={handleReset}>
+              {dirty && !isValid && linkIsClicked && <PopUpStayOrLeave />}
+              {dirty && isValid && linkIsClicked && !status?.errorResponse && (
+                <PopUpSave isSubmitting={isSubmitting}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}
               {status?.errorResponse && (
-                <PopUpTryAgain
-                  isSubmitting={isSubmitting}
-                  onClickHandler={() => setStatus({ errorResponse: false })}
-                >
+                <PopUpTryAgain isSubmitting={isSubmitting}>
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
@@ -195,6 +200,7 @@ const PersonalDetails = (props) => {
                     disabled={!isEdit}
                     countryId={countryId}
                     setFieldValue={setFieldValue}
+                    setCountryId={setCountryId}
                   >
                     <InputPersonalDetails
                       name='cellPhone'

@@ -7,14 +7,25 @@
     align-items: center;
     line-height: 1.333;
     color: variables.$text-primary-error;
-    @media (min-width: 1365.98px) {
+
+    &_adaptive {
+        @media (min-width: 1365.98px) {
+            top: 100%;
+            position: absolute;
+            align-items: flex-start;
+            transform: translateY(6px);
+        }
+
+        @media (max-width: 1365.98px) {
+            margin-top: 4px;
+        }
+    }
+
+    &_notAdaptive {
         top: 100%;
         position: absolute;
         align-items: flex-start;
         transform: translateY(6px);
-    }
-    @media (max-width: 1365.98px) {
-        margin-top: 4px;
     }
     svg {
         flex: 0 0 14px;
@@ -22,3 +33,4 @@
         height: 14px;
     }
 }
+

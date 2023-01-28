@@ -8,6 +8,8 @@ import PersonalCabinetPage from '../pages/PersonalCabinetPage/PersonalCabinetPag
 import MyCV from '../pages/MyCV/MyCV';
 import PersonalDetails from '../pages/PersonalDetails/PersonalDetails';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import CV from '../pages/CV/CV';
+import { PersonalInformation } from '../pages/CVsteps/PersonalInformation/PersonalInformation';
 
 const AuthRoutes = () => (
   <Routes>
@@ -20,6 +22,10 @@ const MainRoutes = () => (
     <Route path='/main' element={<PersonalCabinetPage />}>
       <Route path='personal-details' element={<PersonalDetails />} />
       <Route path='my-cv' element={<MyCV />} />
+    </Route>
+    <Route path='/cv' element={<CV />}>
+      <Route path='personal-info/:uuid' element={<PersonalInformation />} />
+      <Route path='personal-info' element={<PersonalInformation />} />
     </Route>
     <Route path='/auth' element={<Navigate to='/main/my-cv' />} />
     <Route path='/' element={<Navigate to='/main/my-cv' />} />

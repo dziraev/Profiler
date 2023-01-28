@@ -6,16 +6,32 @@ import { personalDetailsReducer } from '@reducers';
 import { phoneCodesReducer } from '@reducers';
 import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
+import { photoCabinetReducer } from '@reducers/PersonalDetailsReducers/photoCabinetReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
+import { personalInformationReducer } from '@reducers/CVReducers/personalInformationReducer';
+import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
+import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
+import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
+import { photoCVReducer } from '@reducers/CVReducers/PhotoCVReducer';
+import { cvReducer } from '@reducers/CVReducers/cvReducer';
+import { specificCvReducer } from '@reducers/CVReducers/specificCvReducer';
 
 const appReducer = combineReducers({
   authReducer,
   countriesReducer,
   phoneCodesReducer,
   personalDetailsReducer,
+  personalInformationReducer,
   editModeReducer,
   positionsReducer,
-  linkIsClickedReducer
+  linkIsClickedReducer,
+  photoModalReducer,
+  invalidUploadReducer,
+  adviceReducer,
+  photoCabinetReducer,
+  photoCVReducer,
+  cvReducer,
+  specificCvReducer
 });
 
 const rootReducer = (state, action) => {

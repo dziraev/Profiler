@@ -1,0 +1,79 @@
+@use '../../static/scss/variables';
+
+.page {
+    min-height: 100vh;
+    background: variables.$background-main;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    overflow: auto;
+    &__content {
+        width: calc(100% - 320px);
+        padding: 50px 50px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__main {
+
+    }
+    &__sidebar {
+        flex-basis: 320px;
+    }
+}
+.exit {
+    min-width: 964px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.25em;
+    line-height: 1.32;
+    & p {
+        height: 26px;
+    }
+}
+.overlay {
+    display: none;
+}
+@media (max-width: 1365px) {
+    .overlay {
+        color: variables.$text-primary-dark-blue;
+        display: block;
+        background-color: rgba(0, 0, 0, 0.25);
+        position: absolute;
+        z-index: 20;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100%;
+    }
+    .modal {
+        width: 350px;
+        height: 144px;
+        position: absolute;
+        z-index: 3;
+        top: calc(50% - 144px / 2);
+        left: calc(50% - 350px / 2);
+        background-color: variables.$background-main;
+        border-radius: 15px;
+        text-align: center;
+        &__close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        &__content {
+            margin: 30px auto;
+            width: 278px;
+            font-size: 1em;
+            line-height: 1.32;
+            font-weight: 400;
+            & h2 {
+                font-weight: 600;
+            }
+        }
+        &_closed {
+            display: none;
+        }
+    }
+}

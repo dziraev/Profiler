@@ -43,15 +43,8 @@ module.exports = {
         include: /\.module\.scss$/
       },
       {
-        test: /\.(png|jpg|jpeg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset/resource'
-      },
-      {
-        test: /\.svg$/,
-        type: 'asset/resource',
-        generator: {
-          filename: path.join('icons', '[name].[contenthash][ext]')
-        }
       }
     ]
   },
@@ -59,8 +52,12 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
+      '@buttonsLarge': path.resolve(__dirname, 'src/components/buttons/buttonsLarge'),
       '@reducers': path.resolve(__dirname, 'src/redux/reducers'),
-      '@hooks': path.resolve(__dirname, 'src/hooks')
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@popUps': path.resolve(__dirname, 'src/components/popup'),
+      '@cvCards': path.resolve(__dirname, 'src/components/cvCards'),
+      '@validators': path.resolve(__dirname, 'src/utils/validators')
     }
   },
   plugins: [
@@ -91,7 +88,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     watchFiles: path.join(__dirname, 'src'),
-    port: 80
+    port: 9000
   },
   optimization: {
     minimizer: [

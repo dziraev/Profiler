@@ -1,20 +1,30 @@
 import {
+  ALL_CV_LOAD,
   AUTH_IN,
   AUTH_OUT,
   CHANGE_DIRTY_STATUS_FORM_PD,
-  RESET_DIRTY_STATUS_FORM_PD,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
+  INVALID_UPLOAD,
   LINK_IS_CLICKED,
   LINK_IS_NOT_CLICKED,
   LOADER_DISPLAY_OFF,
   LOADER_DISPLAY_ON,
+  MODAL_IS_CLOSED,
+  MODAL_IS_OPENED,
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD,
-  POSITIONS_LOAD
+  PHOTO_UPDATE_CABINET,
+  PHOTO_UPDATE_CV,
+  PHOTO_UPLOAD_CABINET,
+  PHOTO_UPLOAD_CV,
+  POSITIONS_LOAD,
+  RESET_DIRTY_STATUS_FORM_PD,
+  UPDATE_PERSONALINFORMATION_FROM_PD,
+  UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
+  UPLOADED
 } from './types';
-import uniqid from 'uniqid';
 import $api from '../http/api';
 
 export function authIn() {
@@ -50,6 +60,16 @@ export function authInAndPersonalDetailsLoad() {
         if (this[key] == null) this[key] = '';
       }, data);
       dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
+      dispatch(
+        updatePersonaInformationFromPD({
+          name: data.name,
+          surname: data.surname,
+          country: data.country,
+          countryId: data.countryId,
+          position: data.position,
+          positionId: data.positionId
+        })
+      );
       dispatch(authIn());
     } catch (e) {
       if (e.response && e.response.status === 404) {
@@ -137,7 +157,7 @@ export function positionsLoad() {
       const { data } = await $api.get('positions');
       dispatch({
         type: POSITIONS_LOAD,
-        data: [{ id: uniqid(), name: 'None' }, ...data]
+        data
       });
     } catch (e) {
       console.log(e);
@@ -149,5 +169,92 @@ export function personalDetailsUpdate(data) {
   return {
     type: PERSONALDETAILS_UPDATE,
     data
+  };
+}
+
+export function closePhotoModal() {
+  return {
+    type: MODAL_IS_CLOSED
+  };
+}
+
+export function openPhotoModal() {
+  return {
+    type: MODAL_IS_OPENED
+  };
+}
+
+export function invalidUpload() {
+  return {
+    type: INVALID_UPLOAD
+  };
+}
+
+export function uploaded() {
+  return {
+    type: UPLOADED
+  };
+}
+
+export function updatePersonaInformationFromPD(data) {
+  return {
+    type: UPDATE_PERSONALINFORMATION_FROM_PD,
+    data
+  };
+}
+
+export function photoUpdate(data) {
+  return {
+    type: PHOTO_UPDATE_CABINET,
+    data
+  };
+}
+
+export function photoUploadCabinet(data) {
+  return {
+    type: PHOTO_UPLOAD_CABINET,
+    data
+  };
+}
+
+export function photoUpdateCV(data) {
+  return {
+    type: PHOTO_UPDATE_CV,
+    data
+  };
+}
+
+export function photoUploadCV(data) {
+  return {
+    type: PHOTO_UPLOAD_CV,
+    data
+  };
+}
+
+export function allCvLoad() {
+  return async (dispatch) => {
+    try {
+      const { data } = await $api.get('cvs');
+      dispatch({
+        type: ALL_CV_LOAD,
+        data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function getPersonalInformation(uuid) {
+  return async (dispatch) => {
+    try {
+      const { data } = await $api.get('cvs/' + uuid);
+      dispatch({
+        type: UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
+        data
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 }

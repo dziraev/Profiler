@@ -1,0 +1,113 @@
+@use '../../../static/scss/variables';
+@use '../../../static/scss/mixins';
+
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 1115px;
+  min-width: 946px;
+}
+
+
+.title {
+  text-align: left;
+  font-weight: 500;
+  font-size: mixins.rem(24);
+  line-height: 1.334;
+  color: variables.$text-primary-dark-blue;
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+}
+
+.form {
+  display: grid;
+  row-gap: 48px;
+  grid-template-columns: 156px minmax(420px, 523px) minmax(370px, 436px);
+  grid-template-areas:
+    "container container container"
+    ". buttons ."  ;
+
+
+  &__container {
+    grid-area: container;
+    display: grid;
+    row-gap: 30px;
+    grid-template-columns: 156px minmax(420px, 523px) minmax(370px, 436px);
+    grid-template-areas:
+    "photo photo ."
+    "fields fields advice"
+    ". checkboxes ."  ;
+
+  }
+
+  &__clearFields {
+    position: absolute;
+    right: 0;
+    top: -42px;
+  }
+
+  &__lines {
+    position: relative;
+    grid-area: fields;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  &__photo {
+    grid-area: photo;
+  }
+
+  &__inputBlock, &__photo {
+    display: flex;
+    align-items: center;
+  }
+
+  &__label {
+    flex: 0 0 156px;
+    color: variables.$text-primary-dark-blue;
+    font-weight: 400;
+    font-size: mixins.rem(18);
+    line-height: 1.334;
+
+    &:after {
+      content: '*';
+      color: variables.$text-primary-error;
+      margin-left: 2px;
+    }
+
+    &_afterNone {
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  &__checkboxes {
+    justify-self: flex-end;
+    grid-area: checkboxes;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 62px;
+  }
+  &__buttons {
+    grid-area: buttons;
+    display: flex;
+  }
+  &__button {
+    width: 100%;
+    max-width: 170px;
+    &:last-of-type {
+      margin-left: auto;
+    }
+  }
+  &__advice {
+    grid-area: advice;
+    @include mixins.adaptive-value('margin-left', 59, 50, 1535, 1366);
+    @media(max-width: 1366px) {
+      margin-left: 50px;
+    }
+  }
+
+}

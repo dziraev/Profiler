@@ -1,4 +1,4 @@
-@use '../../static/scss/variables';
+@use '../../../static/scss/variables';
 
 @keyframes opacity-animation {
     0% {
@@ -50,32 +50,7 @@
         }
     }
     &__photo {
-        height: 140px;
-        width: 140px;
-        margin-left: 40px;
-        background: variables.$background-main;
-        border: variables.$text-primary-blue solid 1px;
-        border-radius: 50%;
-        padding: 48px 20px;
-        cursor: pointer;
-    }
-    &__photo__button {
-        width: 24px;
-        height: 24px;
-        margin: auto;
-        background-color: #F0F5FF;
-        border-radius: 50%;
-        padding: 6px;
-        & svg {
-            display: block;
-        }
-    }
-    &__photo__title {
-        color: variables.$text-primary-blue;
-        font-weight: 600;
-        font-size: 0.875em;
-        line-height: 1.32;
-        white-space: nowrap;
+        padding: 0px 0px 0px 40px;
     }
     &__number {
         color: variables.$text-primary-grey;
@@ -114,7 +89,7 @@
         }
     }
     @media (max-width: 1365px) {
-        background: variables.$background-main url("../../static/images/background-personal-cabinet-burger.png") 0 calc(100% - 54px) / contain no-repeat;
+        background: variables.$background-main url("../../../static/images/background-personal-cabinet-burger.png") 0 calc(100% - 54px) / contain no-repeat;
         width: 428px;
         height: 100vh;
         margin: 0 auto;
