@@ -126,14 +126,14 @@ export const PopUpUploadPhotoCV = () => {
             <div className={styles.check} />
           </div>
         </div>
-        {!image &&
+        {!imageCV &&
           <div className={styles.modal__button}>
             <label htmlFor='file' className={styles.modal__button__label}>Add photo
               <input type='file' name='photoUuid' id='file' onChange={getFile}/>
             </label>
           </div>
         }
-        {image &&
+        {imageCV &&
           <div className={styles.modal__button}>
             <label htmlFor='file' className={styles.modal__button__label}>Change photo
               <input type='file' name='photoUuid' id='file' onChange={changeFile}/>
