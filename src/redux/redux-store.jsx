@@ -12,7 +12,7 @@ import { personalInformationReducer } from '@reducers/CVReducers/personalInforma
 import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
 import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
 import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
-import { photoCVReducer } from '@reducers/CVReducers/PhotoCVReducer';
+import { photoCVReducer } from '@reducers/CVReducers/photoCVReducer';
 import { cvReducer } from '@reducers/CVReducers/cvReducer';
 import { specificCvReducer } from '@reducers/CVReducers/specificCvReducer';
 
