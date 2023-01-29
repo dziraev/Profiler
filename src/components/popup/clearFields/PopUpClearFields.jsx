@@ -8,9 +8,8 @@ export const PopUpClearFields = ({ clearFields, dontClearFields }) => {
       <div className={styles.modal__bcg}>
         <div className={styles.modal__content}>
           <div className={styles.modal__content__titles}>
-            <p className={styles.modal__content__title}>The data is entered incorrectly.</p>
-            <p className={styles.modal__content__subtitle}>
-              If you leave this page, the data will not be saved.
+            <p className={styles.modal__content__title}>
+              Do you want to clear all fields on this page?
             </p>
           </div>
           <div className={styles.modal__content__btns}>
