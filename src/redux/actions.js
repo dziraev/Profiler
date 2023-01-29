@@ -56,9 +56,6 @@ export function authInAndPersonalDetailsLoad() {
     try {
       dispatch(loaderOn());
       const { data } = await $api.get('profile');
-      Object.keys(data).forEach(function (key) {
-        if (this[key] == null) this[key] = '';
-      }, data);
       dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
       dispatch(
         updatePersonaInformationFromPD({
