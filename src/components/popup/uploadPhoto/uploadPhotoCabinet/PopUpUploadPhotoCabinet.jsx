@@ -40,13 +40,13 @@ export const PopUpUploadPhotoCabinet = () => {
       })
       dispatch(photoUpdate(response.data.uuid));
       const values = {
-        name: personalDetails.name,
-        surname: personalDetails.surname,
-        countryId: personalDetails.countryId,
-        email: personalDetails.email,
-        phoneCodeId: personalDetails.phoneCodeId,
-        cellPhone: personalDetails.cellPhone,
-        positionId: personalDetails.positionId,
+        name: personalDetails.name || null,
+        surname: personalDetails.surname || null,
+        countryId: personalDetails.countryId || null,
+        email: personalDetails.email || null,
+        phoneCodeId: personalDetails.phoneCodeId || 1,
+        cellPhone: personalDetails.cellPhone || null,
+        positionId: personalDetails.positionId || null,
         profileImageUuid: response.data.uuid
       };
       if (!personalDetails.userInDB) {
@@ -82,23 +82,6 @@ export const PopUpUploadPhotoCabinet = () => {
         image: file
       })
       dispatch(photoUpdate(response.data.uuid));
-      const values = {
-        name: personalDetails.name,
-        surname: personalDetails.surname,
-        countryId: personalDetails.countryId,
-        email: personalDetails.email,
-        phoneCodeId: personalDetails.phoneCodeId,
-        cellPhone: personalDetails.cellPhone,
-        positionId: personalDetails.positionId,
-        profileImageUuid: response.data.uuid
-      };
-      if (!personalDetails.userInDB) {
-        const response = await $api.post('/profile', values);
-        dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
-      } else {
-        const response = await $api.put('/profile', {profileImageUuid: values.profileImageUuid});
-        dispatch(personalDetailsUpdate(values));
-      }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(closePhotoModal());
     } catch (e) {

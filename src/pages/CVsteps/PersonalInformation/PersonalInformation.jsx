@@ -77,11 +77,11 @@ export const PersonalInformation = () => {
                 <PopUpClearFields
                   clearFields={() => {
                     setTouched({
-                      name: true,
-                      surname: true,
-                      country: true,
-                      position: true,
-                      city: true
+                      name: false,
+                      surname: false,
+                      country: false,
+                      position: false,
+                      city: false
                     });
                     setValues(
                       {
@@ -121,7 +121,7 @@ export const PersonalInformation = () => {
                       name='name'
                       adaptive={false}
                       maxLength={50}
-                      label='Name'
+                      label='Enter your name'
                       activeLabel='Enter your name'
                     />
                   </div>
@@ -132,7 +132,7 @@ export const PersonalInformation = () => {
                       name='surname'
                       adaptive={false}
                       maxLength={50}
-                      label='Surname'
+                      label='Enter your surname'
                       activeLabel='Enter your surname'
                     />
                   </div>
@@ -142,7 +142,7 @@ export const PersonalInformation = () => {
                       data-id='position'
                       name='position'
                       adaptive={false}
-                      label='Position'
+                      label='Choose your position'
                       activeLabel='Choose your position'
                       setFieldValue={setFieldValue}
                     />
@@ -153,8 +153,8 @@ export const PersonalInformation = () => {
                       data-id='country'
                       name='country'
                       adaptive={false}
-                      label='Country'
                       maxLength={50}
+                      label='Enter your location'
                       activeLabel='Enter your location'
                       setFieldValue={setFieldValue}
                     />
@@ -166,7 +166,7 @@ export const PersonalInformation = () => {
                       name='city'
                       adaptive={false}
                       maxLength={50}
-                      label='City'
+                      label='Enter your localization city'
                       activeLabel='Enter your localization city'
                     />
                   </div>

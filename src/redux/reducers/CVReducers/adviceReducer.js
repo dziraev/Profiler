@@ -3,7 +3,7 @@ const initialState = {
     {
       name: 'default',
       title: 'Advice on filling',
-      text: 'Click on the field to get a text. Please fill in all fields in <strong>English<strong>.'
+      text: 'Click on the field to get a hint. Please fill in all fields in <strong>English<strong>.'
     },
     {
       name: 'name',
@@ -28,7 +28,7 @@ const initialState = {
     {
       name: 'city',
       title: 'City',
-      text: 'Write the current city where you are looking for a job. <p><strong>Example:</strong> Minsk, St. Petersburg, Ust-Kamenogorsk</p>'
+      text: 'Write the current city where you are looking for a job. <p><strong>Example:</strong> Minsk, Saint Petersburg, Ust-Kamenogorsk</p>'
     }
   ]
 };

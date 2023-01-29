@@ -57,7 +57,9 @@ module.exports = {
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@popUps': path.resolve(__dirname, 'src/components/popup'),
       '@cvCards': path.resolve(__dirname, 'src/components/cvCards'),
-      '@validators': path.resolve(__dirname, 'src/utils/validators')
+      '@validators': path.resolve(__dirname, 'src/utils/validators'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@types': path.resolve(__dirname, 'src/redux/types.js')
     }
   },
   plugins: [
