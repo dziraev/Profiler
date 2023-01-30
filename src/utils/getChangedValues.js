@@ -1,5 +1,6 @@
 export const getChangedValues = (values, initialValues) => {
-  return Object.entries(values).reduce((acc, [key, value]) => {
+  const acc = {};
+  for (const [key, value] of Object.entries(values)) {
     if (typeof initialValues[key] === 'string') {
       initialValues[key] = initialValues[key] || null;
     }
@@ -11,9 +12,8 @@ export const getChangedValues = (values, initialValues) => {
     }
 
     if (hasChanged) {
-      acc[key] = value || null;
+      acc[key] = value;
     }
-
-    return acc;
-  }, {});
+  }
+  return acc;
 };

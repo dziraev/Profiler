@@ -67,7 +67,7 @@ const PersonalDetails = (props) => {
         initialValues={personalDetails}
         validateOnChange={false}
         onSubmit={async (formikValues, { setStatus }) => {
-          const values = trimValues(formikValues);
+          const values = trimValues(formikValues, true);
 
           const initialValues = {
             name: personalDetails.name,
@@ -244,7 +244,11 @@ const PersonalDetails = (props) => {
                       </CancelButton>
                     </div>
                     <div className={styles.form__button}>
-                      <Button type={isSubmitting ? 'button' : 'submit'} disabled={!dirty}>
+                      <Button
+                        type={isSubmitting ? 'button' : 'submit'}
+                        disabled={!dirty}
+                        isLoading={isSubmitting}
+                      >
                         Save
                       </Button>
                     </div>

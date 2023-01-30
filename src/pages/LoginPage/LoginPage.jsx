@@ -58,7 +58,11 @@ const LoginPage = (props) => {
                   </div>
                 </div>
                 <div className={styles.form__button}>
-                  <Button type='submit' disabled={!(dirty && isValid) || isSubmitting}>
+                  <Button
+                    type='submit'
+                    disabled={!(dirty && isValid)}
+                    {...(isSubmitting && { type: 'button', isLoading: true })}
+                  >
                     Sign In
                   </Button>
                 </div>

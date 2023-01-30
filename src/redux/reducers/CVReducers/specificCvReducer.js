@@ -1,4 +1,4 @@
-import { UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV } from '../../types';
+import { UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV } from '@types';
 
 const initialState = {
   personalInformation: {

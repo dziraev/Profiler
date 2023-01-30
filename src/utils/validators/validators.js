@@ -1,7 +1,7 @@
-export const trimValues = (object) => {
+export const trimValues = (object, replaceToNull = false) => {
   return Object.entries(object).reduce((acc, [key, value]) => {
     if (typeof value === 'string') {
-      acc[key] = value.trim() || null;
+      acc[key] = replaceToNull ? value.trim() || null : value.trim();
     } else {
       acc[key] = value;
     }

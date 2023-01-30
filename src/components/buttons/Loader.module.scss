@@ -1,0 +1,24 @@
+@import 'src/static/scss/variables';
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 3.5px solid $button-circle-main-bcg;
+  border-bottom-color: $button-main-slider;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  &_borderColor {
+    border-color: $button-circle-grey-bcg;
+    border-bottom-color: $button-blue-slider;
+  }
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
