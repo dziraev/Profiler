@@ -41,7 +41,9 @@ export const PopUpSave = ({ children, isSubmitting, handleReset, ...props }) => 
               </CancelButton>
             </div>
             <div className={styles.modal__content__btns__again}>
-              <Button type={isSubmitting ? 'button' : 'submit'}>Save</Button>
+              <Button type='submit' {...(isSubmitting && { type: 'button', isLoading: true })}>
+                Save
+              </Button>
             </div>
           </div>
         </div>

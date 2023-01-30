@@ -244,7 +244,11 @@ const PersonalDetails = (props) => {
                       </CancelButton>
                     </div>
                     <div className={styles.form__button}>
-                      <Button type={isSubmitting ? 'button' : 'submit'} disabled={!dirty}>
+                      <Button
+                        type={isSubmitting ? 'button' : 'submit'}
+                        disabled={!dirty}
+                        isLoading={isSubmitting}
+                      >
                         Save
                       </Button>
                     </div>

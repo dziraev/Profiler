@@ -1,31 +1,34 @@
-@use '../../../static/scss/variables';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
+
 .button {
     font-family:"Red Hat Display";
     width: 100%;
-    padding: 0.8125rem;
-    border: 1px solid variables.$button-default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: rem(11) rem(23);
+    border: 1px solid $button-default;
     font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.3125;
-    background-color: variables.$background-main;
+    font-size: rem(18);
+    line-height: 1.334;
+    background-color: $background-main;
     border-radius: 15px;
     text-align: center;
-    color: variables.$text-primary-blue;
+    color: $text-primary-blue;
     cursor: pointer;
     outline: none;
     user-select: none;
-    @media (min-width: 1365px) {
-        padding: 0.9375rem;
-        font-weight: 700;
-        font-size: 1.25rem;
+    @media (min-width: 1365.98px) {
+        padding: rem(13) rem(31);
+        font-size: rem(20);
         line-height: 1.3;
     }
     &:hover, &:focus {
-       background-color: variables.$cancel-button-background;
+       background-color: $cancel-button-background;
     }
     &:active {
-        border-color: variables.$button-active;
-        color: variables.$button-active;
+        border-color: $button-active;
+        color: $button-active;
     }
-
 }
