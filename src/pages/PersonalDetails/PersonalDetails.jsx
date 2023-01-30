@@ -67,7 +67,7 @@ const PersonalDetails = (props) => {
         initialValues={personalDetails}
         validateOnChange={false}
         onSubmit={async (formikValues, { setStatus }) => {
-          const values = trimValues(formikValues);
+          const values = trimValues(formikValues, true);
 
           const initialValues = {
             name: personalDetails.name,

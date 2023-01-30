@@ -1,4 +1,5 @@
 import { UPDATE_PERSONALINFORMATION_FROM_PD, PHOTO_UPDATE_CV } from '../../types';
+import { nullToEmptyString } from '@utils/nullToEmptyString';
 
 export const initialState = {
   personalInformation: {
@@ -19,11 +20,12 @@ export const initialState = {
 export const personalInformationReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_PERSONALINFORMATION_FROM_PD:
+      const values = nullToEmptyString(action.data);
       return {
         ...state,
         personalInformation: {
           ...state.personalInformation,
-          ...action.data
+          ...values
         }
       };
     case PHOTO_UPDATE_CV:
