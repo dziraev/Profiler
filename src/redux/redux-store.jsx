@@ -13,7 +13,7 @@ import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
 import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
 import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
 import { photoCVReducer } from '@reducers/CVReducers/photoCVReducer';
-import { cvReducer } from '@reducers/CVReducers/cvReducer';
+import { cvsReducer } from '@reducers/CVReducers/cvsReducer';
 import { specificCvReducer } from '@reducers/CVReducers/specificCvReducer';
 
 const appReducer = combineReducers({
@@ -30,7 +30,7 @@ const appReducer = combineReducers({
   adviceReducer,
   photoCabinetReducer,
   photoCVReducer,
-  cvReducer,
+  cvReducer: cvsReducer,
   specificCvReducer
 });
 

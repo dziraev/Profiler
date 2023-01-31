@@ -1,16 +1,25 @@
-import React from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { Form, Formik } from 'formik';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Input, InputPassword } from '@components/fields';
 import { Button } from '@components/buttons';
-import { authInAndPersonalDetailsLoad } from '../../redux/actions';
 import { validateAuthorization } from '@validators/validateAuthorization';
+import { Form, Formik } from 'formik';
+import axios from 'axios';
 import logo from '../../static/images/logo.svg';
 import styles from './LoginPage.module.scss';
 
 const LoginPage = (props) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location?.state?.from?.pathname || '/';
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/');
+    }
+  }, []);
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -31,7 +40,7 @@ const LoginPage = (props) => {
                 password: values.password
               });
               localStorage.setItem('token', response.data.token);
-              dispatch(authInAndPersonalDetailsLoad());
+              navigate(fromPage);
             } catch (e) {
               setFieldValue('password', '', false);
               setFieldError('password', <span>Wrong email or password</span>);

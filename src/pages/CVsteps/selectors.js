@@ -1,1 +1,1 @@
-export const selectAllCv = (state) => state.cvReducer.allCv;
+export const selectCvsObj = (state) => state.cvReducer;
