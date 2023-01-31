@@ -1,5 +1,7 @@
 import {
   ALL_CV_LOAD,
+  ALL_CV_LOADING_OFF,
+  ALL_CV_LOADING_ON,
   AUTH_IN,
   AUTH_OUT,
   CHANGE_DIRTY_STATUS_FORM_PD,
@@ -231,6 +233,7 @@ export function photoUploadCV(data) {
 export function allCvLoad() {
   return async (dispatch) => {
     try {
+      dispatch({ type: ALL_CV_LOADING_ON });
       const { data } = await $api.get('cvs');
       dispatch({
         type: ALL_CV_LOAD,
@@ -238,6 +241,8 @@ export function allCvLoad() {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      dispatch({ type: ALL_CV_LOADING_OFF });
     }
   };
 }

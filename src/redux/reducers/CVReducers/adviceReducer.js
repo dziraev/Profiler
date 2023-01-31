@@ -2,7 +2,7 @@ const initialState = {
   advices: [
     {
       name: 'default',
-      title: 'Advice on filling',
+      title: 'Advice on filling in',
       text: 'Click on the field to get a hint. Please fill in all fields in <strong>English<strong>.'
     },
     {
