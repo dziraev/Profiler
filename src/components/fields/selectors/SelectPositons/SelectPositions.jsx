@@ -86,20 +86,19 @@ export const SelectPositions = ({
             </span>
           )}
 
-          <div className={isVisible ? styles.select__arrowOpen : styles.select__arrow}>
+          <div className={cx({ select__arrowOpen: isVisible, select__arrow: !isVisible })}>
             <svg
-              width='12'
-              height='8'
-              viewBox='0 0 12 8'
+              width='20'
+              height='9'
+              viewBox='0 0 20 9'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
             >
               <path
-                d='M10.6666 1.66602L5.99992 6.33268L1.33325 1.66602'
-                stroke='#407BFF'
-                strokeWidth='1.5'
-                strokeLinecap='round'
-                strokeLinejoin='round'
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M0.433594 0.508411C0.705097 0.195587 1.17879 0.16209 1.49161 0.433594L8.9007 6.86403C9.49367 7.37867 10.5063 7.37867 11.0993 6.86403L18.5084 0.433594C18.8212 0.16209 19.2949 0.195587 19.5664 0.508411C19.8379 0.821235 19.8044 1.29493 19.4916 1.56643L12.0825 7.99686C10.9255 9.00106 9.07453 9.00106 7.9175 7.99686L0.508411 1.56643C0.195587 1.29493 0.16209 0.821235 0.433594 0.508411Z'
+                fill='#407BFF'
               />
             </svg>
           </div>
@@ -131,7 +130,7 @@ export const SelectPositions = ({
         >
           {positions.map((position) => (
             <div
-              className={styles.select__item}
+              className={cx(styles.select__item, { select__item_active: position.name === value })}
               key={position.id}
               onMouseDown={(e) => {
                 e.preventDefault();
@@ -139,20 +138,20 @@ export const SelectPositions = ({
               }}
             >
               {position.name}
-              {position.name === value && (
-                <svg
-                  width='24'
-                  height='19'
-                  viewBox='0 0 24 19'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M8.93925 13.198L5.62542 9.88651C5.44686 9.70808 5.20467 9.60783 4.95215 9.60783C4.69962 9.60783 4.45744 9.70808 4.27888 9.88651C4.10032 10.0649 4 10.307 4 10.5593C4 10.6842 4.02463 10.808 4.07248 10.9234C4.12033 11.0388 4.19046 11.1437 4.27888 11.2321L8.27075 15.2211C8.6432 15.5933 9.24484 15.5933 9.61729 15.2211L19.7211 5.1245C19.8997 4.94607 20 4.70406 20 4.45171C20 4.19937 19.8997 3.95736 19.7211 3.77892C19.5426 3.60049 19.3004 3.50024 19.0479 3.50024C18.7953 3.50024 18.5531 3.60049 18.3746 3.77892L8.93925 13.198Z'
-                    fill='#407BFF'
-                  />
-                </svg>
-              )}
+              <svg
+                width='16'
+                height='12'
+                viewBox='0 0 16 12'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  fillRule='evenodd'
+                  clipRule='evenodd'
+                  d='M15.8687 0.662218C16.0552 0.865817 16.0414 1.1821 15.8378 1.36865L4.92408 11.3687C4.73294 11.5438 4.43965 11.5438 4.24851 11.3687L0.162218 7.62446C-0.0413805 7.43791 -0.0551986 7.12163 0.131355 6.91803C0.317908 6.71443 0.634189 6.70062 0.837788 6.88717L4.5863 10.3218L15.1622 0.631355C15.3658 0.444801 15.6821 0.45862 15.8687 0.662218Z'
+                  fill='#407BFF'
+                />
+              </svg>
             </div>
           ))}
         </div>

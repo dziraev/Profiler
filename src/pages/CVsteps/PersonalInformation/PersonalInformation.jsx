@@ -141,7 +141,7 @@ export const PersonalInformation = () => {
                     <SelectPositions
                       data-id='position'
                       name='position'
-                      adaptive={false}
+                      // adaptive={false}
                       label='Choose your position'
                       activeLabel='Choose your position'
                       setFieldValue={setFieldValue}

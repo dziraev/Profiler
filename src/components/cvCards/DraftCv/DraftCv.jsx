@@ -9,7 +9,13 @@ export const DraftCv = ({ position, uuid }) => {
 
   return (
     <div className={styles.card} onClick={() => navigate('/cv/personal-info/' + uuid)}>
-      <div className={cx(styles.card__container, stylesDraft.draft__container)}>
+      <div
+        className={cx(
+          styles.card__container,
+          styles.card__container_bgDraft,
+          stylesDraft.draft__container
+        )}
+      >
         <div className={stylesDraft.draft__dot}>
           <svg
             width='4'

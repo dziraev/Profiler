@@ -1,166 +1,158 @@
-@use '../../../../static/scss/variables';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
 
 .selectPhone {
-    font-family: "Red Hat Display";
-    user-select: none;
+  font-family: "Red Hat Display";
+  user-select: none;
+  position: relative;
+  width: 100%;
+  &__container {
+    display: flex;
+    column-gap: 15px;
     position: relative;
+    @media (max-width: 350px) {
+      flex-wrap: wrap;
+      row-gap: 20px;
+    }
+  }
+  &__select {
+    position: relative;
+    flex: 1 0 120px;
+    height: 48px;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 15px;
+    background-color: $input-background;
+    padding: rem(12) rem(13.5);
+    border: 1px solid transparent;
     width: 100%;
-    &__container {
-        display: flex;
-        column-gap: 15px;
-        @media (max-width: 350px) {
-            flex-wrap: wrap;
-            row-gap: 20px;
-        }
-    }
-    &__select {
-        position: relative;
-        flex: 1 0 114px;
-        height: 48px;
-        border-radius: 15px;
-        background-color: variables.$input-background;
-        padding: 0.6875rem 0.875rem;
-        border: 1px solid transparent;
-        font-size: 1.125rem;
-        line-height: 1.333;
-        width: 100%;
-        font-weight: 400;
-        caret-color: variables.$text-primary-blue;
-        color: variables.$text-primary-dark-blue;
-        cursor: pointer;
-        &:hover, &:focus {
-            border-color: variables.$input-stroke-active;
-        }
-    }
-    &__input {
-        width: 100%;
-    }
-    &__phoneCode {
-        display: flex;
-        align-items: center;
-        column-gap: 5px;
-        img {
-            border-radius: 3px;
-            max-height: 21px;
-            width: 100%;
-            max-width: 21px;
-        }
-    }
-    &__error {
-        border-color: variables.$input-stroke-error;
-        &:hover {
-            border-color: variables.$input-stroke-error;
-        }
+    font-weight: 400;
+    caret-color: $text-primary-blue;
+    color: $text-primary-dark-blue;
+    cursor: pointer;
+    @media(min-width: 1365.98px) {
+      font-size: rem(18);
+      line-height: 1.333;
+      flex-basis: 130px;
     }
 
-    &__dropdown {
-        display: flex;
-        flex-direction: column;
-        row-gap: 8px;
-        @media (max-width: 1365.98px) {
-            padding: 15px 5px;
-            background-color: variables.$background-main;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
-            border-radius: 15px;
-            overflow-y: auto;
-            width: 100%;
-            z-index: 4;
-            max-width: 396px;
-            max-height: 370px;
-        }
+    &:hover, &:focus {
+      border-color: $input-stroke-active;
     }
-    &__item {
-        display: flex;
-        justify-content: space-between;
-        cursor: pointer;
-        font-weight: 400;
-        font-size: 0.875rem;
-        line-height: 1.357;
-        padding: 6px 5px;
-        &:hover {
-            background-color: variables.$input-background;
-            border-radius: 7px;
-        }
-        &:active {
-            color: variables.$text-primary-blue;
-        }
+  }
+  &__input {
+    width: 100%;
+  }
+  &__phoneCode {
+    display: flex;
+    align-items: center;
+    column-gap: 7.5px;
+    img {
+      border-radius: 3px;
+      max-height: 21px;
+      width: 100%;
+      max-width: 21px;
     }
-    &__line {
-        background-color: variables.$input-background;
-        min-height: 1px;
+  }
+  &__error {
+    border-color: $input-stroke-error;
+    &:hover {
+      border-color: $input-stroke-error;
     }
-    &__countryName {
-        display: flex;
-        column-gap: 10px;
-        align-items: center;
-        img {
-            border-radius: 3px;
-            width: 100%;
-            max-width: 21px;
-        }
-    }
-    &__countryCode {
+  }
 
+  &__dropdown {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    padding: 10px 6px;
+    max-height: 290px;
+    background-color: $background-main;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 4;
+    @media (min-width: 1365.98px) {
+      position: absolute;
+      z-index: 3;
+      top: 100%;
+      transform: translateY(10px);
     }
-    &__modal {
-        @media(min-width: 1365.98px)  {
-            position: absolute;
-            padding: 15px 25px;
-            background-color: variables.$background-main;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
-            border-radius: 15px;
-            overflow-y: auto;
-            width: 100%;
-            z-index: 4;
-            max-height: 370px;
-            top: 100%;
-            transform: translateY(15px);
-        }
+    @media (max-width: 1365.98px) {
+      margin-top: 10px;
+    }
+  }
 
-        @media (max-width: 1365.98px) {
-            display:flex;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            padding: 0 15px;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 3;
-            background-color: rgba(0, 0, 0, 0.25);
-        }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 6px 9px 7.5px;
+    font-weight: 400;
+    font-size: rem(14);
+    line-height: 1.29;
+    color: $text-primary-dark-blue;
+    cursor: pointer;
+    &_active {
+      color: $text-primary-blue;
     }
-    &__title {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 19px;
-        padding-bottom: 2px;
-        @media (max-width: 1365.98px) {
-            padding: 0 10px 2px;
-        }
+    &:hover {
+      background-color: $input-background;
+      border-radius: 7px;
     }
+    &:active {
+      color: $text-primary-blue;
+    }
+  }
+
+  &__line {
+    background-color: $input-background;
+    min-height: 1px;
+  }
+
+  &__countryName {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    img {
+      border-radius: 3px;
+      width: 100%;
+      max-width: 21px;
+    }
+  }
+
+  &__countryCode {
+
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: $text-primary-dark-blue;
+    padding: 6px 6px 8px;
+  }
 }
 
 .error {
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 0.75rem;
-    line-height: 1.333;
-    color: variables.$text-primary-error;
-    @media (min-width: 1365.98px) {
-        align-items: flex-start;
-        transform: translateY(6px);
-        top: 100%;
-        position: absolute;
-    }
-    @media (max-width: 1365.98px) {
-        margin-top: 4px;
-    }
-    svg {
-        flex: 0 0 14px;
-        margin-right: 5px;
-        height: 14px;
-    }
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.333;
+  color: $text-primary-error;
+  @media (min-width: 1365.98px) {
+    align-items: flex-start;
+    transform: translateY(6px);
+    top: 100%;
+    position: absolute;
+  }
+  @media (max-width: 1365.98px) {
+    margin-top: 4px;
+  }
+  svg {
+    flex: 0 0 14px;
+    margin-right: 5px;
+    height: 14px;
+  }
 }

@@ -1,4 +1,5 @@
-@use 'src/static/scss/variables';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
 
 .select {
   font-family: "Red Hat Display";
@@ -19,26 +20,26 @@
     position: relative;
     height: 48px;
     border-radius: 15px;
-    background-color: variables.$input-background;
+    background-color: $input-background;
     padding: 0.6875rem 0.875rem;
     border: 1px solid transparent;
     font-size: 1.125rem;
     line-height: 1.333;
     width: 100%;
     font-weight: 400;
-    caret-color: variables.$text-primary-blue;
-    color: variables.$text-primary-dark-blue;
+    caret-color: $text-primary-blue;
+    color: $text-primary-dark-blue;
     cursor: pointer;
 
     &:hover, &:focus {
-      border-color: variables.$input-stroke-active;
+      border-color: $input-stroke-active;
     }
 
     &_error {
-      color: variables.$text-primary-error;
-      border-color: variables.$input-stroke-error;
+      color: $text-primary-error;
+      border-color: $input-stroke-error;
       &:hover, &:focus {
-        border-color: variables.$input-stroke-error;
+        border-color: $input-stroke-error;
       }
     }
 
@@ -46,7 +47,7 @@
   &__placeholder {
     font-size: 1.125rem;
     line-height: 1.333;
-    color: variables.$text-primary-secondary-gray;
+    color: $text-primary-secondary-gray;
     &_adaptive {
       @media(max-width: 1365.98px) {
         font-size: 1rem;
@@ -54,7 +55,7 @@
       }
     }
     &_error {
-      color: variables.$text-primary-error;
+      color: $text-primary-error;
     }
   }
 
@@ -62,7 +63,7 @@
     position: absolute;
     font-size: 0;
     top: 50%;
-    right: 16px;
+    right: 14px;
     transform: translateY(-50%) rotate(0);
     transition: transform 0.3s ease 0s;
   }
@@ -71,10 +72,14 @@
     transform: translateY(-50%) rotate(180deg);
   }
   &__dropdown {
-    max-height: 370px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    max-height: 290px;
     transition: all 0.3s ease 0s;
-    padding: 10px;
-    background-color: variables.$background-main;
+    padding: 10px 6px;
+    color: $text-primary-dark-blue;
+    background-color: $background-main;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     overflow-y: auto;
@@ -103,17 +108,26 @@
     align-items: center;
     justify-content: space-between;
     column-gap: 10px;
-    padding: 10px 6px;
+    padding: 9px 7px 9px 6px;
     cursor: pointer;
     font-weight: 400;
-    font-size: 0.875rem;
-    line-height: 1.357;
+    font-size: rem(14);
+    line-height: 1.29;
+    svg {
+      display: none
+    }
+    &_active {
+      color: $text-primary-blue;
+      svg {
+        display: inline;
+      }
+    }
     &:hover {
-      background-color: variables.$input-background;
+      background-color: $input-background;
       border-radius: 7px;
     }
     &:active {
-      color: variables.$text-primary-blue;
+      color: $text-primary-blue;
     }
   }
 }
@@ -125,7 +139,7 @@
   font-size: 0.75rem;
   align-items: center;
   line-height: 1.333;
-  color: variables.$text-primary-error;
+  color: $text-primary-error;
   @media (min-width: 1365.98px) {
     top: 100%;
     position: absolute;
@@ -149,7 +163,7 @@
   font-size: 0.75rem;
   align-items: flex-start;
   line-height: 1.333;
-  color: variables.$text-primary-error;
+  color: $text-primary-error;
   top: 100%;
   transform: translateY(6px);
   svg {
