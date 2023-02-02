@@ -4,16 +4,18 @@ import { NavLink } from 'react-router-dom';
 import { linkIsClicked } from '../../redux/actions';
 import styles from './Logout.module.scss';
 import { selectIsDirtyFormPD } from '../../pages/PersonalDetails/selectors';
+import { selectIsDirtyFormCv } from '../../pages/CVsteps/selectors';
 
 const Logout = (props) => {
   const dispatch = useDispatch();
   const isDirtyFormPD = useSelector(selectIsDirtyFormPD);
+  const isDirtyFormCv = useSelector(selectIsDirtyFormCv);
   const handleClick = (e) => {
     if (props.menuIsOpen) {
       e.preventDefault();
       props.closeMenu();
     }
-    if (isDirtyFormPD) {
+    if (isDirtyFormPD || isDirtyFormCv) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
     } else {

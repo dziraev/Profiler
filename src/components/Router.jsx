@@ -14,9 +14,9 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<PrivateRoute />}>
-          <Route path='/' element={<Navigate to='/main/personal-details' />} />
+          <Route path='/' element={<Navigate to='/main/my-cv' />} />
           <Route path='/main' element={<PersonalCabinetPage />}>
-            <Route path='/main' element={<Navigate to='/main/personal-details' replace />} />
+            <Route path='/main' element={<Navigate to='/my-cv' replace />} />
             <Route path='personal-details' element={<PersonalDetails />} />
             <Route path='my-cv' element={<MyCV />} />
           </Route>

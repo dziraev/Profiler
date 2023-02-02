@@ -4,6 +4,7 @@ import {
   ALL_CV_LOADING_ON,
   AUTH_IN,
   AUTH_OUT,
+  CHANGE_DIRTY_STATUS_FORM_CV,
   CHANGE_DIRTY_STATUS_FORM_PD,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
@@ -22,6 +23,7 @@ import {
   PHOTO_UPLOAD_CABINET,
   PHOTO_UPLOAD_CV,
   POSITIONS_LOAD,
+  RESET_DIRTY_STATUS_FORM_CV,
   RESET_DIRTY_STATUS_FORM_PD,
   UPDATE_PERSONALINFORMATION_FROM_PD,
   UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
@@ -258,5 +260,18 @@ export function getPersonalInformation(uuid) {
     } catch (e) {
       console.log(e);
     }
+  };
+}
+
+export function changeDirtyStatusFormCv(dirty) {
+  return {
+    type: CHANGE_DIRTY_STATUS_FORM_CV,
+    dirty
+  };
+}
+
+export function resetDirtyStatusFormCv() {
+  return {
+    type: RESET_DIRTY_STATUS_FORM_CV
   };
 }

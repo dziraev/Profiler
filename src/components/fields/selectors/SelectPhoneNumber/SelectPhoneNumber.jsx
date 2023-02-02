@@ -5,11 +5,15 @@ import { selectPhoneCodes } from '@components/fields';
 import {
   findCountryFlagByPhoneCodeId,
   findPhoneCodeByCountryId
-} from '../../../../utils/findPhoneCodeByCountryId';
+} from '@utils/findPhoneCodeByCountryId';
 import { phoneCodesAndIdUpdate } from '../../../../redux/actions';
 import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
+import classNames from 'classnames/bind';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesSelect from '../Select.module.scss';
+
+const cx = classNames.bind(styles);
+const stylesSelectCx = classNames.bind(stylesSelect);
 
 export const SelectPhoneNumber = ({
   label,
@@ -78,7 +82,7 @@ export const SelectPhoneNumber = ({
     >
       <div className={styles.selectPhone__container}>
         <div
-          className={`${styles.selectPhone__select} ${meta.error ? styles.selectPhone__error : ''}`}
+          className={cx(styles.selectPhone__select, { selectPhone__error: meta.error })}
           style={{ pointerEvents: disabled ? 'none' : 'auto' }}
           onClick={() => setIsVisible((prev) => !prev)}
         >
@@ -91,24 +95,28 @@ export const SelectPhoneNumber = ({
             )}
             <span>+{value}</span>
           </div>
-          <div className={isVisible ? stylesSelect.select__arrowOpen : stylesSelect.select__arrow}>
+          <div
+            className={stylesSelectCx({ select__arrowOpen: isVisible, select__arrow: !isVisible })}
+          >
             <svg
-              width='10'
-              height='5'
-              viewBox='0 0 10 5'
+              width='20'
+              height='9'
+              viewBox='0 0 20 9'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
             >
               <path
-                d='M0.197628 0.17321C0.329381 0.0577367 0.485375 0 0.665612 0C0.845498 0 1.00132 0.0577367 1.13307 0.17321L4.99341 3.55658L8.86693 0.161663C8.9899 0.0538876 9.14361 0 9.32806 0C9.51252 0 9.67062 0.0577367 9.80237 0.17321C9.93412 0.288684 10 0.425404 10 0.583372C10 0.741031 9.93412 0.877598 9.80237 0.993072L5.36232 4.87298C5.30962 4.91917 5.25253 4.95196 5.19104 4.97136C5.12956 4.99045 5.06368 5 4.99341 5C4.92314 5 4.85727 4.99045 4.79578 4.97136C4.7343 4.95196 4.67721 4.91917 4.62451 4.87298L0.184453 0.981524C0.0614843 0.873749 0 0.741031 0 0.583372C0 0.425404 0.065876 0.288684 0.197628 0.17321Z'
-                fill='#4C84FF'
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M0.433594 0.508411C0.705097 0.195587 1.17879 0.16209 1.49161 0.433594L8.9007 6.86403C9.49367 7.37867 10.5063 7.37867 11.0993 6.86403L18.5084 0.433594C18.8212 0.16209 19.2949 0.195587 19.5664 0.508411C19.8379 0.821235 19.8044 1.29493 19.4916 1.56643L12.0825 7.99686C10.9255 9.00106 9.07453 9.00106 7.9175 7.99686L0.508411 1.56643C0.195587 1.29493 0.16209 0.821235 0.433594 0.508411Z'
+                fill='#407BFF'
               />
             </svg>
           </div>
         </div>
         <div className={styles.selectPhone__input}>{props.children}</div>
       </div>
-      {meta.error && (
+      {!isVisible && meta.error && (
         <div className={styles.error}>
           <svg
             width='24'
@@ -126,28 +134,28 @@ export const SelectPhoneNumber = ({
         </div>
       )}
       {isVisible && phoneCodes.length >= 1 && (
-        <div className={styles.selectPhone__modal}>
-          <div className={styles.selectPhone__dropdown}>
-            <div className={styles.selectPhone__title}>Country</div>
-            {phoneCodes.map((phoneCode, index) => (
-              <React.Fragment key={phoneCode.id}>
-                <div
-                  className={styles.selectPhone__item}
-                  onClick={() => onClickListPhoneCodes(phoneCode)}
-                >
-                  <div className={styles.selectPhone__countryName}>
-                    <img
-                      src={require(`../../../../static/images/countryFlags/${phoneCode.country.countryName}.svg`)}
-                      alt='flag'
-                    />
-                    {phoneCode.country.countryName}
-                  </div>
-                  <div className={styles.selectPhone__countryCode}>+{phoneCode.code}</div>
+        <div className={styles.selectPhone__dropdown}>
+          <div className={styles.selectPhone__title}>Country</div>
+          {phoneCodes.map((phoneCode, index) => (
+            <React.Fragment key={phoneCode.id}>
+              <div
+                className={cx(styles.selectPhone__item, {
+                  selectPhone__item_active: phoneCode.code === value
+                })}
+                onClick={() => onClickListPhoneCodes(phoneCode)}
+              >
+                <div className={styles.selectPhone__countryName}>
+                  <img
+                    src={require(`../../../../static/images/countryFlags/${phoneCode.country.countryName}.svg`)}
+                    alt='flag'
+                  />
+                  {phoneCode.country.countryName}
                 </div>
-                {index === 4 && <div className={styles.selectPhone__line}></div>}
-              </React.Fragment>
-            ))}
-          </div>
+                <div className={styles.selectPhone__countryCode}>+{phoneCode.code}</div>
+              </div>
+              {index === 4 && <div className={styles.selectPhone__line}></div>}
+            </React.Fragment>
+          ))}
         </div>
       )}
     </div>

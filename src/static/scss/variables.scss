@@ -4,6 +4,7 @@ $background-main: #fff;
 $background-sidebar: #f6f9ff;
 $background-link: #f0f5ff;
 $background-constructor-cv: #f9fafe;
+$background-draft-cv: #f3f3f3;
 
 /*=======text========*/
 $text-primary-blue: #407bff;
@@ -15,8 +16,8 @@ $text-primary-error: #d40000;
 
 /*=======button========*/
 $button-default: #407bff;
-$button-hover: #296bff;
-$button-active: #004fff;
+$button-hover: #004fff;
+$button-active: #25225d;
 $button-disabled: #94b5ff;
 $cancel-button-background: #e6edff;
 
@@ -29,7 +30,6 @@ $button-circle-grey-bcg: #f3f3f3;
 $button-blue-slider: #407bff;
 
 
-
 /*=======input========*/
 $input-background: #f3f3f3;
 $input-stroke-active: #407bff;
@@ -37,6 +37,9 @@ $input-stroke-error: #d40000;
 
 /*=======scrollbar========*/
 $scrollbar: #c1c1c1;
+
+/*=======scrollbar========*/
+$popup-background-main: #fff;
 
 
 

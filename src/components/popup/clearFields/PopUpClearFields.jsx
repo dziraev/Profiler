@@ -1,24 +1,27 @@
 import React from 'react';
 import { Button, CancelButton } from '@components/buttons';
+import { useDisableBodyScroll } from '@hooks/useDisableBodyScroll';
+import classnames from 'classnames/bind';
 import styles from '../PopUp.module.scss';
 
-export const PopUpClearFields = ({ clearFields, dontClearFields }) => {
+const cx = classnames.bind(styles);
+
+export const PopUpClearFields = ({ adaptive = true, clearFields, dontClearFields }) => {
+  useDisableBodyScroll();
   return (
-    <div className={styles.modal}>
+    <div className={cx(styles.modal, { modal_adaptive: adaptive })}>
       <div className={styles.modal__bcg}>
         <div className={styles.modal__content}>
-          <div className={styles.modal__content__titles}>
-            <p className={styles.modal__content__title}>
-              Do you want to clear all fields on this page?
-            </p>
+          <div className={styles.modal__header}>
+            <p className={styles.modal__title}>Do you want to clear all fields on this page?</p>
           </div>
-          <div className={styles.modal__content__btns}>
-            <div className={styles.modal__content__btns__again}>
+          <div className={styles.modal__buttons}>
+            <div className={styles.modal__button}>
               <Button type='button' onClick={clearFields}>
                 Clear
               </Button>
             </div>
-            <div className={styles.modal__content__btns__cancel}>
+            <div className={styles.modal__button}>
               <CancelButton type='button' onClick={dontClearFields}>
                 Don't clear
               </CancelButton>
