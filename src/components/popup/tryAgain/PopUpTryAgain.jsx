@@ -1,26 +1,39 @@
 import React from 'react';
-import styles from '../PopUp.module.scss';
 import { Button } from '@components/buttons';
 import { CancelButton } from '@components/buttons';
+import { useDisableBodyScroll } from '@hooks/useDisableBodyScroll';
+import classnames from 'classnames/bind';
+import styles from '../PopUp.module.scss';
 
-export const PopUpTryAgain = ({ children, type, isSubmitting, onClickHandler, ...props }) => {
+const cx = classnames.bind(styles);
+
+export const PopUpTryAgain = ({
+  children,
+  adaptive = true,
+  type,
+  isSubmitting,
+  onClickHandler,
+  ...props
+}) => {
+  useDisableBodyScroll();
   return (
-    <div className={styles.modal}>
+    <div className={cx(styles.modal, { modal_adaptive: adaptive })}>
       <div className={styles.modal__bcg}>
         <div className={styles.modal__content}>
-          <div className={styles.modal__content__titles}>
+          <div className={styles.modal__header}>
             {Array.isArray(children) ? (
               <>
-                <p className={styles.modal__content__title}>{children[0]}</p>
-                <p className={styles.modal__content__subtitle}>{children[1]}</p>
+                <div className={styles.modal__title}>{children[0]}</div>
+                <div className={styles.modal__subtitle}>{children[1]}</div>
               </>
             ) : (
-              <p className={styles.modal__content__title}>{children}</p>
+              <div className={styles.modal__title}>{children}</div>
             )}
           </div>
-          <div className={styles.modal__content__btns}>
-            <div className={styles.modal__content__btns__cancel}>
+          <div className={styles.modal__buttons}>
+            <div className={styles.modal__button}>
               <CancelButton
+                adaptive={adaptive}
                 {...(type
                   ? {
                       type,
@@ -31,8 +44,12 @@ export const PopUpTryAgain = ({ children, type, isSubmitting, onClickHandler, ..
                 Cancel
               </CancelButton>
             </div>
-            <div className={styles.modal__content__btns__again}>
-              <Button type='submit' {...(isSubmitting && { type: 'button', isLoading: true })}>
+            <div className={styles.modal__button}>
+              <Button
+                type='submit'
+                adaptive={adaptive}
+                {...(isSubmitting && { type: 'button', isLoading: true })}
+              >
                 Try again
               </Button>
             </div>

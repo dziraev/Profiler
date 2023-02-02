@@ -1,20 +1,23 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import cx from 'classnames';
 import { usePersonalInformation } from '@hooks/usePersonalInformation';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
 import Photo from '@components/photo/Photo';
 import { ClearButton } from '@components/buttons';
-import { PopUpClearFields, PopUpTryAgain } from '@popUps';
+import { PopUpClearFields, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@popUps';
 import { Button } from '@buttonsLarge';
 import { validatePersonalInformation } from '@validators/validatePersonalInformation';
 import { trimValues } from '@validators/validators';
-import $api from '../../../http/api';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
+import { changeDirtyStatusFormCv } from '../../../redux/actions';
+import $api from '../../../http/api';
 import styles from './PersonalInformation.module.scss';
 
 export const PersonalInformation = () => {
-  const personalInformation = usePersonalInformation();
+  const dispatch = useDispatch();
+  const { personalInformation, linkIsClicked } = usePersonalInformation();
   const [clearFields, setClearFields] = useState(false);
 
   return (
@@ -46,11 +49,23 @@ export const PersonalInformation = () => {
           }
         }}
       >
-        {(formik) => {
-          const { values, status, isSubmitting, setStatus, setFieldValue, setTouched, setValues } =
-            formik;
+        {({
+          values,
+          dirty,
+          isValid,
+          status,
+          isSubmitting,
+          setStatus,
+          setFieldValue,
+          setTouched,
+          setValues,
+          errors
+        }) => {
+          useEffect(() => {
+            dispatch(changeDirtyStatusFormCv(dirty));
+          }, [dirty]);
 
-          const notEmptyValues = useMemo(() => {
+          const oneIsNotEmptyValue = useMemo(() => {
             for (const field in values) {
               if (field === 'uuid' || field === 'imageUuid') {
                 continue;
@@ -61,10 +76,37 @@ export const PersonalInformation = () => {
             }
           }, [values]);
 
+          const allFieldsAreFilledIn = useMemo(
+            () =>
+              Object.keys(values)
+                .filter(
+                  (k) =>
+                    k !== 'uuid' &&
+                    k !== 'imageUuid' &&
+                    k !== 'isReadyToRelocate' &&
+                    k !== 'isReadyForRemoteWork'
+                )
+                .every((k) => values[k] !== ''),
+
+            [values]
+          );
+          console.log(values, errors);
+          const correctAndNotFully = useMemo(() => {
+            const values = Object.values(errors);
+            return values.length && values.every((value) => value === 'Required field');
+          }, [errors, values]);
+
           return (
             <Form className={styles.form}>
+              {dirty && isValid && linkIsClicked && !status?.errorResponse && (
+                <PopUpSave adaptive={false} isSubmitting={isSubmitting}>
+                  Do you want to save the changes in CV?
+                </PopUpSave>
+              )}
+
               {status?.errorResponse && (
                 <PopUpTryAgain
+                  adaptive={false}
                   isSubmitting={isSubmitting}
                   onClickHandler={() => setStatus({ errorResponse: false })}
                   type='button'
@@ -72,9 +114,32 @@ export const PersonalInformation = () => {
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
+              {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
+                <PopUpStayOrLeave adaptive={false}>
+                  <>The data is entered incorrectly</>
+                  <>If you leave this page, the data will not be saved.</>
+                </PopUpStayOrLeave>
+              )}
+              {dirty &&
+                !correctAndNotFully &&
+                !allFieldsAreFilledIn &&
+                !isValid &&
+                linkIsClicked && (
+                  <PopUpStayOrLeave adaptive={false}>
+                    <>The data is entered incorrectly and not fully</>
+                    <>If you leave this page, the data will not be saved.</>
+                  </PopUpStayOrLeave>
+                )}
+              {dirty && correctAndNotFully && linkIsClicked && (
+                <PopUpStayOrLeave adaptive={false}>
+                  <>The data is entered not fully</>
+                  <>If you leave this page, the data will not be saved.</>
+                </PopUpStayOrLeave>
+              )}
 
               {clearFields && (
                 <PopUpClearFields
+                  adaptive={false}
                   clearFields={() => {
                     setTouched({
                       name: false,
@@ -85,6 +150,8 @@ export const PersonalInformation = () => {
                     });
                     setValues(
                       {
+                        uuid: values.uuid,
+                        imageUuid: values.imageUuid,
                         name: '',
                         surname: '',
                         country: '',
@@ -102,7 +169,6 @@ export const PersonalInformation = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-
               <div className={styles.form__container}>
                 <div className={styles.form__inputBlock}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
@@ -110,7 +176,10 @@ export const PersonalInformation = () => {
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
-                    <ClearButton disabled={!notEmptyValues} onClick={() => setClearFields(true)}>
+                    <ClearButton
+                      disabled={!oneIsNotEmptyValue}
+                      onClick={() => setClearFields(true)}
+                    >
                       Clear fields
                     </ClearButton>
                   </div>
@@ -141,7 +210,7 @@ export const PersonalInformation = () => {
                     <SelectPositions
                       data-id='position'
                       name='position'
-                      // adaptive={false}
+                      adaptive={false}
                       label='Choose your position'
                       activeLabel='Choose your position'
                       setFieldValue={setFieldValue}

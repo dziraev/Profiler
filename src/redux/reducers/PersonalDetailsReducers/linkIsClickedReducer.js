@@ -1,4 +1,4 @@
-import { LINK_IS_CLICKED, LINK_IS_NOT_CLICKED } from '../../types';
+import { LINK_IS_CLICKED, LINK_IS_NOT_CLICKED } from '@types';
 
 const initialState = {
   linkIsClicked: false

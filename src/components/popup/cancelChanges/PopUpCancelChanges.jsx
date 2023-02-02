@@ -1,21 +1,26 @@
 import React from 'react';
+import { CancelButton } from '@components/buttons';
+import { Button } from '@components/buttons';
+import { useDisableBodyScroll } from '@hooks/useDisableBodyScroll';
+import classnames from 'classnames/bind';
 import styles from '../PopUp.module.scss';
-import { CancelButton } from '../../buttons/CancelButton/CancelButton';
-import { Button } from '../../buttons/Button/Button';
 
-export const PopUpCancelChanges = ({ children, setCancelIsClicked, ...props }) => {
+const cx = classnames.bind(styles);
+
+export const PopUpCancelChanges = ({ children, setCancelIsClicked, adaptive = true, ...props }) => {
+  useDisableBodyScroll();
   return (
-    <div className={styles.modal}>
+    <div className={cx(styles.modal, { modal_adaptive: adaptive })}>
       <div className={styles.modal__bcg}>
         <div className={styles.modal__content}>
-          <div className={styles.modal__content__titles}>
-            <p className={styles.modal__content__title}>{children}</p>
+          <div className={styles.modal__header}>
+            <p className={styles.modal__title}>{children}</p>
           </div>
-          <div className={styles.modal__content__btns}>
-            <div className={styles.modal__content__btns__again}>
+          <div className={styles.modal__buttons}>
+            <div className={styles.modal__button}>
               <Button type='reset'>Yes</Button>
             </div>
-            <div className={styles.modal__content__btns__cancel}>
+            <div className={styles.modal__button}>
               <CancelButton type='button' onClick={(e) => setCancelIsClicked(false)}>
                 No
               </CancelButton>

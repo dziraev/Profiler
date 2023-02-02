@@ -1,14 +1,17 @@
 import React from 'react';
-import cx from 'classnames';
+import loaderCx from 'classnames';
+import classnames from 'classnames/bind';
 import stylesLoader from '../Loader.module.scss';
 import styles from './CancelButton.module.scss';
 
-export const CancelButton = ({ children, isLoading = false, ...props }) => {
+const cx = classnames.bind(styles);
+
+export const CancelButton = ({ children, adaptive = true, isLoading = false, ...props }) => {
   return (
-    <button {...props} className={styles.button}>
+    <button {...props} className={cx(styles.button, { button_adaptive: adaptive })}>
       {!isLoading && children}
       {isLoading && (
-        <span className={cx(stylesLoader.loader, stylesLoader.loader_borderColor)}></span>
+        <span className={loaderCx(stylesLoader.loader, stylesLoader.loader_borderColor)}></span>
       )}
     </button>
   );

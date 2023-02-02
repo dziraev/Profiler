@@ -130,7 +130,7 @@ const PersonalDetails = (props) => {
         validate={validatePersonalDetails}
       >
         {(formik) => {
-          const { dirty, isSubmitting, isValid, setFieldValue, status } = formik;
+          const { dirty, errors, isSubmitting, isValid, setFieldValue, status } = formik;
 
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
@@ -138,7 +138,12 @@ const PersonalDetails = (props) => {
 
           return (
             <Form className={styles.form}>
-              {dirty && !isValid && linkIsClicked && <PopUpStayOrLeave />}
+              {dirty && !isValid && linkIsClicked && (
+                <PopUpStayOrLeave>
+                  <>The data is entered incorrectly</>
+                  <>If you leave this page, the data will not be saved.</>
+                </PopUpStayOrLeave>
+              )}
               {dirty && isValid && linkIsClicked && !status?.errorResponse && (
                 <PopUpSave isSubmitting={isSubmitting}>
                   Do you want to save the changes in Personal details?

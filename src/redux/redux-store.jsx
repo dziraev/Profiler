@@ -8,7 +8,7 @@ import { positionsReducer } from '@reducers';
 import { editModeReducer } from '@reducers/PersonalDetailsReducers/editModeReducer';
 import { photoCabinetReducer } from '@reducers/PersonalDetailsReducers/photoCabinetReducer';
 import { linkIsClickedReducer } from '@reducers/PersonalDetailsReducers/linkIsClickedReducer';
-import { personalInformationReducer } from '@reducers/CVReducers/personalInformationReducer';
+import { constructorCvReducer } from '@reducers/CVReducers/constructorCvReducer';
 import { photoModalReducer } from '@reducers/CVReducers/photoModalReducer';
 import { invalidUploadReducer } from '@reducers/CVReducers/invalidUploadReducer';
 import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
@@ -21,7 +21,7 @@ const appReducer = combineReducers({
   countriesReducer,
   phoneCodesReducer,
   personalDetailsReducer,
-  personalInformationReducer,
+  constructorCvReducer,
   editModeReducer,
   positionsReducer,
   linkIsClickedReducer,
@@ -30,7 +30,7 @@ const appReducer = combineReducers({
   adviceReducer,
   photoCabinetReducer,
   photoCVReducer,
-  cvReducer: cvsReducer,
+  cvsReducer,
   specificCvReducer
 });
 
