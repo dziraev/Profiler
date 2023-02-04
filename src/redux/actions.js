@@ -25,10 +25,10 @@ import {
   POSITIONS_LOAD,
   RESET_DIRTY_STATUS_FORM_CV,
   RESET_DIRTY_STATUS_FORM_PD,
-  UPDATE_PERSONALINFORMATION_FROM_PD,
+  UPDATE_PERSONALINFORMATION,
   UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
   UPLOADED
-} from './types';
+} from '@types';
 import $api from '../http/api';
 
 export function authIn() {
@@ -61,8 +61,10 @@ export function authInAndPersonalDetailsLoad() {
       dispatch(loaderOn());
       const { data } = await $api.get('profile');
       dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
+      const response = await $api.get('images/' + data.profileImageUuid);
+      console.log(response);
       dispatch(
-        updatePersonaInformationFromPD({
+        updatePersonaInformation({
           name: data.name,
           surname: data.surname,
           country: data.country,
@@ -197,9 +199,9 @@ export function uploaded() {
   };
 }
 
-export function updatePersonaInformationFromPD(data) {
+export function updatePersonaInformation(data) {
   return {
-    type: UPDATE_PERSONALINFORMATION_FROM_PD,
+    type: UPDATE_PERSONALINFORMATION,
     data
   };
 }
@@ -249,7 +251,7 @@ export function allCvLoad() {
   };
 }
 
-export function getPersonalInformation(uuid) {
+export function getPersonalInformationInSpecificCv(uuid) {
   return async (dispatch) => {
     try {
       const { data } = await $api.get('cvs/' + uuid);

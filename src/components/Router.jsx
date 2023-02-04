@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { PersonalInformation } from '../pages/CVsteps/PersonalInformation/PersonalInformation';
+import { Contacts } from '../pages/CVsteps/Contacts/Contacts';
 import { PrivateRoute } from '../hoc/PrivateRoute';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import PersonalCabinetPage from '../pages/PersonalCabinetPage/PersonalCabinetPage';
@@ -24,6 +25,8 @@ export const Router = () => {
             <Route path='/cv' element={<Navigate to='/main/my-cv' replace />} />
             <Route path='personal-info/:uuid' element={<PersonalInformation />} />
             <Route path='personal-info' element={<PersonalInformation />} />
+            <Route path='contacts/:uuid' element={<Contacts />} />
+            <Route path='contacts' element={<Contacts />} />
           </Route>
           <Route path='/404' element={<NotFoundPage />} />
         </Route>

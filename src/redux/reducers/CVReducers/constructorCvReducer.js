@@ -2,7 +2,7 @@ import {
   CHANGE_DIRTY_STATUS_FORM_CV,
   PHOTO_UPDATE_CV,
   RESET_DIRTY_STATUS_FORM_CV,
-  UPDATE_PERSONALINFORMATION_FROM_PD
+  UPDATE_PERSONALINFORMATION
 } from '@types';
 import { nullToEmptyString } from '@utils/nullToEmptyString';
 
@@ -11,7 +11,7 @@ export const initialState = {
   personalInformation: {
     uuid: null,
     imageUuid: null,
-    name: 'test',
+    name: '',
     surname: '',
     country: '',
     countryId: '',
@@ -20,12 +20,21 @@ export const initialState = {
     city: '',
     isReadyToRelocate: false,
     isReadyForRemoteWork: false
+  },
+  contacts: {
+    phoneCode: '',
+    phoneCodeId: '',
+    phoneNumber: '',
+    email: '',
+    skype: '',
+    linkedin: '',
+    portfolio: ''
   }
 };
 
 export const constructorCvReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_PERSONALINFORMATION_FROM_PD:
+    case UPDATE_PERSONALINFORMATION:
       const values = nullToEmptyString(action.data);
       return {
         ...state,
