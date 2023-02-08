@@ -18,7 +18,6 @@ import {
   updatePersonaInformation
 } from '../../../redux/actions';
 import cx from 'classnames';
-import Photo from '@components/photo/Photo';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
 
