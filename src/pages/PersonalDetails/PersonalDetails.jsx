@@ -5,8 +5,9 @@ import { trimValues } from '@validators/validators';
 import { useDispatch } from 'react-redux';
 import {
   changeDirtyStatusFormPD,
+  linkIsNotClicked,
   personalDetailsUpdate,
-  updatePersonaInformationFromPD
+  updatePersonaInformation
 } from '../../redux/actions';
 import { PopUpCancelChanges, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@components/popup';
 import {
@@ -18,7 +19,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Button, CancelButton } from '@components/buttons';
 import { Notification } from '@components/tooltip/Notification';
-import { getChangedValues } from '../../utils/getChangedValues';
+import { getChangedValues } from '@utils/getChangedValues';
+import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { usePersonalDetails } from '@hooks/usePersonalDetails';
 import $api from '../../http/api';
 import styles from './PersonalDetails.module.scss';
@@ -29,9 +31,9 @@ const PersonalDetails = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [cancelIsClicked, setCancelIsClicked] = useState(false);
   const [countryId, setCountryId] = useState(null);
-  const { personalDetails, linkIsClicked } = usePersonalDetails();
-  const hrefLinkIsClicked = useRef(null);
-  hrefLinkIsClicked.current = linkIsClicked;
+  const personalDetails = usePersonalDetails();
+  const hrefLinkIsClicked = useLinkIsClicked();
+  const { current: linkIsClicked } = hrefLinkIsClicked;
 
   return (
     <section className={styles.wrapper}>
@@ -101,7 +103,7 @@ const PersonalDetails = (props) => {
               dispatch(personalDetailsUpdate(values));
             }
             dispatch(
-              updatePersonaInformationFromPD({
+              updatePersonaInformation({
                 name: values.name,
                 surname: values.surname,
                 country: values.country,
@@ -130,7 +132,7 @@ const PersonalDetails = (props) => {
         validate={validatePersonalDetails}
       >
         {(formik) => {
-          const { dirty, errors, isSubmitting, isValid, setFieldValue, status } = formik;
+          const { values, dirty, isSubmitting, isValid, setFieldValue, status } = formik;
 
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
@@ -139,7 +141,7 @@ const PersonalDetails = (props) => {
           return (
             <Form className={styles.form}>
               {dirty && !isValid && linkIsClicked && (
-                <PopUpStayOrLeave>
+                <PopUpStayOrLeave onClickStay={() => dispatch(linkIsNotClicked())}>
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -205,7 +207,6 @@ const PersonalDetails = (props) => {
                     disabled={!isEdit}
                     countryId={countryId}
                     setFieldValue={setFieldValue}
-                    setCountryId={setCountryId}
                   >
                     <InputPersonalDetails
                       name='cellPhone'

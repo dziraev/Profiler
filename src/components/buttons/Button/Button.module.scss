@@ -34,5 +34,6 @@
     }
     &:disabled {
         background-color: $button-disabled;
+        color: $text-dsb-button;
     }
 }

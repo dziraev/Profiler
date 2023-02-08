@@ -1,5 +1,5 @@
-@use '../../../static/scss/variables';
-@use '../../../static/scss/mixins';
+@use 'src/static/scss/variables';
+@use 'src/static/scss/mixins';
 
 
 .wrapper {
@@ -34,11 +34,16 @@
     display: grid;
     row-gap: 30px;
     grid-template-columns: 156px minmax(420px, 523px) minmax(370px, 436px);
-    grid-template-areas:
-    "photo photo ."
-    "fields fields advice"
-    ". checkboxes ."  ;
-
+    &_firstPage {
+      grid-template-areas:
+      "photo photo ."
+      "fields fields advice"
+      ". checkboxes ."  ;
+    }
+    &_secondPage {
+      grid-template-areas:
+      "fields fields advice"
+    }
   }
 
   &__clearFields {
@@ -109,5 +114,4 @@
       margin-left: 50px;
     }
   }
-
 }

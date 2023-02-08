@@ -51,6 +51,11 @@
   p {
     padding-top: 8px;
   }
+
+  a {
+    color: $text-primary-blue;
+    border-bottom: 2px solid $text-primary-blue;
+  }
 }
 
 strong{
