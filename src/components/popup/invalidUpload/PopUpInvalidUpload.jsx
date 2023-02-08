@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
-  invalidUpload,
-  uploaded,
-  photoUpdate,
+  invalidUploadPhoto,
+  uploadedPhoto,
+  photoUpdateCabinet,
   photoUploadCabinet,
   photoUpdateCV,
   photoUploadCV,
@@ -24,7 +24,7 @@ const PopUpInvalidUpload = (props) => {
   const imageCVUuid = personalInformation.imageUuid;
   const dispatch = useDispatch();
   const cancel = (e) => {
-    dispatch(uploaded());
+    dispatch(uploadedPhoto());
   }
   const getFile = (e) => {
     const file = e.target.files[0];
@@ -32,7 +32,7 @@ const PopUpInvalidUpload = (props) => {
         file.type !== 'image/jpeg' &&
         file.type !== 'image/jpg' &&
         file.type !== 'image/png') {
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       return;
     };
     props.page ? sendFileCabinet(file) : sendFileCV(file);
@@ -42,7 +42,7 @@ const PopUpInvalidUpload = (props) => {
       const response = await photoapi.post('/images', {
         image: file
       })
-      dispatch(photoUpdate(response.data.uuid));
+      dispatch(photoUpdateCabinet(response.data.uuid));
       const values = {
         name: personalDetails.name || null,
         surname: personalDetails.surname || null,
@@ -65,9 +65,9 @@ const PopUpInvalidUpload = (props) => {
         console.error(e);
       }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
-      dispatch(uploaded());
+      dispatch(uploadedPhoto());
     } catch (e) {
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       console.error(e);
     }
   };
@@ -78,9 +78,9 @@ const PopUpInvalidUpload = (props) => {
       })
       dispatch(photoUpdateCV(response.data.uuid));
       dispatch(photoUploadCV(URL.createObjectURL(file)));
-      dispatch(uploaded());
+      dispatch(uploadedPhoto());
     } catch (e) {
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       console.error(e);
     }
   };
@@ -90,7 +90,7 @@ const PopUpInvalidUpload = (props) => {
         file.type !== 'image/jpeg' &&
         file.type !== 'image/jpg' &&
         file.type !== 'image/png') {
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       return;
     };
     props.page ? sendChangedFileCabinet(file) : sendChangedFileCV(file);
@@ -102,9 +102,9 @@ const PopUpInvalidUpload = (props) => {
       })
       dispatch(photoUpdate(response.data.uuid));
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
-      dispatch(uploaded());
+      dispatch(uploadedPhoto());
     } catch (e) {
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       console.error(e);
     }
   };
@@ -115,9 +115,9 @@ const PopUpInvalidUpload = (props) => {
       })
       dispatch(photoUpdateCV(response.data.uuid));
       dispatch(photoUploadCV(URL.createObjectURL(file)));
-      dispatch(uploaded());
+      dispatch(uploadedPhoto());
     } catch (e) {
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       console.error(e);
     }
   };

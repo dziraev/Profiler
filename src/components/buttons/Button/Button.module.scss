@@ -12,7 +12,7 @@
     width: 100%;
     font-weight: 600;
     background-color: $button-default;
-    border-radius: 15px;
+    border-radius: 12px;
     text-align: center;
     color: $text-primary-white;
     cursor: pointer;
@@ -23,6 +23,7 @@
             padding: rem(12) rem(24);
             font-size: rem(18);
             line-height: 1.334;
+            border-radius: 10px;
         }
     }
     &:hover, &:focus {

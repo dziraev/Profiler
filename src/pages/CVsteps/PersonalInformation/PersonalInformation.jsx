@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import cx from 'classnames';
 import { usePersonalInformation } from '@hooks/usePersonalInformation';
 import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
-import Photo from '@components/photo/Photo';
+import PhotoCV from '@components/photo/PhotoCV/PhotoCV';
 import { ClearButton } from '@components/buttons';
 import { PopUpClearFields, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@popUps';
 import { Button } from '@buttonsLarge';
@@ -172,7 +172,7 @@ export const PersonalInformation = () => {
               <div className={styles.form__container}>
                 <div className={styles.form__inputBlock}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
-                  <Photo />
+                  <PhotoCV />
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>

@@ -13,7 +13,7 @@
   border: 1px solid $button-default;
   font-weight: 600;
   background-color: $background-main;
-  border-radius: 15px;
+  border-radius: 12px;
   text-align: center;
   color: $text-primary-blue;
   cursor: pointer;
@@ -25,6 +25,7 @@
       padding: rem(11) rem(23);
       font-size: rem(18);
       line-height: 1.334;
+      border-radius: 10px;
     }
   }
   &:hover, &:focus {

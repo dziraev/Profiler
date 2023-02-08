@@ -6,13 +6,15 @@ import PersonalCabinetHeader from '../../components/headers/PersonalCabinetHeade
 import Logout from '../../components/links/Logout';
 import PhotoMobile from '../../components/photo/photoMobile/PhotoMobile';
 import PopUpUploadPhotoCabinet from '../../components/popup/uploadPhoto/uploadPhotoCabinet/PopUpUploadPhotoCabinet';
-import PopUpInvalidUpload from '../../components/popup/invalidUpload/PopUpInvalidUpload';
+import PopUpInvalidUploadCabinet from '../../components/popup/invalidUpload/invalidUploadCabinet/PopUpInvalidUploadCabinet';
+import { PopUpTryAgainPhotoCabinet } from '../../components/popup/tryAgainPhoto/tryAgainPhotoCabinet/PopUpTryAgainPhotoCabinet';
 import styles from './PersonalCabinetPage.module.scss';
 
 const PersonalCabinetPage = (props) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const openModal = useSelector((state) => state.photoModalReducer.openModal);
   const invalidUpload = useSelector((state) => state.invalidUploadReducer.invalidUpload);
+  const failedToSave = useSelector((state) => state.failedToSaveReducer.failedToSave);
   function openAndCloseMenu(e) {
     setMenuIsOpen(!menuIsOpen);
   }
@@ -65,7 +67,12 @@ const PersonalCabinetPage = (props) => {
         </div>
       </div>
       {openModal && <PopUpUploadPhotoCabinet />}
-      {invalidUpload && <PopUpInvalidUpload page='cabinet' />}
+      {invalidUpload && <PopUpInvalidUploadCabinet />}
+      {failedToSave && 
+        <PopUpTryAgainPhotoCabinet>
+          Failed to save data. Please try again
+        </PopUpTryAgainPhotoCabinet>
+      }
     </div>
   );
 };

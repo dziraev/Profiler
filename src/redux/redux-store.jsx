@@ -15,6 +15,7 @@ import { adviceReducer } from '@reducers/CVReducers/adviceReducer';
 import { photoCVReducer } from '@reducers/CVReducers/photoCVReducer';
 import { cvsReducer } from '@reducers/CVReducers/cvsReducer';
 import { specificCvReducer } from '@reducers/CVReducers/specificCvReducer';
+import { failedToSaveReducer } from '@reducers/CVReducers/failedToSaveReducer';
 
 const appReducer = combineReducers({
   authReducer,
@@ -31,7 +32,8 @@ const appReducer = combineReducers({
   photoCabinetReducer,
   photoCVReducer,
   cvsReducer,
-  specificCvReducer
+  specificCvReducer,
+  failedToSaveReducer
 });
 
 const rootReducer = (state, action) => {

@@ -1,4 +1,4 @@
-import { UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV } from '@types';
+import { UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV, UPDATE_PHOTO_IN_SPECIFIC_CV } from '@types';
 
 const initialState = {
   personalInformation: {
@@ -22,6 +22,14 @@ export const specificCvReducer = (state = initialState, action) => {
       return {
         ...state,
         personalInformation: { ...action.data }
+      };
+    case UPDATE_PHOTO_IN_SPECIFIC_CV:
+      return {
+        ...state,
+        personalInformation: {
+          ...state.personalInformation,
+          imageUuid: action.data
+        }
       };
     default:
       return state;
