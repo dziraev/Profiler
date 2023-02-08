@@ -5,7 +5,7 @@ import { openPhotoModal,
   photoUploadCV,
   photoUpdateCV,
   personalInfoUpdateInSpecificCV,
-  updatePersonaInformationFromPD
+  updatePersonaInformation
 } from '../../../redux/actions';
 import { selectPersonalDetails } from '../../../pages/PersonalDetails/selectors';
 import photoapi from '../../../http/photoapi';
@@ -78,7 +78,7 @@ const PhotoCV = (props) => {
         dispatch(personalInfoUpdateInSpecificCV(values));
       } else {
         const response = await $api.post(`/cvs/`, values);
-        dispatch(updatePersonaInformationFromPD(values));
+        dispatch(updatePersonaInformation(values));
       }
       dispatch(photoUploadCV(''));
     } catch (e) {
