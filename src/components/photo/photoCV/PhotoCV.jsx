@@ -30,12 +30,13 @@ const PhotoCV = (props) => {
   useEffect(() => {
     dispatch(photoUploadCV(null));
     if (uuid) {
-      if (personalInformationSpecific.imageUuid) getFile();
+      if (!personalInformationSpecific.isLoading && personalInformationSpecific.imageUuid) getFile();
+      if (!personalInformationSpecific.isLoading && !personalInformationSpecific.imageUuid) setIsLoading(false);
     } else {
-      if (personalDetails.profileImageUuid) uploadFile();
+      if (!personalDetails.isLoading && personalDetails.profileImageUuid) uploadFile();
+      if (!personalDetails.isLoading && !personalDetails.profileImageUuid) setIsLoading(false);
     }
-    setIsLoading(false);
-  }, []);
+  }, [personalDetails.isLoading, personalInformationSpecific.isLoading]);
   const getFile = async () => {
     try {
       const response = await photoapi.get(`/images/${personalInformationSpecific.imageUuid}`, {
