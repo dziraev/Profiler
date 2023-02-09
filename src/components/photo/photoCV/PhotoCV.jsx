@@ -16,7 +16,6 @@ import stylesLoader from '../../buttons/Loader.module.scss';
 import { trimValues } from '@validators/validators';
 
 const PhotoCV = (props) => {
-  //
   const dispatch = useDispatch();
   const { uuid } = useParams();
   const personalDetails = useSelector(selectPersonalDetails);
