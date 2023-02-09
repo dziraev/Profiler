@@ -10,10 +10,11 @@ export const validateContacts = (values) => {
     errors.email = 'Invalid email. Example of the correct variant: example@example.com';
   }
 
-  if (!values.cellPhone) {
+  if (!values.phoneNumber) {
     errors.phoneCode = 'Required field';
-  } else if (!/^\d+$/.test(values.cellPhone)) {
-    errors.cellPhone = true;
+    errors.phoneNumber = true;
+  } else if (!/^\d+$/.test(values.phoneNumber)) {
+    errors.phoneNumber = true;
     errors.phoneCode = 'Invalid cell phone number. Example of the correct variant: 29233XXXX';
   }
 

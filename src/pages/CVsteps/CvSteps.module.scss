@@ -18,6 +18,11 @@
   &:not(:last-child) {
     margin-bottom: 30px;
   }
+  &_mb_60 {
+    &:not(:last-child) {
+      margin-bottom: 60px;
+    }
+  }
 }
 
 .form {

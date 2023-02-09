@@ -2,24 +2,44 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import {
+  getContactsSpecificCv,
   linkIsNotClicked,
   phoneCodesLoad,
-  resetDirtyStatusFormCv
+  resetDirtyStatusInConstructorCv,
+  resetDirtyStatusInSpecificCv
 } from '../redux/actions';
+import {
+  selectContactsFromConstructorCv,
+  selectContactsFromSpecificCv,
+  selectIsContactsExists
+} from '../pages/CVsteps/selectors';
 
 export const useContacts = () => {
   const { uuid } = useParams();
   const dispatch = useDispatch();
+  const isContactsExists = useSelector(selectIsContactsExists);
   useEffect(() => {
     dispatch(phoneCodesLoad());
-    if (uuid) {
-    }
+    dispatch(getContactsSpecificCv(uuid));
     return () => {
       dispatch(linkIsNotClicked());
-      dispatch(resetDirtyStatusFormCv());
+      if (isContactsExists) {
+        dispatch(resetDirtyStatusInSpecificCv());
+      } else {
+        dispatch(resetDirtyStatusInConstructorCv());
+      }
     };
   }, []);
 
-  const { contacts } = useSelector((state) => state.constructorCvReducer);
-  return contacts;
+  if (isContactsExists) {
+    return {
+      contacts: useSelector(selectContactsFromSpecificCv),
+      isContactsExists
+    };
+  } else {
+    return {
+      contacts: useSelector(selectContactsFromConstructorCv),
+      isContactsExists
+    };
+  }
 };

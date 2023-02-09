@@ -1,71 +1,56 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
-import {
-  findCountryFlagByPhoneCodeId,
-  findPhoneCodeByCountryId
-} from '@utils/findPhoneCodeByCountryId';
-import { phoneCodesAndIdUpdate } from '@actions';
-import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
+import { findCountryFlagByPhoneCode } from '@utils/findPhoneCodeByCountryId';
 import classNames from 'classnames/bind';
-import styles from './SelectPhoneNumber.module.scss';
+import styles from './SelectPhoneNumberCv.module.scss';
 import stylesSelect from '../Select.module.scss';
 
 const cx = classNames.bind(styles);
 const stylesSelectCx = classNames.bind(stylesSelect);
 
-export const SelectPhoneNumber = ({
+export const SelectPhoneNumberCv = ({
   name,
+  adaptive = true,
   label,
   activeLabel,
   disabled,
-  countryId,
+  isPhoneNumberTouched,
   setFieldValue,
+  onClickPhoneCodesHandler,
   ...props
 }) => {
-  const dispatch = useDispatch();
   const phoneCodes = useSelector(selectPhoneCodes);
-  const phoneCodeId = useSelector(selectPersonalDetailsPhoneCodeId);
   const [countryFlag, setCountryFlag] = useState(false);
   const [field, meta, helper] = useField(name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
+  const hasError = !!(meta.error && isPhoneNumberTouched);
   const { value } = field;
   const { setValue } = helper;
 
   useEffect(() => {
-    const splitCountryId = Number(countryId?.split('-')[0]);
-    const foundPhoneCode = findPhoneCodeByCountryId(phoneCodes, splitCountryId);
-    if (foundPhoneCode && countryId) {
-      setValue(foundPhoneCode.code);
-      setFieldValue(name + 'Id', foundPhoneCode.id);
-      setCountryFlag(foundPhoneCode.country.countryName);
-    }
-    if (!value && phoneCodes.length) {
-      dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
-      setCountryFlag(phoneCodes[0].country.countryName);
-    }
-    if (value && phoneCodes.length && !countryId) {
-      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
+    if (value && phoneCodes.length) {
+      const countryFlag = findCountryFlagByPhoneCode(phoneCodes, value);
       setCountryFlag(countryFlag);
     }
-  }, [countryId, phoneCodes]);
+    if (!value && phoneCodes.length) {
+      setValue(phoneCodes[0].code);
+      setFieldValue(name + 'Id', phoneCodes[0].id);
+      setCountryFlag(phoneCodes[0].country.countryName);
+    }
+  }, [phoneCodes]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, [phoneCodes, phoneCodeId]);
+  }, [phoneCodes]);
 
   function handleClickOutside(e) {
     const { current } = positionRef;
     if (current && !current.contains(e.target)) {
       setIsVisible(false);
-    }
-
-    if (e.target.closest('button[type=reset]') && phoneCodes.length >= 1) {
-      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
-      setCountryFlag(countryFlag);
     }
   }
 
@@ -74,17 +59,22 @@ export const SelectPhoneNumber = ({
     setValue(value.code);
     setCountryFlag(value.country.countryName);
     setFieldValue(name + 'Id', value.id);
+
+    if (onClickPhoneCodesHandler) {
+      onClickPhoneCodesHandler(name, value.code);
+      onClickPhoneCodesHandler(name + 'Id', value.id);
+    }
   };
 
   return (
     <div
       ref={positionRef}
-      className={styles.selectPhone}
+      className={cx(styles.selectPhone, { selectPhone_adaptive: adaptive })}
       style={{ cursor: disabled ? 'no-drop' : 'pointer' }}
     >
       <div className={styles.selectPhone__container}>
         <div
-          className={cx(styles.selectPhone__select, { selectPhone__error: meta.error })}
+          className={cx(styles.selectPhone__select, { selectPhone__error: hasError })}
           style={{ pointerEvents: disabled ? 'none' : 'auto' }}
           onClick={() => setIsVisible((prev) => !prev)}
         >
@@ -118,8 +108,10 @@ export const SelectPhoneNumber = ({
         </div>
         <div className={styles.selectPhone__input}>{props.children}</div>
       </div>
-      {!isVisible && meta.error && (
-        <div className={styles.error}>
+      {!isVisible && hasError && (
+        <div
+          className={cx(styles.error, { error_adaptive: adaptive, error_notAdaptive: !adaptive })}
+        >
           <svg
             width='24'
             height='24'
@@ -136,7 +128,12 @@ export const SelectPhoneNumber = ({
         </div>
       )}
       {isVisible && phoneCodes.length >= 1 && (
-        <div className={styles.selectPhone__dropdown}>
+        <div
+          className={cx(styles.selectPhone__dropdown, {
+            selectPhone__dropdown_adaptive: adaptive,
+            selectPhone__dropdown_notAdaptive: !adaptive
+          })}
+        >
           <div className={styles.selectPhone__title}>Country</div>
           {phoneCodes.map((phoneCode, index) => (
             <React.Fragment key={phoneCode.id}>

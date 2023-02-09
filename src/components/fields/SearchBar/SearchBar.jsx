@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useField } from 'formik';
-import { debounce } from '../../../utils/debounce';
+import { debounce } from '@utils/debounce';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { countriesSearch } from '../../../redux/actions';
+import { countriesSearch } from '@actions';
 import { filterCountriesByPrefix } from '../../../pages/PersonalDetails/selectors';
 import styles from './SearchBar.module.scss';
 
@@ -62,7 +62,7 @@ export const SearchBar = ({
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       country.current = e.target.value;
-      setFieldValue('countryId', '');
+      setFieldValue('countryId', null);
     }
     field.onChange(e);
     updateSearchValue(e.target.value);
@@ -85,7 +85,7 @@ export const SearchBar = ({
     setValue(value.countryName, true);
     setFieldValue('countryId', value.id);
     if (!!setCountryId) {
-      setCountryId(value.id);
+      setCountryId(value.id + '-' + crypto.randomUUID());
     }
     setDisplay(false);
   };

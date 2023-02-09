@@ -1,6 +1,14 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from '../Card.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPersonalDetails } from '../../../pages/PersonalDetails/selectors';
+import {
+  updateContactsInConstructorCv,
+  updatePIandContactsInConstructorCv
+} from '../../../redux/actions';
+import { selectContactsFromConstructorCv } from '../../../pages/CVsteps/selectors';
+import { UPDATE_CONTACTS_IN_CONSTRUCTOR_CV } from '@types';
 
 export const ConstructorCv = () => {
   return (

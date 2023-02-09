@@ -8,19 +8,25 @@ const cx = classNames.bind(styles);
 const stylesPDcx = classNames.bind(stylesPD);
 
 export const InputPersonalDetails = ({
+  name,
   label,
   activeLabel,
   adaptive = true,
   showError = true,
+  actionOnBlur,
   ...props
 }) => {
   const [active, setActive] = useState(false);
-  const [field, meta, helper] = useField(props);
+  const [field, meta, helper] = useField(name);
   const hasError = !!(meta.error && meta.touched);
+  const { value } = field;
 
   function handleBlur(e) {
     field.onBlur(e);
     setActive(false);
+    if (actionOnBlur) {
+      actionOnBlur(name, value);
+    }
   }
 
   function handleFocus(e) {

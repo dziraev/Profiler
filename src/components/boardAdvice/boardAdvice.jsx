@@ -39,10 +39,10 @@ export const BoardAdvice = () => {
         })}
       >
         <div className={styles.boardAdvice__content}>
-          <div className={styles.boardAdvice__title}>{advice.title}</div>
+          <div className={styles.boardAdvice__title}>{advice?.title}</div>
           <div
             className={styles.boardAdvice__hint}
-            dangerouslySetInnerHTML={{ __html: advice.text }}
+            dangerouslySetInnerHTML={{ __html: advice?.text }}
           />
         </div>
       </div>

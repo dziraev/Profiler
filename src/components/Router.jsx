@@ -26,7 +26,6 @@ export const Router = () => {
             <Route path='personal-info/:uuid' element={<PersonalInformation />} />
             <Route path='personal-info' element={<PersonalInformation />} />
             <Route path='contacts/:uuid' element={<Contacts />} />
-            <Route path='contacts' element={<Contacts />} />
           </Route>
           <Route path='/404' element={<NotFoundPage />} />
         </Route>

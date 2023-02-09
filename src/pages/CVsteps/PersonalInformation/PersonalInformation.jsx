@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { usePersonalInformation } from '@hooks/usePersonalInformation';
-import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
+import { CheckBox, SearchBar, SelectPositions } from '@components/fields';
 import { ClearButton } from '@components/buttons';
 import { PopUpClearFields, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@popUps';
 import { Button } from '@buttonsLarge';
@@ -10,32 +10,45 @@ import { validatePersonalInformation } from '@validators/validatePersonalInforma
 import { trimValues } from '@validators/validators';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
+import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
+import { useLoadingConstructorCv } from '@hooks/useLoadingConstructorCv';
 import { useNavigate, useParams } from 'react-router-dom';
+import { InputCv } from '@hoc/InputCv';
 import {
-  changeDirtyStatusFormCv,
+  changeDirtyStatusInConstructorCv,
+  changeDirtyStatusInSpecificCv,
   linkIsNotClicked,
-  updatePersonaInformation
-} from '../../../redux/actions';
+  updatePersonaInformationInSpecificCv
+} from '@actions';
 import cx from 'classnames';
 import Photo from '@components/photo/Photo';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
 
 export const PersonalInformation = () => {
+  const { uuid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const personalInformation = usePersonalInformation();
   const [clearFields, setClearFields] = useState(false);
   const [btnNextIsClicked, setBtnNextIsClicked] = useState(false);
+  const isLoadingSpecificCv = useLoadingSpecificCv();
+  const isLoadingConstructorCv = useLoadingConstructorCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
+
+  if (isLoadingSpecificCv && uuid) {
+    return;
+  }
+  if (isLoadingConstructorCv && !uuid) {
+    return;
+  }
 
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>1. Personal information</h2>
       <Formik
-        enableReinitialize={true}
         initialValues={personalInformation}
         validateOnChange={false}
         validate={validatePersonalInformation}
@@ -45,7 +58,7 @@ export const PersonalInformation = () => {
           const { uuid } = values;
 
           const currentValues = {
-            imageUuid: values.imageUuid,
+            imageUuid: personalInformation.imageUuid,
             name: values.name,
             surname: values.surname,
             positionId: values.positionId,
@@ -62,8 +75,7 @@ export const PersonalInformation = () => {
             } else {
               ({ data } = await $api.put('cvs/' + uuid, currentValues));
             }
-
-            dispatch(updatePersonaInformation(data));
+            dispatch(updatePersonaInformationInSpecificCv(data));
 
             if (data.uuid && btnNextIsClicked) {
               navigate('../contacts/' + data.uuid);
@@ -101,7 +113,11 @@ export const PersonalInformation = () => {
         }) => {
           const { uuid } = values;
           useEffect(() => {
-            dispatch(changeDirtyStatusFormCv(dirty));
+            if (uuid) {
+              dispatch(changeDirtyStatusInSpecificCv(dirty));
+            } else {
+              dispatch(changeDirtyStatusInConstructorCv(dirty));
+            }
           }, [dirty]);
 
           const onClickStayPopUp = () => {
@@ -241,7 +257,7 @@ export const PersonalInformation = () => {
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={styles.form__label}>Name</div>
-                    <InputPersonalDetails
+                    <InputCv
                       data-id='name'
                       name='name'
                       adaptive={false}
@@ -252,7 +268,7 @@ export const PersonalInformation = () => {
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={styles.form__label}>Surname</div>
-                    <InputPersonalDetails
+                    <InputCv
                       data-id='surname'
                       name='surname'
                       adaptive={false}
@@ -286,7 +302,7 @@ export const PersonalInformation = () => {
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={styles.form__label}>City</div>
-                    <InputPersonalDetails
+                    <InputCv
                       data-id='city'
                       name='city'
                       adaptive={false}
@@ -318,6 +334,7 @@ export const PersonalInformation = () => {
                         type: 'submit',
                         onClick: () => setBtnNextIsClicked(true)
                       })}
+                    isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
                   >
                     Next
                   </Button>

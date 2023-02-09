@@ -5,7 +5,8 @@ import {
   getPersonalInformationInSpecificCv,
   linkIsNotClicked,
   positionsLoad,
-  resetDirtyStatusFormCv
+  resetDirtyStatusInConstructorCv,
+  resetDirtyStatusInSpecificCv
 } from '../redux/actions';
 import { useParams } from 'react-router-dom';
 
@@ -20,7 +21,11 @@ export const usePersonalInformation = () => {
     }
     return () => {
       dispatch(linkIsNotClicked());
-      dispatch(resetDirtyStatusFormCv());
+      if (uuid) {
+        dispatch(resetDirtyStatusInSpecificCv());
+      } else {
+        dispatch(resetDirtyStatusInConstructorCv());
+      }
     };
   }, []);
 

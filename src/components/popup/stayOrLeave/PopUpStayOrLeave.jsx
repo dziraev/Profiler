@@ -9,7 +9,7 @@ import styles from '../PopUp.module.scss';
 
 const cx = classnames.bind(styles);
 
-export const PopUpStayOrLeave = ({ children, onClickStay, adaptive = true }) => {
+export const PopUpStayOrLeave = ({ children, onClickStay, onClickLeave, adaptive = true }) => {
   useDisableBodyScroll();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,6 +39,10 @@ export const PopUpStayOrLeave = ({ children, onClickStay, adaptive = true }) => 
                     dispatch({ type: 'USER_LOGOUT' });
                   }
                   navigate(linkIsClicked);
+
+                  if (onClickLeave) {
+                    onClickLeave();
+                  }
                 }}
               >
                 Leave
