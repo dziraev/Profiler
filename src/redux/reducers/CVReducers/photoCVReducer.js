@@ -1,7 +1,8 @@
-import { PHOTO_UPLOAD_CV } from '../../types';
+import { PHOTO_UPLOAD_CV, PHOTO_FAILED_CV } from '../../types';
 
 const initialState = {
-  photo: ''
+  photo: '',
+  failedPhoto: ''
 };
 
 export const photoCVReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const photoCVReducer = (state = initialState, action) => {
       return {
         ...state,
         photo: action.data
+      };
+    case PHOTO_FAILED_CV:
+      return {
+        ...state,
+        failedPhoto: action.data
       };
     default:
       return state;

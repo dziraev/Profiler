@@ -125,6 +125,10 @@
   & path {
     fill: variables.$background-main;
   }
+  & .stroke {
+    fill: none;
+    stroke: variables.$background-main
+  }
   &:hover {
     & path {
       stroke: variables.$background-main;

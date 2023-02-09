@@ -7,9 +7,8 @@ import {
   SPECIFIC_CV_NOT_FOUND_RESET,
   UPDATE_CONTACTS_IN_SPECIFIC_CV,
   UPDATE_EXTRA_FIELDS_IN_SPECIFIC_CV,
-  UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV,
-  UPDATE_FIELD_IN_CONTACTS_SPECIFIC_CV,
-  UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV
+  UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
+  UPDATE_PHOTO_IN_SPECIFIC_CV
 } from '@types';
 import { nullToEmptyString } from '@utils/nullToEmptyString';
 
@@ -101,6 +100,14 @@ export const specificCvReducer = (state = initialState, action) => {
           ...values
         },
         isContactsExists: action.data.isContactsExists
+      };
+    case UPDATE_PHOTO_IN_SPECIFIC_CV:
+      return {
+        ...state,
+        personalInformation: {
+          ...state.personalInformation,
+          imageUuid: action.data
+        }
       };
     default:
       return state;

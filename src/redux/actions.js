@@ -12,7 +12,8 @@ import {
   CONSTRUCTOR_CV_LOADING_ON,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
-  INVALID_UPLOAD,
+  FAILED_TO_SAVE,
+  INVALID_UPLOAD_PHOTO,
   LINK_IS_CLICKED,
   LINK_IS_NOT_CLICKED,
   LOADER_DISPLAY_OFF,
@@ -28,8 +29,12 @@ import {
   PHOTO_UPDATE_CV,
   PHOTO_UPLOAD_CABINET,
   PHOTO_UPLOAD_CV,
+  PHOTO_FAILED_CABINET,
+  PHOTO_FAILED_CV,
   POSITIONS_LOAD,
   RESET_DIRTY_STATUS_FORM_PD,
+  SAVED_SUCCESFULLY,
+  UPDATE_PERSONALINFORMATION_IN_CONSTRUCTOR_CV,
   RESET_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
   RESET_DIRTY_STATUS_IN_SPECIFIC_CV,
   SPECIFIC_CV_LOADING_OFF,
@@ -42,8 +47,9 @@ import {
   UPDATE_FIELDS_IN_CONSTRUCTOR_CV,
   UPDATE_FIELDS_IN_CONTACTS_CONSTRUCTOR_CV,
   UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
-  UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV,
-  UPLOADED
+  UPDATE_PHOTO_IN_SPECIFIC_CV,
+  UPLOADED_PHOTO,
+  UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV
 } from '@types';
 import $api from '../http/api';
 
@@ -225,19 +231,26 @@ export function openPhotoModal() {
   };
 }
 
-export function invalidUpload() {
+export function invalidUploadPhoto() {
   return {
-    type: INVALID_UPLOAD
+    type: INVALID_UPLOAD_PHOTO
   };
 }
 
-export function uploaded() {
+export function uploadedPhoto() {
   return {
-    type: UPLOADED
+    type: UPLOADED_PHOTO
   };
 }
 
-export function photoUpdate(data) {
+export function updatePersonaInformationInConstructorCv(data) {
+  return {
+    type: UPDATE_PERSONALINFORMATION_IN_CONSTRUCTOR_CV,
+    data
+  };
+}
+
+export function photoUpdateCabinet(data) {
   return {
     type: PHOTO_UPDATE_CABINET,
     data
@@ -433,5 +446,38 @@ export function changeDirtyStatusInSpecificCv(dirty) {
 export function resetDirtyStatusInSpecificCv() {
   return {
     type: RESET_DIRTY_STATUS_IN_SPECIFIC_CV
+  };
+}
+
+export function photoUpdateInSpecificCV(data) {
+  return {
+    type: UPDATE_PHOTO_IN_SPECIFIC_CV,
+    data
+  };
+}
+
+export function failedToSave() {
+  return {
+    type: FAILED_TO_SAVE
+  };
+}
+
+export function savedSuccessfully() {
+  return {
+    type: SAVED_SUCCESFULLY
+  };
+}
+
+export function photoFailedCV(data) {
+  return {
+    type: PHOTO_FAILED_CV,
+    data
+  };
+}
+
+export function photoFailedCabinet(data) {
+  return {
+    type: PHOTO_FAILED_CABINET,
+    data
   };
 }

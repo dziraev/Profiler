@@ -1,27 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useUploadPhotoCV } from '@hooks/useUploadPhotoCV';
+import { useChangePhotoCV } from '@hooks/useChangePhotoCV';
 import { 
   closePhotoModal,
-  invalidUpload,
-  photoUpdateCV,
-  photoUploadCV
+  invalidUploadPhoto,
 } from '../../../../redux/actions';
-import { usePersonalInformation } from '@hooks/usePersonalInformation';
-import { selectPersonalDetails } from '../../../../pages/PersonalDetails/selectors';
 import incorrect from '../../../../static/images/incorrect-photo.png';
 import correct from '../../../../static/images/correct-photo.png';
-import photoapi from '../../../../http/photoapi';
 import styles from './PopUpUploadPhotoCV.module.scss';
+import stylesLoader from '../../../../components/buttons/Loader.module.scss';
 
 export const PopUpUploadPhotoCV = () => {
-  const personalDetails = useSelector(selectPersonalDetails);
-  const personalInformation = usePersonalInformation();
-  // const imageCabinet = useSelector((state) => state.photoCabinetReducer.photo);
-  // const imageCV = useSelector((state) => state.photoCVReducer.photo);
-  const imageCabinet = personalDetails.profileImageUuid;
-  const imageCV = personalInformation.imageUuid;
-  const image = imageCV || imageCabinet;
   const dispatch = useDispatch();
+  const sendFile = useUploadPhotoCV();
+  const changeFile = useChangePhotoCV();
+  const image = useSelector((state) => state.photoCVReducer.photo);
+  const [isLoading, setIsLoading] = useState(false);
   const getFile = (e) => {
     const file = e.target.files[0];
     if (file.size > 5242880 ||
@@ -29,50 +24,11 @@ export const PopUpUploadPhotoCV = () => {
         file.type !== 'image/jpg' &&
         file.type !== 'image/png') {
       dispatch(closePhotoModal());
-      dispatch(invalidUpload());
+      dispatch(invalidUploadPhoto());
       return;
     };
-    sendFile(file);
-  };
-  const sendFile = async (file) => {
-    try {
-      const response = await photoapi.post('/images', {
-        image: file
-      })
-      dispatch(photoUpdateCV(response.data.uuid));
-      dispatch(photoUploadCV(URL.createObjectURL(file)));
-      dispatch(closePhotoModal());
-    } catch (e) {
-      dispatch(invalidUpload());
-      dispatch(closePhotoModal());
-      console.error(e);
-    }
-  };
-  const changeFile = (e) => {
-    const file = e.target.files[0];
-    if (file.size > 5242880 ||
-        file.type !== 'image/jpeg' &&
-        file.type !== 'image/jpg' &&
-        file.type !== 'image/png') {
-      dispatch(closePhotoModal());
-      dispatch(invalidUpload());
-      return;
-    };
-    sendChangedFile(file);
-  }
-  const sendChangedFile = async (file) => {
-    try {
-      const response = await photoapi.put(`/images/${personalInformation.imageUuid}`, {
-        image: file
-      })
-      dispatch(photoUpdateCV(response.data.uuid));
-      dispatch(photoUploadCV(URL.createObjectURL(file)));
-      dispatch(closePhotoModal());
-    } catch (e) {
-      dispatch(invalidUpload());
-      dispatch(closePhotoModal());
-      console.error(e);
-    }
+    setIsLoading(true);
+    image ? changeFile(file) : sendFile(file);
   };
   return (
     <div 
@@ -83,37 +39,28 @@ export const PopUpUploadPhotoCV = () => {
           className={styles.modal__close}
           onClick={() => dispatch(closePhotoModal())}
         >
-          <svg 
-            width='30' 
-            height='30' 
-            viewBox='0 0 30 30' 
-            fill='none' 
+          <svg width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
-            <g 
-              clipPath='url(#clip0_293_2738)'>
-              <path 
-                d='M23.5165 8.68655L17.2031 15L23.5165 21.3135C23.8514 21.6483 24.0395 22.1025 24.0395 22.5761C24.0395 23.0497 23.8514 23.5039 23.5165 23.8388C23.1816 24.1737 22.7274 24.3619 22.2538 24.3619C21.7802 24.3619 21.326 24.1737 20.9911 23.8388L14.6777 17.5254L8.36422 23.8388C8.02933 24.1737 7.57513 24.3619 7.10153 24.3619C6.62792 24.3619 6.17372 24.1737 5.83884 23.8388C5.50395 23.5039 5.31581 23.0497 5.31581 22.5761C5.31581 22.1025 5.50395 21.6483 5.83884 21.3135L12.1523 15L5.83883 8.68655C5.50395 8.35166 5.31581 7.89746 5.31581 7.42386C5.31581 6.95025 5.50395 6.49605 5.83883 6.16117C6.17372 5.82628 6.62792 5.63814 7.10152 5.63814C7.57513 5.63814 8.02933 5.82628 8.36422 6.16117L14.6777 12.4746L20.9911 6.16117C21.326 5.82628 21.7802 5.63814 22.2538 5.63814C22.7274 5.63814 23.1816 5.82628 23.5165 6.16117C23.8514 6.49605 24.0395 6.95025 24.0395 7.42386C24.0395 7.89746 23.8514 8.35166 23.5165 8.68655V8.68655Z' 
-                fill='#25225D'
-              />
-            </g>
-            <defs>
-              <clipPath 
-                id='clip0_293_2738'>
-                <rect 
-                  width='30' 
-                  height='30' 
-                  fill='white'
-                />
-              </clipPath>
-            </defs>
+            <path 
+              d='M6.75781 17.243L12.0008 12M17.2438 6.75702L11.9998 12M11.9998 12L6.75781 6.75702M12.0008 12L17.2438 17.243' 
+              stroke='black' 
+              strokeWidth='1.5' 
+              strokeLinecap='round' 
+              strokeLinejoin='round'
+            />
           </svg>
         </div>
         <div className={styles.modal__content}>
           <h2 className={styles.modal__content__title}>
             Please choose a new photo from gallery.
           </h2>
-          <p>Acceptable formats: <span>jpeg, jpg, png</span>. Allowed size up to <span>5 MB</span>.</p>
+          <p className={styles.modal__content__subtitle}>
+            Acceptable formats: <span>jpeg, jpg, png</span>. Allowed size up to <span>5 MB</span>.
+          </p>
           <p><span>Recommendation</span>: Avoid using selfies, photos with friends, or photos in poorly lit areas. Choose a photo in business style, where your face is clearly visible and there are no distractions in the background.</p>
         </div>
         <div className={styles.modal__images}>
@@ -126,20 +73,14 @@ export const PopUpUploadPhotoCV = () => {
             <div className={styles.check} />
           </div>
         </div>
-        {!image &&
-          <div className={styles.modal__button}>
-            <label htmlFor='file' className={styles.modal__button__label}>Add photo
-              <input type='file' name='photoUuid' id='file' onChange={getFile}/>
-            </label>
-          </div>
-        }
-        {image &&
-          <div className={styles.modal__button}>
-            <label htmlFor='file' className={styles.modal__button__label}>Change photo
-              <input type='file' name='photoUuid' id='file' onChange={changeFile}/>
-            </label>
-          </div>
-        }
+        <div className={styles.modal__button}>
+          <label htmlFor='file' className={styles.modal__button__label}>
+            {image && !isLoading &&  'Change photo'}
+            {!image && !isLoading &&  'Add photo'}
+            {!isLoading && <input type='file' name='photoUuid' id='file' onChange={getFile}/>}
+            {isLoading && <span className={stylesLoader.loader} />}
+          </label>
+        </div>
       </div>
     </div>
   );

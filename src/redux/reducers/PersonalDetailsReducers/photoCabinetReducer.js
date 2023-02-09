@@ -1,7 +1,8 @@
-import { PHOTO_UPLOAD_CABINET } from '../../types';
+import { PHOTO_UPLOAD_CABINET, PHOTO_FAILED_CABINET } from '../../types';
 
 const initialState = {
-  photo: ''
+  photo: '',
+  failedPhoto: ''
 };
 
 export const photoCabinetReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const photoCabinetReducer = (state = initialState, action) => {
       return {
         ...state,
         photo: action.data
+      };
+    case PHOTO_FAILED_CABINET:
+      return {
+        ...state,
+        failedFhoto: action.data
       };
     default:
       return state;

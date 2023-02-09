@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import Logout from '../../components/links/Logout';
 import NavMenuCV from '../../components/navigation/menuCV/NavMenuCV';
 import PopUpUploadPhotoCV from '../../components/popup/uploadPhoto/uploadPhotoCV/PopUpUploadPhotoCV';
-import PopUpInvalidUpload from '../../components/popup/invalidUpload/PopUpInvalidUpload';
+import PopUpInvalidUploadCV from '../../components/popup/invalidUpload/invalidUploadCV/PopUpInvalidUploadCV';
+import { PopUpTryAgainPhotoCV } from '../../components/popup/tryAgainPhoto/tryAgainPhotoCV/PopUpTryAgainPhotoCV';
 import styles from './CV.module.scss';
 
 const CV = () => {
@@ -12,6 +13,7 @@ const CV = () => {
   const closeModal = () => setClosed(true);
   const openModal = useSelector((state) => state.photoModalReducer.openModal);
   const invalidUpload = useSelector((state) => state.invalidUploadReducer.invalidUpload);
+  const failedToSave = useSelector((state) => state.failedToSaveReducer.failedToSave);
 
   return (
     <div className={styles.page}>
@@ -55,7 +57,12 @@ const CV = () => {
         </main>
       </div>
       {openModal && <PopUpUploadPhotoCV />}
-      {invalidUpload && <PopUpInvalidUpload />}
+      {invalidUpload && <PopUpInvalidUploadCV />}
+      {failedToSave &&
+        <PopUpTryAgainPhotoCV>
+          Failed to save data. Please try again
+        </PopUpTryAgainPhotoCV>
+      }
     </div>
   );
 };

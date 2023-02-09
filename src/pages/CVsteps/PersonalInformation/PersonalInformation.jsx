@@ -20,8 +20,8 @@ import {
   linkIsNotClicked,
   updatePersonaInformationInSpecificCv
 } from '@actions';
+import PhotoCV from '@components/photo/PhotoCV/PhotoCV';
 import cx from 'classnames';
-import Photo from '@components/photo/Photo';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
 
@@ -244,7 +244,7 @@ export const PersonalInformation = () => {
               <div className={cx(styles.form__container, styles.form__container_firstPage)}>
                 <div className={styles.form__photo}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
-                  <Photo />
+                  <PhotoCV />
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>

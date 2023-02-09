@@ -7,7 +7,7 @@ import {
   selectUniqueStudentIdentifier
 } from '../../../pages/PersonalDetails/selectors';
 import Logout from '../../links/Logout';
-import Photo from '../../photo/Photo';
+import PhotoCabinet from '../../photo/PhotoCabinet/PhotoCabinet';
 import styles from './NavMenu.module.scss';
 import logo from '../../../static/images/menu-logo.svg';
 import mobilelogo from '../../../static/images/menu-logo-mobile.svg';
@@ -59,7 +59,7 @@ const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
         </div>
       </div>
       <div className={styles.sidebar__photo}>
-        <Photo page='cabinet' />
+        <PhotoCabinet />
       </div>
       <div className={styles.sidebar__number}>
         {!!uniqueStudentIdentifier && (

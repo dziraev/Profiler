@@ -1,0 +1,87 @@
+@use '../../../static/scss/variables';
+
+.photo {
+  background: variables.$background-main;
+  border: variables.$text-primary-blue solid 1px;
+  border-radius: 50%;
+  height: 140px;
+  width: 140px;
+  padding: 48px 20px;
+  cursor: pointer;
+  &__button {
+    margin: 0 auto;
+    background-color: #F0F5FF;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+    & svg {
+      display: block;
+    }
+  }
+  &__title {
+    white-space: nowrap;
+    color: variables.$text-primary-blue;
+    font-weight: 600;
+    line-height: 1.32;
+    font-size: 0.875em;
+  }
+  &__image {
+    display: block;
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    padding: 0%;
+    border: transparent;
+    padding: 0%;
+    object-fit: cover;
+    cursor: default;
+    &__change {
+      display: none;
+      width: 24px;
+      height: 24px;
+      background-color: rgba(177, 202, 255, 0.5);
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      padding: 4px;
+      bottom: 9px;
+      left: 36px;
+      z-index: 2;
+      backdrop-filter: blur(3px);
+      cursor: pointer;
+    }
+    &__delete {
+      display: none;
+      width: 24px;
+      height: 24px;
+      background-color: rgba(177, 202, 255, 0.5);
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      padding: 4px 5px;
+      bottom: 9px;
+      left: 70px;
+      z-index: 2;
+      backdrop-filter: blur(3px);
+      cursor: pointer;
+    }
+  }
+  &__loader {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: variables.$background-main;
+    padding: 58px;
+  }
+}
+
+.wrapper {
+  position: relative;
+  &:hover .photo__image__change {
+    display: block;
+  }
+  &:hover .photo__image__delete {
+    display: block;
+  }
+}
