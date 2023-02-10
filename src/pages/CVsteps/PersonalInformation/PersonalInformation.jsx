@@ -1,38 +1,64 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
-import cx from 'classnames';
 import { usePersonalInformation } from '@hooks/usePersonalInformation';
-import { CheckBox, InputPersonalDetails, SearchBar, SelectPositions } from '@components/fields';
-import Photo from '@components/photo/Photo';
+import { CheckBox, SearchBar, SelectPositions } from '@components/fields';
 import { ClearButton } from '@components/buttons';
 import { PopUpClearFields, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@popUps';
 import { Button } from '@buttonsLarge';
 import { validatePersonalInformation } from '@validators/validatePersonalInformation';
 import { trimValues } from '@validators/validators';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
-import { changeDirtyStatusFormCv } from '../../../redux/actions';
+import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
+import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
+import { useLoadingConstructorCv } from '@hooks/useLoadingConstructorCv';
+import { useNavigate, useParams } from 'react-router-dom';
+import { InputCv } from '@hoc/InputCv';
+import {
+  changeDirtyStatusInConstructorCv,
+  changeDirtyStatusInSpecificCv,
+  linkIsNotClicked,
+  updatePersonaInformationInSpecificCv
+} from '@actions';
+import PhotoCV from '@components/photo/PhotoCV/PhotoCV';
+import cx from 'classnames';
 import $api from '../../../http/api';
-import styles from './PersonalInformation.module.scss';
+import styles from '../CvSteps.module.scss';
 
 export const PersonalInformation = () => {
+  const { uuid } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { personalInformation, linkIsClicked } = usePersonalInformation();
+  const personalInformation = usePersonalInformation();
   const [clearFields, setClearFields] = useState(false);
+  const [btnNextIsClicked, setBtnNextIsClicked] = useState(false);
+  const isLoadingSpecificCv = useLoadingSpecificCv();
+  const isLoadingConstructorCv = useLoadingConstructorCv();
+
+  const hrefLinkIsClicked = useLinkIsClicked();
+  const { current: linkIsClicked } = hrefLinkIsClicked;
+
+  if (isLoadingSpecificCv && uuid) {
+    return;
+  }
+  if (isLoadingConstructorCv && !uuid) {
+    return;
+  }
 
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>1. Personal information</h2>
       <Formik
-        enableReinitialize={true}
         initialValues={personalInformation}
         validateOnChange={false}
         validate={validatePersonalInformation}
         onSubmit={async (formikValues, { setStatus }) => {
           const values = trimValues(formikValues);
 
+          const { uuid } = values;
+
           const currentValues = {
-            imageUuid: values.imageUuid,
+            imageUuid: personalInformation.imageUuid,
             name: values.name,
             surname: values.surname,
             positionId: values.positionId,
@@ -43,9 +69,32 @@ export const PersonalInformation = () => {
           };
 
           try {
-            const response = await $api.post('/cvs', currentValues);
+            let data;
+            if (!uuid) {
+              ({ data } = await $api.post('cvs', currentValues));
+            } else {
+              ({ data } = await $api.put('cvs/' + uuid, currentValues));
+            }
+            dispatch(updatePersonaInformationInSpecificCv(data));
+
+            if (data.uuid && btnNextIsClicked) {
+              navigate('../contacts/' + data.uuid);
+            }
           } catch (e) {
             setStatus({ errorResponse: true });
+          } finally {
+            setBtnNextIsClicked(false);
+          }
+        }}
+        onReset={() => {
+          const { current } = hrefLinkIsClicked;
+          if (current && current === '/auth') {
+            localStorage.removeItem('token');
+            dispatch({ type: 'USER_LOGOUT' });
+            navigate(current);
+          }
+          if (current && current !== '/auth') {
+            navigate(current);
           }
         }}
       >
@@ -54,6 +103,7 @@ export const PersonalInformation = () => {
           dirty,
           isValid,
           status,
+          handleReset,
           isSubmitting,
           setStatus,
           setFieldValue,
@@ -61,20 +111,33 @@ export const PersonalInformation = () => {
           setValues,
           errors
         }) => {
+          const { uuid } = values;
           useEffect(() => {
-            dispatch(changeDirtyStatusFormCv(dirty));
+            if (uuid) {
+              dispatch(changeDirtyStatusInSpecificCv(dirty));
+            } else {
+              dispatch(changeDirtyStatusInConstructorCv(dirty));
+            }
           }, [dirty]);
 
-          const oneIsNotEmptyValue = useMemo(() => {
-            for (const field in values) {
-              if (field === 'uuid' || field === 'imageUuid') {
-                continue;
-              }
-              if (values[field] !== '' && values[field] !== false) {
-                return true;
-              }
-            }
-          }, [values]);
+          const onClickStayPopUp = () => {
+            dispatch(linkIsNotClicked());
+            setTouched({
+              name: true,
+              surname: true,
+              country: true,
+              position: true,
+              city: true
+            });
+          };
+
+          const oneIsNotEmptyValue = useMemo(
+            () =>
+              Object.keys(values)
+                .filter((k) => k !== 'uuid' && k !== 'imageUuid')
+                .some((k) => values[k] !== '' && values[k] !== false),
+            [values]
+          );
 
           const allFieldsAreFilledIn = useMemo(
             () =>
@@ -90,11 +153,11 @@ export const PersonalInformation = () => {
 
             [values]
           );
-          console.log(values, errors);
+
           const correctAndNotFully = useMemo(() => {
             const values = Object.values(errors);
-            return values.length && values.every((value) => value === 'Required field');
-          }, [errors, values]);
+            return !!values.length && values.every((value) => value === 'Required field');
+          }, [errors]);
 
           return (
             <Form className={styles.form}>
@@ -106,32 +169,41 @@ export const PersonalInformation = () => {
 
               {status?.errorResponse && (
                 <PopUpTryAgain
+                  type='button'
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  onClickHandler={() => setStatus({ errorResponse: false })}
-                  type='button'
+                  onClickHandler={() => {
+                    if (linkIsClicked) {
+                      handleReset();
+                    } else {
+                      setStatus({ errorResponse: false });
+                    }
+                  }}
                 >
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
+
               {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
-                <PopUpStayOrLeave adaptive={false}>
+                <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
               )}
+
               {dirty &&
                 !correctAndNotFully &&
                 !allFieldsAreFilledIn &&
                 !isValid &&
                 linkIsClicked && (
-                  <PopUpStayOrLeave adaptive={false}>
+                  <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
                   </PopUpStayOrLeave>
                 )}
+
               {dirty && correctAndNotFully && linkIsClicked && (
-                <PopUpStayOrLeave adaptive={false}>
+                <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -169,10 +241,10 @@ export const PersonalInformation = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-              <div className={styles.form__container}>
-                <div className={styles.form__inputBlock}>
+              <div className={cx(styles.form__container, styles.form__container_firstPage)}>
+                <div className={styles.form__photo}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
-                  <Photo />
+                  <PhotoCV />
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
@@ -185,7 +257,7 @@ export const PersonalInformation = () => {
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={styles.form__label}>Name</div>
-                    <InputPersonalDetails
+                    <InputCv
                       data-id='name'
                       name='name'
                       adaptive={false}
@@ -196,7 +268,7 @@ export const PersonalInformation = () => {
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={styles.form__label}>Surname</div>
-                    <InputPersonalDetails
+                    <InputCv
                       data-id='surname'
                       name='surname'
                       adaptive={false}
@@ -230,7 +302,7 @@ export const PersonalInformation = () => {
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={styles.form__label}>City</div>
-                    <InputPersonalDetails
+                    <InputCv
                       data-id='city'
                       name='city'
                       adaptive={false}
@@ -250,7 +322,22 @@ export const PersonalInformation = () => {
               </div>
               <div className={styles.form__buttons}>
                 <div className={styles.form__button}>
-                  <Button type={isSubmitting ? 'button' : 'submit'}>Next</Button>
+                  <Button
+                    type='button'
+                    {...(uuid &&
+                      !dirty &&
+                      !isSubmitting && {
+                        onClick: () => navigate('../contacts/' + uuid)
+                      })}
+                    {...(dirty &&
+                      !isSubmitting && {
+                        type: 'submit',
+                        onClick: () => setBtnNextIsClicked(true)
+                      })}
+                    isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
+                  >
+                    Next
+                  </Button>
                 </div>
               </div>
             </Form>

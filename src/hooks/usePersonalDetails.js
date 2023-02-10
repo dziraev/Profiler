@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectLinkIsClicked, selectPersonalDetails } from '../pages/PersonalDetails/selectors';
+import { selectPersonalDetails } from '../pages/PersonalDetails/selectors';
 import {
   countriesLoad,
   linkIsNotClicked,
@@ -12,7 +12,7 @@ import {
 export const usePersonalDetails = () => {
   const dispatch = useDispatch();
   const personalDetails = useSelector(selectPersonalDetails);
-  const linkIsClicked = useSelector(selectLinkIsClicked);
+
   useEffect(() => {
     dispatch(countriesLoad());
     dispatch(phoneCodesLoad());
@@ -23,8 +23,5 @@ export const usePersonalDetails = () => {
     };
   }, []);
 
-  return {
-    personalDetails,
-    linkIsClicked
-  };
+  return personalDetails;
 };

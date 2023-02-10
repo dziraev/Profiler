@@ -10,7 +10,14 @@ import styles from '../PopUp.module.scss';
 
 const cx = classnames.bind(styles);
 
-export const PopUpSave = ({ children, isSubmitting, handleReset, adaptive = true, ...props }) => {
+export const PopUpSave = ({
+  children,
+  isSubmitting,
+  onClickSave,
+  onClickDontSave,
+  adaptive = true,
+  ...props
+}) => {
   useDisableBodyScroll();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +47,9 @@ export const PopUpSave = ({ children, isSubmitting, handleReset, adaptive = true
                       localStorage.removeItem('token');
                       dispatch({ type: 'USER_LOGOUT' });
                     }
+                    if (onClickDontSave) {
+                      onClickDontSave();
+                    }
                     navigate(linkIsClicked);
                   }
                 })}
@@ -52,6 +62,13 @@ export const PopUpSave = ({ children, isSubmitting, handleReset, adaptive = true
                 type='submit'
                 adaptive={adaptive}
                 {...(isSubmitting && { type: 'button', isLoading: true })}
+                {...(!isSubmitting && {
+                  onClick: () => {
+                    if (onClickSave) {
+                      onClickSave();
+                    }
+                  }
+                })}
               >
                 Save
               </Button>

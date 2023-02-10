@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { linkIsNotClicked } from '../../../redux/actions';
 import { Button, CancelButton } from '@components/buttons';
 import { useDisableBodyScroll } from '@hooks/useDisableBodyScroll';
 import { selectLinkIsClicked } from '../../../pages/PersonalDetails/selectors';
@@ -10,7 +9,7 @@ import styles from '../PopUp.module.scss';
 
 const cx = classnames.bind(styles);
 
-export const PopUpStayOrLeave = ({ children, adaptive = true }) => {
+export const PopUpStayOrLeave = ({ children, onClickStay, onClickLeave, adaptive = true }) => {
   useDisableBodyScroll();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,17 +39,17 @@ export const PopUpStayOrLeave = ({ children, adaptive = true }) => {
                     dispatch({ type: 'USER_LOGOUT' });
                   }
                   navigate(linkIsClicked);
+
+                  if (onClickLeave) {
+                    onClickLeave();
+                  }
                 }}
               >
                 Leave
               </Button>
             </div>
             <div className={styles.modal__button}>
-              <CancelButton
-                type='button'
-                adaptive={adaptive}
-                onClick={() => dispatch(linkIsNotClicked())}
-              >
+              <CancelButton type='button' adaptive={adaptive} onClick={onClickStay}>
                 Stay
               </CancelButton>
             </div>

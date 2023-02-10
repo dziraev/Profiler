@@ -6,7 +6,7 @@ import {
   findCountryFlagByPhoneCodeId,
   findPhoneCodeByCountryId
 } from '@utils/findPhoneCodeByCountryId';
-import { phoneCodesAndIdUpdate } from '../../../../redux/actions';
+import { phoneCodesAndIdUpdate } from '@actions';
 import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
 import classNames from 'classnames/bind';
 import styles from './SelectPhoneNumber.module.scss';
@@ -16,6 +16,7 @@ const cx = classNames.bind(styles);
 const stylesSelectCx = classNames.bind(stylesSelect);
 
 export const SelectPhoneNumber = ({
+  name,
   label,
   activeLabel,
   disabled,
@@ -27,17 +28,18 @@ export const SelectPhoneNumber = ({
   const phoneCodes = useSelector(selectPhoneCodes);
   const phoneCodeId = useSelector(selectPersonalDetailsPhoneCodeId);
   const [countryFlag, setCountryFlag] = useState(false);
-  const [field, meta, helper] = useField(props.name);
+  const [field, meta, helper] = useField(name);
   const [isVisible, setIsVisible] = useState(false);
   const positionRef = useRef(null);
   const { value } = field;
   const { setValue } = helper;
 
   useEffect(() => {
-    const foundPhoneCode = findPhoneCodeByCountryId(phoneCodes, countryId);
+    const splitCountryId = Number(countryId?.split('-')[0]);
+    const foundPhoneCode = findPhoneCodeByCountryId(phoneCodes, splitCountryId);
     if (foundPhoneCode && countryId) {
       setValue(foundPhoneCode.code);
-      setFieldValue('phoneCodeId', foundPhoneCode.id);
+      setFieldValue(name + 'Id', foundPhoneCode.id);
       setCountryFlag(foundPhoneCode.country.countryName);
     }
     if (!value && phoneCodes.length) {
@@ -71,7 +73,7 @@ export const SelectPhoneNumber = ({
     setIsVisible(false);
     setValue(value.code);
     setCountryFlag(value.country.countryName);
-    setFieldValue('phoneCodeId', value.id);
+    setFieldValue(name + 'Id', value.id);
   };
 
   return (

@@ -1,4 +1,4 @@
-@use '../../static/scss/variables';
+@import 'src/static/scss/variables';
 .wrapper {
     margin: 0 auto 260px;
     text-align: left;
@@ -23,7 +23,7 @@
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.3333;
-    color: variables.$text-primary-dark-blue;
+    color: $text-primary-dark-blue;
     @media (max-width: 1365px) {
         font-size: 1rem;
         line-height: 1.3125;
@@ -46,6 +46,7 @@
             row-gap: 20px;
             width: 100%;
         }
+
     }
     &__input {
         width: 100%;
@@ -67,7 +68,7 @@
             left: 50%;
             transform: translateX(-50%);
             column-gap: 12px;
-            background-color: variables.$background-main;
+            background-color: $background-main;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
             border-radius: 20px 20px 0px 0px;
         }
@@ -77,6 +78,12 @@
         @media (min-width: 1365.98px) {
             max-width: 192px;
         }
+    }
+
+    [data-hover='false']:hover ~ &__buttons button{
+        background-color: $button-hover;
+        animation: animationScaleButton 1s ease infinite;
+
     }
 }
 
@@ -91,3 +98,27 @@
         order: 3;
     }
 }
+
+@keyframes animationScaleButton {
+    0% {
+        transform: rotate(-1deg);
+    }
+    20% {
+        transform: rotate(10deg);
+    }
+    40% {
+        transform: rotate(-12deg);
+    }
+    60% {
+        transform: rotate(5deg);
+    }
+    90% {
+        transform: rotate(-1deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+
+
+

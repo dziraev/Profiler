@@ -6,6 +6,16 @@
   &__container {
     position: relative;
     display: flex;
+    &:hover {
+      .title {
+        color: $text-draft-hover;
+      }
+    }
+    &:active {
+      .title {
+        color: $text-draft-active;
+      }
+    }
   }
 
   &__dot {

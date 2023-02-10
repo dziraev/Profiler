@@ -59,7 +59,10 @@ module.exports = {
       '@cvCards': path.resolve(__dirname, 'src/components/cvCards'),
       '@validators': path.resolve(__dirname, 'src/utils/validators'),
       '@utils': path.resolve(__dirname, 'src/utils'),
-      '@types': path.resolve(__dirname, 'src/redux/types.js')
+      '@types': path.resolve(__dirname, 'src/redux/types.js'),
+      '@actions': path.resolve(__dirname, 'src/redux/actions.js'),
+      '@hoc': path.resolve(__dirname, 'src/hoc'),
+      '@configs': path.resolve(__dirname, 'src/configs')
     }
   },
   plugins: [

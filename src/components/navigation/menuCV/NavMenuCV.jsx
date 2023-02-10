@@ -1,8 +1,13 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { CvPaths } from '@configs/configs';
 import { useDispatch, useSelector } from 'react-redux';
-import { linkIsClicked } from '../../../redux/actions';
-import { selectIsDirtyFormCv } from '../../../pages/CVsteps/selectors';
+import { linkIsClicked } from '@actions';
+import { useUpdateFieldsConstructorCv } from '@hooks/useUpdateFieldsConstructorCv';
+import {
+  selectIsDirtyFormConstructorCv,
+  selectIsDirtyFormSpecificCv
+} from '../../../pages/CVsteps/selectors';
 import logo from '../../../static/images/menu-logo.svg';
 import styles from './NavMenuCV.module.scss';
 
@@ -10,14 +15,19 @@ const NavMenu = () => {
   const isActiveLink = ({ isActive }) => (isActive ? styles.active : '');
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const isDirtyFormCv = useSelector(selectIsDirtyFormCv);
+  const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
+  const isDirtyFormSpecificCv = useSelector(selectIsDirtyFormSpecificCv);
+  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
 
   const handleClick = (e) => {
     const href = e.currentTarget.getAttribute('href');
 
-    if (isDirtyFormCv && pathname !== href) {
+    if ((isDirtyFormConstructorCv || isDirtyFormSpecificCv) && pathname !== href) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
+    }
+    if (!isDirtyFormConstructorCv && href === CvPaths.INDEX) {
+      updateFieldsConstructorCv();
     }
   };
   return (
@@ -180,7 +190,7 @@ const NavMenu = () => {
             <p>Contacts</p>
           </div>
         </NavLink>
-        <NavLink to='/cv' onClick={handleClick} className={isActiveLink}>
+        <NavLink to='/cv/personal-info' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg

@@ -1,0 +1,181 @@
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
+
+.selectPhone {
+  font-family: "Red Hat Display";
+  user-select: none;
+  position: relative;
+  width: 100%;
+  &_adaptive {
+    &__container {
+      @media (max-width: 350px) {
+        flex-wrap: wrap;
+        row-gap: 20px;
+      }
+    }
+    &__select {
+      @media(max-width: 1365.98px) {
+        font-size: 1rem;
+        line-height: 1.5;
+        flex-basis: 120px;
+      }
+    }
+
+  }
+  &__container {
+    display: flex;
+    column-gap: 15px;
+    position: relative;
+  }
+  &__select {
+    position: relative;
+    flex: 1 0 130px;
+    height: 48px;
+    font-size: rem(18);
+    line-height: 1.333;
+    border-radius: 15px;
+    background-color: $input-background;
+    padding: rem(12) rem(13.5);
+    border: 1px solid transparent;
+    width: 100%;
+    font-weight: 400;
+    caret-color: $text-primary-blue;
+    color: $text-primary-dark-blue;
+    cursor: pointer;
+
+    &:hover, &:focus {
+      border-color: $input-stroke-active;
+    }
+  }
+  &__input {
+    width: 100%;
+  }
+  &__phoneCode {
+    display: flex;
+    align-items: center;
+    column-gap: 7.5px;
+    img {
+      border-radius: 3px;
+      max-height: 21px;
+      width: 100%;
+      max-width: 21px;
+    }
+  }
+  &__error {
+    border-color: $input-stroke-error;
+    &:hover {
+      border-color: $input-stroke-error;
+    }
+  }
+
+  &__dropdown {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    padding: 10px 6px;
+    max-height: 290px;
+    background-color: $background-main;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 4;
+    &_adaptive {
+      @media (min-width: 1365.98px) {
+        position: absolute;
+        z-index: 3;
+        top: 100%;
+        transform: translateY(10px);
+      }
+      @media (max-width: 1365.98px) {
+        margin-top: 10px;
+      }
+    }
+    &_notAdaptive {
+      position: absolute;
+      z-index: 3;
+      top: 100%;
+      transform: translateY(10px);
+    }
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 6px 9px 7.5px;
+    font-weight: 400;
+    font-size: rem(14);
+    line-height: 1.29;
+    color: $text-primary-dark-blue;
+    cursor: pointer;
+    &_active {
+      color: $text-primary-blue;
+    }
+    &:hover {
+      background-color: $input-background;
+      border-radius: 7px;
+    }
+    &:active {
+      color: $text-primary-blue;
+    }
+  }
+
+  &__line {
+    background-color: $input-background;
+    min-height: 1px;
+  }
+
+  &__countryName {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    img {
+      border-radius: 3px;
+      width: 100%;
+      max-width: 21px;
+    }
+  }
+
+  &__countryCode {
+
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: $text-primary-dark-blue;
+    padding: 6px 6px 8px;
+  }
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.333;
+  color: $text-primary-error;
+  &_adaptive {
+    @media (min-width: 1365.98px) {
+      align-items: flex-start;
+      transform: translateY(6px);
+      top: 100%;
+      position: absolute;
+    }
+    @media (max-width: 1365.98px) {
+      margin-top: 4px;
+    }
+  }
+  &_notAdaptive {
+    align-items: flex-start;
+    transform: translateY(6px);
+    top: 100%;
+    position: absolute;
+  }
+  svg {
+    flex: 0 0 14px;
+    margin-right: 5px;
+    height: 14px;
+  }
+}

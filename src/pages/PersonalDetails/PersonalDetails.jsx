@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { validatePersonalDetails } from '@validators/validatePersonalDetails';
 import { trimValues } from '@validators/validators';
 import { useDispatch } from 'react-redux';
 import {
   changeDirtyStatusFormPD,
+  linkIsNotClicked,
   personalDetailsUpdate,
-  updatePersonaInformationFromPD
-} from '../../redux/actions';
+  updatePIandContactsInConstructorCv
+} from '@actions';
 import { PopUpCancelChanges, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@components/popup';
 import {
   InputPersonalDetails,
@@ -18,7 +19,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Button, CancelButton } from '@components/buttons';
 import { Notification } from '@components/tooltip/Notification';
-import { getChangedValues } from '../../utils/getChangedValues';
+import { getChangedValues } from '@utils/getChangedValues';
+import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { usePersonalDetails } from '@hooks/usePersonalDetails';
 import $api from '../../http/api';
 import styles from './PersonalDetails.module.scss';
@@ -29,9 +31,13 @@ const PersonalDetails = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const [cancelIsClicked, setCancelIsClicked] = useState(false);
   const [countryId, setCountryId] = useState(null);
-  const { personalDetails, linkIsClicked } = usePersonalDetails();
-  const hrefLinkIsClicked = useRef(null);
-  hrefLinkIsClicked.current = linkIsClicked;
+  const personalDetails = usePersonalDetails();
+  const hrefLinkIsClicked = useLinkIsClicked();
+  const { current: linkIsClicked } = hrefLinkIsClicked;
+
+  if (personalDetails.isLoading) {
+    return;
+  }
 
   return (
     <section className={styles.wrapper}>
@@ -92,22 +98,31 @@ const PersonalDetails = (props) => {
           };
 
           try {
+            let data;
             if (!values.userInDB) {
-              const response = await $api.post('/profile', currentValues);
-              dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
+              ({ data } = await $api.post('/profile', currentValues));
+              dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
             } else {
               const changedValues = getChangedValues(currentValues, initialValues);
-              const response = await $api.put('/profile', changedValues);
-              dispatch(personalDetailsUpdate(values));
+              ({ data } = await $api.put('/profile', changedValues));
+              dispatch(personalDetailsUpdate(data));
             }
             dispatch(
-              updatePersonaInformationFromPD({
-                name: values.name,
-                surname: values.surname,
-                country: values.country,
-                countryId: values.countryId,
-                position: values.position,
-                positionId: values.positionId
+              updatePIandContactsInConstructorCv({
+                personalInformation: {
+                  name: data.name,
+                  surname: data.surname,
+                  country: data.country,
+                  countryId: data.countryId,
+                  position: data.position,
+                  positionId: data.positionId
+                },
+                contacts: {
+                  phoneCode: data.phoneCode,
+                  phoneCodeId: data.phoneCodeId,
+                  phoneNumber: data.cellPhone,
+                  email: data.email
+                }
               })
             );
           } catch (e) {
@@ -130,7 +145,7 @@ const PersonalDetails = (props) => {
         validate={validatePersonalDetails}
       >
         {(formik) => {
-          const { dirty, errors, isSubmitting, isValid, setFieldValue, status } = formik;
+          const { values, dirty, isSubmitting, isValid, setFieldValue, status } = formik;
 
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
@@ -139,7 +154,7 @@ const PersonalDetails = (props) => {
           return (
             <Form className={styles.form}>
               {dirty && !isValid && linkIsClicked && (
-                <PopUpStayOrLeave>
+                <PopUpStayOrLeave onClickStay={() => dispatch(linkIsNotClicked())}>
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -159,7 +174,7 @@ const PersonalDetails = (props) => {
                   Do you really want to cancel the changes?
                 </PopUpCancelChanges>
               )}
-              <div className={styles.form__inputs}>
+              <div data-hover={isEdit} className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails
                     name='name'
@@ -205,7 +220,6 @@ const PersonalDetails = (props) => {
                     disabled={!isEdit}
                     countryId={countryId}
                     setFieldValue={setFieldValue}
-                    setCountryId={setCountryId}
                   >
                     <InputPersonalDetails
                       name='cellPhone'
@@ -252,7 +266,7 @@ const PersonalDetails = (props) => {
                       <Button
                         type={isSubmitting ? 'button' : 'submit'}
                         disabled={!dirty}
-                        isLoading={isSubmitting}
+                        isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
                       >
                         Save
                       </Button>

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { linkIsClicked } from '../../../redux/actions';
-import { selectIsDirtyFormPD } from '../../../pages/PersonalDetails/selectors';
+import {
+  selectIsDirtyFormPD,
+  selectUniqueStudentIdentifier
+} from '../../../pages/PersonalDetails/selectors';
 import Logout from '../../links/Logout';
-import Photo from '../../photo/Photo';
+import PhotoCabinet from '../../photo/PhotoCabinet/PhotoCabinet';
 import styles from './NavMenu.module.scss';
 import logo from '../../../static/images/menu-logo.svg';
 import mobilelogo from '../../../static/images/menu-logo-mobile.svg';
@@ -12,7 +15,7 @@ import mobilelogo from '../../../static/images/menu-logo-mobile.svg';
 const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const [studentNumber, setStudentNumber] = useState('123455');
+  const uniqueStudentIdentifier = useSelector(selectUniqueStudentIdentifier);
   const isDirtyFormPD = useSelector(selectIsDirtyFormPD);
 
   const handleClick = (e) => {
@@ -56,12 +59,15 @@ const NavMenu = ({ menuIsOpen, closeMenu, ...props }) => {
         </div>
       </div>
       <div className={styles.sidebar__photo}>
-        <Photo page='cabinet' />
+        <PhotoCabinet />
       </div>
       <div className={styles.sidebar__number}>
-        <p>
-          Student’s number<span className={styles.sidebar__number__id}>{studentNumber}</span>
-        </p>
+        {!!uniqueStudentIdentifier && (
+          <p>
+            Student’s number
+            <span className={styles.sidebar__number__id}>{uniqueStudentIdentifier}</span>
+          </p>
+        )}
       </div>
       <nav className={styles.sidebar__nav}>
         <ul>
