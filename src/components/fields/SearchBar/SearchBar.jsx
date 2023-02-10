@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
+import { v4 as uuidv4 } from 'uuid';
 import { useField } from 'formik';
 import { debounce } from '@utils/debounce';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -85,7 +86,7 @@ export const SearchBar = ({
     setValue(value.countryName, true);
     setFieldValue('countryId', value.id);
     if (!!setCountryId) {
-      setCountryId(value.id + '-' + crypto.randomUUID());
+      setCountryId(value.id + '-' + uuidv4());
     }
     setDisplay(false);
   };
