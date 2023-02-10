@@ -20,7 +20,7 @@ import {
   linkIsNotClicked,
   updatePersonaInformationInSpecificCv
 } from '@actions';
-import PhotoCV from '@components/photo/PhotoCV/PhotoCV';
+import PhotoCV from '@components/photo/photoCV/PhotoCV';
 import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';

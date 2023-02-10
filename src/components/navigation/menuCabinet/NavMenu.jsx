@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { linkIsClicked } from '../../../redux/actions';
+import { linkIsClicked } from '@actions';
 import {
   selectIsDirtyFormPD,
   selectUniqueStudentIdentifier
 } from '../../../pages/PersonalDetails/selectors';
 import Logout from '../../links/Logout';
-import PhotoCabinet from '../../photo/PhotoCabinet/PhotoCabinet';
+import PhotoCabinet from '../../photo/photoCabinet/PhotoCabinet';
 import styles from './NavMenu.module.scss';
 import logo from '../../../static/images/menu-logo.svg';
 import mobilelogo from '../../../static/images/menu-logo-mobile.svg';
