@@ -105,7 +105,7 @@ export function authInAndPersonalDetailsLoad() {
       );
       dispatch(authIn());
     } catch (e) {
-      if (e.response && e.response.status === 404) {
+      if (e?.response?.status === 404) {
         dispatch(authIn());
       }
       console.log(e);
@@ -388,7 +388,7 @@ export function getPersonalInformationInSpecificCv(uuid) {
         })
       );
     } catch (e) {
-      if (e?.response?.data?.statusCode === 404) {
+      if (e?.response?.status === 404) {
         dispatch(specificCvNotFound());
       }
     } finally {
@@ -402,9 +402,8 @@ export function getContactsSpecificCv(uuid) {
     try {
       dispatch(specificCvLoadingOn());
 
-      const response = await $api.get('cvs/' + uuid + '/contacts');
-      if (response) {
-        const { data } = response;
+      const { data, status } = await $api.get('cvs/' + uuid + '/contacts');
+      if (status === 200) {
         dispatch(
           updateContactsInSpecificCv({
             contacts: data,
@@ -413,8 +412,8 @@ export function getContactsSpecificCv(uuid) {
         );
       }
     } catch (e) {
-      if (e?.response?.data?.statusCode === 404) {
-        dispatch(specificCvNotFound);
+      if (e?.response?.status === 404) {
+        dispatch(specificCvNotFound());
       }
       console.log(e);
     } finally {

@@ -37,6 +37,7 @@ export const Contacts = () => {
     btnNextIsClicked: false,
     btnBackIsClicked: false
   });
+
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
   const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
@@ -378,7 +379,12 @@ export const Contacts = () => {
                       })}
                     {...(!isContactsExists &&
                       !isSubmitting && { onClick: () => navigate('../personal-info/' + uuid) })}
-                    isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
+                    isLoading={
+                      !status?.errorResponse &&
+                      !linkIsClicked &&
+                      isSubmitting &&
+                      !buttonStatus.btnNextIsClicked
+                    }
                   >
                     Back
                   </CancelButton>
@@ -398,7 +404,12 @@ export const Contacts = () => {
                         type: 'button',
                         onClick: () => navigate('../about-yourself/' + uuid)
                       })}
-                    isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
+                    isLoading={
+                      !status?.errorResponse &&
+                      !linkIsClicked &&
+                      isSubmitting &&
+                      !buttonStatus.btnBackIsClicked
+                    }
                   >
                     Next
                   </Button>

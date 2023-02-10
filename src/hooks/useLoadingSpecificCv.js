@@ -11,6 +11,6 @@ export const useLoadingSpecificCv = () => {
     if (notFound) {
       navigate('/main/my-cv');
     }
-  });
+  }, [notFound]);
   return isLoading;
 };

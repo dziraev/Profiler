@@ -29,7 +29,7 @@ export const useContacts = () => {
         dispatch(resetDirtyStatusInConstructorCv());
       }
     };
-  }, []);
+  }, [isContactsExists]);
 
   if (isContactsExists) {
     return {

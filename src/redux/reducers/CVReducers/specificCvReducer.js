@@ -92,14 +92,10 @@ export const specificCvReducer = (state = initialState, action) => {
         ...action.data.extraFields
       };
     case UPDATE_CONTACTS_IN_SPECIFIC_CV:
-      const values = nullToEmptyString(action.data.contacts);
+      const values = nullToEmptyString(action.data);
       return {
         ...state,
-        contacts: {
-          ...state.contacts,
-          ...values
-        },
-        isContactsExists: action.data.isContactsExists
+        ...values
       };
     case UPDATE_PHOTO_IN_SPECIFIC_CV:
       return {
