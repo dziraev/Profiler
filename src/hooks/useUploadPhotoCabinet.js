@@ -12,10 +12,11 @@ import {
 import { selectPersonalDetails } from '../pages/PersonalDetails/selectors';
 import photoapi from '../http/photoapi';
 import $api from '../http/api';
+import { getChangedValues } from '@utils/getChangedValues';
 
 export const useUploadPhotoCabinet = (file) => {
   const dispatch = useDispatch();
-  const personalDetails = useSelector(selectPersonalDetails);
+  const PD = useSelector(selectPersonalDetails);
   return async (file) => {
     dispatch(photoFailedCabinet(file));
     try {
@@ -23,22 +24,35 @@ export const useUploadPhotoCabinet = (file) => {
         image: file
       });
       dispatch(photoUpdateCabinet(response.data.uuid));
-      const values = {
-        name: personalDetails.name || null,
-        surname: personalDetails.surname || null,
-        countryId: personalDetails.countryId || null,
-        email: personalDetails.email || null,
-        phoneCodeId: personalDetails.phoneCodeId || 1,
-        cellPhone: personalDetails.cellPhone || null,
-        positionId: personalDetails.positionId || null,
+      const initialValues = {
+        name: PD.name,
+        surname: PD.surname,
+        countryId: PD.countryId,
+        email: PD.email,
+        phoneCodeId: PD.phoneCodeId,
+        cellPhone: PD.cellPhone,
+        positionId: PD.positionId,
+        profileImageUuid: PD.profileImageUuid
+      };
+
+      const currentValues = {
+        name: PD.name || null,
+        surname: PD.surname || null,
+        countryId: PD.countryId || null,
+        email: PD.email || null,
+        phoneCodeId: PD.phoneCodeId || 1,
+        cellPhone: PD.cellPhone || null,
+        positionId: PD.positionId || null,
         profileImageUuid: response.data.uuid
       };
-      if (!personalDetails.userInDB) {
+
+      if (!PD.userInDB) {
         const response = await $api.post('/profile', values);
-        dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
+        dispatch(personalDetailsUpdate({ ...currentValues, userInDB: true }));
       } else {
-        const response = await $api.put('/profile', { profileImageUuid: values.profileImageUuid });
-        dispatch(personalDetailsUpdate(values));
+        const changedValues = getChangedValues(currentValues, initialValues);
+        const { data } = await $api.put('/profile', changedValues);
+        dispatch(personalDetailsUpdate(data));
       }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(closePhotoModal());

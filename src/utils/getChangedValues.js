@@ -7,9 +7,13 @@ export const getChangedValues = (values, initialValues) => {
 
     const hasChanged = initialValues[key] !== value;
 
-    if (hasChanged && value === null) {
+    if (value === null) {
       return values;
     }
+
+    // if (hasChanged && value === null) {
+    //   return values;
+    // }
 
     if (hasChanged) {
       acc[key] = value;
