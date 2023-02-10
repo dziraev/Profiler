@@ -190,7 +190,7 @@ const NavMenu = () => {
             <p>Contacts</p>
           </div>
         </NavLink>
-        <NavLink to='/cv' onClick={handleClick} className={isActiveLink}>
+        <NavLink to='/cv/personal-info' onClick={handleClick} className={isActiveLink}>
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
               <svg

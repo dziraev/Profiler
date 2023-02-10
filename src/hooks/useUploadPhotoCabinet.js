@@ -15,9 +15,9 @@ import $api from '../http/api';
 
 export const useUploadPhotoCabinet = (file) => {
   const dispatch = useDispatch();
-  dispatch(photoFailedCabinet(file));
   const personalDetails = useSelector(selectPersonalDetails);
   return async (file) => {
+    dispatch(photoFailedCabinet(file));
     try {
       const response = await photoapi.post('/images', {
         image: file

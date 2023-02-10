@@ -14,9 +14,9 @@ import photoapi from '../http/photoapi';
 
 export const useUploadPhotoCV = (file) => {
   const dispatch = useDispatch();
-  dispatch(photoFailedCV(file));
   const { uuid } = useParams();
   return async (file) => {
+    dispatch(photoFailedCV(file));
     try {
       const response = await photoapi.post('/images', {
         image: file

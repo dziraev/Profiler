@@ -13,9 +13,9 @@ import photoapi from '../http/photoapi';
 
 export const useChangePhotoCabinet = (file) => {
   const dispatch = useDispatch();
-  dispatch(photoFailedCabinet(file));
   const personalDetails = useSelector(selectPersonalDetails);
   return async (file) => {
+    dispatch(photoFailedCabinet(file));
     try {
       const response = await photoapi.put(`/images/${personalDetails.profileImageUuid}`, {
         image: file

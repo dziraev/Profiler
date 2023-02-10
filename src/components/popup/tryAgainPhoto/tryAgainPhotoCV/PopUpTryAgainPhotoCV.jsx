@@ -27,6 +27,7 @@ export const PopUpTryAgainPhotoCV = ({
     dispatch(savedSuccessfully());
   };
   const saveFile = (e) => {
+    if (isLoading) return;
     setIsLoading(true);
     image ? changeFile(file) : sendFile(file);
   };
