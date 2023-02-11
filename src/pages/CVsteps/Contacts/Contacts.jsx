@@ -374,7 +374,6 @@ export const Contacts = () => {
                     {...(isContactsExists &&
                       !dirty &&
                       !isSubmitting && {
-                        type: 'submit',
                         onClick: () => navigate('../personal-info/' + uuid)
                       })}
                     {...(!isContactsExists &&

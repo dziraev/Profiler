@@ -111,7 +111,10 @@ export const PersonalInformation = () => {
           setValues,
           errors
         }) => {
-          const { uuid } = values;
+          const { uuid, imageUuid } = values;
+
+          const isImageUuidChanged = personalInformation.imageUuid !== imageUuid;
+
           useEffect(() => {
             if (uuid) {
               dispatch(changeDirtyStatusInSpecificCv(dirty));
@@ -330,6 +333,12 @@ export const PersonalInformation = () => {
                         onClick: () => navigate('../contacts/' + uuid)
                       })}
                     {...(dirty &&
+                      !isSubmitting && {
+                        type: 'submit',
+                        onClick: () => setBtnNextIsClicked(true)
+                      })}
+                    {...(uuid &&
+                      isImageUuidChanged &&
                       !isSubmitting && {
                         type: 'submit',
                         onClick: () => setBtnNextIsClicked(true)
