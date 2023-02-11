@@ -47,7 +47,7 @@ export const useUploadPhotoCabinet = (file) => {
       };
 
       if (!PD.userInDB) {
-        const response = await $api.post('/profile', values);
+        const response = await $api.post('/profile', currentValues);
         dispatch(personalDetailsUpdate({ ...currentValues, userInDB: true }));
       } else {
         const changedValues = getChangedValues(currentValues, initialValues);
