@@ -332,7 +332,7 @@ export const PersonalInformation = () => {
                       !isSubmitting && {
                         onClick: () => navigate('../contacts/' + uuid)
                       })}
-                    {...(dirty &&
+                    {...((dirty || !uuid) &&
                       !isSubmitting && {
                         type: 'submit',
                         onClick: () => setBtnNextIsClicked(true)
