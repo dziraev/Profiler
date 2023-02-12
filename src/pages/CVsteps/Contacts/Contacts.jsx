@@ -13,6 +13,7 @@ import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
+import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
@@ -87,23 +88,23 @@ export const Contacts = () => {
             } else if (uuid && buttonStatus.btnBackIsClicked) {
               navigate('../personal-info/' + uuid);
             }
+
             setButtonStatus({
               btnNextIsClicked: false,
               btnBackIsClicked: false
             });
+
+            if (linkIsClicked) {
+              navigationLinkPopUp(linkIsClicked, dispatch, navigate);
+            }
           } catch (e) {
             setStatus({ errorResponse: true });
           }
         }}
         onReset={() => {
           const { current } = hrefLinkIsClicked;
-          if (current && current === '/auth') {
-            localStorage.removeItem('token');
-            dispatch({ type: 'USER_LOGOUT' });
-            navigate(current);
-          }
-          if (current && current !== '/auth') {
-            navigate(current);
+          if (current) {
+            navigationLinkPopUp(current, dispatch, navigate);
           }
         }}
       >

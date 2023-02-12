@@ -13,6 +13,7 @@ import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
 import { useLoadingConstructorCv } from '@hooks/useLoadingConstructorCv';
 import { useNavigate, useParams } from 'react-router-dom';
+import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import { InputCv } from '@hoc/InputCv';
 import {
   changeDirtyStatusInConstructorCv,
@@ -80,6 +81,10 @@ export const PersonalInformation = () => {
             if (data.uuid && btnNextIsClicked) {
               navigate('../contacts/' + data.uuid);
             }
+
+            if (linkIsClicked) {
+              navigationLinkPopUp(linkIsClicked, dispatch, navigate);
+            }
           } catch (e) {
             setStatus({ errorResponse: true });
           } finally {
@@ -88,13 +93,8 @@ export const PersonalInformation = () => {
         }}
         onReset={() => {
           const { current } = hrefLinkIsClicked;
-          if (current && current === '/auth') {
-            localStorage.removeItem('token');
-            dispatch({ type: 'USER_LOGOUT' });
-            navigate(current);
-          }
-          if (current && current !== '/auth') {
-            navigate(current);
+          if (current) {
+            navigationLinkPopUp(current, dispatch, navigate);
           }
         }}
       >
