@@ -15,10 +15,6 @@ const Logout = (props) => {
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
   const isDirtyFormSpecificCv = useSelector(selectIsDirtyFormSpecificCv);
   const handleClick = (e) => {
-    if (props.menuIsOpen) {
-      e.preventDefault();
-      props.closeMenu();
-    }
     if (isDirtyFormPD || isDirtyFormConstructorCv || isDirtyFormSpecificCv) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));

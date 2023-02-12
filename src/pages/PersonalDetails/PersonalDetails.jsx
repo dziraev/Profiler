@@ -75,17 +75,6 @@ const PersonalDetails = (props) => {
         onSubmit={async (formikValues, { setStatus }) => {
           const values = trimValues(formikValues, true);
 
-          const initialValues = {
-            name: personalDetails.name,
-            surname: personalDetails.surname,
-            countryId: personalDetails.countryId,
-            email: personalDetails.email,
-            phoneCodeId: personalDetails.phoneCodeId,
-            cellPhone: personalDetails.cellPhone,
-            positionId: personalDetails.positionId,
-            profileImageUuid: personalDetails.profileImageUuid
-          };
-
           const currentValues = {
             name: values.name,
             surname: values.surname,
@@ -98,30 +87,28 @@ const PersonalDetails = (props) => {
           };
 
           try {
-            let data;
             if (!values.userInDB) {
-              ({ data } = await $api.post('/profile', currentValues));
-              dispatch(personalDetailsUpdate({ ...data, userInDB: true }));
+              const response = await $api.post('/profile', currentValues);
+              dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
             } else {
-              const changedValues = getChangedValues(currentValues, initialValues);
-              ({ data } = await $api.put('/profile', changedValues));
-              dispatch(personalDetailsUpdate(data));
+              const response = await $api.put('/profile', currentValues);
+              dispatch(personalDetailsUpdate(values));
             }
             dispatch(
               updatePIandContactsInConstructorCv({
                 personalInformation: {
-                  name: data.name,
-                  surname: data.surname,
-                  country: data.country,
-                  countryId: data.countryId,
-                  position: data.position,
-                  positionId: data.positionId
+                  name: values.name,
+                  surname: values.surname,
+                  country: values.country,
+                  countryId: values.countryId,
+                  position: values.position,
+                  positionId: values.positionId
                 },
                 contacts: {
-                  phoneCode: data.phoneCode,
-                  phoneCodeId: data.phoneCodeId,
-                  phoneNumber: data.cellPhone,
-                  email: data.email
+                  phoneCode: values.phoneCode,
+                  phoneCodeId: values.phoneCodeId,
+                  phoneNumber: values.cellPhone,
+                  email: values.email
                 }
               })
             );

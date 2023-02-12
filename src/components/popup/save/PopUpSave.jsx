@@ -1,10 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { linkIsNotClicked } from '../../../redux/actions';
+import { linkIsNotClicked } from '@actions';
 import { Button, CancelButton } from '@components/buttons';
 import { useDisableBodyScroll } from '@hooks/useDisableBodyScroll';
 import { selectLinkIsClicked } from '../../../pages/PersonalDetails/selectors';
+import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import classnames from 'classnames/bind';
 import styles from '../PopUp.module.scss';
 
@@ -43,14 +44,10 @@ export const PopUpSave = ({
                 adaptive={adaptive}
                 {...(!isSubmitting && {
                   onClick: () => {
-                    if (linkIsClicked === '/auth') {
-                      localStorage.removeItem('token');
-                      dispatch({ type: 'USER_LOGOUT' });
-                    }
+                    navigationLinkPopUp(linkIsClicked, dispatch, navigate);
                     if (onClickDontSave) {
                       onClickDontSave();
                     }
-                    navigate(linkIsClicked);
                   }
                 })}
               >

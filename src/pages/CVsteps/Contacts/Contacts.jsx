@@ -8,11 +8,16 @@ import { Button, CancelButton } from '@buttonsLarge';
 import { validateContacts } from '@validators/validateContacts';
 import { trimValues } from '@validators/validators';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
-import { useContacts } from '@hooks/useContacts';
-import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
-import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
+import {
+  useContacts,
+  useLinkIsClicked,
+  useLoadingSpecificCv,
+  useUpdateFieldsConstructorCv,
+  useLoadingConstructorCv
+} from '@hooks';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
+import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
@@ -24,8 +29,6 @@ import {
 import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
-import { useLoadingConstructorCv } from '@hooks/useLoadingConstructorCv';
-import { useUpdateFieldsConstructorCv } from '@hooks/useUpdateFieldsConstructorCv';
 
 export const Contacts = () => {
   const { uuid } = useParams();
@@ -87,23 +90,23 @@ export const Contacts = () => {
             } else if (uuid && buttonStatus.btnBackIsClicked) {
               navigate('../personal-info/' + uuid);
             }
+
             setButtonStatus({
               btnNextIsClicked: false,
               btnBackIsClicked: false
             });
+
+            if (linkIsClicked) {
+              navigationLinkPopUp(linkIsClicked, dispatch, navigate);
+            }
           } catch (e) {
             setStatus({ errorResponse: true });
           }
         }}
         onReset={() => {
           const { current } = hrefLinkIsClicked;
-          if (current && current === '/auth') {
-            localStorage.removeItem('token');
-            dispatch({ type: 'USER_LOGOUT' });
-            navigate(current);
-          }
-          if (current && current !== '/auth') {
-            navigate(current);
+          if (current) {
+            navigationLinkPopUp(current, dispatch, navigate);
           }
         }}
       >
@@ -319,8 +322,8 @@ export const Contacts = () => {
                       name='skype'
                       adaptive={false}
                       maxLength={50}
-                      label='Enter your Skype'
-                      activeLabel='Enter your Skype'
+                      label='Enter your Skype login'
+                      activeLabel='Enter your Skype login'
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
@@ -374,7 +377,6 @@ export const Contacts = () => {
                     {...(isContactsExists &&
                       !dirty &&
                       !isSubmitting && {
-                        type: 'submit',
                         onClick: () => navigate('../personal-info/' + uuid)
                       })}
                     {...(!isContactsExists &&

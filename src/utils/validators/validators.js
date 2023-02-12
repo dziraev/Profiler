@@ -13,7 +13,7 @@ export const trimValues = (object, replaceToNull = false) => {
 export const emailValidator = (value) => {
   let email = value.trim();
   const EMAIL_REGEXP =
-    /^[a-zA-Z0-9]+([!"#$%&'()*+,\-.\/:;<=>?[\]\\^_{}][a-z0-9]+)*@([a-z0-9]+(-[a-z0-9]+)?)(\.[a-z]{2,})+$/iu;
+    /^[a-zA-Z0-9]+([!"#$%&'()*+,\-.\/:;<=>?[\]\\^_{}][a-zA-Z0-9]+)*@([a-zA-Z0-9]+(-[a-zA-Z0-9]+)?)(\.[a-z]{2,})+$/u;
   return EMAIL_REGEXP.test(email);
 };
 
