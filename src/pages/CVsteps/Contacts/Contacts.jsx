@@ -8,9 +8,13 @@ import { Button, CancelButton } from '@buttonsLarge';
 import { validateContacts } from '@validators/validateContacts';
 import { trimValues } from '@validators/validators';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
-import { useContacts } from '@hooks/useContacts';
-import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
-import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
+import {
+  useContacts,
+  useLinkIsClicked,
+  useLoadingSpecificCv,
+  useUpdateFieldsConstructorCv,
+  useLoadingConstructorCv
+} from '@hooks';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
 import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
@@ -25,8 +29,6 @@ import {
 import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
-import { useLoadingConstructorCv } from '@hooks/useLoadingConstructorCv';
-import { useUpdateFieldsConstructorCv } from '@hooks/useUpdateFieldsConstructorCv';
 
 export const Contacts = () => {
   const { uuid } = useParams();

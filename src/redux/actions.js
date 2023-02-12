@@ -411,6 +411,13 @@ export function getContactsSpecificCv(uuid) {
           })
         );
       }
+      if (status === 204) {
+        dispatch(
+          updateContactsInSpecificCv({
+            isContactsExists: false
+          })
+        );
+      }
     } catch (e) {
       if (e?.response?.status === 404) {
         dispatch(specificCvNotFound());
