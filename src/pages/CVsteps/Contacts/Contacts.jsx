@@ -319,8 +319,8 @@ export const Contacts = () => {
                       name='skype'
                       adaptive={false}
                       maxLength={50}
-                      label='Enter your Skype'
-                      activeLabel='Enter your Skype'
+                      label='Enter your Skype login'
+                      activeLabel='Enter your Skype login'
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
