@@ -24,16 +24,6 @@ export const useUploadPhotoCabinet = (file) => {
         image: file
       });
       dispatch(photoUpdateCabinet(response.data.uuid));
-      const initialValues = {
-        name: PD.name,
-        surname: PD.surname,
-        countryId: PD.countryId,
-        email: PD.email,
-        phoneCodeId: PD.phoneCodeId,
-        cellPhone: PD.cellPhone,
-        positionId: PD.positionId,
-        profileImageUuid: PD.profileImageUuid
-      };
 
       const currentValues = {
         name: PD.name || null,
@@ -50,9 +40,8 @@ export const useUploadPhotoCabinet = (file) => {
         const response = await $api.post('/profile', currentValues);
         dispatch(personalDetailsUpdate({ ...currentValues, userInDB: true }));
       } else {
-        const changedValues = getChangedValues(currentValues, initialValues);
-        const { data } = await $api.put('/profile', changedValues);
-        dispatch(personalDetailsUpdate(data));
+        const response = await $api.put('/profile', currentValues);
+        dispatch(personalDetailsUpdate(currentValues));
       }
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(closePhotoModal());
