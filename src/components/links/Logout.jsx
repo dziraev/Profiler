@@ -18,6 +18,7 @@ const Logout = (props) => {
     if (isDirtyFormPD || isDirtyFormConstructorCv || isDirtyFormSpecificCv) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
+      props.closeMenu();
     } else {
       localStorage.removeItem('token');
       dispatch({ type: 'USER_LOGOUT' });
