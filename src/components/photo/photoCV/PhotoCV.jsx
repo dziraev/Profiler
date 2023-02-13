@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
+  deletePhotoInConstructorCv,
   openPhotoModal,
   photoUpdateCV,
   photoUploadCV,
-  updatePersonaInformationInSpecificCv,
-  updatePIandContactsInConstructorCv
-} from '../../../redux/actions';
+  updatePersonaInformationInSpecificCv
+} from '@actions';
 import { selectPersonalDetails } from '../../../pages/PersonalDetails/selectors';
+import { trimValues } from '@validators/validators';
 import photoapi from '../../../http/photoapi';
 import $api from '../../../http/api';
 import styles from './PhotoCV.module.scss';
 import stylesLoader from '../../buttons/Loader.module.scss';
-import { trimValues } from '@validators/validators';
 
 const PhotoCV = (props) => {
   const dispatch = useDispatch();
@@ -30,8 +30,10 @@ const PhotoCV = (props) => {
   useEffect(() => {
     dispatch(photoUploadCV(null));
     if (uuid) {
-      if (!personalInformationSpecific.isLoading && personalInformationSpecific.imageUuid) getFile();
-      if (!personalInformationSpecific.isLoading && !personalInformationSpecific.imageUuid) setIsLoading(false);
+      if (!personalInformationSpecific.isLoading && personalInformationSpecific.imageUuid)
+        getFile();
+      if (!personalInformationSpecific.isLoading && !personalInformationSpecific.imageUuid)
+        setIsLoading(false);
     } else {
       if (!personalDetails.isLoading && personalDetails.profileImageUuid) uploadFile();
       if (!personalDetails.isLoading && !personalDetails.profileImageUuid) setIsLoading(false);
@@ -88,7 +90,7 @@ const PhotoCV = (props) => {
         dispatch(updatePersonaInformationInSpecificCv({ personalInformation: values }));
       } else {
         //const response = await $api.post(`/cvs/`, trimmedValues);
-        dispatch(updatePIandContactsInConstructorCv({ personalInformation: values }));
+        dispatch(deletePhotoInConstructorCv());
       }
       dispatch(photoUploadCV(''));
     } catch (e) {

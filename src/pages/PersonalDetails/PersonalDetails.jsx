@@ -19,7 +19,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Button, CancelButton } from '@components/buttons';
 import { Notification } from '@components/tooltip/Notification';
-import { getChangedValues } from '@utils/getChangedValues';
 import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { usePersonalDetails } from '@hooks/usePersonalDetails';
 import $api from '../../http/api';
