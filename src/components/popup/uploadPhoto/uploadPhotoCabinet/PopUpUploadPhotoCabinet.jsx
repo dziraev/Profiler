@@ -83,18 +83,20 @@ export const PopUpUploadPhotoCabinet = () => {
                 alt='preview image'
               />
             )}
-            <div className={styles.loader}>
-              {isLoading && !image && (
-                <div className={styles.loader__empty}>
-                  <span className={`${stylesLoader.loader} ${stylesLoader.loader_borderColor}`} />
-                </div>
-              )}
-              {isLoading && image && (
-                <div className={styles.loader__blur}>
-                  <span className={`${stylesLoader.loader} ${stylesLoader.loader_borderColor}`} />
-                </div>
-              )}
-            </div>
+            {isLoading && (
+              <div className={styles.loader}>
+                {!image && (
+                  <div className={styles.loader__empty}>
+                    <span className={`${stylesLoader.loader} ${stylesLoader.loader_borderColor}`} />
+                  </div>
+                )}
+                {image && (
+                  <div className={styles.loader__blur}>
+                    <span className={`${stylesLoader.loader} ${stylesLoader.loader_borderColor}`} />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <p className={styles.modal__content__subtitle}>
             Acceptable formats: <span>jpeg, jpg, png</span>. Allowed size up to <span>5 MB</span>.

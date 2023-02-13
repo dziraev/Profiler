@@ -3,6 +3,7 @@ import {
   CLEAR_FIELDS_IN_CONTACTS_CONSTRUCTOR_CV,
   CONSTRUCTOR_CV_LOADING_OFF,
   CONSTRUCTOR_CV_LOADING_ON,
+  DELETE_PHOTO_IN_CONSTRUCTOR_CV,
   PHOTO_UPDATE_CV,
   RESET_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
   UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV,
@@ -90,6 +91,14 @@ export const constructorCvReducer = (state = initialState, action) => {
         personalInformation: {
           ...state.personalInformation,
           imageUuid: action.data
+        }
+      };
+    case DELETE_PHOTO_IN_CONSTRUCTOR_CV:
+      return {
+        ...state,
+        personalInformation: {
+          ...state.personalInformation,
+          imageUuid: null
         }
       };
     case UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV:

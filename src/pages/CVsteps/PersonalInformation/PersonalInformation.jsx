@@ -59,7 +59,7 @@ export const PersonalInformation = () => {
           const { uuid } = values;
 
           const currentValues = {
-            imageUuid: personalInformation.imageUuid,
+            imageUuid: personalInformation.imageUuid || null,
             name: values.name,
             surname: values.surname,
             positionId: values.positionId,

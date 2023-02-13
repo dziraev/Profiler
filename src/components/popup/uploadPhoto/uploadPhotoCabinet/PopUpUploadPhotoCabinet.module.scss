@@ -315,6 +315,7 @@
             height: 100%;
             padding: 53px;
             border-radius: 50%;
+            border: variables.$text-primary-blue solid 1px;
         }
         &__blur {
             background: transparent;
