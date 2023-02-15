@@ -41,14 +41,15 @@ export const SelectPhoneNumber = ({
       setValue(foundPhoneCode.code);
       setFieldValue(name + 'Id', foundPhoneCode.id);
       setCountryFlag(foundPhoneCode.country.countryName);
-    } else if (splitCountryId === 'None' && phoneCodes.length) {
+    } else if (splitCountryId === 'None' && phoneCodes.length && phoneCodes[0].code !== value) {
+      //condition phoneCodes[0].code !== value means don't call this block once again if the phone code is already equal to the default one
       setValue(phoneCodes[0].code);
       setFieldValue(name + 'Id', phoneCodes[0].id);
       setCountryFlag(phoneCodes[0].country.countryName);
     } else if (!value && phoneCodes.length) {
       dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
       setCountryFlag(phoneCodes[0].country.countryName);
-    } else if (value && phoneCodes.length) {
+    } else if (value && phoneCodes.length && !countryId) {
       const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
       setCountryFlag(countryFlag);
     }
