@@ -63,7 +63,10 @@ export const SearchBar = ({
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       country.current = e.target.value;
-      setFieldValue('countryId', null);
+      setFieldValue('countryId', '');
+      if (!!setCountryId) {
+        setCountryId('None' + '-' + uuidv4());
+      }
     }
     field.onChange(e);
     updateSearchValue(e.target.value);
@@ -138,11 +141,10 @@ export const SearchBar = ({
             dataResult_adaptive: adaptive,
             dataResult_notAdaptive: !adaptive
           })}
+          onMouseDown={(e) => e.preventDefault()}
         >
           {filteredCountries.length === 0 ? (
-            <div className={styles.dataResult__notFound} onMouseDown={(e) => e.preventDefault()}>
-              Country no found
-            </div>
+            <div className={styles.dataResult__notFound}>Country no found</div>
           ) : (
             filteredCountries.map((value) => (
               <div
