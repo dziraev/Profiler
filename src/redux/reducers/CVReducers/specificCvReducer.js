@@ -1,13 +1,12 @@
 import {
   CHANGE_DIRTY_STATUS_IN_SPECIFIC_CV,
+  DELETE_PHOTO_IN_SPECIFIC_CV,
   RESET_DIRTY_STATUS_IN_SPECIFIC_CV,
   SPECIFIC_CV_LOADING_OFF,
   SPECIFIC_CV_LOADING_ON,
   SPECIFIC_CV_NOT_FOUND_BY_UUID,
   SPECIFIC_CV_NOT_FOUND_RESET,
-  UPDATE_CONTACTS_IN_SPECIFIC_CV,
-  UPDATE_EXTRA_FIELDS_IN_SPECIFIC_CV,
-  UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
+  UPDATE_FIELDS_IN_SPECIFIC_CV,
   UPDATE_PHOTO_IN_SPECIFIC_CV
 } from '@types';
 import { nullToEmptyString } from '@utils/nullToEmptyString';
@@ -17,6 +16,7 @@ const initialState = {
   notFound: false,
   isDirtyFormCv: false,
   isContactsExists: false,
+  isAboutYourselfExists: false,
   personalInformation: {
     uuid: '',
     imageUuid: '',
@@ -38,6 +38,10 @@ const initialState = {
     skype: '',
     linkedin: '',
     portfolio: ''
+  },
+  aboutYourself: {
+    description: '',
+    selfPresentation: ''
   }
 };
 
@@ -77,21 +81,7 @@ export const specificCvReducer = (state = initialState, action) => {
         notFound: false
       };
     }
-    case UPDATE_EXTRA_FIELDS_IN_SPECIFIC_CV:
-      return {
-        ...state,
-        ...action.data
-      };
-    case UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV:
-      return {
-        ...state,
-        personalInformation: {
-          ...state.personalInformation,
-          ...action.data.personalInformation
-        },
-        ...action.data.extraFields
-      };
-    case UPDATE_CONTACTS_IN_SPECIFIC_CV:
+    case UPDATE_FIELDS_IN_SPECIFIC_CV:
       const values = nullToEmptyString(action.data);
       return {
         ...state,
@@ -103,6 +93,14 @@ export const specificCvReducer = (state = initialState, action) => {
         personalInformation: {
           ...state.personalInformation,
           imageUuid: action.data
+        }
+      };
+    case DELETE_PHOTO_IN_SPECIFIC_CV:
+      return {
+        ...state,
+        personalInformation: {
+          ...state.personalInformation,
+          imageUuid: null
         }
       };
     default:

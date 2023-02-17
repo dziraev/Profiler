@@ -2,44 +2,42 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import {
-  getContactsSpecificCv,
+  getAboutYourselfSpecificCv,
   linkIsNotClicked,
-  phoneCodesLoad,
   resetDirtyStatusInConstructorCv,
   resetDirtyStatusInSpecificCv
 } from '@actions';
 import {
-  selectContactsFromConstructorCv,
-  selectContactsFromSpecificCv,
-  selectIsContactsExists
+  selectAboutYourselfFromConstructorCv,
+  selectAboutYourselfFromSpecificCv,
+  selectIsAboutYourselfExists
 } from '@cvSteps/selectors';
 
-export const useContacts = () => {
+export const useAboutYourself = () => {
   const { uuid } = useParams();
   const dispatch = useDispatch();
-  const isContactsExists = useSelector(selectIsContactsExists);
+  const isAboutYourselfExists = useSelector(selectIsAboutYourselfExists);
   useEffect(() => {
-    dispatch(phoneCodesLoad());
-    dispatch(getContactsSpecificCv(uuid));
+    // dispatch(getAboutYourselfSpecificCv(uuid));
     return () => {
       dispatch(linkIsNotClicked());
-      if (isContactsExists) {
+      if (isAboutYourselfExists) {
         dispatch(resetDirtyStatusInSpecificCv());
       } else {
         dispatch(resetDirtyStatusInConstructorCv());
       }
     };
-  }, [isContactsExists]);
+  }, [isAboutYourselfExists]);
 
-  if (isContactsExists) {
+  if (false) {
     return {
-      contacts: useSelector(selectContactsFromSpecificCv),
-      isContactsExists
+      aboutYourself: useSelector(selectAboutYourselfFromSpecificCv),
+      isAboutYourselfExists
     };
   } else {
     return {
-      contacts: useSelector(selectContactsFromConstructorCv),
-      isContactsExists
+      aboutYourself: useSelector(selectAboutYourselfFromConstructorCv),
+      isAboutYourselfExists
     };
   }
 };

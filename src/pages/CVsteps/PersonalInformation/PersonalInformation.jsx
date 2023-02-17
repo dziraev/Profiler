@@ -19,8 +19,9 @@ import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
   linkIsNotClicked,
-  updatePersonaInformationInSpecificCv
+  updateFieldsInSpecificCv
 } from '@actions';
+import { CvPaths } from '@configs/configs';
 import PhotoCV from '@components/photo/photoCV/PhotoCV';
 import cx from 'classnames';
 import $api from '../../../http/api';
@@ -47,7 +48,7 @@ export const PersonalInformation = () => {
   }
 
   return (
-    <section className={styles.wrapper}>
+    <section className={cx(styles.wrapper, styles.wrapper_mb_60)}>
       <h2 className={styles.title}>1. Personal information</h2>
       <Formik
         initialValues={personalInformation}
@@ -76,10 +77,10 @@ export const PersonalInformation = () => {
             } else {
               ({ data } = await $api.put('cvs/' + uuid, currentValues));
             }
-            dispatch(updatePersonaInformationInSpecificCv(data));
+            dispatch(updateFieldsInSpecificCv({ personalInformation: data }));
 
             if (data.uuid && btnNextIsClicked) {
-              navigate('../contacts/' + data.uuid);
+              navigate(CvPaths.CONTACTS + data.uuid);
             }
 
             if (linkIsClicked) {
@@ -244,7 +245,12 @@ export const PersonalInformation = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-              <div className={cx(styles.form__container, styles.form__container_firstPage)}>
+              <div
+                className={cx(
+                  styles.form__container,
+                  styles.form__container_personalInformationPage
+                )}
+              >
                 <div className={styles.form__photo}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
                   <PhotoCV />
@@ -330,7 +336,7 @@ export const PersonalInformation = () => {
                     {...(uuid &&
                       !dirty &&
                       !isSubmitting && {
-                        onClick: () => navigate('../contacts/' + uuid)
+                        onClick: () => navigate(CvPaths.CONTACTS + uuid)
                       })}
                     {...((dirty || !uuid) &&
                       !isSubmitting && {

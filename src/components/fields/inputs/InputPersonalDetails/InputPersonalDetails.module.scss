@@ -1,36 +1,36 @@
-@use '../../../../static/scss/variables';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
 
 .error {
-    display: flex;
-    font-weight: 500;
-    font-size: 0.75rem;
-    align-items: center;
-    line-height: 1.333;
-    color: variables.$text-primary-error;
+  display: flex;
+  font-weight: 400;
+  font-size: rem(12);
+  align-items: center;
+  line-height: 1.334;
+  color: $text-primary-error;
 
-    &_adaptive {
-        @media (min-width: 1365.98px) {
-            top: 100%;
-            position: absolute;
-            align-items: flex-start;
-            transform: translateY(6px);
-        }
-
-        @media (max-width: 1365.98px) {
-            margin-top: 4px;
-        }
+  &_adaptive {
+    @media (min-width: 1365.98px) {
+      top: 100%;
+      position: absolute;
+      transform: translateY(4px);
     }
 
-    &_notAdaptive {
-        top: 100%;
-        position: absolute;
-        align-items: flex-start;
-        transform: translateY(6px);
+    @media (max-width: 1365.98px) {
+      margin-top: 4px;
     }
-    svg {
-        flex: 0 0 14px;
-        margin-right: 6px;
-        height: 14px;
-    }
+  }
+
+  &_notAdaptive {
+    top: 100%;
+    position: absolute;
+    transform: translateY(4px);
+  }
+
+  svg {
+    flex: 0 0 18px;
+    margin-right: 6px;
+    height: 18px;
+  }
 }
 

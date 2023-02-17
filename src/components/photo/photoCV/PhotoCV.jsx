@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
   deletePhotoInConstructorCv,
+  deletePhotoInSpecificCV,
   openPhotoModal,
   photoUpdateCV,
-  photoUploadCV,
-  updatePersonaInformationInSpecificCv
+  photoUploadCV
 } from '@actions';
 import { selectPersonalDetails } from '../../../pages/PersonalDetails/selectors';
 import { trimValues } from '@validators/validators';
@@ -86,10 +86,9 @@ const PhotoCV = (props) => {
       };
       const trimmedValues = trimValues(values, true);
       if (uuid) {
-        const response = await $api.put(`/cvs/${uuid}`, trimmedValues);
-        dispatch(updatePersonaInformationInSpecificCv({ personalInformation: values }));
+        const { data } = await $api.put(`/cvs/${uuid}`, trimmedValues);
+        dispatch(deletePhotoInSpecificCV());
       } else {
-        //const response = await $api.post(`/cvs/`, trimmedValues);
         dispatch(deletePhotoInConstructorCv());
       }
       dispatch(photoUploadCV(''));

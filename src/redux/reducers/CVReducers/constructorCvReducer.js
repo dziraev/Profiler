@@ -1,11 +1,13 @@
 import {
   CHANGE_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
+  CLEAR_FIELDS_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
   CLEAR_FIELDS_IN_CONTACTS_CONSTRUCTOR_CV,
   CONSTRUCTOR_CV_LOADING_OFF,
   CONSTRUCTOR_CV_LOADING_ON,
   DELETE_PHOTO_IN_CONSTRUCTOR_CV,
   PHOTO_UPDATE_CV,
   RESET_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
+  UPDATE_FIELD_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
   UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV,
   UPDATE_FIELDS_IN_CONSTRUCTOR_CV,
   UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV
@@ -36,6 +38,10 @@ export const initialState = {
     skype: '',
     linkedin: '',
     portfolio: ''
+  },
+  aboutYourself: {
+    description: '',
+    selfPresentation: ''
   }
 };
 
@@ -66,10 +72,7 @@ export const constructorCvReducer = (state = initialState, action) => {
     case UPDATE_FIELDS_IN_CONSTRUCTOR_CV: {
       return {
         ...state,
-        contacts: {
-          ...state.contacts,
-          ...action.data.contacts
-        }
+        ...action.data
       };
     }
     case UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV:
@@ -119,6 +122,23 @@ export const constructorCvReducer = (state = initialState, action) => {
           skype: '',
           linkedin: '',
           portfolio: ''
+        }
+      };
+    case UPDATE_FIELD_IN_ABOUTYOURSELF_CONSTRUCTOR_CV:
+      return {
+        ...state,
+        aboutYourself: {
+          ...state.aboutYourself,
+          [action.fieldName]: action.value
+        }
+      };
+    case CLEAR_FIELDS_IN_ABOUTYOURSELF_CONSTRUCTOR_CV:
+      return {
+        ...state,
+        aboutYourself: {
+          ...state.aboutYourself,
+          description: '',
+          selfPresentation: ''
         }
       };
     default:

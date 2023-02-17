@@ -17,12 +17,12 @@ export const PopUpClearFields = ({ adaptive = true, clearFields, dontClearFields
           </div>
           <div className={styles.modal__buttons}>
             <div className={styles.modal__button}>
-              <Button type='button' onClick={clearFields}>
+              <Button type='button' adaptive={adaptive} onClick={clearFields}>
                 Clear
               </Button>
             </div>
             <div className={styles.modal__button}>
-              <CancelButton type='button' onClick={dontClearFields}>
+              <CancelButton type='button' adaptive={adaptive} onClick={dontClearFields}>
                 Don't clear
               </CancelButton>
             </div>

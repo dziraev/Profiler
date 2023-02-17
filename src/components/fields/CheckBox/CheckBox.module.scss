@@ -1,9 +1,9 @@
-@use 'src/static/scss/variables';
-@use 'src/static/scss/mixins';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
 
 .checkbox {
   font-weight: 400;
-  color: variables.$text-primary-dark-blue;
+  color: $text-primary-dark-blue;
   font-size: 0;
   position: relative;
   padding: 0px 0px 0px 2px;
@@ -20,19 +20,28 @@
 
   &__label {
     position: relative;
-    font-size: mixins.rem(16);
+    font-size: rem(16);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     column-gap: 14px;
     line-height: 1.3125;
+    &:hover {
+      &::before {
+        border-width: 2px;
+      }
+
+      &::after {
+        border-width: 0 2px 2px 0;
+      }
+    }
     &::before {
       align-self: flex-start;
       content: '';
       flex: 0 0 20px;
       height: 20px;
       min-width: 20px;
-      border: 1.5px solid variables.$input-stroke-active;
+      border: 1.5px solid $checkbox-default;
       border-radius: 5px;
     }
     &::after {
@@ -42,7 +51,7 @@
       top: 4px;
       width: 6px;
       height: 10px;
-      border: solid variables.$input-stroke-active;
+      border: solid $checkbox-default;
       border-width: 0 1.5px 1.5px 0;
       transform: rotate(45deg);
       opacity: 0;

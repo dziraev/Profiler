@@ -46,6 +46,7 @@ const LoginPage = (props) => {
               setFieldError('password', <span>Wrong email or password</span>);
             }
           }}
+          validateOnChange={false}
           validate={validateAuthorization}
         >
           {(formik) => {

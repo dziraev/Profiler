@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 import stylesDraft from './DraftCv.module.scss';
 import styles from '../Card.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectPersonalDetails } from '../../../pages/PersonalDetails/selectors';
-import { updateContactsInConstructorCv } from '../../../redux/actions';
-import { selectContactsFromConstructorCv } from '../../../pages/CVsteps/selectors';
-import { UPDATE_CONTACTS_IN_CONSTRUCTOR_CV } from '@types';
 
 export const DraftCv = ({ position, uuid }) => {
   const navigate = useNavigate();
