@@ -9,7 +9,8 @@
   padding: 0px 0px 0px 2px;
 
   &__input {
-    display: none;
+    opacity: 0;
+    width: 0;
     &:focus + .checkbox__label {
 
     }

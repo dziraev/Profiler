@@ -49,6 +49,7 @@
         width: 380px;
         &__label {
             display: block;
+            box-sizing: border-box;
             width: 170px;
             height: 54px;
             background-color: variables.$background-main;
@@ -57,7 +58,7 @@
             color: variables.$text-primary-blue;
             font-size: 1.25em;
             line-height: 1.32;
-            font-weight: 700;
+            font-weight: 600;
             padding: 14px 30px;
             position: relative;
             cursor: pointer;
@@ -76,13 +77,14 @@
             top: 0%;
             left: 0%;
             z-index: 2;
-            width: 100%;
-            height: 100%;
+            width: 170px;
+            height: 54px;
             opacity: 0;
             cursor: pointer;
         }
         & button {
             display: block;
+            font-family:"Red Hat Display";
             width: 170px;
             height: 54px;
             background-color: variables.$button-default;
@@ -113,7 +115,8 @@
         padding: 34px 10px 20px;
         &__content {
             font-size: 0.875em;
-            width: 100%;
+            width: 250px;
+            margin: 0 auto;
             &__title {
                 font-size: 1em;
             }
@@ -131,6 +134,10 @@
                 font-size: 1.125em;
                 font-weight: 600;
                 padding: 12px 30px;
+            }
+            & input[type='file'] {
+                width: 150px;
+                height: 48px;
             }
             & button {
                 width: 150px;

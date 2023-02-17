@@ -9,7 +9,7 @@ import {
   selectIsDirtyFormSpecificCv
 } from '../../pages/CVsteps/selectors';
 
-const Logout = (props) => {
+const Logout = ({ tabIndex = 0 , ...props }) => {
   const dispatch = useDispatch();
   const isDirtyFormPD = useSelector(selectIsDirtyFormPD);
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
@@ -25,7 +25,7 @@ const Logout = (props) => {
     }
   };
   return (
-    <NavLink to='/auth' onClick={handleClick}>
+    <NavLink to='/auth' tabIndex={tabIndex} onClick={handleClick}>
       <div className={styles.logout}>
         <div className={styles.logout__link}>
           <div className={styles.logout__icon}>

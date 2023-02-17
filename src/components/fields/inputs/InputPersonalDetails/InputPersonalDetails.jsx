@@ -14,6 +14,7 @@ export const InputPersonalDetails = ({
   adaptive = true,
   showError = true,
   actionOnBlur,
+  tabIndex = 0,
   ...props
 }) => {
   const [active, setActive] = useState(false);
@@ -43,6 +44,7 @@ export const InputPersonalDetails = ({
         type='text'
         className={cx(styles.input, { input__error: hasError, input_adaptive: adaptive })}
         placeholder={active ? activeLabel : label}
+        tabIndex={tabIndex}
       />
       {hasError && showError && (
         <div

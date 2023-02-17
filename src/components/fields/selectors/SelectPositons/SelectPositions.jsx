@@ -13,6 +13,7 @@ export const SelectPositions = ({
   adaptive = true,
   disabled,
   setFieldValue,
+  tabIndex = 0,
   ...props
 }) => {
   const positions = useSelector(selectPositions);
@@ -62,10 +63,12 @@ export const SelectPositions = ({
       >
         <div
           {...props}
-          {...(!disabled && { tabIndex: '0' })}
+          // {...(!disabled && { tabIndex: tabIndex })}
+          tabIndex={!disabled ? tabIndex : 0}
           className={cx(styles.select__input, { select__input_error: hasError })}
           style={{ pointerEvents: disabled ? 'none' : 'auto' }}
           onClick={() => setIsVisible((prev) => !prev)}
+          onKeyDown={(e) => e.code === 'Enter' && setIsVisible((prev) => !prev)}
         >
           {!!value && value}
           {!value && !isVisible && (

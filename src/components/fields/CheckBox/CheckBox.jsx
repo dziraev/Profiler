@@ -2,7 +2,7 @@ import React from 'react';
 import { useField } from 'formik';
 import styles from './CheckBox.module.scss';
 
-export const CheckBox = ({ name, label, ...props }) => {
+export const CheckBox = ({ name, label, tabIndex, ...props }) => {
   const [field, _, helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;
@@ -22,8 +22,10 @@ export const CheckBox = ({ name, label, ...props }) => {
         id={name}
         checked={!!value}
         type='checkbox'
+        tabIndex={tabIndex}
         {...props}
         onChange={handleChange}
+        onKeyDown={(e) => e.code === 'Enter' && setValue(true)}
       />
       <label className={styles.checkbox__label} htmlFor={name}>
         {label}

@@ -247,13 +247,14 @@ export const PersonalInformation = () => {
               <div className={cx(styles.form__container, styles.form__container_firstPage)}>
                 <div className={styles.form__photo}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
-                  <PhotoCV />
+                  <PhotoCV tabIndex={11} />
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
                     <ClearButton
                       disabled={!oneIsNotEmptyValue}
                       onClick={() => setClearFields(true)}
+                      tabIndex={19}
                     >
                       Clear fields
                     </ClearButton>
@@ -267,6 +268,7 @@ export const PersonalInformation = () => {
                       maxLength={50}
                       label='Enter your name'
                       activeLabel='Enter your name'
+                      tabIndex={12}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -278,6 +280,7 @@ export const PersonalInformation = () => {
                       maxLength={50}
                       label='Enter your surname'
                       activeLabel='Enter your surname'
+                      tabIndex={13}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -289,6 +292,7 @@ export const PersonalInformation = () => {
                       label='Choose your position'
                       activeLabel='Choose your position'
                       setFieldValue={setFieldValue}
+                      tabIndex={14}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -301,6 +305,7 @@ export const PersonalInformation = () => {
                       label='Enter your location'
                       activeLabel='Enter your location'
                       setFieldValue={setFieldValue}
+                      tabIndex={15}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -312,6 +317,7 @@ export const PersonalInformation = () => {
                       maxLength={50}
                       label='Enter your localization city'
                       activeLabel='Enter your localization city'
+                      tabIndex={16}
                     />
                   </div>
                 </div>
@@ -319,8 +325,16 @@ export const PersonalInformation = () => {
                   <BoardAdvice />
                 </div>
                 <div className={styles.form__checkboxes}>
-                  <CheckBox name='isReadyToRelocate' label='Ready to relocate' />
-                  <CheckBox name='isReadyForRemoteWork' label='Ready for remote work' />
+                  <CheckBox
+                    name='isReadyToRelocate'
+                    label='Ready to relocate'
+                    tabIndex={17}
+                  />
+                  <CheckBox
+                    name='isReadyForRemoteWork'
+                    label='Ready for remote work'
+                    tabIndex={18}
+                  />
                 </div>
               </div>
               <div className={styles.form__buttons}>
@@ -344,6 +358,7 @@ export const PersonalInformation = () => {
                         onClick: () => setBtnNextIsClicked(true)
                       })}
                     isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
+                    tabIndex={20}
                   >
                     Next
                   </Button>

@@ -16,6 +16,7 @@ export const SearchBar = ({
   adaptive = true,
   setCountryId,
   setFieldValue,
+  tabIndex = 0,
   ...props
 }) => {
   const { filteredCountries, searchText } = useSelector((state) => {
@@ -110,6 +111,7 @@ export const SearchBar = ({
           })}
           type='text'
           placeholder={active ? activeLabel : label}
+          tabIndex={tabIndex}
           onClick={() => setDisplay(true)}
         />
         {hasError && (!display || searchText.length <= 0) && (
