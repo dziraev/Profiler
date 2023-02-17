@@ -4,9 +4,10 @@
     text-align: left;
     max-width: 1216px;
     padding: 0 80px;
+
     @media (max-width: 1365.98px) {
         padding: 0px 15px;
-        margin-bottom: 100px;
+        margin-bottom: 88px;
     }
 }
 
@@ -14,6 +15,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+
     @media (max-width: 1365px) {
         margin-bottom: 24px;
     }
@@ -24,6 +26,7 @@
     font-size: 1.5rem;
     line-height: 1.3333;
     color: $text-primary-dark-blue;
+
     @media (max-width: 1365px) {
         font-size: 1rem;
         line-height: 1.3125;
@@ -41,85 +44,61 @@
         &:not(:last-child) {
             margin-bottom: 48px;
         }
+
         @media (max-width: 1365.98px) {
             flex-direction: column;
             row-gap: 20px;
             width: 100%;
+            &:not(:last-child) {
+                margin-bottom: 36px;
+            }
         }
 
     }
+
     &__input {
         width: 100%;
+
         @media (min-width: 1365.98px) {
             flex: 1 0 calc(50% - 46px/2);
         }
     }
+
     &__buttons {
         display: flex;
         column-gap: 40px;
         justify-content: flex-end;
-
         @media (max-width: 1365.98px) {
-            max-width: 428px;
             width: 100%;
-            padding: 1.125rem 1rem;
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            column-gap: 12px;
-            background-color: $background-main;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
-            border-radius: 20px 20px 0px 0px;
-            z-index: 10;
+            max-width: 428px;
         }
     }
+
     &__button {
         width: 100%;
+
         @media (min-width: 1365.98px) {
             max-width: 192px;
         }
     }
 
-    [data-hover='false']:hover ~ &__buttons button{
-        background-color: $button-hover;
-        animation: animationScaleButton 1s ease infinite;
-
-    }
 }
 
 @media (max-width: 1365.98px) {
+
     .order-1 {
         order: 1;
     }
+
     .order-2 {
         order: 2;
     }
+
     .order-3 {
         order: 3;
     }
 }
 
-@keyframes animationScaleButton {
-    0% {
-        transform: rotate(-1deg);
-    }
-    20% {
-        transform: rotate(10deg);
-    }
-    40% {
-        transform: rotate(-12deg);
-    }
-    60% {
-        transform: rotate(5deg);
-    }
-    90% {
-        transform: rotate(-1deg);
-    }
-    100% {
-        transform: rotate(0);
-    }
-}
 
 
 

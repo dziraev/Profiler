@@ -9,7 +9,12 @@ import {
   personalDetailsUpdate,
   updatePIandContactsInConstructorCv
 } from '@actions';
-import { PopUpCancelChanges, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@components/popup';
+import {
+  PopUpSave,
+  PopUpStayOrLeave,
+  PopUpTryAgain,
+  PopUpSuccessFulSaving
+} from '@components/popup';
 import {
   InputPersonalDetails,
   SearchBar,
@@ -17,7 +22,8 @@ import {
   SelectPositions
 } from '@components/fields';
 import { useNavigate } from 'react-router-dom';
-import { Button, CancelButton } from '@components/buttons';
+import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
+import { Button } from '@components/buttons';
 import { Notification } from '@components/tooltip/Notification';
 import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { usePersonalDetails } from '@hooks/usePersonalDetails';
@@ -27,8 +33,7 @@ import styles from './PersonalDetails.module.scss';
 const PersonalDetails = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isEdit, setIsEdit] = useState(false);
-  const [cancelIsClicked, setCancelIsClicked] = useState(false);
+  const [showSuccessfulSaving, setShowSuccessfulSaving] = useState(false);
   const [countryId, setCountryId] = useState(null);
   const personalDetails = usePersonalDetails();
   const hrefLinkIsClicked = useLinkIsClicked();
@@ -111,22 +116,21 @@ const PersonalDetails = (props) => {
                 }
               })
             );
+
+            setShowSuccessfulSaving(true);
+
+            setTimeout(() => {
+              setShowSuccessfulSaving(false);
+            }, 1400);
           } catch (e) {
             setStatus({ errorResponse: true });
           }
         }}
         onReset={() => {
           const { current } = hrefLinkIsClicked;
-          if (current && current === '/auth') {
-            localStorage.removeItem('token');
-            dispatch({ type: 'USER_LOGOUT' });
-            navigate(current);
+          if (current) {
+            navigationLinkPopUp(current, dispatch, navigate);
           }
-          if (current && current !== '/auth') {
-            navigate(current);
-          }
-          setIsEdit(false);
-          setCancelIsClicked(false);
         }}
         validate={validatePersonalDetails}
       >
@@ -139,6 +143,9 @@ const PersonalDetails = (props) => {
 
           return (
             <Form className={styles.form}>
+              <PopUpSuccessFulSaving show={showSuccessfulSaving}>
+                Tha data is saved successfully!
+              </PopUpSuccessFulSaving>
               {dirty && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave onClickStay={() => dispatch(linkIsNotClicked())}>
                   <>The data is entered incorrectly</>
@@ -155,19 +162,13 @@ const PersonalDetails = (props) => {
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
-              {cancelIsClicked && dirty && (
-                <PopUpCancelChanges setCancelIsClicked={setCancelIsClicked}>
-                  Do you really want to cancel the changes?
-                </PopUpCancelChanges>
-              )}
-              <div data-hover={isEdit} className={styles.form__inputs}>
+              <div className={styles.form__inputs}>
                 <div className={styles.form__input}>
                   <InputPersonalDetails
                     name='name'
                     maxLength={50}
                     label='Name'
                     activeLabel='Enter your name'
-                    disabled={!isEdit}
                   />
                 </div>
                 <div className={styles.form__input}>
@@ -176,7 +177,6 @@ const PersonalDetails = (props) => {
                     maxLength={50}
                     label='Surname'
                     activeLabel='Enter your surname'
-                    disabled={!isEdit}
                   />
                 </div>
                 <div className={`${styles.form__input} ${styles['order-2']}`}>
@@ -186,7 +186,6 @@ const PersonalDetails = (props) => {
                     maxLength={50}
                     activeLabel='Enter your location'
                     autoComplete={'off'}
-                    disabled={!isEdit}
                     setCountryId={setCountryId}
                     setFieldValue={setFieldValue}
                   />
@@ -197,13 +196,11 @@ const PersonalDetails = (props) => {
                     label='Email'
                     maxLength={50}
                     activeLabel='Enter your email'
-                    disabled={!isEdit}
                   />
                 </div>
                 <div className={`${styles.form__input} ${styles['order-2']}`}>
                   <SelectPhoneNumber
                     name='phoneCode'
-                    disabled={!isEdit}
                     countryId={countryId}
                     setFieldValue={setFieldValue}
                   >
@@ -212,7 +209,6 @@ const PersonalDetails = (props) => {
                       label='Cell phone number'
                       activeLabel='Enter cell phone number'
                       maxLength={25}
-                      disabled={!isEdit}
                       showError={false}
                     />
                   </SelectPhoneNumber>
@@ -222,43 +218,19 @@ const PersonalDetails = (props) => {
                     name='position'
                     label='Position'
                     activeLabel='Choose your position'
-                    disabled={!isEdit}
                     setFieldValue={setFieldValue}
                   />
                 </div>
               </div>
               <div className={styles.form__buttons}>
-                {!isEdit && (
-                  <div className={styles.form__button}>
-                    <Button type='button' onClick={() => setIsEdit(true)}>
-                      Edit
-                    </Button>
-                  </div>
-                )}
-                {isEdit && (
-                  <>
-                    <div className={styles.form__button}>
-                      <CancelButton
-                        type='reset'
-                        {...(dirty && {
-                          type: 'button',
-                          onClick: () => setCancelIsClicked(!cancelIsClicked)
-                        })}
-                      >
-                        Cancel
-                      </CancelButton>
-                    </div>
-                    <div className={styles.form__button}>
-                      <Button
-                        type={isSubmitting ? 'button' : 'submit'}
-                        disabled={!dirty}
-                        isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </>
-                )}
+                <div className={styles.form__button}>
+                  <Button
+                    type={isSubmitting || !dirty ? 'button' : 'submit'}
+                    isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
             </Form>
           );
