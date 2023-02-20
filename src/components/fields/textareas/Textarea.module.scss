@@ -40,7 +40,7 @@
     }
 
     &:disabled:hover {
-      border-color:transparent;
+      border-color: transparent;
     }
 
     &::placeholder {
@@ -49,17 +49,17 @@
       line-height: 1.333;
       color: $text-primary-grey;
       -webkit-text-fill-color: $text-primary-grey;
-      user-select: none;
     }
 
     &:focus::placeholder {
       color: $text-primary-secondary-gray;
       -webkit-text-fill-color: $text-primary-secondary-gray;
-
     }
+
     &:focus + .textarea__counter {
       color: $text-primary-secondary-gray;
     }
+
   }
 
 
@@ -70,9 +70,6 @@
     font-size: rem(12);
     line-height: 1.334;
     color: $text-primary-grey;
-    &_error {
-      color: $text-primary-error;
-    }
   }
 
 
@@ -85,16 +82,34 @@
     }
   }
 
-  &__error {
+  &_error {
     -webkit-text-fill-color: $text-primary-error;
     color: $text-primary-error;
     border-color: $input-stroke-error;
+
     &:hover, &:focus {
       border-color: $input-stroke-error;
     }
-    &::placeholder, &:focus::placeholder, &:focus + .textarea__counter {
+
+    &::placeholder, &:focus::placeholder {
       -webkit-text-fill-color: $text-primary-error;
       color: $text-primary-error
+    }
+  }
+
+  &_warning {
+    border-color: $input-stroke-error;
+
+    &:hover, &:focus {
+      border-color: $input-stroke-error;
+    }
+
+    & + .textarea__counter {
+      color: $text-primary-error;
+    }
+
+    &:focus + .textarea__counter {
+      color: $text-primary-error;
     }
   }
 }

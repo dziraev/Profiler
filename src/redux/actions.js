@@ -438,7 +438,7 @@ export function getAboutYourselfSpecificCv(uuid) {
     try {
       dispatch(specificCvLoadingOn());
 
-      const { data, status } = await $api.get('cvs/' + uuid + '/aboutyourself');
+      const { data, status } = await $api.get('cvs/' + uuid + '/about');
       if (status === 200) {
         dispatch(
           updateFieldsInSpecificCv({

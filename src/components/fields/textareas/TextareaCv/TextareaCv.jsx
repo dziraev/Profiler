@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useField } from 'formik';
+import { debounce } from '@utils/debounce';
 import classNames from 'classnames/bind';
 import styles from '../Textarea.module.scss';
 
@@ -7,12 +8,14 @@ const cx = classNames.bind(styles);
 
 export const TextareaCv = ({
   name,
+  maxLength,
   label,
   activeLabel,
   actionOnBlur,
   adaptive = true,
   ...props
 }) => {
+  const [warning, setWarning] = useState(false);
   const [active, setActive] = useState(false);
   const [field, meta] = useField(name);
   const hasError = !!(meta.error && meta.touched);
@@ -31,8 +34,27 @@ export const TextareaCv = ({
     setActive(true);
   };
 
+  const updateStateWarning = useCallback(
+    debounce(
+      (state) => {
+        setWarning(state);
+      },
+      1000,
+      false
+    ),
+    []
+  );
   const handleChange = (e) => {
     e.target.value = e.target.value.replace(/\n/, '');
+
+    const { value } = e.target;
+
+    if (value.length > maxLength) {
+      e.target.value = value.substring(0, maxLength);
+      setWarning(true);
+      updateStateWarning(false);
+    }
+
     field.onChange(e);
   };
 
@@ -46,13 +68,14 @@ export const TextareaCv = ({
           onFocus={handleFocus}
           onChange={handleChange}
           className={cx(styles.textarea__block, {
-            textarea__error: hasError,
+            textarea_error: hasError,
+            textarea_warning: warning,
             textarea_adaptive: adaptive
           })}
           placeholder={active ? activeLabel : label}
         />
-        <span className={cx(styles.textarea__counter, { textarea__counter_error: hasError })}>
-          {value.length}/450
+        <span className={cx(styles.textarea__counter)}>
+          {value.length}/{maxLength}
         </span>
       </div>
       {hasError && (

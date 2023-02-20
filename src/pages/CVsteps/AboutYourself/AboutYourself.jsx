@@ -66,7 +66,7 @@ export const AboutYourself = () => {
 
           try {
             if (uuid && !isAboutYourselfExists) {
-              const { data } = await $api.post('cvs/' + uuid + '/aboutyourself', values);
+              const { data } = await $api.post('cvs/' + uuid + '/about', values);
               dispatch(
                 updateFieldsInSpecificCv({
                   aboutYourself: data,
@@ -74,7 +74,7 @@ export const AboutYourself = () => {
                 })
               );
             } else {
-              const { data } = await $api.put('cvs/' + uuid + '/aboutyourself', values);
+              const { data } = await $api.put('cvs/' + uuid + '/about', values);
               dispatch(updateFieldsInSpecificCv({ aboutYourself: data }));
             }
 
