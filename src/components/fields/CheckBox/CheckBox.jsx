@@ -25,7 +25,6 @@ export const CheckBox = ({ name, label, tabIndex, ...props }) => {
         tabIndex={tabIndex}
         {...props}
         onChange={handleChange}
-        onKeyDown={(e) => e.code === 'Enter' && setValue(true)}
       />
       <label className={styles.checkbox__label} htmlFor={name}>
         {label}

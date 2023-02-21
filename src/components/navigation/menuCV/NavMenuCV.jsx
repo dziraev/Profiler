@@ -15,6 +15,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
   const isActiveLink = ({ isActive }) => (isActive ? styles.active : '');
   const { pathname } = useLocation();
   const { uuid } = useParams();
+  const path = uuid ? uuid : '';
   const dispatch = useDispatch();
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
   const isDirtyFormSpecificCv = useSelector(selectIsDirtyFormSpecificCv);
@@ -63,7 +64,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/personal-info/${uuid}`}
+          to={path ? `/cv/personal-info/${path}` : `/cv/personal-info/`}
           tabIndex='-1'
           onClick={handleClick}
           className={({isActive}) => isActive ? styles.active : styles.available}
@@ -97,7 +98,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/contacts/${uuid}`}
+          to={`/cv/contacts/${path}`}
           tabIndex='-1'
           onClick={isContactsExists ? handleClick : prevent}
           className={({isActive}) => isActive ? styles.active : isContactsExists ? styles.available : ''}
@@ -124,10 +125,9 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/about/${uuid}`}
+          to={`/cv/about/${path}`}
           tabIndex='-1'
           onClick={prevent}
-          className={isActiveLink}
           className={({isActive}) => isActive ? styles.active : isAboutYourselfExists ? styles.available : ''}
         >
           <div className={styles.sidebar__nav__link}>
@@ -151,7 +151,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/skill/${uuid}`}
+          to={`/cv/skill/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -179,7 +179,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/experience/${uuid}`}
+          to={`/cv/experience/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -205,7 +205,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/education/${uuid}`}
+          to={`/cv/education/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -231,7 +231,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/additional/${uuid}`}
+          to={`/cv/additional/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -261,7 +261,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/recommendations/${uuid}`}
+          to={`/cv/recommendations/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}

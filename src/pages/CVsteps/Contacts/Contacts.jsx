@@ -264,107 +264,7 @@ export const Contacts = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-              <div className={cx(styles.form__container, styles.form__container_secondPage)}>
-                <div className={styles.form__lines}>
-                  <div className={styles.form__clearFields}>
-                    <ClearButton
-                      disabled={!oneIsNotEmptyValue}
-                      onClick={() => setClearFields(true)}
-                    >
-                      Clear fields
-                    </ClearButton>
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={styles.form__label}>Phone</div>
-                    <SelectPhoneNumberCv
-                      adaptive={false}
-                      name='phoneCode'
-                      isPhoneNumberTouched={touched.phoneNumber}
-                      setFieldValue={setFieldValue}
-                      onClickPhoneCodesHandler={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    >
-                      <InputCv
-                        data-id='phone'
-                        adaptive={false}
-                        name='phoneNumber'
-                        label='Cell phone number'
-                        activeLabel='Cell phone number'
-                        maxLength={25}
-                        showError={false}
-                        actionOnBlur={(fieldName, value) => {
-                          updateFieldInContactsStore(fieldName, value, isContactsExists);
-                        }}
-                      />
-                    </SelectPhoneNumberCv>
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={styles.form__label}>Email</div>
-                    <InputCv
-                      data-id='email'
-                      name='email'
-                      adaptive={false}
-                      maxLength={50}
-                      label='Enter your email'
-                      activeLabel='Enter your email'
-                      actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={cx(styles.form__label, styles.form__label_afterNone)}>
-                      Skype
-                    </div>
-                    <InputCv
-                      data-id='skype'
-                      name='skype'
-                      adaptive={false}
-                      maxLength={50}
-                      label='Enter your Skype login'
-                      activeLabel='Enter your Skype login'
-                      actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={styles.form__label}>LinkedIn</div>
-                    <InputCv
-                      data-id='linkedin'
-                      name='linkedin'
-                      adaptive={false}
-                      maxLength={255}
-                      label='Add the link'
-                      activeLabel='Add the link'
-                      actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={cx(styles.form__label, styles.form__label_afterNone)}>
-                      Portfolio
-                    </div>
-                    <InputCv
-                      data-id='portfolio'
-                      name='portfolio'
-                      adaptive={false}
-                      maxLength={255}
-                      label='Add the link'
-                      activeLabel='Add the link'
-                      actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.form__advice}>
-                  <BoardAdvice />
-                </div>
-              </div>
-              <div className={styles.form__buttons}>
+                            <div className={styles.form__buttons}>
                 <div className={styles.form__button}>
                   <CancelButton
                     type='button'
@@ -387,6 +287,7 @@ export const Contacts = () => {
                       isSubmitting &&
                       !buttonStatus.btnNextIsClicked
                     }
+                    tabIndex={18}
                   >
                     Back
                   </CancelButton>
@@ -412,9 +313,117 @@ export const Contacts = () => {
                       isSubmitting &&
                       !buttonStatus.btnBackIsClicked
                     }
+                    tabIndex={17}
                   >
                     Next
                   </Button>
+                </div>
+              </div>
+              <div className={cx(styles.form__container, styles.form__container_secondPage)}>
+                <div className={styles.form__lines}>
+                  <div className={styles.form__clearFields}>
+                    <ClearButton
+                      disabled={!oneIsNotEmptyValue}
+                      onClick={() => setClearFields(true)}
+                      tabIndex={16}
+                    >
+                      Clear fields
+                    </ClearButton>
+                  </div>
+                  <div className={styles.form__inputBlock}>
+                    <div className={styles.form__label}>Phone</div>
+                    <SelectPhoneNumberCv
+                      adaptive={false}
+                      name='phoneCode'
+                      isPhoneNumberTouched={touched.phoneNumber}
+                      setFieldValue={setFieldValue}
+                      onClickPhoneCodesHandler={(fieldName, value) => {
+                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                      }}
+                      tabIndex={-1}
+                    >
+                      <InputCv
+                        data-id='phone'
+                        adaptive={false}
+                        name='phoneNumber'
+                        label='Cell phone number'
+                        activeLabel='Cell phone number'
+                        maxLength={25}
+                        showError={false}
+                        actionOnBlur={(fieldName, value) => {
+                          updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        }}
+                        tabIndex={11}
+                      />
+                    </SelectPhoneNumberCv>
+                  </div>
+                  <div className={styles.form__inputBlock}>
+                    <div className={styles.form__label}>Email</div>
+                    <InputCv
+                      data-id='email'
+                      name='email'
+                      adaptive={false}
+                      maxLength={50}
+                      label='Enter your email'
+                      activeLabel='Enter your email'
+                      actionOnBlur={(fieldName, value) => {
+                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                      }}
+                      tabIndex={12}
+                    />
+                  </div>
+                  <div className={styles.form__inputBlock}>
+                    <div className={cx(styles.form__label, styles.form__label_afterNone)}>
+                      Skype
+                    </div>
+                    <InputCv
+                      data-id='skype'
+                      name='skype'
+                      adaptive={false}
+                      maxLength={50}
+                      label='Enter your Skype login'
+                      activeLabel='Enter your Skype login'
+                      actionOnBlur={(fieldName, value) => {
+                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                      }}
+                      tabIndex={13}
+                    />
+                  </div>
+                  <div className={styles.form__inputBlock}>
+                    <div className={styles.form__label}>LinkedIn</div>
+                    <InputCv
+                      data-id='linkedin'
+                      name='linkedin'
+                      adaptive={false}
+                      maxLength={255}
+                      label='Add the link'
+                      activeLabel='Add the link'
+                      actionOnBlur={(fieldName, value) => {
+                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                      }}
+                      tabIndex={14}
+                    />
+                  </div>
+                  <div className={styles.form__inputBlock}>
+                    <div className={cx(styles.form__label, styles.form__label_afterNone)}>
+                      Portfolio
+                    </div>
+                    <InputCv
+                      data-id='portfolio'
+                      name='portfolio'
+                      adaptive={false}
+                      maxLength={255}
+                      label='Add the link'
+                      activeLabel='Add the link'
+                      actionOnBlur={(fieldName, value) => {
+                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                      }}
+                      tabIndex={15}
+                    />
+                  </div>
+                </div>
+                <div className={styles.form__advice}>
+                  <BoardAdvice />
                 </div>
               </div>
             </Form>
