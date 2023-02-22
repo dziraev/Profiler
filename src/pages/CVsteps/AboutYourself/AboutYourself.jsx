@@ -246,6 +246,7 @@ export const AboutYourself = () => {
                     <ClearButton
                       disabled={!oneIsNotEmptyValue}
                       onClick={() => setClearFields(true)}
+                      tabIndex={13}
                     >
                       Clear fields
                     </ClearButton>
@@ -264,6 +265,7 @@ export const AboutYourself = () => {
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
                       }}
+                      tabIndex={11}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -280,6 +282,7 @@ export const AboutYourself = () => {
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
                       }}
+                      tabIndex={12}
                     />
                   </div>
                 </div>
@@ -311,6 +314,7 @@ export const AboutYourself = () => {
                       isSubmitting &&
                       !buttonStatus.btnNextIsClicked
                     }
+                    tabIndex={15}
                   >
                     Back
                   </CancelButton>
@@ -336,6 +340,7 @@ export const AboutYourself = () => {
                       isSubmitting &&
                       !buttonStatus.btnBackIsClicked
                     }
+                    tabIndex={14}
                   >
                     Next
                   </Button>

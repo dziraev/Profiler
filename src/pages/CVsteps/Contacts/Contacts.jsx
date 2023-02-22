@@ -263,64 +263,6 @@ export const Contacts = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-              <div className={styles.form__buttons}>
-                <div className={styles.form__button}>
-                  <CancelButton
-                    type='button'
-                    {...(isContactsExists &&
-                      dirty &&
-                      !isSubmitting && {
-                        type: 'submit',
-                        onClick: () =>
-                          setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
-                      })}
-                    {...(isContactsExists &&
-                      !dirty &&
-                      !isSubmitting && {
-                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
-                      })}
-                    {...(!isContactsExists &&
-                      !isSubmitting && {
-                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
-                      })}
-                    isLoading={
-                      !status?.errorResponse &&
-                      !linkIsClicked &&
-                      isSubmitting &&
-                      !buttonStatus.btnNextIsClicked
-                    }
-                    tabIndex={18}
-                  >
-                    Back
-                  </CancelButton>
-                </div>
-                <div className={styles.form__button}>
-                  <Button
-                    type='submit'
-                    onClick={() =>
-                      setButtonStatus({
-                        btnBackIsClicked: false,
-                        btnNextIsClicked: true
-                      })
-                    }
-                    {...(isContactsExists &&
-                      !dirty &&
-                      !isSubmitting && {
-                        type: 'button',
-                        onClick: () => navigate(CvPaths.ABOUTYOURSELF + uuid)
-                      })}
-                    isLoading={
-                      !status?.errorResponse &&
-                      !linkIsClicked &&
-                      isSubmitting &&
-                      !buttonStatus.btnBackIsClicked
-                    }
-                    tabIndex={17}
-                  >
-                    Next
-                  </Button>
-                </div>
-              </div>
               <div className={cx(styles.form__container, styles.form__container_contactsPage)}>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
@@ -426,6 +368,65 @@ export const Contacts = () => {
                 </div>
                 <div className={styles.form__advice}>
                   <BoardAdvice />
+                </div>
+                
+              </div>
+              <div className={styles.form__buttons}>
+                <div className={styles.form__button}>
+                  <CancelButton
+                    type='button'
+                    {...(isContactsExists &&
+                      dirty &&
+                      !isSubmitting && {
+                        type: 'submit',
+                        onClick: () =>
+                          setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
+                      })}
+                    {...(isContactsExists &&
+                      !dirty &&
+                      !isSubmitting && {
+                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
+                      })}
+                    {...(!isContactsExists &&
+                      !isSubmitting && {
+                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
+                      })}
+                    isLoading={
+                      !status?.errorResponse &&
+                      !linkIsClicked &&
+                      isSubmitting &&
+                      !buttonStatus.btnNextIsClicked
+                    }
+                    tabIndex={18}
+                  >
+                    Back
+                  </CancelButton>
+                </div>
+                <div className={styles.form__button}>
+                  <Button
+                    type='submit'
+                    onClick={() =>
+                      setButtonStatus({
+                        btnBackIsClicked: false,
+                        btnNextIsClicked: true
+                      })
+                    }
+                    {...(isContactsExists &&
+                      !dirty &&
+                      !isSubmitting && {
+                        type: 'button',
+                        onClick: () => navigate(CvPaths.ABOUTYOURSELF + uuid)
+                      })}
+                    isLoading={
+                      !status?.errorResponse &&
+                      !linkIsClicked &&
+                      isSubmitting &&
+                      !buttonStatus.btnBackIsClicked
+                    }
+                    tabIndex={17}
+                  >
+                    Next
+                  </Button>
                 </div>
               </div>
             </Form>

@@ -29,10 +29,11 @@
       padding: 1.5px 0 1.5px 5px;
       margin-bottom: 32px;
       color: variables.$text-primary-blue;
+      width: fit-content;
       & p {
         border-bottom: 1px solid transparent;
       }
-      &:hover p {
+      &:hover p, &:focus p {
         border-bottom: 1px solid variables.$text-primary-blue;
       }
       &:active {

@@ -20,9 +20,9 @@ export const BoardAdvice = () => {
       }
     };
 
-    document.addEventListener('click', handleClick, { capture: true });
+    document.addEventListener('focus', handleClick, { capture: true });
 
-    return () => document.removeEventListener('click', handleClick, { capture: true });
+    return () => document.removeEventListener('focus', handleClick, { capture: true });
   }, []);
 
   const advice = useMemo(() => {

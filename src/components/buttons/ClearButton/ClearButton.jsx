@@ -16,7 +16,7 @@ export const ClearButton = ({ children, tabIndex = 0, ...props }) => {
           fill='#407BFF'
         />
       </svg>
-      {children}
+      <p>{children}</p>
     </button>
   );
 };
