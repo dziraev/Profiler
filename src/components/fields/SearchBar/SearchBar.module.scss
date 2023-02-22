@@ -1,4 +1,5 @@
-@use '../../../static/scss/variables';
+@import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
 
 .search {
   font-family: "Red Hat Display";
@@ -18,22 +19,22 @@
   &__input {
     font-family: inherit;
     border-radius: 15px;
-    background-color: variables.$input-background;
-    padding: 0.6875rem 0.875rem;
+    background-color: $input-background;
+    padding: rem(11);
     border: 1px solid transparent;
     font-size: 1.125rem;
     line-height: 1.3334;
     width: 100%;
     font-weight: 400;
     outline: none;
-    caret-color: variables.$text-primary-blue;
-    color: variables.$text-primary-dark-blue;
-    -webkit-text-fill-color: variables.$text-primary-dark-blue;
+    caret-color: $text-primary-blue;
+    color: $text-primary-dark-blue;
+    -webkit-text-fill-color: $text-primary-dark-blue;
     cursor: text;
 
 
     &:hover, &:focus {
-      border-color: variables.$input-stroke-active;
+      border-color: $input-stroke-active;
     }
 
     &:disabled {
@@ -48,8 +49,8 @@
       font-family: "Red Hat Display";
       font-size: 1.125rem;
       line-height: 1.333;
-      color: variables.$text-primary-secondary-gray;
-      -webkit-text-fill-color: variables.$text-primary-secondary-gray;
+      color: $text-primary-grey;
+      -webkit-text-fill-color: $text-primary-grey;
 
       &_adaptive {
         &::placeholder {
@@ -59,19 +60,23 @@
           }
         }
       }
+    }
 
+    &:focus::placeholder {
+      color: $text-primary-secondary-gray;
+      -webkit-text-fill-color: $text-primary-secondary-gray;
     }
 
     &_error {
-      -webkit-text-fill-color: variables.$text-primary-error;
-      color: variables.$text-primary-error;
-      border-color: variables.$input-stroke-error;
+      -webkit-text-fill-color: $text-primary-error;
+      color: $text-primary-error;
+      border-color: $input-stroke-error;
       &:hover, &:focus {
-        border-color: variables.$input-stroke-error;
+        border-color: $input-stroke-error;
       }
-      &::placeholder {
-        -webkit-text-fill-color: variables.$text-primary-error;
-        color: variables.$text-primary-error
+      &::placeholder, &:focus::placeholder {
+        -webkit-text-fill-color: $text-primary-error;
+        color: $text-primary-error
       }
     }
   }
@@ -80,7 +85,7 @@
 .dataResult {
   max-height: 370px;
   padding: 10px;
-  background-color: variables.$background-main;
+  background-color: $background-main;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
   overflow-y: auto;
@@ -106,12 +111,12 @@
     font-size: 0.875rem;
     line-height: 1.357;
     &:hover {
-      background-color: variables.$input-background;
+      background-color: $input-background;
       border-radius: 7px;
 
     }
     &:active {
-      color: variables.$text-primary-blue;
+      color: $text-primary-blue;
     }
   }
   &__notFound {
@@ -124,18 +129,17 @@
 
 .error {
   display: flex;
-  font-weight: 500;
-  font-size: 0.75rem;
+  font-weight: 400;
+  font-size: rem(12);
   align-items: center;
-  line-height: 1.333;
-  color: variables.$text-primary-error;
+  line-height: 1.334;
+  color: $text-primary-error;
 
   &_adaptive {
     @media (min-width: 1365.98px) {
       top: 100%;
       position: absolute;
-      align-items: flex-start;
-      transform: translateY(6px);
+      transform: translateY(4px);
     }
 
     @media (max-width: 1365.98px) {
@@ -146,12 +150,11 @@
   &_notAdaptive {
     top: 100%;
     position: absolute;
-    align-items: flex-start;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   svg {
-    flex: 0 0 14px;
+    flex: 0 0 18px;
     margin-right: 6px;
-    height: 14px;
+    height: 18px;
   }
 }

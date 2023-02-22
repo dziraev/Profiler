@@ -17,6 +17,10 @@ export const useUpdateFieldsConstructorCv = () => {
           skype: '',
           linkedin: '',
           portfolio: ''
+        },
+        aboutYourself: {
+          description: '',
+          selfPresentation: ''
         }
       })
     );

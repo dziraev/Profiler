@@ -46,6 +46,7 @@ const LoginPage = (props) => {
               setFieldError('password', <span>Wrong email or password</span>);
             }
           }}
+          validateOnChange={false}
           validate={validateAuthorization}
         >
           {(formik) => {
@@ -68,8 +69,7 @@ const LoginPage = (props) => {
                 </div>
                 <div className={styles.form__button}>
                   <Button
-                    type='submit'
-                    disabled={!(dirty && isValid)}
+                    type={!(dirty && isValid) ? 'button' : 'submit'}
                     {...(isSubmitting && { type: 'button', isLoading: true })}
                   >
                     Sign In

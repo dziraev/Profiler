@@ -13,3 +13,4 @@ export * from './usePersonalInformation';
 export * from './useUpdateFieldsConstructorCv';
 export * from './useUploadPhotoCabinet';
 export * from './useUploadPhotoCV';
+export * from './useAboutYourself';

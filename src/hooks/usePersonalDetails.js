@@ -7,7 +7,7 @@ import {
   phoneCodesLoad,
   positionsLoad,
   resetDirtyStatusFormPD
-} from '../redux/actions';
+} from '@actions';
 
 export const usePersonalDetails = () => {
   const dispatch = useDispatch();

@@ -1,29 +1,30 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { SelectPhoneNumberCv } from '@components/fields';
 import { ClearButton } from '@components/buttons';
 import { PopUpClearFields, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@popUps';
 import { Button, CancelButton } from '@buttonsLarge';
-import { validateContacts } from '@validators/validateContacts';
 import { trimValues } from '@validators/validators';
+import { TextareaCv } from '@components/fields';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import {
-  useContacts,
+  useAboutYourself,
   useLinkIsClicked,
+  useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsConstructorCv,
-  useLoadingConstructorCv
+  useUpdateFieldsConstructorCv
 } from '@hooks';
+
+import { validateAboutYourself } from '@validators/validateAboutYourself';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
 import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
-  clearFieldsInContactsConstructorCv,
+  clearFieldsInAboutYourselfConstructorCv,
   linkIsNotClicked,
-  updateFieldInContactsConstructorCv,
+  updateFieldInAboutYourselfConstructorCv,
   updateFieldsInSpecificCv
 } from '@actions';
 import { CvPaths } from '@configs/configs';
@@ -31,11 +32,11 @@ import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
 
-export const Contacts = () => {
+export const AboutYourself = () => {
   const { uuid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { contacts, isContactsExists } = useContacts();
+  const { aboutYourself, isAboutExists } = useAboutYourself();
   const [clearFields, setClearFields] = useState(false);
   const [buttonStatus, setButtonStatus] = useState({
     btnNextIsClicked: false,
@@ -55,41 +56,32 @@ export const Contacts = () => {
 
   return (
     <section className={styles.wrapper}>
-      <h2 className={cx(styles.title, styles.title_mb_60)}>2. Contacts</h2>
+      <h2 className={cx(styles.title, styles.title_mb_60)}>3. About yourself</h2>
       <Formik
-        initialValues={contacts}
+        initialValues={aboutYourself}
         validateOnChange={false}
-        validate={validateContacts}
+        validate={validateAboutYourself}
         onSubmit={async (formikValues, { setStatus }) => {
           const values = trimValues(formikValues, true);
 
-          const currentValues = {
-            phoneCodeId: values.phoneCodeId,
-            phoneNumber: values.phoneNumber,
-            email: values.email,
-            skype: values.skype,
-            linkedin: values.linkedin,
-            portfolio: values.portfolio
-          };
-
           try {
-            if (uuid && !isContactsExists) {
-              const { data } = await $api.post('cvs/' + uuid + '/contacts', currentValues);
+            if (uuid && !isAboutExists) {
+              const { data } = await $api.post('cvs/' + uuid + '/about', values);
               dispatch(
                 updateFieldsInSpecificCv({
-                  contacts: data,
-                  isContactsExists: true
+                  aboutYourself: data,
+                  isAboutExists: true
                 })
               );
             } else {
-              const { data } = await $api.put('cvs/' + uuid + '/contacts', currentValues);
-              dispatch(updateFieldsInSpecificCv({ contacts: data }));
+              const { data } = await $api.put('cvs/' + uuid + '/about', values);
+              dispatch(updateFieldsInSpecificCv({ aboutYourself: data }));
             }
 
             if (uuid && buttonStatus.btnNextIsClicked) {
-              navigate(CvPaths.ABOUTYOURSELF + uuid);
+              navigate(CvPaths.SKILLS + uuid);
             } else if (uuid && buttonStatus.btnBackIsClicked) {
-              navigate(CvPaths.PERSONALINFORMATION + uuid);
+              navigate(CvPaths.CONTACTS + uuid);
             }
 
             setButtonStatus({
@@ -116,17 +108,15 @@ export const Contacts = () => {
           dirty,
           isValid,
           status,
-          touched,
           isSubmitting,
           setStatus,
-          setFieldValue,
           handleReset,
           setTouched,
           setValues,
           errors
         }) => {
           useEffect(() => {
-            if (isContactsExists) {
+            if (isAboutExists) {
               dispatch(changeDirtyStatusInSpecificCv(dirty));
             } else {
               dispatch(changeDirtyStatusInConstructorCv(dirty));
@@ -136,24 +126,19 @@ export const Contacts = () => {
           const onClickStayPopUp = () => {
             dispatch(linkIsNotClicked());
             setTouched({
-              phoneNumber: true,
-              email: true,
-              linkedin: true
+              description: true
             });
           };
 
           const oneIsNotEmptyValue = useMemo(
-            () =>
-              Object.keys(values)
-                .filter((k) => k !== 'phoneCode' && k !== 'phoneCodeId')
-                .some((k) => values[k] !== ''),
+            () => Object.keys(values).some((k) => values[k] !== ''),
             [values]
           );
 
-          const allFieldsAreFilledIn = useMemo(
+          const allRequiredFieldsAreFilledIn = useMemo(
             () =>
               Object.keys(values)
-                .filter((k) => k !== 'skype' && k !== 'portfolio')
+                .filter((k) => k !== 'selfPresentation')
                 .every((k) => values[k] !== ''),
 
             [values]
@@ -163,9 +148,9 @@ export const Contacts = () => {
             return !!values.length && values.every((value) => value === 'Required field');
           }, [errors]);
 
-          const updateFieldInContactsStore = (fieldName, value, isPageExists) => {
+          const updateFieldInAboutYourselfInConstructorCv = (fieldName, value, isPageExists) => {
             if (!isPageExists) {
-              dispatch(updateFieldInContactsConstructorCv(fieldName, value));
+              dispatch(updateFieldInAboutYourselfConstructorCv(fieldName, value));
             }
           };
 
@@ -175,11 +160,7 @@ export const Contacts = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...(!isContactsExists && {
-                    onClickSave: updateFieldsConstructorCv,
-                    onClickDontSave: updateFieldsConstructorCv
-                  })}
-                  {...(isContactsExists && {
+                  {...(!isAboutExists && {
                     onClickSave: updateFieldsConstructorCv,
                     onClickDontSave: updateFieldsConstructorCv
                   })}
@@ -196,7 +177,6 @@ export const Contacts = () => {
                   onClickHandler={() => {
                     if (linkIsClicked) {
                       handleReset();
-                      // !isContactsExists ? updateFieldsConstructorCv() : null; //TODO: cannot use it because when calling the SavePopUps the fields are already cleared
                     } else {
                       setStatus({ errorResponse: false });
                     }
@@ -205,11 +185,11 @@ export const Contacts = () => {
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
-              {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
+              {dirty && allRequiredFieldsAreFilledIn && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isContactsExists && { onClickLeave: updateFieldsConstructorCv })}
+                  {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -217,13 +197,13 @@ export const Contacts = () => {
               )}
               {dirty &&
                 !correctAndNotFully &&
-                !allFieldsAreFilledIn &&
+                !allRequiredFieldsAreFilledIn &&
                 !isValid &&
                 linkIsClicked && (
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...(!isContactsExists && { onClickLeave: updateFieldsConstructorCv })}
+                    {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -233,7 +213,7 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isContactsExists && { onClickLeave: updateFieldsConstructorCv })}
+                  {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
@@ -245,31 +225,24 @@ export const Contacts = () => {
                   adaptive={false}
                   clearFields={() => {
                     setTouched({
-                      phoneNumber: false,
-                      email: false,
-                      linkedin: false
+                      description: false
                     });
                     setValues(
                       {
-                        phoneCode: values.phoneCode,
-                        phoneCodeId: values.phoneCodeId,
-                        phoneNumber: '',
-                        email: '',
-                        skype: '',
-                        linkedin: '',
-                        portfolio: ''
+                        description: '',
+                        selfPresentation: ''
                       },
                       true
                     );
                     setClearFields(false);
-                    if (!isContactsExists) {
-                      dispatch(clearFieldsInContactsConstructorCv());
+                    if (!isAboutExists) {
+                      dispatch(clearFieldsInAboutYourselfConstructorCv());
                     }
                   }}
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-              <div className={cx(styles.form__container, styles.form__container_contactsPage)}>
+              <div className={cx(styles.form__container, styles.form__container_aboutYourselfPage)}>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
                     <ClearButton
@@ -279,88 +252,35 @@ export const Contacts = () => {
                       Clear fields
                     </ClearButton>
                   </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={styles.form__label}>Phone</div>
-                    <SelectPhoneNumberCv
+                  <div className={styles.form__textarea}>
+                    <div className={cx(styles.form__label, styles.form__label_pt_12)}>
+                      Description
+                    </div>
+                    <TextareaCv
+                      data-id='description'
+                      name='description'
                       adaptive={false}
-                      name='phoneCode'
-                      isPhoneNumberTouched={touched.phoneNumber}
-                      setFieldValue={setFieldValue}
-                      onClickPhoneCodesHandler={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    >
-                      <InputCv
-                        data-id='phone'
-                        adaptive={false}
-                        name='phoneNumber'
-                        label='Cell phone number'
-                        activeLabel='Cell phone number'
-                        maxLength={25}
-                        showError={false}
-                        actionOnBlur={(fieldName, value) => {
-                          updateFieldInContactsStore(fieldName, value, isContactsExists);
-                        }}
-                      />
-                    </SelectPhoneNumberCv>
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={styles.form__label}>Email</div>
-                    <InputCv
-                      data-id='email'
-                      name='email'
-                      adaptive={false}
-                      maxLength={50}
-                      label='Enter your email'
-                      activeLabel='Enter your email'
+                      maxLength={450}
+                      label='Enter information about yourself'
+                      activeLabel='Enter information about yourself'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
                       }}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
                     <div className={cx(styles.form__label, styles.form__label_afterNone)}>
-                      Skype
+                      Self-presentation
                     </div>
                     <InputCv
-                      data-id='skype'
-                      name='skype'
-                      adaptive={false}
-                      maxLength={50}
-                      label='Enter your Skype login'
-                      activeLabel='Enter your Skype login'
-                      actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={styles.form__label}>LinkedIn</div>
-                    <InputCv
-                      data-id='linkedin'
-                      name='linkedin'
+                      data-id='selfPresentation'
+                      name='selfPresentation'
                       adaptive={false}
                       maxLength={255}
                       label='Add the link'
                       activeLabel='Add the link'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.form__inputBlock}>
-                    <div className={cx(styles.form__label, styles.form__label_afterNone)}>
-                      Portfolio
-                    </div>
-                    <InputCv
-                      data-id='portfolio'
-                      name='portfolio'
-                      adaptive={false}
-                      maxLength={255}
-                      label='Add the link'
-                      activeLabel='Add the link'
-                      actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
                       }}
                     />
                   </div>
@@ -373,22 +293,20 @@ export const Contacts = () => {
                 <div className={styles.form__button}>
                   <CancelButton
                     type='button'
-                    {...(isContactsExists &&
+                    {...(isAboutExists &&
                       dirty &&
                       !isSubmitting && {
                         type: 'submit',
                         onClick: () =>
                           setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
                       })}
-                    {...(isContactsExists &&
+                    {...(isAboutExists &&
                       !dirty &&
                       !isSubmitting && {
-                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
+                        onClick: () => navigate(CvPaths.CONTACTS + uuid)
                       })}
-                    {...(!isContactsExists &&
-                      !isSubmitting && {
-                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
-                      })}
+                    {...(!isAboutExists &&
+                      !isSubmitting && { onClick: () => navigate(CvPaths.CONTACTS + uuid) })}
                     isLoading={
                       !status?.errorResponse &&
                       !linkIsClicked &&
@@ -408,11 +326,11 @@ export const Contacts = () => {
                         btnNextIsClicked: true
                       })
                     }
-                    {...(isContactsExists &&
+                    {...(isAboutExists &&
                       !dirty &&
                       !isSubmitting && {
                         type: 'button',
-                        onClick: () => navigate(CvPaths.ABOUTYOURSELF + uuid)
+                        onClick: () => navigate(CvPaths.SKILLS + uuid)
                       })}
                     isLoading={
                       !status?.errorResponse &&

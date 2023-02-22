@@ -34,21 +34,22 @@ import {
   POSITIONS_LOAD,
   RESET_DIRTY_STATUS_FORM_PD,
   SAVED_SUCCESFULLY,
-  UPDATE_PERSONALINFORMATION_IN_CONSTRUCTOR_CV,
   RESET_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
   RESET_DIRTY_STATUS_IN_SPECIFIC_CV,
   SPECIFIC_CV_LOADING_OFF,
   SPECIFIC_CV_LOADING_ON,
   SPECIFIC_CV_NOT_FOUND_BY_UUID,
-  UPDATE_CONTACTS_IN_SPECIFIC_CV,
-  UPDATE_EXTRA_FIELDS_IN_SPECIFIC_CV,
   UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV,
   UPDATE_FIELDS_IN_CONSTRUCTOR_CV,
-  UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
   UPDATE_PHOTO_IN_SPECIFIC_CV,
   UPLOADED_PHOTO,
   UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV,
-  DELETE_PHOTO_IN_CONSTRUCTOR_CV
+  DELETE_PHOTO_IN_CONSTRUCTOR_CV,
+  UPDATE_FIELDS_IN_SPECIFIC_CV,
+  DELETE_PHOTO_IN_SPECIFIC_CV,
+  SPECIFIC_CV_NOT_FOUND_RESET,
+  CLEAR_FIELDS_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
+  UPDATE_FIELD_IN_ABOUTYOURSELF_CONSTRUCTOR_CV
 } from '@types';
 import $api from '../http/api';
 
@@ -242,13 +243,6 @@ export function uploadedPhoto() {
   };
 }
 
-export function updatePersonaInformationInConstructorCv(data) {
-  return {
-    type: UPDATE_PERSONALINFORMATION_IN_CONSTRUCTOR_CV,
-    data
-  };
-}
-
 export function photoUpdateCabinet(data) {
   return {
     type: PHOTO_UPDATE_CABINET,
@@ -313,17 +307,18 @@ export function updatePIandContactsInConstructorCv(data) {
   };
 }
 
+export function updateFieldsInConstructorCv(data) {
+  return {
+    type: UPDATE_FIELDS_IN_CONSTRUCTOR_CV,
+    data
+  };
+}
+
 export function updateFieldInContactsConstructorCv(fieldName, value) {
   return {
     type: UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV,
     fieldName,
     value
-  };
-}
-export function updateFieldsInConstructorCv(data) {
-  return {
-    type: UPDATE_FIELDS_IN_CONSTRUCTOR_CV,
-    data
   };
 }
 
@@ -332,6 +327,21 @@ export function clearFieldsInContactsConstructorCv() {
     type: CLEAR_FIELDS_IN_CONTACTS_CONSTRUCTOR_CV
   };
 }
+
+export function updateFieldInAboutYourselfConstructorCv(fieldName, value) {
+  return {
+    type: UPDATE_FIELD_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
+    fieldName,
+    value
+  };
+}
+
+export function clearFieldsInAboutYourselfConstructorCv() {
+  return {
+    type: CLEAR_FIELDS_IN_ABOUTYOURSELF_CONSTRUCTOR_CV
+  };
+}
+
 export function deletePhotoInConstructorCv() {
   return {
     type: DELETE_PHOTO_IN_CONSTRUCTOR_CV
@@ -356,23 +366,15 @@ export function specificCvNotFound() {
   };
 }
 
-export function updatePersonaInformationInSpecificCv(data) {
+export function specificCvNotFoundReset() {
   return {
-    type: UPDATE_PERSONALINFORMATION_IN_SPECIFIC_CV,
-    data
+    type: SPECIFIC_CV_NOT_FOUND_RESET
   };
 }
 
-export function updateContactsInSpecificCv(data) {
+export function updateFieldsInSpecificCv(data) {
   return {
-    type: UPDATE_CONTACTS_IN_SPECIFIC_CV,
-    data
-  };
-}
-
-export function updateExtraFieldsInSpecificCv(data) {
-  return {
-    type: UPDATE_EXTRA_FIELDS_IN_SPECIFIC_CV,
+    type: UPDATE_FIELDS_IN_SPECIFIC_CV,
     data
   };
 }
@@ -384,11 +386,9 @@ export function getPersonalInformationInSpecificCv(uuid) {
       const { data } = await $api.get('cvs/' + uuid);
       const { isContactsExists, ...rest } = data;
       dispatch(
-        updatePersonaInformationInSpecificCv({
+        updateFieldsInSpecificCv({
           personalInformation: rest,
-          extraFields: {
-            isContactsExists
-          }
+          isContactsExists
         })
       );
     } catch (e) {
@@ -409,7 +409,7 @@ export function getContactsSpecificCv(uuid) {
       const { data, status } = await $api.get('cvs/' + uuid + '/contacts');
       if (status === 200) {
         dispatch(
-          updateContactsInSpecificCv({
+          updateFieldsInSpecificCv({
             contacts: data,
             isContactsExists: true
           })
@@ -417,8 +417,40 @@ export function getContactsSpecificCv(uuid) {
       }
       if (status === 204) {
         dispatch(
-          updateContactsInSpecificCv({
+          updateFieldsInSpecificCv({
             isContactsExists: false
+          })
+        );
+      }
+    } catch (e) {
+      if (e?.response?.status === 404) {
+        dispatch(specificCvNotFound());
+      }
+      console.log(e);
+    } finally {
+      dispatch(specificCvLoadingOff());
+    }
+  };
+}
+
+export function getAboutYourselfSpecificCv(uuid) {
+  return async (dispatch) => {
+    try {
+      dispatch(specificCvLoadingOn());
+
+      const { data, status } = await $api.get('cvs/' + uuid + '/about');
+      if (status === 200) {
+        dispatch(
+          updateFieldsInSpecificCv({
+            aboutYourself: data,
+            isAboutExists: true
+          })
+        );
+      }
+      if (status === 204) {
+        dispatch(
+          updateFieldsInSpecificCv({
+            isAboutExists: false
           })
         );
       }
@@ -463,6 +495,12 @@ export function photoUpdateInSpecificCV(data) {
   return {
     type: UPDATE_PHOTO_IN_SPECIFIC_CV,
     data
+  };
+}
+
+export function deletePhotoInSpecificCV() {
+  return {
+    type: DELETE_PHOTO_IN_SPECIFIC_CV
   };
 }
 

@@ -62,7 +62,8 @@ module.exports = {
       '@types': path.resolve(__dirname, 'src/redux/types.js'),
       '@actions': path.resolve(__dirname, 'src/redux/actions.js'),
       '@hoc': path.resolve(__dirname, 'src/hoc'),
-      '@configs': path.resolve(__dirname, 'src/configs')
+      '@configs': path.resolve(__dirname, 'src/configs'),
+      '@cvSteps': path.resolve(__dirname, 'src/pages/CVsteps')
     }
   },
   plugins: [

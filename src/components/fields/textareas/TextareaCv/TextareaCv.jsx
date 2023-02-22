@@ -1,54 +1,86 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useField } from 'formik';
+import { debounce } from '@utils/debounce';
 import classNames from 'classnames/bind';
-import stylesPD from './InputPersonalDetails.module.scss';
-import styles from '../Input.module.scss';
+import styles from '../Textarea.module.scss';
 
 const cx = classNames.bind(styles);
-const stylesPDcx = classNames.bind(stylesPD);
 
-export const InputPersonalDetails = ({
+export const TextareaCv = ({
   name,
+  maxLength,
   label,
   activeLabel,
-  adaptive = true,
-  showError = true,
   actionOnBlur,
-  tabIndex = 0,
+  adaptive = true,
   ...props
 }) => {
+  const [warning, setWarning] = useState(false);
   const [active, setActive] = useState(false);
-  const [field, meta, helper] = useField(name);
+  const [field, meta] = useField(name);
   const hasError = !!(meta.error && meta.touched);
+
   const { value } = field;
 
-  function handleBlur(e) {
+  const handleBlur = (e) => {
     field.onBlur(e);
     setActive(false);
     if (actionOnBlur) {
       actionOnBlur(name, value);
     }
-  }
+  };
 
-  function handleFocus(e) {
+  const handleFocus = (e) => {
     setActive(true);
-  }
+  };
+
+  const updateStateWarning = useCallback(
+    debounce(
+      (state) => {
+        setWarning(state);
+      },
+      1000,
+      false
+    ),
+    []
+  );
+  const handleChange = (e) => {
+    e.target.value = e.target.value.replace(/\n/, '');
+
+    const { value } = e.target;
+
+    if (value.length > maxLength) {
+      e.target.value = value.substring(0, maxLength);
+      setWarning(true);
+      updateStateWarning(false);
+    }
+
+    field.onChange(e);
+  };
 
   return (
-    <div className={styles.inputContainer}>
-      <input
-        {...props}
-        {...field}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        type='text'
-        className={cx(styles.input, { input__error: hasError, input_adaptive: adaptive })}
-        placeholder={active ? activeLabel : label}
-        tabIndex={tabIndex}
-      />
-      {hasError && showError && (
+    <div className={styles.wrapper}>
+      <div className={styles.textarea}>
+        <textarea
+          {...props}
+          {...field}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          onChange={handleChange}
+          className={cx(styles.textarea__block, {
+            textarea_error: hasError,
+            textarea_warning: warning,
+            textarea_adaptive: adaptive
+          })}
+          placeholder={active ? activeLabel : label}
+        />
+        <span className={cx(styles.textarea__counter)}>
+          {value.length}/{maxLength}
+        </span>
+      </div>
+      {hasError && (
         <div
-          className={stylesPDcx(stylesPD.error, {
+          className={cx(styles.error, {
             error_adaptive: adaptive,
             error_notAdaptive: !adaptive
           })}

@@ -21,7 +21,7 @@
     height: 48px;
     border-radius: 15px;
     background-color: $input-background;
-    padding: 0.6875rem 0.875rem;
+    padding: rem(11);
     border: 1px solid transparent;
     font-size: 1.125rem;
     line-height: 1.333;
@@ -135,43 +135,36 @@
 
 .error {
   display: flex;
-  font-weight: 500;
-  font-size: 0.75rem;
+  font-weight: 400;
+  font-size: rem(12);
   align-items: center;
-  line-height: 1.333;
+  line-height: 1.334;
   color: $text-primary-error;
-  @media (min-width: 1365.98px) {
+  &_adaptive {
+    @media (min-width: 1365.98px) {
+      top: 100%;
+      position: absolute;
+      transform: translateY(4px);
+    }
+
+    @media (max-width: 1365.98px) {
+      margin-top: 4px;
+    }
+  }
+
+  &_notAdaptive {
     top: 100%;
     position: absolute;
-    align-items: flex-start;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
-  @media (max-width: 1365.98px) {
-    margin-top: 4px;
-  }
+
   svg {
-    flex: 0 0 14px;
+    flex: 0 0 18px;
     margin-right: 6px;
-    height: 14px;
+    height: 18px;
   }
 }
 
-.notAdaptiveError {
-  position: absolute;
-  display: flex;
-  font-weight: 500;
-  font-size: 0.75rem;
-  align-items: flex-start;
-  line-height: 1.333;
-  color: $text-primary-error;
-  top: 100%;
-  transform: translateY(6px);
-  svg {
-    flex: 0 0 14px;
-    margin-right: 6px;
-    height: 14px;
-  }
-}
 
 
 
