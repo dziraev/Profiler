@@ -156,7 +156,9 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           to={CvPaths.SKILLS + path}
           tabIndex='-1'
           onClick={prevent}
-          className={isActiveLink}
+          className={({ isActive }) =>
+            isActive ? styles.active : isAboutExists ? styles.available : ''
+          }
         >
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
