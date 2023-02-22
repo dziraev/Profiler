@@ -144,7 +144,7 @@ const PersonalDetails = (props) => {
           return (
             <Form className={styles.form}>
               <PopUpSuccessFulSaving show={showSuccessfulSaving}>
-                Tha data is saved successfully!
+                The data is saved successfully!
               </PopUpSuccessFulSaving>
               {dirty && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave onClickStay={() => dispatch(linkIsNotClicked())}>
