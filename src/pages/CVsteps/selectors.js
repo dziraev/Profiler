@@ -11,7 +11,7 @@ export const selectIsContactsExists = (state) => state.specificCvReducer.isConta
 export const selectContactsFromSpecificCv = (state) => state.specificCvReducer.contacts;
 export const selectContactsFromConstructorCv = (state) => state.constructorCvReducer.contacts;
 
-export const selectIsAboutYourselfExists = (state) => state.specificCvReducer.isAboutYourselfExists;
+export const selectIsAboutExists = (state) => state.specificCvReducer.isAboutExists;
 export const selectAboutYourselfFromSpecificCv = (state) => state.specificCvReducer.aboutYourself;
 export const selectAboutYourselfFromConstructorCv = (state) =>
   state.constructorCvReducer.aboutYourself;

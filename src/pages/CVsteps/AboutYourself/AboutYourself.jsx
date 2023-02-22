@@ -36,7 +36,7 @@ export const AboutYourself = () => {
   const { uuid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { aboutYourself, isAboutYourselfExists } = useAboutYourself();
+  const { aboutYourself, isAboutExists } = useAboutYourself();
   const [clearFields, setClearFields] = useState(false);
   const [buttonStatus, setButtonStatus] = useState({
     btnNextIsClicked: false,
@@ -50,9 +50,9 @@ export const AboutYourself = () => {
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
 
-  // if (isLoading || isLoadingConstructorCv) {
-  //   return;
-  // }
+  if (isLoading || isLoadingConstructorCv) {
+    return;
+  }
 
   return (
     <section className={styles.wrapper}>
@@ -65,12 +65,12 @@ export const AboutYourself = () => {
           const values = trimValues(formikValues, true);
 
           try {
-            if (uuid && !isAboutYourselfExists) {
+            if (uuid && !isAboutExists) {
               const { data } = await $api.post('cvs/' + uuid + '/about', values);
               dispatch(
                 updateFieldsInSpecificCv({
                   aboutYourself: data,
-                  isAboutYourselfExists: true
+                  isAboutExists: true
                 })
               );
             } else {
@@ -116,7 +116,7 @@ export const AboutYourself = () => {
           errors
         }) => {
           useEffect(() => {
-            if (isAboutYourselfExists) {
+            if (isAboutExists) {
               dispatch(changeDirtyStatusInSpecificCv(dirty));
             } else {
               dispatch(changeDirtyStatusInConstructorCv(dirty));
@@ -160,7 +160,7 @@ export const AboutYourself = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...(!isAboutYourselfExists && {
+                  {...(!isAboutExists && {
                     onClickSave: updateFieldsConstructorCv,
                     onClickDontSave: updateFieldsConstructorCv
                   })}
@@ -189,7 +189,7 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isAboutYourselfExists && { onClickLeave: updateFieldsConstructorCv })}
+                  {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -203,7 +203,7 @@ export const AboutYourself = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...(!isAboutYourselfExists && { onClickLeave: updateFieldsConstructorCv })}
+                    {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -213,7 +213,7 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isAboutYourselfExists && { onClickLeave: updateFieldsConstructorCv })}
+                  {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
@@ -235,7 +235,7 @@ export const AboutYourself = () => {
                       true
                     );
                     setClearFields(false);
-                    if (!isAboutYourselfExists) {
+                    if (!isAboutExists) {
                       dispatch(clearFieldsInAboutYourselfConstructorCv());
                     }
                   }}
@@ -264,11 +264,7 @@ export const AboutYourself = () => {
                       label='Enter information about yourself'
                       activeLabel='Enter information about yourself'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInAboutYourselfInConstructorCv(
-                          fieldName,
-                          value,
-                          isAboutYourselfExists
-                        );
+                        updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
                       }}
                     />
                   </div>
@@ -284,11 +280,7 @@ export const AboutYourself = () => {
                       label='Add the link'
                       activeLabel='Add the link'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInAboutYourselfInConstructorCv(
-                          fieldName,
-                          value,
-                          isAboutYourselfExists
-                        );
+                        updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
                       }}
                     />
                   </div>
@@ -301,19 +293,19 @@ export const AboutYourself = () => {
                 <div className={styles.form__button}>
                   <CancelButton
                     type='button'
-                    {...(isAboutYourselfExists &&
+                    {...(isAboutExists &&
                       dirty &&
                       !isSubmitting && {
                         type: 'submit',
                         onClick: () =>
                           setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
                       })}
-                    {...(isAboutYourselfExists &&
+                    {...(isAboutExists &&
                       !dirty &&
                       !isSubmitting && {
                         onClick: () => navigate(CvPaths.CONTACTS + uuid)
                       })}
-                    {...(!isAboutYourselfExists &&
+                    {...(!isAboutExists &&
                       !isSubmitting && { onClick: () => navigate(CvPaths.CONTACTS + uuid) })}
                     isLoading={
                       !status?.errorResponse &&
@@ -334,7 +326,7 @@ export const AboutYourself = () => {
                         btnNextIsClicked: true
                       })
                     }
-                    {...(isAboutYourselfExists &&
+                    {...(isAboutExists &&
                       !dirty &&
                       !isSubmitting && {
                         type: 'button',

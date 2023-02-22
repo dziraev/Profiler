@@ -443,14 +443,14 @@ export function getAboutYourselfSpecificCv(uuid) {
         dispatch(
           updateFieldsInSpecificCv({
             aboutYourself: data,
-            isAboutYourselfExists: true
+            isAboutExists: true
           })
         );
       }
       if (status === 204) {
         dispatch(
           updateFieldsInSpecificCv({
-            isAboutYourselfExists: false
+            isAboutExists: false
           })
         );
       }

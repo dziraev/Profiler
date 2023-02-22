@@ -16,7 +16,7 @@ const initialState = {
   notFound: false,
   isDirtyFormCv: false,
   isContactsExists: false,
-  isAboutYourselfExists: false,
+  isAboutExists: false,
   personalInformation: {
     uuid: '',
     imageUuid: '',

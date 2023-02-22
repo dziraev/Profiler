@@ -10,34 +10,34 @@ import {
 import {
   selectAboutYourselfFromConstructorCv,
   selectAboutYourselfFromSpecificCv,
-  selectIsAboutYourselfExists
+  selectIsAboutExists
 } from '@cvSteps/selectors';
 
 export const useAboutYourself = () => {
   const { uuid } = useParams();
   const dispatch = useDispatch();
-  const isAboutYourselfExists = useSelector(selectIsAboutYourselfExists);
+  const isAboutExists = useSelector(selectIsAboutExists);
   useEffect(() => {
-    // dispatch(getAboutYourselfSpecificCv(uuid));
+    dispatch(getAboutYourselfSpecificCv(uuid));
     return () => {
       dispatch(linkIsNotClicked());
-      if (isAboutYourselfExists) {
+      if (isAboutExists) {
         dispatch(resetDirtyStatusInSpecificCv());
       } else {
         dispatch(resetDirtyStatusInConstructorCv());
       }
     };
-  }, [isAboutYourselfExists]);
+  }, [isAboutExists]);
 
-  if (false) {
+  if (isAboutExists) {
     return {
       aboutYourself: useSelector(selectAboutYourselfFromSpecificCv),
-      isAboutYourselfExists
+      isAboutExists
     };
   } else {
     return {
       aboutYourself: useSelector(selectAboutYourselfFromConstructorCv),
-      isAboutYourselfExists
+      isAboutExists
     };
   }
 };
