@@ -443,6 +443,7 @@ export function getAboutYourselfSpecificCv(uuid) {
         dispatch(
           updateFieldsInSpecificCv({
             aboutYourself: data,
+            isContactsExists: true,
             isAboutExists: true
           })
         );

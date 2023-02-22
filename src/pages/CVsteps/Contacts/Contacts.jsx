@@ -179,10 +179,6 @@ export const Contacts = () => {
                     onClickSave: updateFieldsConstructorCv,
                     onClickDontSave: updateFieldsConstructorCv
                   })}
-                  {...(isContactsExists && {
-                    onClickSave: updateFieldsConstructorCv,
-                    onClickDontSave: updateFieldsConstructorCv
-                  })}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -269,12 +265,71 @@ export const Contacts = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
+              <div className={styles.form__buttons}>
+                <div className={styles.form__button}>
+                  <CancelButton
+                    type='button'
+                    {...(isContactsExists &&
+                         dirty &&
+                         !isSubmitting && {
+                        type: 'submit',
+                        onClick: () =>
+                          setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
+                      })}
+                    {...(isContactsExists &&
+                         !dirty &&
+                         !isSubmitting && {
+                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
+                      })}
+                    {...(!isContactsExists &&
+                         !isSubmitting && {
+                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
+                      })}
+                    isLoading={
+                      !status?.errorResponse &&
+                      !linkIsClicked &&
+                      isSubmitting &&
+                      !buttonStatus.btnNextIsClicked
+                    }
+                    tabIndex={18}
+                  >
+                    Back
+                  </CancelButton>
+                </div>
+                <div className={styles.form__button}>
+                  <Button
+                    type='submit'
+                    onClick={() =>
+                      setButtonStatus({
+                        btnBackIsClicked: false,
+                        btnNextIsClicked: true
+                      })
+                    }
+                    {...(isContactsExists &&
+                         !dirty &&
+                         !isSubmitting && {
+                        type: 'button',
+                        onClick: () => navigate(CvPaths.ABOUTYOURSELF + uuid)
+                      })}
+                    isLoading={
+                      !status?.errorResponse &&
+                      !linkIsClicked &&
+                      isSubmitting &&
+                      !buttonStatus.btnBackIsClicked
+                    }
+                    tabIndex={17}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
               <div className={cx(styles.form__container, styles.form__container_contactsPage)}>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
                     <ClearButton
                       disabled={!oneIsNotEmptyValue}
                       onClick={() => setClearFields(true)}
+                      tabIndex={16}
                     >
                       Clear fields
                     </ClearButton>
@@ -289,6 +344,7 @@ export const Contacts = () => {
                       onClickPhoneCodesHandler={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
+                      tabIndex={-1}
                     >
                       <InputCv
                         data-id='phone'
@@ -301,6 +357,7 @@ export const Contacts = () => {
                         actionOnBlur={(fieldName, value) => {
                           updateFieldInContactsStore(fieldName, value, isContactsExists);
                         }}
+                        tabIndex={11}
                       />
                     </SelectPhoneNumberCv>
                   </div>
@@ -316,6 +373,7 @@ export const Contacts = () => {
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
+                      tabIndex={12}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -332,6 +390,7 @@ export const Contacts = () => {
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
+                      tabIndex={13}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -346,6 +405,7 @@ export const Contacts = () => {
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
+                      tabIndex={14}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -362,67 +422,12 @@ export const Contacts = () => {
                       actionOnBlur={(fieldName, value) => {
                         updateFieldInContactsStore(fieldName, value, isContactsExists);
                       }}
+                      tabIndex={15}
                     />
                   </div>
                 </div>
                 <div className={styles.form__advice}>
                   <BoardAdvice />
-                </div>
-              </div>
-              <div className={styles.form__buttons}>
-                <div className={styles.form__button}>
-                  <CancelButton
-                    type='button'
-                    {...(isContactsExists &&
-                      dirty &&
-                      !isSubmitting && {
-                        type: 'submit',
-                        onClick: () =>
-                          setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
-                      })}
-                    {...(isContactsExists &&
-                      !dirty &&
-                      !isSubmitting && {
-                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
-                      })}
-                    {...(!isContactsExists &&
-                      !isSubmitting && {
-                        onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
-                      })}
-                    isLoading={
-                      !status?.errorResponse &&
-                      !linkIsClicked &&
-                      isSubmitting &&
-                      !buttonStatus.btnNextIsClicked
-                    }
-                  >
-                    Back
-                  </CancelButton>
-                </div>
-                <div className={styles.form__button}>
-                  <Button
-                    type='submit'
-                    onClick={() =>
-                      setButtonStatus({
-                        btnBackIsClicked: false,
-                        btnNextIsClicked: true
-                      })
-                    }
-                    {...(isContactsExists &&
-                      !dirty &&
-                      !isSubmitting && {
-                        type: 'button',
-                        onClick: () => navigate(CvPaths.ABOUTYOURSELF + uuid)
-                      })}
-                    isLoading={
-                      !status?.errorResponse &&
-                      !linkIsClicked &&
-                      isSubmitting &&
-                      !buttonStatus.btnBackIsClicked
-                    }
-                  >
-                    Next
-                  </Button>
                 </div>
               </div>
             </Form>

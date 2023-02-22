@@ -4,10 +4,7 @@ import { CvPaths } from '@configs/configs';
 import { useDispatch, useSelector } from 'react-redux';
 import { linkIsClicked } from '@actions';
 import { useUpdateFieldsConstructorCv } from '@hooks/useUpdateFieldsConstructorCv';
-import {
-  selectIsDirtyFormConstructorCv,
-  selectIsDirtyFormSpecificCv,
-} from '../../../pages/CVsteps/selectors';
+import { selectIsDirtyFormConstructorCv, selectIsDirtyFormSpecificCv } from '@cvSteps/selectors';
 import logo from '../../../static/images/menu-logo.svg';
 import styles from './NavMenuCV.module.scss';
 
@@ -15,11 +12,16 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
   const isActiveLink = ({ isActive }) => (isActive ? styles.active : '');
   const { pathname } = useLocation();
   const { uuid } = useParams();
+  const path = uuid ? uuid : '';
   const dispatch = useDispatch();
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
   const isDirtyFormSpecificCv = useSelector(selectIsDirtyFormSpecificCv);
   const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
-  const {isContactsExists, isAboutYourselfExists } = useSelector(state => state.specificCvReducer)
+  const {
+    personalInformation: { uuid: isPersonalInformationExists },
+    isContactsExists,
+    isAboutExists
+  } = useSelector((state) => state.specificCvReducer);
 
   const handleClick = (e) => {
     const href = e.currentTarget.getAttribute('href');
@@ -41,11 +43,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
         <img src={logo} alt='logo' />
       </div>
       <nav className={styles.sidebar__nav}>
-      <NavLink 
-          to='/main/my-cv'
-          tabIndex={tabIndex}
-          onClick={handleClick}
-        >
+        <NavLink to={CvPaths.INDEX} tabIndex={tabIndex} onClick={handleClick}>
           <div className={styles.sidebar__link}>
             <svg
               width='18'
@@ -63,10 +61,10 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/personal-info/${uuid}`}
+          to={path ? CvPaths.PERSONALINFORMATION + path : CvPaths.PERSONALINFORMATION}
           tabIndex='-1'
           onClick={handleClick}
-          className={({isActive}) => isActive ? styles.active : styles.available}
+          className={({ isActive }) => (isActive ? styles.active : styles.available)}
         >
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
@@ -97,10 +95,12 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/contacts/${uuid}`}
+          to={CvPaths.CONTACTS + path}
           tabIndex='-1'
-          onClick={isContactsExists ? handleClick : prevent}
-          className={({isActive}) => isActive ? styles.active : isContactsExists ? styles.available : ''}
+          onClick={isPersonalInformationExists ? handleClick : prevent}
+          className={({ isActive }) =>
+            isActive ? styles.active : isPersonalInformationExists ? styles.available : ''
+          }
         >
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
@@ -124,11 +124,12 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/about/${uuid}`}
+          to={CvPaths.ABOUTYOURSELF + path}
           tabIndex='-1'
-          onClick={prevent}
-          className={isActiveLink}
-          className={({isActive}) => isActive ? styles.active : isAboutYourselfExists ? styles.available : ''}
+          onClick={isContactsExists ? handleClick : prevent}
+          className={({ isActive }) =>
+            isActive ? styles.active : isContactsExists ? styles.available : ''
+          }
         >
           <div className={styles.sidebar__nav__link}>
             <div className={styles.sidebar__nav__link__icon}>
@@ -151,7 +152,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/skill/${uuid}`}
+          to={CvPaths.SKILLS + path}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -179,7 +180,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/experience/${uuid}`}
+          to={`/cv/experience/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -205,7 +206,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/education/${uuid}`}
+          to={`/cv/education/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -231,7 +232,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/additional/${uuid}`}
+          to={`/cv/additional/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}
@@ -261,7 +262,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
           </div>
         </NavLink>
         <NavLink
-          to={`/cv/recommendations/${uuid}`}
+          to={`/cv/recommendations/${path}`}
           tabIndex='-1'
           onClick={prevent}
           className={isActiveLink}

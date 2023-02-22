@@ -11,9 +11,20 @@
   opacity: 1;
   transition: opacity 0.2s ease 0s;
   background-color: transparent;
+  border-bottom: 2px solid transparent;
   cursor: pointer;
   &:disabled {
     opacity: 0.4;
     cursor: no-drop;
+  }
+  &:hover, &:focus {
+    border-color: variables.$text-primary-blue;
+  }
+  &:active {
+    color: variables.$text-primary-dark-blue;
+    border-color: transparent;
+    & path {
+      fill: variables.$text-primary-dark-blue;
+    }
   }
 }

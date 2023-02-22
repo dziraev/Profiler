@@ -77,10 +77,10 @@
 
 .wrapper {
   position: relative;
-  &:hover .photo__image__change {
+  &:hover .photo__image__change, &:focus .photo__image__change {
     display: block;
   }
-  &:hover .photo__image__delete {
+  &:hover .photo__image__delete, &:focus .photo__image__delete {
     display: block;
   }
 }
