@@ -384,11 +384,12 @@ export function getPersonalInformationInSpecificCv(uuid) {
     try {
       dispatch(specificCvLoadingOn());
       const { data } = await $api.get('cvs/' + uuid);
-      const { isContactsExists, ...rest } = data;
+      const { isContactsExists, isAboutExist, ...rest } = data;
       dispatch(
         updateFieldsInSpecificCv({
           personalInformation: rest,
-          isContactsExists
+          isContactsExists,
+          isAboutExist
         })
       );
     } catch (e) {

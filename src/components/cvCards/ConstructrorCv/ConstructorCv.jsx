@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { CvPaths } from '@configs/configs';
 import styles from '../Card.module.scss';
 
 export const ConstructorCv = () => {
   return (
     <div className={styles.card}>
-      <NavLink to='/cv/personal-info'>
+      <NavLink to={CvPaths.PERSONALINFORMATION}>
         <div className={styles.card__container}>
           <div className={styles.card__link}>
             <svg

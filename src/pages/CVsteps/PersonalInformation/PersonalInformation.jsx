@@ -26,6 +26,7 @@ import PhotoCV from '@components/photo/photoCV/PhotoCV';
 import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
+import { useUpdateFieldsCv } from '@hooks';
 
 export const PersonalInformation = () => {
   const { uuid } = useParams();
@@ -34,8 +35,10 @@ export const PersonalInformation = () => {
   const personalInformation = usePersonalInformation();
   const [clearFields, setClearFields] = useState(false);
   const [btnNextIsClicked, setBtnNextIsClicked] = useState(false);
+
   const isLoadingSpecificCv = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
+  const updateFieldsCv = useUpdateFieldsCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -166,7 +169,14 @@ export const PersonalInformation = () => {
           return (
             <Form className={styles.form}>
               {dirty && isValid && linkIsClicked && !status?.errorResponse && (
-                <PopUpSave adaptive={false} isSubmitting={isSubmitting}>
+                <PopUpSave
+                  adaptive={false}
+                  isSubmitting={isSubmitting}
+                  {...(uuid && {
+                    onClickSave: () => updateFieldsCv(uuid, linkIsClicked),
+                    onClickDontSave: () => updateFieldsCv(uuid, linkIsClicked)
+                  })}
+                >
                   Do you want to save the changes in CV?
                 </PopUpSave>
               )}
@@ -189,7 +199,13 @@ export const PersonalInformation = () => {
               )}
 
               {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
-                <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
+                <PopUpStayOrLeave
+                  adaptive={false}
+                  onClickStay={onClickStayPopUp}
+                  {...(uuid && {
+                    onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                  })}
+                >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -200,14 +216,26 @@ export const PersonalInformation = () => {
                 !allFieldsAreFilledIn &&
                 !isValid &&
                 linkIsClicked && (
-                  <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
+                  <PopUpStayOrLeave
+                    adaptive={false}
+                    onClickStay={onClickStayPopUp}
+                    {...(uuid && {
+                      onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                    })}
+                  >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
                   </PopUpStayOrLeave>
                 )}
 
               {dirty && correctAndNotFully && linkIsClicked && (
-                <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
+                <PopUpStayOrLeave
+                  adaptive={false}
+                  onClickStay={onClickStayPopUp}
+                  {...(uuid && {
+                    onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                  })}
+                >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -331,11 +359,7 @@ export const PersonalInformation = () => {
                   <BoardAdvice />
                 </div>
                 <div className={styles.form__checkboxes}>
-                  <CheckBox
-                    name='isReadyToRelocate'
-                    label='Ready to relocate'
-                    tabIndex={17}
-                  />
+                  <CheckBox name='isReadyToRelocate' label='Ready to relocate' tabIndex={17} />
                   <CheckBox
                     name='isReadyForRemoteWork'
                     label='Ready for remote work'

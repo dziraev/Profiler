@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CvPaths } from '@configs/configs';
 import cx from 'classnames';
 import stylesDraft from './DraftCv.module.scss';
 import styles from '../Card.module.scss';
@@ -8,7 +9,7 @@ export const DraftCv = ({ position, uuid }) => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.card} onClick={() => navigate('/cv/personal-info/' + uuid)}>
+    <div className={styles.card} onClick={() => navigate(CvPaths.PERSONALINFORMATION + uuid)}>
       <div
         className={cx(
           styles.card__container,

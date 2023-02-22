@@ -10,7 +10,7 @@ export * from './useLoadingConstructorCv';
 export * from './useLoadingSpecificCv';
 export * from './usePersonalDetails';
 export * from './usePersonalInformation';
-export * from './useUpdateFieldsConstructorCv';
+export * from './useUpdateFieldsCv';
 export * from './useUploadPhotoCabinet';
 export * from './useUploadPhotoCV';
 export * from './useAboutYourself';

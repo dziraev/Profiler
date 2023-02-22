@@ -12,7 +12,7 @@ import {
   useLinkIsClicked,
   useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsConstructorCv
+  useUpdateFieldsCv
 } from '@hooks';
 
 import { validateAboutYourself } from '@validators/validateAboutYourself';
@@ -45,7 +45,7 @@ export const AboutYourself = () => {
 
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
+  const updateFieldsCv = useUpdateFieldsCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -160,10 +160,8 @@ export const AboutYourself = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...(!isAboutExists && {
-                    onClickSave: updateFieldsConstructorCv,
-                    onClickDontSave: updateFieldsConstructorCv
-                  })}
+                  onClickSave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  onClickDontSave={() => updateFieldsCv(uuid, linkIsClicked)}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -189,7 +187,7 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
+                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -203,7 +201,7 @@ export const AboutYourself = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
+                    onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -213,7 +211,7 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isAboutExists && { onClickLeave: updateFieldsConstructorCv })}
+                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>

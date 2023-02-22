@@ -11,9 +11,9 @@ import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import {
   useContacts,
   useLinkIsClicked,
+  useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsConstructorCv,
-  useLoadingConstructorCv
+  useUpdateFieldsCv
 } from '@hooks';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -44,7 +44,7 @@ export const Contacts = () => {
 
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
+  const updateFieldsCv = useUpdateFieldsCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -175,10 +175,8 @@ export const Contacts = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...(!isContactsExists && {
-                    onClickSave: updateFieldsConstructorCv,
-                    onClickDontSave: updateFieldsConstructorCv
-                  })}
+                  onClickSave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  onClickDontSave={() => updateFieldsCv(uuid, linkIsClicked)}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -205,7 +203,7 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isContactsExists && { onClickLeave: updateFieldsConstructorCv })}
+                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -219,7 +217,7 @@ export const Contacts = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...(!isContactsExists && { onClickLeave: updateFieldsConstructorCv })}
+                    onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -229,7 +227,7 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(!isContactsExists && { onClickLeave: updateFieldsConstructorCv })}
+                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
@@ -270,19 +268,19 @@ export const Contacts = () => {
                   <CancelButton
                     type='button'
                     {...(isContactsExists &&
-                         dirty &&
-                         !isSubmitting && {
+                      dirty &&
+                      !isSubmitting && {
                         type: 'submit',
                         onClick: () =>
                           setButtonStatus({ btnNextIsClicked: false, btnBackIsClicked: true })
                       })}
                     {...(isContactsExists &&
-                         !dirty &&
-                         !isSubmitting && {
+                      !dirty &&
+                      !isSubmitting && {
                         onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
                       })}
                     {...(!isContactsExists &&
-                         !isSubmitting && {
+                      !isSubmitting && {
                         onClick: () => navigate(CvPaths.PERSONALINFORMATION + uuid)
                       })}
                     isLoading={
@@ -306,8 +304,8 @@ export const Contacts = () => {
                       })
                     }
                     {...(isContactsExists &&
-                         !dirty &&
-                         !isSubmitting && {
+                      !dirty &&
+                      !isSubmitting && {
                         type: 'button',
                         onClick: () => navigate(CvPaths.ABOUTYOURSELF + uuid)
                       })}
