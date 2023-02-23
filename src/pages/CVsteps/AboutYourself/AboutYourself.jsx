@@ -24,6 +24,8 @@ import {
   changeDirtyStatusInSpecificCv,
   clearFieldsInAboutYourselfConstructorCv,
   linkIsNotClicked,
+  resetDirtyStatusInConstructorCv,
+  resetDirtyStatusInSpecificCv,
   updateFieldInAboutYourselfConstructorCv,
   updateFieldsInSpecificCv
 } from '@actions';
@@ -121,6 +123,13 @@ export const AboutYourself = () => {
             } else {
               dispatch(changeDirtyStatusInConstructorCv(dirty));
             }
+            return () => {
+              if (isAboutExists) {
+                dispatch(resetDirtyStatusInSpecificCv());
+              } else {
+                dispatch(resetDirtyStatusInConstructorCv());
+              }
+            };
           }, [dirty]);
 
           const onClickStayPopUp = () => {

@@ -406,13 +406,15 @@ export function getContactsSpecificCv(uuid) {
   return async (dispatch) => {
     try {
       dispatch(specificCvLoadingOn());
-
+      const { data: dataFirstPage } = await $api.get('cvs/' + uuid);
+      const { isContactsExists, isAboutExists } = dataFirstPage;
       const { data, status } = await $api.get('cvs/' + uuid + '/contacts');
       if (status === 200) {
         dispatch(
           updateFieldsInSpecificCv({
             contacts: data,
-            isContactsExists: true
+            isContactsExists,
+            isAboutExists
           })
         );
       }
@@ -438,14 +440,16 @@ export function getAboutYourselfSpecificCv(uuid) {
   return async (dispatch) => {
     try {
       dispatch(specificCvLoadingOn());
-
+      const { data: dataFirstPage } = await $api.get('cvs/' + uuid);
+      const { isContactsExists, isAboutExists, ...rest } = dataFirstPage;
       const { data, status } = await $api.get('cvs/' + uuid + '/about');
       if (status === 200) {
         dispatch(
           updateFieldsInSpecificCv({
+            personalInformation: rest,
             aboutYourself: data,
-            isContactsExists: true,
-            isAboutExists: true
+            isContactsExists,
+            isAboutExists
           })
         );
       }
