@@ -35,16 +35,23 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
       updateFieldsCv(uuid, href);
     }
   };
+
   const prevent = (e) => {
     e.preventDefault();
   };
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebar__logo}>
         <img src={logo} alt='logo' />
       </div>
       <nav className={styles.sidebar__nav}>
-        <NavLink to={CvPaths.INDEX} tabIndex={tabIndex} onClick={handleClick} className={styles.sidebar__link}>
+        <NavLink
+          to={CvPaths.INDEX}
+          tabIndex={tabIndex}
+          onClick={handleClick}
+          className={styles.sidebar__link}
+        >
           <svg
             width='18'
             height='14'

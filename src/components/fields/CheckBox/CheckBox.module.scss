@@ -11,8 +11,15 @@
   &__input {
     opacity: 0;
     width: 0;
-    &:focus + .checkbox__label {
+    &:focus + .checkbox__label, &:hover + .checkbox__label {
 
+        &::before {
+          border-width: 2px;
+        }
+
+        &::after {
+          border-width: 0 2px 2px 0;
+        }
     }
     &:checked + .checkbox__label::after {
         opacity: 1;
@@ -27,15 +34,7 @@
     align-items: center;
     column-gap: 14px;
     line-height: 1.3125;
-    &:hover {
-      &::before {
-        border-width: 2px;
-      }
 
-      &::after {
-        border-width: 0 2px 2px 0;
-      }
-    }
     &::before {
       align-self: flex-start;
       content: '';
@@ -45,6 +44,7 @@
       border: 1.5px solid $checkbox-default;
       border-radius: 5px;
     }
+
     &::after {
       content: '';
       position: absolute;

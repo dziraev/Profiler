@@ -23,6 +23,8 @@ import {
   changeDirtyStatusInSpecificCv,
   clearFieldsInContactsConstructorCv,
   linkIsNotClicked,
+  resetDirtyStatusInConstructorCv,
+  resetDirtyStatusInSpecificCv,
   updateFieldInContactsConstructorCv,
   updateFieldsInSpecificCv
 } from '@actions';
@@ -131,6 +133,13 @@ export const Contacts = () => {
             } else {
               dispatch(changeDirtyStatusInConstructorCv(dirty));
             }
+            return () => {
+              if (isContactsExists) {
+                dispatch(resetDirtyStatusInSpecificCv());
+              } else {
+                dispatch(resetDirtyStatusInConstructorCv());
+              }
+            };
           }, [dirty]);
 
           const onClickStayPopUp = () => {
@@ -369,7 +378,6 @@ export const Contacts = () => {
                 <div className={styles.form__advice}>
                   <BoardAdvice />
                 </div>
-                
               </div>
               <div className={styles.form__buttons}>
                 <div className={styles.form__button}>

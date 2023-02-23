@@ -23,13 +23,8 @@ export const useContacts = () => {
     dispatch(getContactsSpecificCv(uuid));
     return () => {
       dispatch(linkIsNotClicked());
-      if (isContactsExists) {
-        dispatch(resetDirtyStatusInSpecificCv());
-      } else {
-        dispatch(resetDirtyStatusInConstructorCv());
-      }
     };
-  }, [isContactsExists]);
+  }, []);
 
   if (isContactsExists) {
     return {

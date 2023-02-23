@@ -21,13 +21,8 @@ export const useAboutYourself = () => {
     dispatch(getAboutYourselfSpecificCv(uuid));
     return () => {
       dispatch(linkIsNotClicked());
-      if (isAboutExists) {
-        dispatch(resetDirtyStatusInSpecificCv());
-      } else {
-        dispatch(resetDirtyStatusInConstructorCv());
-      }
     };
-  }, [isAboutExists]);
+  }, []);
 
   if (isAboutExists) {
     return {
