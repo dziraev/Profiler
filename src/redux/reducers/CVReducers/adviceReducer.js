@@ -55,6 +55,16 @@ const initialState = {
       name: 'portfolio',
       title: 'Portfolio',
       text: 'The field Portfolio is optional. But we recommend you to fill in this field in order to have a better chance of employment. <p>Use specialized resources — Github, Dribble, Behance or put your artifacts to the folder on Google Drive.</p>'
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      text: 'Write a brief information about yourself and your soft skills that could help in professional implementation. The description should match the job you are applying for. Do not use template characteristics, be individual. <p><strong>Example:</strong> not teachable, but “I always strive to learn new information in the field of Software Development, now I am teaching the Spring framework based on the book by Craig Walls”</p>'
+    },
+    {
+      name: 'selfPresentation',
+      title: 'Self-presentation',
+      text: 'The field Self-presentation is optional.<br/> Self-presentation is a short video through which a recruiter can learn important information about a candidate. Video presentation can help you to stand out from the competition.'
     }
   ]
 };

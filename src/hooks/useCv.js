@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { allCvLoad } from '../redux/actions';
-import { selectCvsObj } from '../pages/CVsteps/selectors';
+import { allCvLoad } from '@actions';
+import { selectCvsObj } from '@cvSteps/selectors';
 
 export const useCv = () => {
   const dispatch = useDispatch();

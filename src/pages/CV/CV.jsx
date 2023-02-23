@@ -45,16 +45,16 @@ const CV = () => {
           </div>
         </div>
       </div>
-      <div className={styles.page__sidebar}>
-        <NavMenuCV />
-      </div>
       <div className={styles.page__content}>
-        <div className={styles.exit}>
-          <Logout />
-        </div>
         <main className={styles.page__main}>
           <Outlet />
         </main>
+        <div className={styles.exit}>
+          <Logout tabIndex={21} />
+        </div>
+      </div>
+      <div className={styles.page__sidebar}>
+        <NavMenuCV tabIndex={22} />
       </div>
       {openModal && <PopUpUploadPhotoCV />}
       {invalidUpload && <PopUpInvalidUploadCV />}

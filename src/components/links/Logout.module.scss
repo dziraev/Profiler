@@ -12,7 +12,7 @@
             stroke: variables.$text-primary-blue;
         }
     }
-    &__link:hover p {
+    &__link:hover p, &__link:focus p {
         border-bottom: 1px variables.$text-primary-blue solid;
     }
     &__link:active {

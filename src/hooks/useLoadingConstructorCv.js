@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectIsLoadingConstructorCv } from '../pages/CVsteps/selectors';
+import { selectIsLoadingConstructorCv } from '@cvSteps/selectors';
 
 export const useLoadingConstructorCv = () => {
   const isLoading = useSelector(selectIsLoadingConstructorCv);

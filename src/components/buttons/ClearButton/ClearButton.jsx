@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './ClearButton.module.scss';
 
-export const ClearButton = ({ children, ...props }) => {
+export const ClearButton = ({ children, tabIndex = 0, ...props }) => {
   return (
-    <button type='button' className={styles.button} {...props}>
+    <button type='button' tabIndex={tabIndex} className={styles.button} {...props}>
       <svg
         width='18'
         height='20'
@@ -16,7 +16,7 @@ export const ClearButton = ({ children, ...props }) => {
           fill='#407BFF'
         />
       </svg>
-      {children}
+      <p>{children}</p>
     </button>
   );
 };

@@ -14,7 +14,7 @@
     border-radius: 50%;
     width: 24px;
     height: 24px;
-    padding: 6px;
+    padding: 4.65px;
     & svg {
       display: block;
     }
@@ -38,30 +38,30 @@
     cursor: default;
     &__change {
       display: none;
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       background-color: rgba(177, 202, 255, 0.5);
       border-radius: 50%;
       position: absolute;
       text-align: center;
-      padding: 4px;
-      bottom: 9px;
-      left: 36px;
+      padding: 7px;
+      bottom: 14px;
+      left: 32px;
       z-index: 2;
       backdrop-filter: blur(3px);
       cursor: pointer;
     }
     &__delete {
       display: none;
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       background-color: rgba(177, 202, 255, 0.5);
       border-radius: 50%;
       position: absolute;
       text-align: center;
-      padding: 4px 5px;
-      bottom: 9px;
-      left: 70px;
+      padding: 6px 8px;
+      bottom: 14px;
+      left: 78px;
       z-index: 2;
       backdrop-filter: blur(3px);
       cursor: pointer;

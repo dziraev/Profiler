@@ -19,12 +19,14 @@ import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
   linkIsNotClicked,
-  updatePersonaInformationInSpecificCv
+  updateFieldsInSpecificCv
 } from '@actions';
+import { CvPaths } from '@configs/configs';
 import PhotoCV from '@components/photo/photoCV/PhotoCV';
 import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
+import { useUpdateFieldsCv } from '@hooks';
 
 export const PersonalInformation = () => {
   const { uuid } = useParams();
@@ -33,8 +35,10 @@ export const PersonalInformation = () => {
   const personalInformation = usePersonalInformation();
   const [clearFields, setClearFields] = useState(false);
   const [btnNextIsClicked, setBtnNextIsClicked] = useState(false);
+
   const isLoadingSpecificCv = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
+  const updateFieldsCv = useUpdateFieldsCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -47,7 +51,7 @@ export const PersonalInformation = () => {
   }
 
   return (
-    <section className={styles.wrapper}>
+    <section className={cx(styles.wrapper, styles.wrapper_mb_60)}>
       <h2 className={styles.title}>1. Personal information</h2>
       <Formik
         initialValues={personalInformation}
@@ -76,16 +80,19 @@ export const PersonalInformation = () => {
             } else {
               ({ data } = await $api.put('cvs/' + uuid, currentValues));
             }
-            dispatch(updatePersonaInformationInSpecificCv(data));
+            dispatch(updateFieldsInSpecificCv({ personalInformation: data }));
 
             if (data.uuid && btnNextIsClicked) {
-              navigate('../contacts/' + data.uuid);
+              navigate(CvPaths.CONTACTS + data.uuid);
             }
 
             if (linkIsClicked) {
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
             }
           } catch (e) {
+            if (e?.response?.status === 400) {
+              navigate(CvPaths.INDEX);
+            }
             setStatus({ errorResponse: true });
           } finally {
             setBtnNextIsClicked(false);
@@ -165,7 +172,14 @@ export const PersonalInformation = () => {
           return (
             <Form className={styles.form}>
               {dirty && isValid && linkIsClicked && !status?.errorResponse && (
-                <PopUpSave adaptive={false} isSubmitting={isSubmitting}>
+                <PopUpSave
+                  adaptive={false}
+                  isSubmitting={isSubmitting}
+                  {...(uuid && {
+                    onClickSave: () => updateFieldsCv(uuid, linkIsClicked),
+                    onClickDontSave: () => updateFieldsCv(uuid, linkIsClicked)
+                  })}
+                >
                   Do you want to save the changes in CV?
                 </PopUpSave>
               )}
@@ -188,7 +202,13 @@ export const PersonalInformation = () => {
               )}
 
               {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
-                <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
+                <PopUpStayOrLeave
+                  adaptive={false}
+                  onClickStay={onClickStayPopUp}
+                  {...(uuid && {
+                    onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                  })}
+                >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -199,14 +219,26 @@ export const PersonalInformation = () => {
                 !allFieldsAreFilledIn &&
                 !isValid &&
                 linkIsClicked && (
-                  <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
+                  <PopUpStayOrLeave
+                    adaptive={false}
+                    onClickStay={onClickStayPopUp}
+                    {...(uuid && {
+                      onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                    })}
+                  >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
                   </PopUpStayOrLeave>
                 )}
 
               {dirty && correctAndNotFully && linkIsClicked && (
-                <PopUpStayOrLeave adaptive={false} onClickStay={onClickStayPopUp}>
+                <PopUpStayOrLeave
+                  adaptive={false}
+                  onClickStay={onClickStayPopUp}
+                  {...(uuid && {
+                    onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                  })}
+                >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
@@ -244,16 +276,22 @@ export const PersonalInformation = () => {
                   dontClearFields={() => setClearFields(false)}
                 />
               )}
-              <div className={cx(styles.form__container, styles.form__container_firstPage)}>
+              <div
+                className={cx(
+                  styles.form__container,
+                  styles.form__container_personalInformationPage
+                )}
+              >
                 <div className={styles.form__photo}>
                   <div className={cx(styles.form__label, styles.form__label_afterNone)}>Photo</div>
-                  <PhotoCV />
+                  <PhotoCV tabIndex={11} />
                 </div>
                 <div className={styles.form__lines}>
                   <div className={styles.form__clearFields}>
                     <ClearButton
                       disabled={!oneIsNotEmptyValue}
                       onClick={() => setClearFields(true)}
+                      tabIndex={19}
                     >
                       Clear fields
                     </ClearButton>
@@ -267,6 +305,7 @@ export const PersonalInformation = () => {
                       maxLength={50}
                       label='Enter your name'
                       activeLabel='Enter your name'
+                      tabIndex={12}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -278,6 +317,7 @@ export const PersonalInformation = () => {
                       maxLength={50}
                       label='Enter your surname'
                       activeLabel='Enter your surname'
+                      tabIndex={13}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -289,6 +329,7 @@ export const PersonalInformation = () => {
                       label='Choose your position'
                       activeLabel='Choose your position'
                       setFieldValue={setFieldValue}
+                      tabIndex={14}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -301,6 +342,7 @@ export const PersonalInformation = () => {
                       label='Enter your location'
                       activeLabel='Enter your location'
                       setFieldValue={setFieldValue}
+                      tabIndex={15}
                     />
                   </div>
                   <div className={styles.form__inputBlock}>
@@ -312,6 +354,7 @@ export const PersonalInformation = () => {
                       maxLength={50}
                       label='Enter your localization city'
                       activeLabel='Enter your localization city'
+                      tabIndex={16}
                     />
                   </div>
                 </div>
@@ -319,8 +362,12 @@ export const PersonalInformation = () => {
                   <BoardAdvice />
                 </div>
                 <div className={styles.form__checkboxes}>
-                  <CheckBox name='isReadyToRelocate' label='Ready to relocate' />
-                  <CheckBox name='isReadyForRemoteWork' label='Ready for remote work' />
+                  <CheckBox name='isReadyToRelocate' label='Ready to relocate' tabIndex={17} />
+                  <CheckBox
+                    name='isReadyForRemoteWork'
+                    label='Ready for remote work'
+                    tabIndex={18}
+                  />
                 </div>
               </div>
               <div className={styles.form__buttons}>
@@ -330,7 +377,7 @@ export const PersonalInformation = () => {
                     {...(uuid &&
                       !dirty &&
                       !isSubmitting && {
-                        onClick: () => navigate('../contacts/' + uuid)
+                        onClick: () => navigate(CvPaths.CONTACTS + uuid)
                       })}
                     {...((dirty || !uuid) &&
                       !isSubmitting && {
@@ -344,6 +391,7 @@ export const PersonalInformation = () => {
                         onClick: () => setBtnNextIsClicked(true)
                       })}
                     isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
+                    tabIndex={20}
                   >
                     Next
                   </Button>

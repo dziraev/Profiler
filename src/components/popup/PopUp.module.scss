@@ -27,23 +27,9 @@
     position: absolute;
     top: 18.25px;
     right: 18.25px;
-    width: 20px;
-    height: 20px;
+    width: 15.5px;
+    height: 15.5px;
     cursor: pointer;
-    &::after, &::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      width: 2px;
-      height: 100%;
-      background-color: $text-primary-dark-blue;
-    }
-    &::before {
-      transform: translateX(-50%) rotate(45deg);
-    }
-    &::after {
-      transform: translateX(-50%) rotate(-45deg);
-    }
   }
   &__header {
     &:not(:last-child) {
@@ -99,8 +85,12 @@
       .modal__close {
         top: 12.5px;
         right: 12.5px;
-        width: 16px;
-        height: 16px;
+        width: 13px;
+        height: 13px;
+        & svg {
+          width: 13px;
+          height: 13px;
+        }
       }
 
     }
