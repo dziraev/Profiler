@@ -1,23 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CvPaths } from '@configs/configs';
-import cx from 'classnames';
-import stylesDraft from './DraftCv.module.scss';
-import styles from '../Card.module.scss';
+import { useNavigate } from 'react-router-dom';
+import styles from './DraftCv.module.scss';
 
-export const DraftCv = ({ position, uuid }) => {
+export const DraftCv = ({ position, uuid, status }) => {
   const navigate = useNavigate();
 
   return (
     <div className={styles.card} onClick={() => navigate(CvPaths.PERSONALINFORMATION + uuid)}>
-      <div
-        className={cx(
-          styles.card__container,
-          styles.card__container_bgDraft,
-          stylesDraft.draft__container
-        )}
-      >
-        <div className={stylesDraft.draft__dot}>
+      <div className={styles.draft__container}>
+        <div className={styles.draft__dot}>
           <svg
             width='4'
             height='12'
@@ -31,9 +23,9 @@ export const DraftCv = ({ position, uuid }) => {
             />
           </svg>
         </div>
-        <div className={stylesDraft.title}>
-          <div className={stylesDraft.title__status}>Draft</div>
-          <div className={stylesDraft.title__position}>{position}</div>
+        <div className={styles.title}>
+          <div className={styles.title__status}>{status}</div>
+          <div className={styles.title__position}>{position}</div>
         </div>
       </div>
     </div>

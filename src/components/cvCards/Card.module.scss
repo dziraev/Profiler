@@ -1,51 +1,73 @@
 @import 'src/static/scss/variables';
+@import 'src/static/scss/mixins';
 
 .card {
-  &__title {
-    font-size: 1.625em;
-    line-height: 1.32;
-    font-weight: 600;
-    color: $text-primary-dark-blue;
-    margin: 0 0 40px 0;
-    text-align: left;
-  }
+
   &__container {
     background-color: $background-constructor-cv;
     width: 199px;
     height: 252px;
     border-radius: 20px;
     text-align: center;
-    padding: 81px 23px;
+    padding: 84px 22px;
     cursor: pointer;
-    &_bgDraft {
-      background-color: $background-draft-cv;
+    border: 1px solid transparent;
+
+    &:hover {
+      border-color: $border-hover-constructorCv;
+    }
+
+    &:active {
+      border-color: $border-active-constructorCv;
+    }
+
+
+    &_disabled {
+      opacity: 0.4;
+      &:hover, &:active {
+        border-color: transparent;
+      }
     }
   }
+
   &__content {
     color: $text-primary-blue;
-    font-size: 1.125em;
-    line-height: 1.32;
+    font-size: rem(18);
+    line-height: 1.334;
     font-weight: 600;
-    padding-top: 10px;
-    max-width: 153px;
   }
+
   &__link {
+    position: relative;
     margin: auto;
     border-radius: 50%;
     background-color: $background-link;
-    width: 32px;
-    height: 32px;
-    padding: 7px 9px;
+    width: 24px;
+    height: 24px;
+    &:not(:last-child) {
+      margin-bottom: 13px;
+    }
   }
+
+  &__plus {
+    font-size: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   &__label {
     display: flex;
     gap: 4px;
     width: 200px;
     padding-top: 16px;
   }
+
   &__icon {
 
   }
+
   &__text {
     font-size: 0.75em;
     line-height: 1.32;
@@ -63,13 +85,12 @@
       margin: 0 0 24px 0;
     }
     &__container {
-      width: 191px;
+      width: 192px;
       height: 220px;
-      padding: 79px 21px;
+      padding: 76px 21px;
     }
     &__content {
-      font-size: 0.75em;
-      max-width: 148px;
+      font-size: rem(12);
     }
     &__label {
       display: none;
@@ -83,7 +104,7 @@
   @media (max-width: 427px) {
     &__container {
       width: 158px;
-      padding: 79px 4px;
+      padding: 76px 4px;
     }
   }
 }

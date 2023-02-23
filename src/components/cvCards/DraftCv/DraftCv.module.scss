@@ -6,15 +6,39 @@
   &__container {
     position: relative;
     display: flex;
+    width: 199px;
+    height: 252px;
+    border-radius: 20px;
+    text-align: center;
+    padding: 84px 22px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background-color: $background-draft-cv;
+
+    @media (max-width: 1365px) {
+      width: 192px;
+      height: 220px;
+      padding: 76px 21px;
+    }
+
+    @media (max-width: 427px) {
+      width: 158px;
+      padding: 76px 4px;
+    }
+
     &:hover {
+
       .title {
         color: $text-draft-hover;
       }
+
     }
     &:active {
+
       .title {
         color: $text-draft-active;
       }
+
     }
   }
 
@@ -41,3 +65,5 @@
 
   }
 }
+
+

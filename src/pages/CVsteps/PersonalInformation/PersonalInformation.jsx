@@ -90,6 +90,9 @@ export const PersonalInformation = () => {
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
             }
           } catch (e) {
+            if (e?.response?.status === 400) {
+              navigate(CvPaths.INDEX);
+            }
             setStatus({ errorResponse: true });
           } finally {
             setBtnNextIsClicked(false);
