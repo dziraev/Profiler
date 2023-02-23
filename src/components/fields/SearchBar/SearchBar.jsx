@@ -76,6 +76,7 @@ export const SearchBar = ({
   const handleBlur = (e) => {
     field.onBlur(e);
     setActive(false);
+    setDisplay(false);
     setValue(country.current, true);
     updateSearchValue(country.current);
   };
