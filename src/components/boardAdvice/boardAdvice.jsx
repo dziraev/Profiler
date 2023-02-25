@@ -15,6 +15,8 @@ export const BoardAdvice = () => {
       const nodeWithDataId = e.target.closest('[data-id]');
       if (nodeWithDataId) {
         setAdviceName(nodeWithDataId.getAttribute('data-id'));
+      } else if (e.target.closest('[data-link]')) {
+        return;
       } else {
         setAdviceName('default');
       }

@@ -49,7 +49,7 @@ const initialState = {
     {
       name: 'linkedin',
       title: 'LinkedIn',
-      text: 'Provide a link to your Linkedin profile. Customize the link by using your name in the URL.<br/> Follow the <a target="_blank" href="https://www.linkedin.com/help/linkedin/answer/a545612/-url-?lang=en">link</a> to read more about name customization. <p><strong>Example:</strong> https://linkedin.com/in/ivan-ivanov</p>'
+      text: 'Provide a link to your Linkedin profile. Customize the link by using your name in the URL.<br/> Follow the <a data-link target="_blank" href="https://www.linkedin.com/help/linkedin/answer/a545612/-url-?lang=en">link</a> to read more about name customization. <p><strong>Example:</strong> https://linkedin.com/in/ivan-ivanov</p>'
     },
     {
       name: 'portfolio',
@@ -59,12 +59,12 @@ const initialState = {
     {
       name: 'description',
       title: 'Description',
-      text: 'Write a brief information about yourself and your soft skills that could help in professional implementation. The description should match the job you are applying for. Do not use template characteristics, be individual. <p><strong>Example:</strong> not teachable, but “I always strive to learn new information in the field of Software Development, now I am teaching the Spring framework based on the book by Craig Walls”</p>'
+      text: 'Write a brief information about yourself and your soft skills that could help in professional implementation. The description should match the job you are applying for. Do not use template characteristics, be individual. <p><strong>Example:</strong> not teachable, but “I always strive to learn new information in the field of Software Development, now I am studying the Spring framework based on the book by Craig Walls”.</p>'
     },
     {
       name: 'selfPresentation',
       title: 'Self-presentation',
-      text: 'The field Self-presentation is optional.<br/> Self-presentation is a short video through which a recruiter can learn important information about a candidate. Video presentation can help you to stand out from the competition.'
+      text: 'The field Self-presentation is optional.<br/> Self-presentation is a short video through which a recruiter can learn important information about a candidate. Video presentation can help you to stand out from the competitors.'
     }
   ]
 };
