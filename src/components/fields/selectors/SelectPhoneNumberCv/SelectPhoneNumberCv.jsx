@@ -67,15 +67,10 @@ export const SelectPhoneNumberCv = ({
   };
 
   return (
-    <div
-      ref={positionRef}
-      className={cx(styles.selectPhone, { selectPhone_adaptive: adaptive })}
-      style={{ cursor: disabled ? 'no-drop' : 'pointer' }}
-    >
+    <div ref={positionRef} className={cx(styles.selectPhone, { selectPhone_adaptive: adaptive })}>
       <div className={styles.selectPhone__container}>
         <div
           className={cx(styles.selectPhone__select, { selectPhone__error: hasError })}
-          style={{ pointerEvents: disabled ? 'none' : 'auto' }}
           onClick={() => setIsVisible((prev) => !prev)}
         >
           <div className={styles.selectPhone__phoneCode}>
