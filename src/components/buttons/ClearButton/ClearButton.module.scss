@@ -1,32 +1,43 @@
-@use 'src/static/scss/variables';
+@import 'src/static/scss/variables';
 
 .button {
   font-family: 'Red Hat Display';
   display: flex;
-  column-gap: 15px;
+  column-gap: 12px;
   align-items: center;
-  color: variables.$text-primary-blue;
-  font-size: 1rem;
-  line-height: 1.375;
+  color: $text-primary-blue;
   opacity: 1;
   transition: opacity 0.2s ease 0s;
   background-color: transparent;
   cursor: pointer;
-  & p {
-    border-bottom: 2px solid transparent;
+
+  span {
+    font-size: 1rem;
+    line-height: 1.375;
+    border-bottom: 1px solid transparent;
   }
+
+  path {
+    fill: $text-primary-blue;
+  }
+
+  &:hover:not([disabled]) span, &:focus:not([disabled]) span {
+    border-color: $text-primary-blue;
+  }
+
+  &:active {
+    border-color: transparent;
+
+    &:not([disabled]) {
+      color: $text-primary-dark-blue;
+      path {
+        fill: $text-primary-dark-blue;
+      }
+    }
+  }
+
   &:disabled {
     opacity: 0.4;
     cursor: no-drop;
   }
-  &:hover:not([disabled]) p, &:focus:not([disabled]) p {
-    border-color: variables.$text-primary-blue;
-  }
-  &:active {
-    color: variables.$text-primary-dark-blue;
-    border-color: transparent;
-    & path {
-      fill: variables.$text-primary-dark-blue;
-    }
-  }     
 }
