@@ -3,7 +3,6 @@
 
 .selectPhone {
   font-family: "Red Hat Display";
-  user-select: none;
   position: relative;
   width: 100%;
   &__container {
@@ -141,6 +140,7 @@
   font-size: rem(12);
   line-height: 1.334;
   color: $text-primary-error;
+  cursor: initial;
   @media (min-width: 1365.98px) {
     position: absolute;
     top: 100%;

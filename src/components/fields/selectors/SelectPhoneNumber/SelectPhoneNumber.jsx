@@ -80,15 +80,10 @@ export const SelectPhoneNumber = ({
   };
 
   return (
-    <div
-      ref={positionRef}
-      className={styles.selectPhone}
-      style={{ cursor: disabled ? 'no-drop' : 'pointer' }}
-    >
+    <div ref={positionRef} className={styles.selectPhone}>
       <div className={styles.selectPhone__container}>
         <div
           className={cx(styles.selectPhone__select, { selectPhone__error: meta.error })}
-          style={{ pointerEvents: disabled ? 'none' : 'auto' }}
           onClick={() => setIsVisible((prev) => !prev)}
         >
           <div className={styles.selectPhone__phoneCode}>
