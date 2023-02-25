@@ -180,16 +180,16 @@ export const AboutYourself = () => {
 
               {status?.errorResponse && (
                 <PopUpTryAgain
-                  type='button'
+                  // type='button'
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  onClickHandler={() => {
-                    if (linkIsClicked) {
-                      handleReset();
-                    } else {
-                      setStatus({ errorResponse: false });
-                    }
-                  }}
+                  // onClickHandler={() => {
+                  //   if (linkIsClicked) {
+                  //     handleReset();
+                  //   } else {
+                  //     setStatus({ errorResponse: false });
+                  //   }
+                  // }}
                 >
                   Failed to save data. Please try again
                 </PopUpTryAgain>
