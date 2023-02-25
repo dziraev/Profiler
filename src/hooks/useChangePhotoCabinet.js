@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { 
+import {
   photoUpdateCabinet,
   photoUploadCabinet,
   uploadedPhoto,
@@ -7,7 +7,7 @@ import {
   closePhotoModal,
   photoFailedCabinet,
   savedSuccessfully
- } from '../redux/actions';
+} from '@actions';
 import { selectPersonalDetails } from '../pages/PersonalDetails/selectors';
 import photoapi from '../http/photoapi';
 
@@ -19,7 +19,7 @@ export const useChangePhotoCabinet = (file) => {
     try {
       const response = await photoapi.put(`/images/${personalDetails.profileImageUuid}`, {
         image: file
-      })
+      });
       dispatch(photoUpdateCabinet(response.data.uuid));
       dispatch(photoUploadCabinet(URL.createObjectURL(file)));
       dispatch(closePhotoModal());
@@ -31,5 +31,5 @@ export const useChangePhotoCabinet = (file) => {
       dispatch(failedToSave());
       console.error(e);
     }
-  }
+  };
 };

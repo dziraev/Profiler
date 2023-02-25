@@ -1,12 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import {
-  getAboutYourselfSpecificCv,
-  linkIsNotClicked,
-  resetDirtyStatusInConstructorCv,
-  resetDirtyStatusInSpecificCv
-} from '@actions';
+import { getAboutYourselfSpecificCv, linkIsNotClicked } from '@actions';
 import {
   selectAboutYourselfFromConstructorCv,
   selectAboutYourselfFromSpecificCv,

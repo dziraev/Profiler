@@ -9,7 +9,7 @@ import {
   selectIsDirtyFormSpecificCv
 } from '../../pages/CVsteps/selectors';
 
-const Logout = ({ tabIndex = 0 , ...props }) => {
+const Logout = ({ tabIndex = 0 , closeMenu, ...props }) => {
   const dispatch = useDispatch();
   const isDirtyFormPD = useSelector(selectIsDirtyFormPD);
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
@@ -18,7 +18,7 @@ const Logout = ({ tabIndex = 0 , ...props }) => {
     if (isDirtyFormPD || isDirtyFormConstructorCv || isDirtyFormSpecificCv) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
-      props.closeMenu();
+      closeMenu && closeMenu();
     } else {
       localStorage.removeItem('token');
       dispatch({ type: 'USER_LOGOUT' });

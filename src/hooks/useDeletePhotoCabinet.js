@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { photoUploadCabinet, personalDetailsUpdate } from '../redux/actions';
+import { personalDetailsUpdate, photoUploadCabinet } from '@actions';
 import { selectPersonalDetails } from '../pages/PersonalDetails/selectors';
 import $api from '../http/api';
-import { getChangedValues } from '@utils/getChangedValues';
 
 export const useDeletePhotoCabinet = () => {
   const dispatch = useDispatch();

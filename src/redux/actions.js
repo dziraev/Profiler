@@ -422,7 +422,8 @@ export function getContactsSpecificCv(uuid) {
       if (status === 204) {
         dispatch(
           updateFieldsInSpecificCv({
-            isContactsExists: false
+            isContactsExists,
+            isAboutExists
           })
         );
       }
@@ -457,7 +458,9 @@ export function getAboutYourselfSpecificCv(uuid) {
       if (status === 204) {
         dispatch(
           updateFieldsInSpecificCv({
-            isAboutExists: false
+            personalInformation: rest,
+            isContactsExists,
+            isAboutExists
           })
         );
       }

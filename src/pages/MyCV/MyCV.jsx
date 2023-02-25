@@ -1,7 +1,7 @@
 import React from 'react';
 import { CvStatus } from '@configs/configs';
 import { ConstructorCv, DraftCv } from '@cvCards';
-import { useCv } from '@hooks/useCv';
+import { useCv } from '@hooks/Cv/useCv';
 import styles from './MyCV.module.scss';
 
 const MyCV = (props) => {
