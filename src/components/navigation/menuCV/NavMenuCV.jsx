@@ -3,7 +3,7 @@ import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { CvPaths } from '@configs/configs';
 import { useDispatch, useSelector } from 'react-redux';
 import { linkIsClicked } from '@actions';
-import { useUpdateFieldsCv } from '@hooks/useUpdateFieldsCv';
+import { useUpdateFieldsConstructorCv } from '@hooks/Cv/useUpdateFieldsConstructorCv';
 import { selectIsDirtyFormConstructorCv, selectIsDirtyFormSpecificCv } from '@cvSteps/selectors';
 import logo from '../../../static/images/menu-logo.svg';
 import styles from './NavMenuCV.module.scss';
@@ -16,7 +16,7 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
   const dispatch = useDispatch();
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
   const isDirtyFormSpecificCv = useSelector(selectIsDirtyFormSpecificCv);
-  const updateFieldsCv = useUpdateFieldsCv();
+  const updateFieldsCv = useUpdateFieldsConstructorCv();
   const {
     personalInformation: { uuid: isPersonalInformationExists },
     isContactsExists,

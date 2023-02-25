@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { 
+import {
   photoUpdateCV,
   photoUpdateInSpecificCV,
   photoUploadCV,
@@ -9,7 +9,7 @@ import {
   failedToSave,
   savedSuccessfully,
   closePhotoModal
- } from '../redux/actions';
+} from '@actions';
 import photoapi from '../http/photoapi';
 
 export const useUploadPhotoCV = (file) => {
@@ -20,7 +20,7 @@ export const useUploadPhotoCV = (file) => {
     try {
       const response = await photoapi.post('/images', {
         image: file
-      })
+      });
       if (uuid) {
         dispatch(photoUpdateInSpecificCV(response.data.uuid));
       } else {
@@ -36,5 +36,5 @@ export const useUploadPhotoCV = (file) => {
       dispatch(failedToSave());
       console.error(e);
     }
-  }
+  };
 };

@@ -1,13 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import {
-  getContactsSpecificCv,
-  linkIsNotClicked,
-  phoneCodesLoad,
-  resetDirtyStatusInConstructorCv,
-  resetDirtyStatusInSpecificCv
-} from '@actions';
+import { getContactsSpecificCv, linkIsNotClicked, phoneCodesLoad } from '@actions';
 import {
   selectContactsFromConstructorCv,
   selectContactsFromSpecificCv,

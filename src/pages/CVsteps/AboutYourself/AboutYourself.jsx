@@ -12,9 +12,9 @@ import {
   useLinkIsClicked,
   useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsCv
+  useUpdateFieldsConstructorCv,
+  useUpdateFieldsSpecificCv
 } from '@hooks';
-
 import { validateAboutYourself } from '@validators/validateAboutYourself';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,8 +26,7 @@ import {
   linkIsNotClicked,
   resetDirtyStatusInConstructorCv,
   resetDirtyStatusInSpecificCv,
-  updateFieldInAboutYourselfConstructorCv,
-  updateFieldsInSpecificCv
+  updateFieldInAboutYourselfConstructorCv
 } from '@actions';
 import { CvPaths } from '@configs/configs';
 import cx from 'classnames';
@@ -47,7 +46,8 @@ export const AboutYourself = () => {
 
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsCv = useUpdateFieldsCv();
+  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
+  const updateFieldsSpecificCv = useUpdateFieldsSpecificCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -69,15 +69,8 @@ export const AboutYourself = () => {
           try {
             if (uuid && !isAboutExists) {
               const { data } = await $api.post('cvs/' + uuid + '/about', values);
-              dispatch(
-                updateFieldsInSpecificCv({
-                  aboutYourself: data,
-                  isAboutExists: true
-                })
-              );
             } else {
               const { data } = await $api.put('cvs/' + uuid + '/about', values);
-              dispatch(updateFieldsInSpecificCv({ aboutYourself: data }));
             }
 
             if (uuid && buttonStatus.btnNextIsClicked) {
@@ -90,6 +83,12 @@ export const AboutYourself = () => {
               btnNextIsClicked: false,
               btnBackIsClicked: false
             });
+
+            if (linkIsClicked && !isAboutExists) {
+              updateFieldsConstructorCv();
+            } else if (linkIsClicked && isAboutExists) {
+              updateFieldsSpecificCv();
+            }
 
             if (linkIsClicked) {
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
@@ -169,8 +168,11 @@ export const AboutYourself = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  onClickSave={() => updateFieldsCv(uuid, linkIsClicked)}
-                  onClickDontSave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  {...{
+                    onClickDontSave: !isAboutExists
+                      ? updateFieldsConstructorCv
+                      : updateFieldsSpecificCv
+                  }}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -196,7 +198,11 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  {...{
+                    onClickLeave: !isAboutExists
+                      ? updateFieldsConstructorCv
+                      : updateFieldsSpecificCv
+                  }}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -210,7 +216,11 @@ export const AboutYourself = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
+                    {...{
+                      onClickLeave: !isAboutExists
+                        ? updateFieldsConstructorCv
+                        : updateFieldsSpecificCv
+                    }}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -220,7 +230,11 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  {...{
+                    onClickLeave: !isAboutExists
+                      ? updateFieldsConstructorCv
+                      : updateFieldsSpecificCv
+                  }}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>

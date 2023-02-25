@@ -13,7 +13,8 @@ import {
   useLinkIsClicked,
   useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsCv
+  useUpdateFieldsConstructorCv,
+  useUpdateFieldsSpecificCv
 } from '@hooks';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -25,8 +26,7 @@ import {
   linkIsNotClicked,
   resetDirtyStatusInConstructorCv,
   resetDirtyStatusInSpecificCv,
-  updateFieldInContactsConstructorCv,
-  updateFieldsInSpecificCv
+  updateFieldInContactsConstructorCv
 } from '@actions';
 import { CvPaths } from '@configs/configs';
 import cx from 'classnames';
@@ -46,7 +46,8 @@ export const Contacts = () => {
 
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsCv = useUpdateFieldsCv();
+  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
+  const updateFieldsSpecificCv = useUpdateFieldsSpecificCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -77,15 +78,8 @@ export const Contacts = () => {
           try {
             if (uuid && !isContactsExists) {
               const { data } = await $api.post('cvs/' + uuid + '/contacts', currentValues);
-              dispatch(
-                updateFieldsInSpecificCv({
-                  contacts: data,
-                  isContactsExists: true
-                })
-              );
             } else {
               const { data } = await $api.put('cvs/' + uuid + '/contacts', currentValues);
-              dispatch(updateFieldsInSpecificCv({ contacts: data }));
             }
 
             if (uuid && buttonStatus.btnNextIsClicked) {
@@ -98,6 +92,12 @@ export const Contacts = () => {
               btnNextIsClicked: false,
               btnBackIsClicked: false
             });
+
+            if (linkIsClicked && !isContactsExists) {
+              updateFieldsConstructorCv();
+            } else if (linkIsClicked && isContactsExists) {
+              updateFieldsSpecificCv();
+            }
 
             if (linkIsClicked) {
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
@@ -164,7 +164,6 @@ export const Contacts = () => {
               Object.keys(values)
                 .filter((k) => k !== 'skype' && k !== 'portfolio')
                 .every((k) => values[k] !== ''),
-
             [values]
           );
           const correctAndNotFully = useMemo(() => {
@@ -184,8 +183,11 @@ export const Contacts = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  onClickSave={() => updateFieldsCv(uuid, linkIsClicked)}
-                  onClickDontSave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  {...{
+                    onClickDontSave: !isContactsExists
+                      ? updateFieldsConstructorCv
+                      : updateFieldsSpecificCv
+                  }}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -199,7 +201,7 @@ export const Contacts = () => {
                   onClickHandler={() => {
                     if (linkIsClicked) {
                       handleReset();
-                      // !isContactsExists ? updateFieldsConstructorCv() : null; //TODO: cannot use it because when calling the SavePopUps the fields are already cleared
+                      !isContactsExists ? updateFieldsConstructorCv() : updateFieldsSpecificCv();
                     } else {
                       setStatus({ errorResponse: false });
                     }
@@ -212,7 +214,11 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  {...{
+                    onClickLeave: !isContactsExists
+                      ? updateFieldsConstructorCv
+                      : updateFieldsSpecificCv
+                  }}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -226,7 +232,11 @@ export const Contacts = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
+                    {...{
+                      onClickLeave: !isContactsExists
+                        ? updateFieldsConstructorCv
+                        : updateFieldsSpecificCv
+                    }}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -236,7 +246,11 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  onClickLeave={() => updateFieldsCv(uuid, linkIsClicked)}
+                  {...{
+                    onClickLeave: !isContactsExists
+                      ? updateFieldsConstructorCv
+                      : updateFieldsSpecificCv
+                  }}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>

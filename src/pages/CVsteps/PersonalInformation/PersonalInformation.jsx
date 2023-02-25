@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { usePersonalInformation } from '@hooks/usePersonalInformation';
+import { usePersonalInformation } from '@hooks/Cv/usePersonalInformation';
 import { CheckBox, SearchBar, SelectPositions } from '@components/fields';
 import { ClearButton } from '@components/buttons';
 import { PopUpClearFields, PopUpSave, PopUpStayOrLeave, PopUpTryAgain } from '@popUps';
@@ -10,23 +10,22 @@ import { validatePersonalInformation } from '@validators/validatePersonalInforma
 import { trimValues } from '@validators/validators';
 import { BoardAdvice } from '@components/boardAdvice/boardAdvice';
 import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
-import { useLoadingSpecificCv } from '@hooks/useLoadingSpecificCv';
-import { useLoadingConstructorCv } from '@hooks/useLoadingConstructorCv';
+import { useLoadingSpecificCv } from '@hooks/Cv/useLoadingSpecificCv';
+import { useLoadingConstructorCv } from '@hooks/Cv/useLoadingConstructorCv';
 import { useNavigate, useParams } from 'react-router-dom';
 import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import { InputCv } from '@hoc/InputCv';
+import { useUpdateFieldsSpecificCv } from '@hooks';
 import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
-  linkIsNotClicked,
-  updateFieldsInSpecificCv
+  linkIsNotClicked
 } from '@actions';
 import { CvPaths } from '@configs/configs';
 import PhotoCV from '@components/photo/photoCV/PhotoCV';
 import cx from 'classnames';
 import $api from '../../../http/api';
 import styles from '../CvSteps.module.scss';
-import { useUpdateFieldsCv } from '@hooks';
 
 export const PersonalInformation = () => {
   const { uuid } = useParams();
@@ -38,7 +37,7 @@ export const PersonalInformation = () => {
 
   const isLoadingSpecificCv = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsCv = useUpdateFieldsCv();
+  const updateFieldsSpecificCv = useUpdateFieldsSpecificCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -80,13 +79,13 @@ export const PersonalInformation = () => {
             } else {
               ({ data } = await $api.put('cvs/' + uuid, currentValues));
             }
-            dispatch(updateFieldsInSpecificCv({ personalInformation: data }));
 
             if (data.uuid && btnNextIsClicked) {
               navigate(CvPaths.CONTACTS + data.uuid);
             }
 
             if (linkIsClicked) {
+              uuid && updateFieldsSpecificCv();
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
             }
           } catch (e) {
@@ -176,8 +175,7 @@ export const PersonalInformation = () => {
                   adaptive={false}
                   isSubmitting={isSubmitting}
                   {...(uuid && {
-                    onClickSave: () => updateFieldsCv(uuid, linkIsClicked),
-                    onClickDontSave: () => updateFieldsCv(uuid, linkIsClicked)
+                    onClickDontSave: updateFieldsSpecificCv
                   })}
                 >
                   Do you want to save the changes in CV?
@@ -206,7 +204,7 @@ export const PersonalInformation = () => {
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
                   {...(uuid && {
-                    onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                    onClickLeave: updateFieldsSpecificCv
                   })}
                 >
                   <>The data is entered incorrectly</>
@@ -223,7 +221,7 @@ export const PersonalInformation = () => {
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
                     {...(uuid && {
-                      onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                      onClickLeave: () => updateFieldsSpecificCv
                     })}
                   >
                     <>The data is entered incorrectly and not fully</>
@@ -236,7 +234,7 @@ export const PersonalInformation = () => {
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
                   {...(uuid && {
-                    onClickLeave: () => updateFieldsCv(uuid, linkIsClicked)
+                    onClickLeave: () => updateFieldsSpecificCv
                   })}
                 >
                   <>The data is entered not fully</>

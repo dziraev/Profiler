@@ -7,7 +7,7 @@ import {
   positionsLoad,
   resetDirtyStatusInConstructorCv,
   resetDirtyStatusInSpecificCv
-} from '../redux/actions';
+} from '@actions';
 import { useParams } from 'react-router-dom';
 
 export const usePersonalInformation = () => {
