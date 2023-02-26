@@ -15,7 +15,7 @@ import { useLoadingConstructorCv } from '@hooks/Cv/useLoadingConstructorCv';
 import { useNavigate, useParams } from 'react-router-dom';
 import { navigationLinkPopUp } from '@utils/navigationLinkPopUp';
 import { InputCv } from '@hoc/InputCv';
-import { useUpdateFieldsSpecificCv } from '@hooks';
+import { useUpdateFieldsAllCv } from '@hooks';
 import {
   changeDirtyStatusInConstructorCv,
   changeDirtyStatusInSpecificCv,
@@ -37,7 +37,7 @@ export const PersonalInformation = () => {
 
   const isLoadingSpecificCv = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsSpecificCv = useUpdateFieldsSpecificCv();
+  const updateFieldsAllCv = useUpdateFieldsAllCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -85,7 +85,7 @@ export const PersonalInformation = () => {
             }
 
             if (linkIsClicked) {
-              uuid && updateFieldsSpecificCv();
+              updateFieldsAllCv();
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
             }
           } catch (e) {
@@ -93,8 +93,6 @@ export const PersonalInformation = () => {
               navigate(CvPaths.INDEX);
             }
             setStatus({ errorResponse: true });
-          } finally {
-            setBtnNextIsClicked(false);
           }
         }}
         onReset={() => {
@@ -174,9 +172,7 @@ export const PersonalInformation = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...(uuid && {
-                    onClickDontSave: updateFieldsSpecificCv
-                  })}
+                  onClickDontSave={updateFieldsAllCv}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -203,9 +199,7 @@ export const PersonalInformation = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(uuid && {
-                    onClickLeave: updateFieldsSpecificCv
-                  })}
+                  onClickLeave={updateFieldsAllCv}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -220,9 +214,7 @@ export const PersonalInformation = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...(uuid && {
-                      onClickLeave: () => updateFieldsSpecificCv
-                    })}
+                    onClickLeave={updateFieldsAllCv}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -233,9 +225,7 @@ export const PersonalInformation = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...(uuid && {
-                    onClickLeave: () => updateFieldsSpecificCv
-                  })}
+                  onClickLeave={updateFieldsAllCv}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>
