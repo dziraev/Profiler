@@ -12,8 +12,7 @@ import {
   useLinkIsClicked,
   useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsConstructorCv,
-  useUpdateFieldsSpecificCv
+  useUpdateFieldsAllCv
 } from '@hooks';
 import { validateAboutYourself } from '@validators/validateAboutYourself';
 import { InputCv } from '@hoc/InputCv';
@@ -46,8 +45,7 @@ export const AboutYourself = () => {
 
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
-  const updateFieldsSpecificCv = useUpdateFieldsSpecificCv();
+  const updateFieldsAllCv = useUpdateFieldsAllCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -79,18 +77,8 @@ export const AboutYourself = () => {
               navigate(CvPaths.CONTACTS + uuid);
             }
 
-            setButtonStatus({
-              btnNextIsClicked: false,
-              btnBackIsClicked: false
-            });
-
-            if (linkIsClicked && !isAboutExists) {
-              updateFieldsConstructorCv();
-            } else if (linkIsClicked && isAboutExists) {
-              updateFieldsSpecificCv();
-            }
-
             if (linkIsClicked) {
+              updateFieldsAllCv();
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
             }
           } catch (e) {
@@ -110,7 +98,6 @@ export const AboutYourself = () => {
           isValid,
           status,
           isSubmitting,
-          setStatus,
           handleReset,
           setTouched,
           setValues,
@@ -168,11 +155,7 @@ export const AboutYourself = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...{
-                    onClickDontSave: !isAboutExists
-                      ? updateFieldsConstructorCv
-                      : updateFieldsSpecificCv
-                  }}
+                  onClickDontSave={updateFieldsAllCv}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -180,16 +163,15 @@ export const AboutYourself = () => {
 
               {status?.errorResponse && (
                 <PopUpTryAgain
-                  // type='button'
+                  type='button'
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  // onClickHandler={() => {
-                  //   if (linkIsClicked) {
-                  //     handleReset();
-                  //   } else {
-                  //     setStatus({ errorResponse: false });
-                  //   }
-                  // }}
+                  onClickHandler={() => {
+                    handleReset();
+                    if (linkIsClicked) {
+                      updateFieldsAllCv();
+                    }
+                  }}
                 >
                   Failed to save data. Please try again
                 </PopUpTryAgain>
@@ -198,11 +180,7 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...{
-                    onClickLeave: !isAboutExists
-                      ? updateFieldsConstructorCv
-                      : updateFieldsSpecificCv
-                  }}
+                  onClickLeave={updateFieldsAllCv}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -216,11 +194,7 @@ export const AboutYourself = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...{
-                      onClickLeave: !isAboutExists
-                        ? updateFieldsConstructorCv
-                        : updateFieldsSpecificCv
-                    }}
+                    onClickLeave={updateFieldsAllCv}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -230,11 +204,7 @@ export const AboutYourself = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...{
-                    onClickLeave: !isAboutExists
-                      ? updateFieldsConstructorCv
-                      : updateFieldsSpecificCv
-                  }}
+                  onClickLeave={updateFieldsAllCv}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>

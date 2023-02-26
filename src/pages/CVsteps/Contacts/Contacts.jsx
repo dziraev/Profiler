@@ -13,8 +13,7 @@ import {
   useLinkIsClicked,
   useLoadingConstructorCv,
   useLoadingSpecificCv,
-  useUpdateFieldsConstructorCv,
-  useUpdateFieldsSpecificCv
+  useUpdateFieldsAllCv
 } from '@hooks';
 import { InputCv } from '@hoc/InputCv';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -46,8 +45,7 @@ export const Contacts = () => {
 
   const isLoading = useLoadingSpecificCv();
   const isLoadingConstructorCv = useLoadingConstructorCv();
-  const updateFieldsConstructorCv = useUpdateFieldsConstructorCv();
-  const updateFieldsSpecificCv = useUpdateFieldsSpecificCv();
+  const updateFieldsAllCv = useUpdateFieldsAllCv();
 
   const hrefLinkIsClicked = useLinkIsClicked();
   const { current: linkIsClicked } = hrefLinkIsClicked;
@@ -88,18 +86,8 @@ export const Contacts = () => {
               navigate(CvPaths.PERSONALINFORMATION + uuid);
             }
 
-            setButtonStatus({
-              btnNextIsClicked: false,
-              btnBackIsClicked: false
-            });
-
-            if (linkIsClicked && !isContactsExists) {
-              updateFieldsConstructorCv();
-            } else if (linkIsClicked && isContactsExists) {
-              updateFieldsSpecificCv();
-            }
-
             if (linkIsClicked) {
+              updateFieldsAllCv();
               navigationLinkPopUp(linkIsClicked, dispatch, navigate);
             }
           } catch (e) {
@@ -183,11 +171,7 @@ export const Contacts = () => {
                 <PopUpSave
                   adaptive={false}
                   isSubmitting={isSubmitting}
-                  {...{
-                    onClickDontSave: !isContactsExists
-                      ? updateFieldsConstructorCv
-                      : updateFieldsSpecificCv
-                  }}
+                  onClickDontSave={updateFieldsAllCv}
                 >
                   Do you want to save the changes in CV?
                 </PopUpSave>
@@ -201,7 +185,7 @@ export const Contacts = () => {
                   onClickHandler={() => {
                     if (linkIsClicked) {
                       handleReset();
-                      !isContactsExists ? updateFieldsConstructorCv() : updateFieldsSpecificCv();
+                      updateFieldsAllCv();
                     } else {
                       setStatus({ errorResponse: false });
                     }
@@ -214,11 +198,7 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...{
-                    onClickLeave: !isContactsExists
-                      ? updateFieldsConstructorCv
-                      : updateFieldsSpecificCv
-                  }}
+                  onClickLeave={updateFieldsAllCv}
                 >
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
@@ -232,11 +212,7 @@ export const Contacts = () => {
                   <PopUpStayOrLeave
                     adaptive={false}
                     onClickStay={onClickStayPopUp}
-                    {...{
-                      onClickLeave: !isContactsExists
-                        ? updateFieldsConstructorCv
-                        : updateFieldsSpecificCv
-                    }}
+                    onClickLeave={updateFieldsAllCv}
                   >
                     <>The data is entered incorrectly and not fully</>
                     <>If you leave this page, the data will not be saved.</>
@@ -246,11 +222,7 @@ export const Contacts = () => {
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
-                  {...{
-                    onClickLeave: !isContactsExists
-                      ? updateFieldsConstructorCv
-                      : updateFieldsSpecificCv
-                  }}
+                  onClickLeave={updateFieldsAllCv}
                 >
                   <>The data is entered not fully</>
                   <>If you leave this page, the data will not be saved.</>

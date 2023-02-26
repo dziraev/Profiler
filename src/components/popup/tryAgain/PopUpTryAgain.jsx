@@ -37,7 +37,7 @@ export const PopUpTryAgain = ({
                 {...(type
                   ? {
                       type,
-                      onClick: !isSubmitting && onClickHandler
+                      onClick: !isSubmitting ? onClickHandler : undefined
                     }
                   : { type: isSubmitting ? 'button' : 'reset' })}
               >

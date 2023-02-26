@@ -3,7 +3,7 @@ import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { CvPaths } from '@configs/configs';
 import { useDispatch, useSelector } from 'react-redux';
 import { linkIsClicked } from '@actions';
-import { useUpdateFieldsConstructorCv } from '@hooks/Cv/useUpdateFieldsConstructorCv';
+import { useUpdateFieldsAllCv } from '@hooks';
 import { selectIsDirtyFormConstructorCv, selectIsDirtyFormSpecificCv } from '@cvSteps/selectors';
 import logo from '../../../static/images/menu-logo.svg';
 import styles from './NavMenuCV.module.scss';
@@ -16,7 +16,8 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
   const dispatch = useDispatch();
   const isDirtyFormConstructorCv = useSelector(selectIsDirtyFormConstructorCv);
   const isDirtyFormSpecificCv = useSelector(selectIsDirtyFormSpecificCv);
-  const updateFieldsCv = useUpdateFieldsConstructorCv();
+  const updateFieldsAllCv = useUpdateFieldsAllCv();
+
   const {
     personalInformation: { uuid: isPersonalInformationExists },
     isContactsExists,
@@ -29,10 +30,8 @@ const NavMenu = ({ tabIndex = 0, ...props }) => {
     if ((isDirtyFormConstructorCv || isDirtyFormSpecificCv) && pathname !== href) {
       e.preventDefault();
       dispatch(linkIsClicked(e.currentTarget.getAttribute('href')));
-    } else if (!isDirtyFormConstructorCv && !uuid && href === CvPaths.INDEX) {
-      updateFieldsCv(null, href);
-    } else if (!isDirtyFormSpecificCv && uuid && href === CvPaths.INDEX) {
-      updateFieldsCv(uuid, href);
+    } else if ((!isDirtyFormConstructorCv || !isDirtyFormSpecificCv) && href === CvPaths.INDEX) {
+      updateFieldsAllCv();
     }
   };
 

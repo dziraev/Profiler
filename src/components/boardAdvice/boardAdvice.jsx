@@ -15,7 +15,7 @@ export const BoardAdvice = () => {
       const nodeWithDataId = e.target.closest('[data-id]');
       if (nodeWithDataId) {
         setAdviceName(nodeWithDataId.getAttribute('data-id'));
-      } else if (e.target.closest('[data-link]')) {
+      } else if (e.target.closest('[data-board-advice]')) {
         return;
       } else {
         setAdviceName('default');
@@ -38,7 +38,7 @@ export const BoardAdvice = () => {
   }, [adviceName]);
 
   return (
-    <div key={adviceName} className={styles.boardAdvice}>
+    <div data-board-advice key={adviceName} className={styles.boardAdvice}>
       <div
         className={cx(styles.boardAdvice__container, {
           boardAdvice__container_animation: adviceName !== 'default'

@@ -49,7 +49,7 @@ const initialState = {
     {
       name: 'linkedin',
       title: 'LinkedIn',
-      text: 'Provide a link to your Linkedin profile. Customize the link by using your name in the URL.<br/> Follow the <a data-link target="_blank" href="https://www.linkedin.com/help/linkedin/answer/a545612/-url-?lang=en">link</a> to read more about name customization. <p><strong>Example:</strong> https://linkedin.com/in/ivan-ivanov</p>'
+      text: 'Provide a link to your Linkedin profile. Customize the link by using your name in the URL.<br/> Follow the <a target="_blank" href="https://www.linkedin.com/help/linkedin/answer/a545612/-url-?lang=en">link</a> to read more about name customization. <p><strong>Example:</strong> https://linkedin.com/in/ivan-ivanov</p>'
     },
     {
       name: 'portfolio',
