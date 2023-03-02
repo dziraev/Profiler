@@ -14,7 +14,7 @@ const CV = () => {
   const openModal = useSelector((state) => state.photoModalReducer.openModal);
   const invalidUpload = useSelector((state) => state.invalidUploadReducer.invalidUpload);
   const failedToSave = useSelector((state) => state.failedToSaveReducer.failedToSave);
-
+//
   return (
     <div className={styles.page}>
       <div className={`${styles.overlay} ${closed ? styles.modal_closed : ''}`}>
