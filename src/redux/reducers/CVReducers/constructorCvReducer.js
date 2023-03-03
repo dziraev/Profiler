@@ -31,8 +31,8 @@ export const initialState = {
     isReadyForRemoteWork: false
   },
   contacts: {
-    phoneCode: '',
-    phoneCodeId: '',
+    phoneCode: 375,
+    phoneCodeId: 1,
     phoneNumber: '',
     email: '',
     skype: '',

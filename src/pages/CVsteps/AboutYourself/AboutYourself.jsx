@@ -143,7 +143,7 @@ export const AboutYourself = () => {
             return !!values.length && values.every((value) => value === 'Required field');
           }, [errors]);
 
-          const updateFieldInAboutYourselfInConstructorCv = (fieldName, value, isPageExists) => {
+          const updateFieldInAboutYourselfInConstructor = (fieldName, value, isPageExists) => {
             if (!isPageExists) {
               dispatch(updateFieldInAboutYourselfConstructorCv(fieldName, value));
             }
@@ -256,7 +256,7 @@ export const AboutYourself = () => {
                       label='Enter information about yourself'
                       activeLabel='Enter information about yourself'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
+                        updateFieldInAboutYourselfInConstructor(fieldName, value, isAboutExists);
                       }}
                       tabIndex={11}
                     />
@@ -273,7 +273,7 @@ export const AboutYourself = () => {
                       label='Add the link'
                       activeLabel='Add the link'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInAboutYourselfInConstructorCv(fieldName, value, isAboutExists);
+                        updateFieldInAboutYourselfInConstructor(fieldName, value, isAboutExists);
                       }}
                       tabIndex={12}
                     />

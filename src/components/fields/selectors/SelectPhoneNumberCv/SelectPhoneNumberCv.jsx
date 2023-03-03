@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import { useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
-import { findCountryFlagByPhoneCode } from '@utils/findPhoneCodeByCountryId';
+import { findCountryFlagByPhoneCodeId } from '@utils/findPhoneCodeByCountryId';
 import classNames from 'classnames/bind';
 import styles from './SelectPhoneNumberCv.module.scss';
 import stylesSelect from '../Select.module.scss';
@@ -17,6 +17,7 @@ export const SelectPhoneNumberCv = ({
   activeLabel,
   disabled,
   isPhoneNumberTouched,
+  phoneCodeId,
   setFieldValue,
   onClickPhoneCodesHandler,
   ...props
@@ -31,16 +32,15 @@ export const SelectPhoneNumberCv = ({
   const { setValue } = helper;
 
   useEffect(() => {
-    if (value && phoneCodes.length) {
-      const countryFlag = findCountryFlagByPhoneCode(phoneCodes, value);
+    if (phoneCodeId && phoneCodes.length) {
+      const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
       setCountryFlag(countryFlag);
-    }
-    if (!value && phoneCodes.length) {
+    } else if (!phoneCodeId && phoneCodes.length) {
       setValue(phoneCodes[0].code);
       setFieldValue(name + 'Id', phoneCodes[0].id);
       setCountryFlag(phoneCodes[0].country.countryName);
     }
-  }, [phoneCodes]);
+  }, [phoneCodes, phoneCodeId]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -152,7 +152,7 @@ export const SelectPhoneNumberCv = ({
             <React.Fragment key={phoneCode.id}>
               <div
                 className={cx(styles.selectPhone__item, {
-                  selectPhone__item_active: phoneCode.code === value
+                  selectPhone__item_active: phoneCode.id === phoneCodeId
                 })}
                 onClick={() => onClickListPhoneCodes(phoneCode)}
               >

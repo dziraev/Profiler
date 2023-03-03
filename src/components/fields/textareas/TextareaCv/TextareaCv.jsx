@@ -45,7 +45,7 @@ export const TextareaCv = ({
     []
   );
   const handleChange = (e) => {
-    e.target.value = e.target.value.replace(/\n/, '');
+    e.target.value = e.target.value.replace(/\n/g, '');
 
     const { value } = e.target;
 
