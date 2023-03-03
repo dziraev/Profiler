@@ -35,10 +35,13 @@ const LoginPage = (props) => {
           }}
           onSubmit={async (values, { setFieldValue, setFieldError }) => {
             try {
-              const response = await axios.post(`${window?._env_?.API_URL || process.env.API_URL}/api/v1/auth/login`, {
-                email: values.email.trim(),
-                password: values.password
-              });
+              const response = await axios.post(
+                `${window?._env_?.API_URL || process.env.API_URL}/api/v1/auth/login`,
+                {
+                  email: values.email.trim(),
+                  password: values.password
+                }
+              );
               localStorage.setItem('token', response.data.token);
               navigate(fromPage);
             } catch (e) {
@@ -68,10 +71,7 @@ const LoginPage = (props) => {
                   </div>
                 </div>
                 <div className={styles.form__button}>
-                  <Button
-                    type={!(dirty && isValid) ? 'button' : 'submit'}
-                    {...(isSubmitting && { type: 'button', isLoading: true })}
-                  >
+                  <Button type='submit' {...(isSubmitting && { type: 'button', isLoading: true })}>
                     Sign In
                   </Button>
                 </div>
