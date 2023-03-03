@@ -4,11 +4,9 @@ import store from '../redux/redux-store';
 
 const App = () => {
   return (
-    <div>
-      <Provider store={store}>
-        <Router />
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <Router />
+    </Provider>
   );
 };
 
