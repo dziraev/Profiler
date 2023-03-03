@@ -146,7 +146,7 @@ export const PersonalInformation = () => {
             [values]
           );
 
-          const allFieldsAreFilledIn = useMemo(
+          const allRequiredFieldsAreFilledIn = useMemo(
             () =>
               Object.keys(values)
                 .filter(
@@ -195,7 +195,7 @@ export const PersonalInformation = () => {
                 </PopUpTryAgain>
               )}
 
-              {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
+              {dirty && allRequiredFieldsAreFilledIn && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
@@ -208,7 +208,7 @@ export const PersonalInformation = () => {
 
               {dirty &&
                 !correctAndNotFully &&
-                !allFieldsAreFilledIn &&
+                !allRequiredFieldsAreFilledIn &&
                 !isValid &&
                 linkIsClicked && (
                   <PopUpStayOrLeave

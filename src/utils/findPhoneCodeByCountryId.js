@@ -1,8 +1,9 @@
-export const findPhoneCodeByCountryId = (phoneCodes, countryId) => {
+export const findPhoneCodeObjByCountryId = (phoneCodes, countryId) => {
   return phoneCodes.find((phoneCode) => phoneCode.country.id === countryId);
 };
+
 export const findCountryFlagByPhoneCodeId = (phoneCodes, phoneCodeId) => {
-  const phoneCodeObj = phoneCodes.find((obj) => obj.id === +phoneCodeId);
+  const phoneCodeObj = phoneCodes.find((obj) => obj.id === phoneCodeId);
   if (phoneCodeObj && phoneCodeObj.country) return phoneCodeObj.country.countryName;
 };
 

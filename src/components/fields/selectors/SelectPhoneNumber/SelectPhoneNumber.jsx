@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectPhoneCodes } from '@components/fields';
 import {
   findCountryFlagByPhoneCodeId,
-  findPhoneCodeByCountryId
+  findPhoneCodeObjByCountryId
 } from '@utils/findPhoneCodeByCountryId';
-import { phoneCodesAndIdUpdate } from '@actions';
-import { selectPersonalDetailsPhoneCodeId } from '../../../../pages/PersonalDetails/selectors';
 import classNames from 'classnames/bind';
 import styles from './SelectPhoneNumber.module.scss';
 import stylesSelect from '../Select.module.scss';
@@ -20,13 +18,12 @@ export const SelectPhoneNumber = ({
   label,
   activeLabel,
   disabled,
+  phoneCodeId,
   countryId,
   setFieldValue,
   ...props
 }) => {
-  const dispatch = useDispatch();
   const phoneCodes = useSelector(selectPhoneCodes);
-  const phoneCodeId = useSelector(selectPersonalDetailsPhoneCodeId);
   const [countryFlag, setCountryFlag] = useState(false);
   const [field, meta, helper] = useField(name);
   const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +33,7 @@ export const SelectPhoneNumber = ({
 
   useEffect(() => {
     const splitCountryId = countryId?.split('-')[0];
-    const foundPhoneCode = findPhoneCodeByCountryId(phoneCodes, Number(splitCountryId));
+    const foundPhoneCode = findPhoneCodeObjByCountryId(phoneCodes, Number(splitCountryId));
     if (foundPhoneCode && countryId) {
       setValue(foundPhoneCode.code);
       setFieldValue(name + 'Id', foundPhoneCode.id);
@@ -47,7 +44,8 @@ export const SelectPhoneNumber = ({
       setFieldValue(name + 'Id', phoneCodes[0].id);
       setCountryFlag(phoneCodes[0].country.countryName);
     } else if (!value && phoneCodes.length) {
-      dispatch(phoneCodesAndIdUpdate(phoneCodes[0].code, phoneCodes[0].id));
+      setValue(phoneCodes[0].code);
+      setFieldValue(name + 'Id', foundPhoneCode.id);
       setCountryFlag(phoneCodes[0].country.countryName);
     } else if (value && phoneCodes.length && !countryId) {
       const countryFlag = findCountryFlagByPhoneCodeId(phoneCodes, phoneCodeId);
@@ -151,7 +149,7 @@ export const SelectPhoneNumber = ({
             <React.Fragment key={phoneCode.id}>
               <div
                 className={cx(styles.selectPhone__item, {
-                  selectPhone__item_active: phoneCode.code === value
+                  selectPhone__item_active: phoneCode.id === phoneCodeId
                 })}
                 onClick={() => onClickListPhoneCodes(phoneCode)}
               >

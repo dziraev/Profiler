@@ -8,6 +8,7 @@ import MyCV from '../pages/MyCV/MyCV';
 import PersonalDetails from '../pages/PersonalDetails/PersonalDetails';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import CV from '../pages/CV/CV';
+import GeneralErrorPage from '../pages/GeneralErrorPage/GeneralErrorPage';
 
 export const Router = () => {
   return (
@@ -28,6 +29,7 @@ export const Router = () => {
             <Route path='about-yourself/:uuid' element={<AboutYourself />} />
           </Route>
           <Route path='/404' element={<NotFoundPage />} />
+          <Route path='/error' element={<GeneralErrorPage />} />
         </Route>
         <Route path='/auth' element={<LoginPage />} />
         <Route path='*' element={<NotFoundPage />} />

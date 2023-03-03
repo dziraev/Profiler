@@ -147,19 +147,20 @@ export const Contacts = () => {
             [values]
           );
 
-          const allFieldsAreFilledIn = useMemo(
+          const allRequiredFieldsAreFilledIn = useMemo(
             () =>
               Object.keys(values)
                 .filter((k) => k !== 'skype' && k !== 'portfolio')
                 .every((k) => values[k] !== ''),
             [values]
           );
+
           const correctAndNotFully = useMemo(() => {
             const values = Object.values(errors);
             return !!values.length && values.every((value) => value === 'Required field');
           }, [errors]);
 
-          const updateFieldInContactsStore = (fieldName, value, isPageExists) => {
+          const updateFieldInContactsConstructor = (fieldName, value, isPageExists) => {
             if (!isPageExists) {
               dispatch(updateFieldInContactsConstructorCv(fieldName, value));
             }
@@ -194,7 +195,7 @@ export const Contacts = () => {
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
-              {dirty && allFieldsAreFilledIn && !isValid && linkIsClicked && (
+              {dirty && allRequiredFieldsAreFilledIn && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave
                   adaptive={false}
                   onClickStay={onClickStayPopUp}
@@ -206,7 +207,7 @@ export const Contacts = () => {
               )}
               {dirty &&
                 !correctAndNotFully &&
-                !allFieldsAreFilledIn &&
+                !allRequiredFieldsAreFilledIn &&
                 !isValid &&
                 linkIsClicked && (
                   <PopUpStayOrLeave
@@ -240,8 +241,8 @@ export const Contacts = () => {
                     });
                     setValues(
                       {
-                        phoneCode: values.phoneCode,
-                        phoneCodeId: values.phoneCodeId,
+                        phoneCode: 375,
+                        phoneCodeId: 1,
                         phoneNumber: '',
                         email: '',
                         skype: '',
@@ -253,6 +254,8 @@ export const Contacts = () => {
                     setClearFields(false);
                     if (!isContactsExists) {
                       dispatch(clearFieldsInContactsConstructorCv());
+                      updateFieldInContactsConstructor('phoneCode', 375, isContactsExists);
+                      updateFieldInContactsConstructor('phoneCodeId', 1, isContactsExists);
                     }
                   }}
                   dontClearFields={() => setClearFields(false)}
@@ -276,8 +279,9 @@ export const Contacts = () => {
                       name='phoneCode'
                       isPhoneNumberTouched={touched.phoneNumber}
                       setFieldValue={setFieldValue}
+                      phoneCodeId={values.phoneCodeId}
                       onClickPhoneCodesHandler={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInContactsConstructor(fieldName, value, isContactsExists);
                       }}
                       tabIndex={-1}
                     >
@@ -290,7 +294,7 @@ export const Contacts = () => {
                         maxLength={25}
                         showError={false}
                         actionOnBlur={(fieldName, value) => {
-                          updateFieldInContactsStore(fieldName, value, isContactsExists);
+                          updateFieldInContactsConstructor(fieldName, value, isContactsExists);
                         }}
                         tabIndex={11}
                       />
@@ -306,7 +310,7 @@ export const Contacts = () => {
                       label='Enter your email'
                       activeLabel='Enter your email'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInContactsConstructor(fieldName, value, isContactsExists);
                       }}
                       tabIndex={12}
                     />
@@ -323,7 +327,7 @@ export const Contacts = () => {
                       label='Enter your Skype login'
                       activeLabel='Enter your Skype login'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInContactsConstructor(fieldName, value, isContactsExists);
                       }}
                       tabIndex={13}
                     />
@@ -338,7 +342,7 @@ export const Contacts = () => {
                       label='Add the link'
                       activeLabel='Add the link'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInContactsConstructor(fieldName, value, isContactsExists);
                       }}
                       tabIndex={14}
                     />
@@ -355,7 +359,7 @@ export const Contacts = () => {
                       label='Add the link'
                       activeLabel='Add the link'
                       actionOnBlur={(fieldName, value) => {
-                        updateFieldInContactsStore(fieldName, value, isContactsExists);
+                        updateFieldInContactsConstructor(fieldName, value, isContactsExists);
                       }}
                       tabIndex={15}
                     />

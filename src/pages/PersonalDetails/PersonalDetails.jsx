@@ -134,9 +134,7 @@ const PersonalDetails = (props) => {
         }}
         validate={validatePersonalDetails}
       >
-        {(formik) => {
-          const { dirty, isSubmitting, isValid, setFieldValue, status } = formik;
-
+        {({ values, dirty, isSubmitting, isValid, setFieldValue, status }) => {
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
           }, [dirty]);
@@ -203,6 +201,7 @@ const PersonalDetails = (props) => {
                     name='phoneCode'
                     countryId={countryId}
                     setFieldValue={setFieldValue}
+                    phoneCodeId={values.phoneCodeId}
                   >
                     <InputPersonalDetails
                       name='cellPhone'

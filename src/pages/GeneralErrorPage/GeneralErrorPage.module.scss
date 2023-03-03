@@ -1,0 +1,196 @@
+@use '../../static/scss/variables';
+
+@keyframes move-1 {
+    0% {
+        transform: rotateZ(0);
+        left: 65px;
+    }
+    20% {
+        transform: rotateZ(-32deg);
+        left: 58px;
+    }
+    23% {
+        transform: rotateZ(-30deg);
+        left: 58px;
+    }
+    60% {
+        transform: rotateZ(-30deg);
+        left: 58px;
+    }
+    63% {
+        transform: rotateZ(-32deg);
+        left: 58px;
+    }
+    80% {
+        transform: rotateZ(2deg);
+        left: 65px;
+    }
+    83% {
+        transform: rotateZ(0deg);
+        left: 65px;
+    }
+}
+
+@keyframes move-2 {
+    0% {
+        transform: rotateZ(0);
+        left: 109px;
+        top: 50px;
+    }
+    20% {
+        transform: rotateZ(32deg);
+        left: 116px;
+        top: 36px;
+    }
+    23% {
+        transform: rotateZ(30deg);
+        left: 116px;
+        top: 36px;
+    }
+    60% {
+        transform: rotateZ(30deg);
+        left: 116px;
+        top: 36px;
+    }
+    63% {
+        transform: rotateZ(32deg);
+        left: 116px;
+        top: 36px;
+    }
+    80% {
+        transform: rotateZ(-4deg);
+        left: 109px;
+        top: 50px;
+    }
+    83% {
+        transform: rotateZ(0deg);
+        left: 109px;
+        top: 50px;
+    }
+}
+
+.page {
+    max-width: 1070px;
+    margin: 0 auto;
+    padding: 30px 16px;
+    &__logo {
+        padding: 0 0 60px;
+        & img {
+            width: 86px;
+            height: 78px;
+        }
+    }
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+    }
+    &__image {
+        position: relative;
+        width: 328px;
+        height: 128px;
+        margin: 0 auto 20px;
+        & svg {
+            display: block;
+            position: absolute;
+            &:nth-child(1) {
+                top: 36px;
+                left: 65px;
+                transform-origin: center;
+                animation: move-1 2500ms ease-out infinite;
+            }
+            &:nth-child(2) {
+                top: 76px;
+                left: 65px;
+            }
+            &:nth-child(3) {
+                top: 50px;
+                left: 109px;
+                animation: move-2 2500ms ease-out infinite;
+            }
+            &:nth-child(4) {
+                top: 76px;
+                left: 109px;
+            }
+            &:nth-child(5) {
+                top: 50px;
+                left: 157px;
+            }
+            &:nth-child(6) {
+                top: 50px;
+                left: 171px;
+            }
+            &:nth-child(7) {
+                top: 50px;
+                left: 197px;
+            }
+            &:nth-child(8) {
+                top: 70px;
+                left: 199px;
+            }
+            &:nth-child(9) {
+                top: 86px;
+                left: 237px;
+            }
+            &:nth-child(10) {
+                top: 86px;
+                left: 247px;
+            }
+            &:nth-child(11) {
+                top: 86px;
+                left: 257px;
+            }
+        }
+    }
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        &__title {
+            max-width: 100%;
+            font-size: 1.5em;
+            line-height: 1.32;
+            font-weight: 600;
+            color: variables.$text-primary-dark-blue;
+        }
+        &__button {
+            width: 345px;
+            height: 54px;
+            margin: auto;
+        }
+    }
+    @media (max-width: 1365px) {
+        max-width: 460px;
+        &__logo {
+            padding: 0 0 100px;
+        }
+        &__image {
+            margin: 0 auto 16px;
+        }
+        &__content {
+            gap: 32px;
+            &__title {
+                font-size: 1.125em;
+            }
+            &__button {
+                width: 396px;
+                height: 48px;
+            }
+        }
+    }
+    @media (max-width: 428px) {
+        max-width: 100%;
+        &__content {
+            gap: 32px;
+            &__title {
+                font-size: 1.125em;
+            }
+            &__button {
+                width: 100%;
+            }
+        }
+    }
+}
