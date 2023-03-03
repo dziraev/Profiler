@@ -75,6 +75,19 @@
   }
 }
 
+.photo:hover {
+  outline: variables.$text-primary-blue solid 1px;
+  .photo__button {
+    box-shadow: 0px 1px 2px 0px #0000001A;
+  }
+}
+.photo[tabindex]:focus {
+  outline: variables.$text-primary-blue solid 1px;
+  .photo__button {
+    box-shadow: 0px 1px 2px 0px #0000001A;
+  }
+}
+
 .wrapper {
   position: relative;
   &:hover .photo__image__change, &:focus .photo__image__change {
@@ -83,4 +96,5 @@
   &:hover .photo__image__delete, &:focus .photo__image__delete {
     display: block;
   }
+
 }
