@@ -27,7 +27,9 @@ export const ConstructorCv = ({ disabled }) => {
               </svg>
             </div>
           </div>
-          <p className={styles.card__content}>Click and start creating your CV</p>
+          <p className={styles.card__content}>
+            Click and start <br /> creating your CV
+          </p>
         </div>
       </NavLink>
       {/*<div className={styles.card__label}>*/}
