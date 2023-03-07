@@ -5,20 +5,24 @@
   margin: 0 auto;
   max-width: 1216px;
   padding: 0 80px;
+
   @media (max-width: 1365px) {
     padding: 0;
   }
+
   &__title {
-    font-size: 1.625em;
+    font-size: rem(24);
     line-height: 1.32;
     font-weight: 600;
     color: $text-primary-dark-blue;
     margin: 0 0 40px 0;
     text-align: left;
+
     @media (max-width: 1365px) {
       font-size: 1em;
       margin: 0 0 24px 0;
     }
+
     @media (max-width: 428px) {
       margin: 0 0 24px 16px;
     }
@@ -34,15 +38,11 @@
       padding: 0 16px;
       gap: 20px 12px;
     }
-    @media (max-width: 360px) {
+
+    @media (max-width: 359.98px) {
       flex-direction: column;
       align-items: center;
     }
 
   }
-
-
-
-
-
 }

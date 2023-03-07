@@ -1,4 +1,6 @@
 @use '../../static/scss/variables';
+@import 'src/static/scss/mixins';
+
 .CabinetHeader {
     width: 100%;
     text-align: center;
@@ -7,7 +9,7 @@
     color: variables.$text-primary-dark-blue;
 
     &__title {
-        width: 768px;
+        @include adaptive-value('max-width', 768, 598, 1536, 1366 );
         text-align: center;
         margin: auto;
     }
@@ -49,13 +51,12 @@
 
     @media (max-width: 1535px) {
         &__title {
-            width: 598px;
         }
     }
     @media (max-width: 1365px) {
         margin: 86px 0 60px;
         &__title {
-            max-width: 328px;
+            max-width: 396px;
         }
     }
     @media (max-width: 360px) {

@@ -9,9 +9,22 @@
     height: 252px;
     border-radius: 20px;
     text-align: center;
-    padding: 84px 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     cursor: pointer;
     border: 1px solid transparent;
+
+
+    @media (max-width: 1365px) {
+        width: 192px;
+        height: 220px;
+    }
+
+    @include adaptive-value('width', 192, 158, 428, 360);
 
     &:hover {
       border-color: $border-hover-constructorCv;
@@ -24,6 +37,7 @@
 
     &_disabled {
       opacity: 0.4;
+
       &:hover, &:active {
         border-color: transparent;
       }
@@ -39,11 +53,11 @@
 
   &__link {
     position: relative;
-    margin: auto;
     border-radius: 50%;
     background-color: $background-link;
     width: 24px;
     height: 24px;
+
     &:not(:last-child) {
       margin-bottom: 13px;
     }
@@ -77,34 +91,26 @@
   }
 
   @media (max-width: 1365px) {
+
     &:only-of-type {
       margin: 0 auto;
     }
-    &__title {
-      font-size: 1em;
-      margin: 0 0 24px 0;
-    }
-    &__container {
-      width: 192px;
-      height: 220px;
-      padding: 76px 21px;
-    }
+
     &__content {
       font-size: rem(12);
+      max-width: 148px;
     }
+
     &__label {
       display: none;
     }
   }
-  @media (max-width: 428px) {
-    &__title {
-      margin: 0 0 24px 16px;
-    }
-  }
-  @media (max-width: 427px) {
+
+
+  @media (max-width: 360px) {
+
     &__container {
       width: 158px;
-      padding: 76px 4px;
     }
   }
 }
