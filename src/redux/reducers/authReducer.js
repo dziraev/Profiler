@@ -1,4 +1,4 @@
-import { AUTH_IN, AUTH_OUT, LOADER_DISPLAY_OFF, LOADER_DISPLAY_ON } from './types';
+import { AUTH_IN, AUTH_OUT, LOADER_DISPLAY_OFF, LOADER_DISPLAY_ON } from '@types';
 
 const initialState = {
   isAuth: false,
