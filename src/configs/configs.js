@@ -10,3 +10,7 @@ export const CvStatus = {
   DRAFT: 'DRAFT',
   ON_REVIEW: 'ON_REVIEW'
 };
+
+export const MainPaths = {
+  GENERAL_ERROR: '/error'
+};

@@ -52,9 +52,7 @@ const LoginPage = (props) => {
           validateOnChange={false}
           validate={validateAuthorization}
         >
-          {(formik) => {
-            const { isValid, dirty, isSubmitting } = formik;
-
+          {({ isSubmitting }) => {
             return (
               <Form className={styles.form}>
                 <div className={styles.form__inputs}>

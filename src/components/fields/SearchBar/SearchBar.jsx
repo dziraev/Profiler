@@ -157,7 +157,7 @@ export const SearchBar = ({
           onMouseDown={(e) => e.preventDefault()}
         >
           {filteredCountries.length === 0 ? (
-            <div className={styles.dataResult__notFound}>Country no found</div>
+            <div className={styles.dataResult__notFound}>Country not found</div>
           ) : (
             filteredCountries.map((value) => (
               <div

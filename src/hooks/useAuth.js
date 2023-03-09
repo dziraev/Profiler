@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { authInAndPersonalDetailsLoad } from '../redux/actions';
+import { authInAndPersonalDetailsLoad } from '@actions';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 

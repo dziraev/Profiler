@@ -7,11 +7,14 @@ import {
   CHANGE_DIRTY_STATUS_FORM_PD,
   CHANGE_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
   CHANGE_DIRTY_STATUS_IN_SPECIFIC_CV,
+  CLEAR_FIELDS_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
   CLEAR_FIELDS_IN_CONTACTS_CONSTRUCTOR_CV,
   CONSTRUCTOR_CV_LOADING_OFF,
   CONSTRUCTOR_CV_LOADING_ON,
   COUNTRIES_LOAD,
   COUNTRIES_SEARCH,
+  DELETE_PHOTO_IN_CONSTRUCTOR_CV,
+  DELETE_PHOTO_IN_SPECIFIC_CV,
   FAILED_TO_SAVE,
   INVALID_UPLOAD_PHOTO,
   LINK_IS_CLICKED,
@@ -25,31 +28,30 @@ import {
   PERSONALDETAILS_UPDATE,
   PHONECODE_AND_ID_UPDATE,
   PHONECODES_LOAD,
+  PHOTO_FAILED_CABINET,
+  PHOTO_FAILED_CV,
   PHOTO_UPDATE_CABINET,
   PHOTO_UPDATE_CV,
   PHOTO_UPLOAD_CABINET,
   PHOTO_UPLOAD_CV,
-  PHOTO_FAILED_CABINET,
-  PHOTO_FAILED_CV,
   POSITIONS_LOAD,
   RESET_DIRTY_STATUS_FORM_PD,
-  SAVED_SUCCESFULLY,
   RESET_DIRTY_STATUS_IN_CONSTRUCTOR_CV,
   RESET_DIRTY_STATUS_IN_SPECIFIC_CV,
+  SAVED_SUCCESFULLY,
   SPECIFIC_CV_LOADING_OFF,
   SPECIFIC_CV_LOADING_ON,
   SPECIFIC_CV_NOT_FOUND_BY_UUID,
+  SPECIFIC_CV_NOT_FOUND_RESET,
+  STATUSCODE_RESET,
+  STATUSCODE_UPDATE,
+  UPDATE_FIELD_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
   UPDATE_FIELD_IN_CONTACTS_CONSTRUCTOR_CV,
   UPDATE_FIELDS_IN_CONSTRUCTOR_CV,
-  UPDATE_PHOTO_IN_SPECIFIC_CV,
-  UPLOADED_PHOTO,
-  UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV,
-  DELETE_PHOTO_IN_CONSTRUCTOR_CV,
   UPDATE_FIELDS_IN_SPECIFIC_CV,
-  DELETE_PHOTO_IN_SPECIFIC_CV,
-  SPECIFIC_CV_NOT_FOUND_RESET,
-  CLEAR_FIELDS_IN_ABOUTYOURSELF_CONSTRUCTOR_CV,
-  UPDATE_FIELD_IN_ABOUTYOURSELF_CONSTRUCTOR_CV
+  UPDATE_PHOTO_IN_SPECIFIC_CV,
+  UPDATE_PI_AND_CONTACTS_IN_CONSTRUCTOR_CV,
+  UPLOADED_PHOTO
 } from '@types';
 import $api from '../http/api';
 
@@ -74,6 +76,19 @@ export function loaderOn() {
 export function loaderOff() {
   return {
     type: LOADER_DISPLAY_OFF
+  };
+}
+
+export function statusCodeUpdate(payload) {
+  return {
+    type: STATUSCODE_UPDATE,
+    payload
+  };
+}
+
+export function statusCodeReset() {
+  return {
+    type: STATUSCODE_RESET
   };
 }
 
@@ -103,11 +118,8 @@ export function authInAndPersonalDetailsLoad() {
           }
         })
       );
-      dispatch(authIn());
     } catch (e) {
-      if (e?.response?.status === 404) {
-        dispatch(authIn());
-      }
+      dispatch(statusCodeUpdate(e?.response?.status));
       console.log(e);
     } finally {
       dispatch(loaderOff());
@@ -152,6 +164,7 @@ export function countriesLoad() {
         data
       });
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       console.log(e);
     }
   };
@@ -181,6 +194,7 @@ export function phoneCodesLoad() {
         data
       });
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       console.log(e);
     }
   };
@@ -195,6 +209,7 @@ export function positionsLoad() {
         data
       });
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       console.log(e);
     }
   };
@@ -281,6 +296,7 @@ export function allCvLoad() {
         data
       });
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       console.log(e);
     } finally {
       dispatch({ type: ALL_CV_LOADING_OFF });
@@ -394,6 +410,7 @@ export function getPersonalInformationInSpecificCv(uuid) {
         })
       );
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       if (e?.response?.status === 404) {
         dispatch(specificCvNotFound());
       }
@@ -428,6 +445,7 @@ export function getContactsSpecificCv(uuid) {
         );
       }
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       if (e?.response?.status === 404) {
         dispatch(specificCvNotFound());
       }
@@ -465,6 +483,7 @@ export function getAboutYourselfSpecificCv(uuid) {
         );
       }
     } catch (e) {
+      dispatch(statusCodeUpdate(e?.response?.status));
       if (e?.response?.status === 404) {
         dispatch(specificCvNotFound());
       }

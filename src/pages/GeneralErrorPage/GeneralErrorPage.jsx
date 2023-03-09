@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/buttons/Button/Button';
+import { useDispatch } from 'react-redux';
+import { Button } from '@components/buttons';
+import { statusCodeReset } from '@actions';
 import styles from './GeneralErrorPage.module.scss';
 import logo from '../../static/images/big-logo.svg';
 
 const GeneralErrorPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => dispatch(statusCodeReset());
+  }, []);
+
   return (
     <div className={styles.page}>
       <div className={styles.page__logo}>
@@ -68,10 +75,7 @@ const GeneralErrorPage = () => {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
-            <path
-              d='M8 0H0V42H8V0Z'
-              fill='#407BFF'
-            />
+            <path d='M8 0H0V42H8V0Z' fill='#407BFF' />
           </svg>
           <svg
             width='18'
@@ -104,19 +108,8 @@ const GeneralErrorPage = () => {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
-            <path d="M11.3506 21.8729C7.72778 21.8293 0 16.6991 0 16.6991L4.34688 11.7601C4.34688 11.7601 9.17714 14.3472 11.5917 15.288C14.0062 16.2287 20.2854 16.4639 19.8028 9.87831C19.3195 7.29156 16.663 6.586 14.7311 5.64451L18.5947 0C18.5947 0 26.26 2.62463 27.5305 6.58527C28.5868 9.87831 27.5306 13.8765 27.5306 13.8765C25.2312 20.4038 17.629 22.5787 11.3506 21.8729Z" fill="#407BFF"/>
-          </svg>
-          <svg
-            width='6'
-            height='6'
-            viewBox='0 0 6 6'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <circle
-              cx='3'
-              cy='3'
-              r='3'
+            <path
+              d='M11.3506 21.8729C7.72778 21.8293 0 16.6991 0 16.6991L4.34688 11.7601C4.34688 11.7601 9.17714 14.3472 11.5917 15.288C14.0062 16.2287 20.2854 16.4639 19.8028 9.87831C19.3195 7.29156 16.663 6.586 14.7311 5.64451L18.5947 0C18.5947 0 26.26 2.62463 27.5305 6.58527C28.5868 9.87831 27.5306 13.8765 27.5306 13.8765C25.2312 20.4038 17.629 22.5787 11.3506 21.8729Z'
               fill='#407BFF'
             />
           </svg>
@@ -127,12 +120,7 @@ const GeneralErrorPage = () => {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
-            <circle
-              cx='3'
-              cy='3'
-              r='3'
-              fill='#407BFF'
-            />
+            <circle cx='3' cy='3' r='3' fill='#407BFF' />
           </svg>
           <svg
             width='6'
@@ -141,12 +129,16 @@ const GeneralErrorPage = () => {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
-            <circle
-              cx='3'
-              cy='3'
-              r='3'
-              fill='#407BFF'
-            />
+            <circle cx='3' cy='3' r='3' fill='#407BFF' />
+          </svg>
+          <svg
+            width='6'
+            height='6'
+            viewBox='0 0 6 6'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <circle cx='3' cy='3' r='3' fill='#407BFF' />
           </svg>
         </div>
         <div className={styles.page__content}>
@@ -154,11 +146,7 @@ const GeneralErrorPage = () => {
             Something went wrong, please reload the page
           </h1>
           <div className={styles.page__content__button}>
-            <Button
-              onClick={() => navigate(-1)}
-            >
-              Reload page
-            </Button>
+            <Button onClick={() => navigate(-1)}>Reload page</Button>
           </div>
         </div>
       </div>
