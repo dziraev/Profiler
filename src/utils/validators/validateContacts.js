@@ -12,7 +12,7 @@ export const validateContacts = (values) => {
 
   if (!values.phoneNumber) {
     errors.phoneCode = 'Required field';
-    errors.phoneNumber = true;
+    errors.phoneNumber = 'Required field';
   } else if (!/^\d+$/.test(values.phoneNumber)) {
     errors.phoneNumber = true;
     errors.phoneCode = 'Invalid cell phone number. Example of the correct variant: 29233XXXX';
