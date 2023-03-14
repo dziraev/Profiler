@@ -27,6 +27,7 @@ import { Button } from '@components/buttons';
 import { Notification } from '@components/tooltip/Notification';
 import { useLinkIsClicked } from '@hooks/useLinkIsClicked';
 import { usePersonalDetails } from '@hooks/usePersonalDetails';
+import isEqual from 'lodash.isequal';
 import $api from '../../http/api';
 import styles from './PersonalDetails.module.scss';
 
@@ -93,10 +94,10 @@ const PersonalDetails = (props) => {
           try {
             if (!values.userInDB) {
               const response = await $api.post('/profile', values);
-              dispatch(personalDetailsUpdate({ ...values, userInDB: true })); //in general, it is not necessary, except the flag userInDB to change method from post to put
+              dispatch(personalDetailsUpdate({ ...formikValues, userInDB: true }));
             } else {
               const response = await $api.put('/profile', values);
-              dispatch(personalDetailsUpdate(values)); //in general, it is not necessary
+              dispatch(personalDetailsUpdate(formikValues));
             }
             dispatch(
               updatePIandContactsInConstructorCv({
@@ -137,19 +138,20 @@ const PersonalDetails = (props) => {
           }
         }}
       >
-        {({
-          values,
-          dirty,
-          status,
-          isSubmitting,
-          isValid,
-          handleReset,
-          setFieldValue,
-          setStatus
-        }) => {
+        {({ values, status, isSubmitting, isValid, handleReset, setFieldValue, setStatus }) => {
+          const {
+            profileImageUuid: _skip1,
+            userInDB: _skip2,
+            isLoading: _skip3,
+            ...valuesInStore
+          } = personalDetails;
+          const { profileImageUuid, userInDB, isLoading, ...currentValues } = values;
+
+          const customDirty = !isEqual(currentValues, valuesInStore);
+
           useEffect(() => {
-            dispatch(changeDirtyStatusFormPD(dirty));
-          }, [dirty]);
+            dispatch(changeDirtyStatusFormPD(customDirty));
+          }, [customDirty]);
 
           return (
             <Form className={styles.form}>
@@ -157,14 +159,14 @@ const PersonalDetails = (props) => {
                 The data is saved successfully!
               </PopUpSuccessFulSaving>
 
-              {dirty && !isValid && linkIsClicked && (
+              {customDirty && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave onClickStay={() => dispatch(linkIsNotClicked())}>
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
               )}
 
-              {dirty && isValid && linkIsClicked && !status?.errorResponse && (
+              {customDirty && isValid && linkIsClicked && !status?.errorResponse && (
                 <PopUpSave isSubmitting={isSubmitting}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
@@ -248,7 +250,7 @@ const PersonalDetails = (props) => {
               <div className={styles.form__buttons}>
                 <div className={styles.form__button}>
                   <Button
-                    type={isSubmitting || !dirty ? 'button' : 'submit'}
+                    type={isSubmitting || !customDirty ? 'button' : 'submit'}
                     isLoading={!status?.errorResponse && !linkIsClicked && isSubmitting}
                   >
                     Save
