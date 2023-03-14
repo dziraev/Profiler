@@ -78,6 +78,7 @@ const PersonalDetails = (props) => {
         validateOnChange={false}
         validate={validatePersonalDetails}
         onSubmit={async (formikValues, { setStatus }) => {
+          const { profileImageUuid } = personalDetails;
           const currentValues = {
             name: formikValues.name,
             surname: formikValues.surname,
@@ -86,18 +87,20 @@ const PersonalDetails = (props) => {
             phoneCodeId: formikValues.phoneCodeId,
             cellPhone: formikValues.cellPhone,
             positionId: formikValues.positionId,
-            profileImageUuid: personalDetails.profileImageUuid
+            profileImageUuid
           };
 
           const values = trimValues(currentValues, true);
 
           try {
-            if (!values.userInDB) {
+            if (!formikValues.userInDB) {
               const response = await $api.post('/profile', values);
-              dispatch(personalDetailsUpdate({ ...formikValues, userInDB: true }));
+              dispatch(
+                personalDetailsUpdate({ ...formikValues, profileImageUuid, userInDB: true })
+              );
             } else {
               const response = await $api.put('/profile', values);
-              dispatch(personalDetailsUpdate(formikValues));
+              dispatch(personalDetailsUpdate({ ...formikValues, profileImageUuid }));
             }
             dispatch(
               updatePIandContactsInConstructorCv({
