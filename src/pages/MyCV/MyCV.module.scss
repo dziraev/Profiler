@@ -18,14 +18,11 @@
     margin: 0 0 40px 0;
     text-align: left;
 
-    @media (max-width: 1365px) {
-      font-size: 1em;
-      margin: 0 0 24px 0;
-    }
-
-    @media (max-width: 428px) {
+    @media (max-width: 1365.98px) {
+      font-size: 1rem;
       margin: 0 0 24px 16px;
     }
+
   }
   &__container {
     display: flex;

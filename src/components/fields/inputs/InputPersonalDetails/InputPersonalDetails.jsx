@@ -18,7 +18,7 @@ export const InputPersonalDetails = ({
   ...props
 }) => {
   const [active, setActive] = useState(false);
-  const [field, meta, helper] = useField(name);
+  const [field, meta] = useField(name);
   const hasError = !!(meta.error && meta.touched);
   const { value } = field;
 

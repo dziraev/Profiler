@@ -23,7 +23,7 @@
     background-color: $input-background;
     padding: rem(11);
     border: 1px solid transparent;
-    font-size: 1.125rem;
+    font-size: rem(18);
     line-height: 1.333;
     width: 100%;
     font-weight: 400;
@@ -41,6 +41,11 @@
       &:hover, &:focus {
         border-color: $input-stroke-error;
       }
+    }
+
+    @media(max-width: 1365.98px) {
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
   }

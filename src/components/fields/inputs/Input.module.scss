@@ -40,7 +40,6 @@
   &::placeholder {
     font-family: "Red Hat Display";
     font-size: 1.125rem;
-    line-height: 1.333;
     color: $text-primary-grey;
     -webkit-text-fill-color: $text-primary-grey;
     user-select: none;
@@ -52,10 +51,12 @@
 
   &_adaptive {
     @media(max-width: 1365.98px) {
+      font-size: 1rem;
+
       &::placeholder {
         font-size: 1rem;
-        line-height: 1.3125;
       }
+
     }
   }
 

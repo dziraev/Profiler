@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useField } from 'formik';
+import classNames from 'classnames/bind';
 import stylesInputPassword from './InputPassword.module.scss';
 import styles from '../Input.module.scss';
 
-export const InputPassword = (props) => {
+const cx = classNames.bind(styles);
+
+export const InputPassword = ({ adaptive = true, ...props }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [active, setActive] = useState(false);
   const [field, meta] = useField(props);
+  const hasError = !!(meta.error && meta.touched);
 
   function handleBlur(e) {
     field.onBlur(e);
@@ -22,9 +26,10 @@ export const InputPassword = (props) => {
       <input
         {...props}
         {...field}
-        className={`${styles.input} ${styles.input_paddingRight} ${
-          meta.error && meta.touched && typeof meta.error === 'string' ? styles.input__error : ''
-        }`}
+        className={cx(styles.input, styles.input_paddingRight, {
+          input__error: hasError && typeof meta.error === 'string',
+          input_adaptive: adaptive
+        })}
         onFocus={handleFocus}
         onBlur={handleBlur}
         type={showPassword ? 'text' : 'password'}
@@ -76,7 +81,7 @@ export const InputPassword = (props) => {
           </svg>
         )}
       </div>
-      {meta.touched && meta.error && (
+      {hasError && (
         <div className={styles.error}>
           {meta.error}
           <svg
