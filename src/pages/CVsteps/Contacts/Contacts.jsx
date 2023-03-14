@@ -180,7 +180,6 @@ export const Contacts = () => {
 
               {status?.errorResponse && (
                 <PopUpTryAgain
-                  type='button'
                   adaptive={false}
                   isSubmitting={isSubmitting}
                   onClickHandler={() => {

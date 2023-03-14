@@ -180,7 +180,6 @@ export const PersonalInformation = () => {
 
               {status?.errorResponse && (
                 <PopUpTryAgain
-                  type='button'
                   adaptive={false}
                   isSubmitting={isSubmitting}
                   onClickHandler={() => {

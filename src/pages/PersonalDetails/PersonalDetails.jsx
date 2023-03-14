@@ -73,30 +73,30 @@ const PersonalDetails = (props) => {
         </Notification>
       </div>
       <Formik
-        enableReinitialize={true}
         initialValues={personalDetails}
         validateOnChange={false}
+        validate={validatePersonalDetails}
         onSubmit={async (formikValues, { setStatus }) => {
-          const values = trimValues(formikValues, true);
-
           const currentValues = {
-            name: values.name,
-            surname: values.surname,
-            countryId: values.countryId,
-            email: values.email,
-            phoneCodeId: values.phoneCodeId,
-            cellPhone: values.cellPhone,
-            positionId: values.positionId,
-            profileImageUuid: values.profileImageUuid
+            name: formikValues.name,
+            surname: formikValues.surname,
+            countryId: formikValues.countryId,
+            email: formikValues.email,
+            phoneCodeId: formikValues.phoneCodeId,
+            cellPhone: formikValues.cellPhone,
+            positionId: formikValues.positionId,
+            profileImageUuid: personalDetails.profileImageUuid
           };
+
+          const values = trimValues(currentValues, true);
 
           try {
             if (!values.userInDB) {
-              const response = await $api.post('/profile', currentValues);
-              dispatch(personalDetailsUpdate({ ...values, userInDB: true }));
+              const response = await $api.post('/profile', values);
+              dispatch(personalDetailsUpdate({ ...values, userInDB: true })); //in general, it is not necessary, except the flag userInDB to change method from post to put
             } else {
-              const response = await $api.put('/profile', currentValues);
-              dispatch(personalDetailsUpdate(values));
+              const response = await $api.put('/profile', values);
+              dispatch(personalDetailsUpdate(values)); //in general, it is not necessary
             }
             dispatch(
               updatePIandContactsInConstructorCv({
@@ -117,6 +117,10 @@ const PersonalDetails = (props) => {
               })
             );
 
+            if (linkIsClicked) {
+              navigationLinkPopUp(linkIsClicked, dispatch, navigate);
+            }
+
             setShowSuccessfulSaving(true);
 
             setTimeout(() => {
@@ -132,9 +136,17 @@ const PersonalDetails = (props) => {
             navigationLinkPopUp(current, dispatch, navigate);
           }
         }}
-        validate={validatePersonalDetails}
       >
-        {({ values, dirty, isSubmitting, isValid, setFieldValue, status }) => {
+        {({
+          values,
+          dirty,
+          status,
+          isSubmitting,
+          isValid,
+          handleReset,
+          setFieldValue,
+          setStatus
+        }) => {
           useEffect(() => {
             dispatch(changeDirtyStatusFormPD(dirty));
           }, [dirty]);
@@ -144,19 +156,31 @@ const PersonalDetails = (props) => {
               <PopUpSuccessFulSaving show={showSuccessfulSaving}>
                 The data is saved successfully!
               </PopUpSuccessFulSaving>
+
               {dirty && !isValid && linkIsClicked && (
                 <PopUpStayOrLeave onClickStay={() => dispatch(linkIsNotClicked())}>
                   <>The data is entered incorrectly</>
                   <>If you leave this page, the data will not be saved.</>
                 </PopUpStayOrLeave>
               )}
+
               {dirty && isValid && linkIsClicked && !status?.errorResponse && (
                 <PopUpSave isSubmitting={isSubmitting}>
                   Do you want to save the changes in Personal details?
                 </PopUpSave>
               )}
+
               {status?.errorResponse && (
-                <PopUpTryAgain isSubmitting={isSubmitting}>
+                <PopUpTryAgain
+                  isSubmitting={isSubmitting}
+                  onClickHandler={() => {
+                    if (linkIsClicked) {
+                      handleReset();
+                    } else {
+                      setStatus({ errorResponse: false });
+                    }
+                  }}
+                >
                   Failed to save data. Please try again
                 </PopUpTryAgain>
               )}
