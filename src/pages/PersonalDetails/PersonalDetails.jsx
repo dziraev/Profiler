@@ -105,18 +105,18 @@ const PersonalDetails = (props) => {
             dispatch(
               updatePIandContactsInConstructorCv({
                 personalInformation: {
-                  name: values.name,
-                  surname: values.surname,
-                  country: values.country,
-                  countryId: values.countryId,
-                  position: values.position,
-                  positionId: values.positionId
+                  name: formikValues.name,
+                  surname: formikValues.surname,
+                  country: formikValues.country,
+                  countryId: formikValues.countryId,
+                  position: formikValues.position,
+                  positionId: formikValues.positionId
                 },
                 contacts: {
-                  phoneCode: values.phoneCode,
-                  phoneCodeId: values.phoneCodeId,
-                  phoneNumber: values.cellPhone,
-                  email: values.email
+                  phoneCode: formikValues.phoneCode,
+                  phoneCodeId: formikValues.phoneCodeId,
+                  phoneNumber: formikValues.cellPhone,
+                  email: formikValues.email
                 }
               })
             );
