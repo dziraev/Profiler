@@ -163,7 +163,6 @@ export const AboutYourself = () => {
 
               {status?.errorResponse && (
                 <PopUpTryAgain
-                  type='button'
                   adaptive={false}
                   isSubmitting={isSubmitting}
                   onClickHandler={() => {

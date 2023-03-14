@@ -34,12 +34,8 @@ export const PopUpTryAgain = ({
             <div className={styles.modal__button}>
               <CancelButton
                 adaptive={adaptive}
-                {...(type
-                  ? {
-                      type,
-                      onClick: !isSubmitting ? onClickHandler : undefined
-                    }
-                  : { type: isSubmitting ? 'button' : 'reset' })}
+                type='button'
+                onClick={!isSubmitting ? onClickHandler : undefined}
               >
                 Cancel
               </CancelButton>
